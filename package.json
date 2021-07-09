@@ -1,0 +1,41 @@
+{
+  "name": "whmcs",
+  "version": "2.0.0",
+  "description": "Moloni for WHMCS",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/moloni-pt/whmcs.git"
+  },
+  "keywords": [
+    "Moloni",
+    "WHMCS"
+  ],
+  "author": "Moloni",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/moloni-pt/whmcs/issues"
+  },
+  "homepage": "https://github.com/moloni-pt/whmcs#readme",
+  "devDependencies": {
+    "autoprefixer": "^10.2.5",
+    "cssnext": "^0.6.6",
+    "gulp": "^4.0.2",
+    "gulp-clean-css": "^4.3.0",
+    "gulp-postcss": "^9.0.0",
+    "gulp-purgecss": "^4.0.3",
+    "gulp-rename": "^2.0.0",
+    "postcss": "^8.2.8",
+    "postcss-clean": "^1.2.2",
+    "postcss-combine-media-query": "^1.0.1",
+    "postcss-css-variables": "^0.17.0",
+    "postcss-loader": "^5.0.0",
+    "postcss-rem-to-pixel": "^4.1.2",
+    "postcss-sort-media-queries": "^3.6.5",
+    "precss": "^4.0.0"
+  },
+  "dependencies": {}
+}

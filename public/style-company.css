@@ -1,0 +1,55 @@
+section#moloni{
+    padding: 5% 0px;
+    background-color: #1a4d80;
+}
+
+.empresasMoloni .card {
+    width: 15em;
+    height:15em;
+    cursor: pointer;
+    box-shadow: 0px 0px 10px #1A4D8029 !important;
+}
+
+.empresasMoloni .card:hover {
+    width: 15em;
+    height:15em;
+    cursor: pointer;
+    box-shadow: 0px 0px 10px #1A4D80A3 !important;
+}
+
+.empresasMoloni .card-content{
+    width:100%;
+    height:100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.empresasMoloni .card span:nth-child(1) {
+    color:#003756;
+    font-weight: bold;
+    font-size: 22px;
+}
+
+.empresasMoloni .card .cardVat {
+    color:#003756;
+    font-size: 14px;
+    position: relative;
+    top: 40%;
+    opacity: 0.5;
+}
+
+.escolhaEmpresa{
+    color:#003756;
+    font-weight: bold;
+    font-size: 22px;
+    padding:4% 0;
+}
+
+.empresasMoloni{
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    padding-bottom: 4%;
+}

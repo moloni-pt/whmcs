@@ -1,0 +1,320 @@
+#moloni {
+  @import 'materialize/materialize.less';
+
+  #content {
+    font-family: "Roboto" !important;
+  }
+
+  .moloni-logo {
+    float: left;
+    width: 200px;
+  }
+
+  .logoutMoloni{
+    padding: 0;
+    font-size: 15px;
+    text-transform: none;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    border-radius: 0;
+    width: 12rem;
+  }
+
+  .logoutMoloni i{
+    font-size:20px;
+  }
+
+  /*-----------------MENU BARRA------------------- */
+  .displayFlexMoloni{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    height: 100%;
+  }
+
+  .menuMoloni{
+    height:7rem;
+    background: rgba(26, 77, 128, 0.24);
+  }
+
+  .menuMoloni .col{
+    .displayFlexMoloni;
+    font-size: 1vw;
+    width:13%;
+    justify-content: center;
+  }
+
+  .menuMoloni .menuAtivo{
+    border: 1px solid #C1CFDD;
+    background:white;
+  }
+
+  .menuMoloni .menuAtivo a{
+    color: #1A4D80 !important;
+    font-weight: bold;
+  }
+
+  /* ***************************** */
+
+  .label-input {
+    font-size: 15px !important;
+    font-weight: 300 !important;
+    margin-top: 30px !important;
+  }
+
+  .message-top {
+    padding: 5px;
+    margin-bottom: 25px;
+    color: white;
+    cursor: pointer;
+  }
+
+  /* DataTables */
+
+  .moloniTable{
+    margin-bottom: 0 !important;
+  }
+
+  .moloniTable th{
+    padding: 10px 5px !important;
+    border-bottom: 1px solid #ddd;
+    background-color: #F5F5F9;
+  }
+
+  .moloniTable .sorting::after,
+  .moloniTable .sorting_asc::after,
+  .moloniTable .sorting_desc::after {
+    content: none;
+  }
+
+  .moloniTable .acoesBtnMoloni{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    padding: 15px 22% !important;
+  }
+
+  .moloniTable .acoesBtnMoloni .btn{
+    padding: 10% 15%;
+    border-radius: 0;
+    display: flex;
+    align-items: center;
+  }
+
+  .moloniTable .acoesBtnMoloniDocs{
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+  }
+
+  .moloniTable .acoesBtnMoloniDocs .btn{
+    padding: 10%;
+    border-radius: 0;
+    margin-right:7px;
+    display: flex;
+    align-items: center;
+  }
+
+  .naoGeradoMoloni td{
+    background-color:lightpink !important;
+  }
+
+  .moloniTable td, .moloniTable th{
+    border-right: 1px solid rgba(193, 207, 221, 0.5);
+    border-bottom: 1px solid rgba(193, 207, 221, 0.5);
+    padding:15px 20px !important;
+  }
+
+  .dataTables_wrapper .bottom {
+    height: 3.5em;
+    border: 1px solid #EEEEEF;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+  }
+
+  .MolShowing .dataTables_length{
+    float:right;
+  }
+
+  .MolShowing .dataTables_length select {
+    display: table !important;
+    font-size: 14px !important;
+    color: black !important;
+    border: 1px solid rgba(52, 52, 52, 0.25) !important;
+    padding:0;
+  }
+
+  .MolSearch .dataTables_filter{
+    float:left;
+  }
+
+  .MolSearch .dataTables_filter input {
+    font-size: 16px;
+    color: black;
+    margin-right: 20px;
+    width: 23vw;
+  }
+
+  .MolSearch .dataTables_filter input::-webkit-input-placeholder {
+    color: black !important;
+  }
+
+  .MolPagination{
+    height:100%;
+    padding:0 !important;
+  }
+
+  #DataTables_Table_0_info{
+    padding-top:0;
+  }
+
+  #DataTables_Table_0_paginate {
+    .displayFlexMoloni;
+    padding: 0;
+    justify-content: flex-end;
+
+    .previous,
+    .next {
+      .displayFlexMoloni;
+      justify-content: center;
+      font-size: 12px;
+      padding: 0.5em 2em;
+      background: rgba(26, 77, 128, 0.1);
+      border: 0;
+      margin: 0;
+      color: #275F96 !important;
+      cursor: pointer;
+    }
+
+    .paginateInativo {
+      .displayFlexMoloni;
+      justify-content: center;
+      font-size: 12px;
+      padding: 0.5em 2em;
+      background: rgba(182, 195, 213, 0.1);
+      border: 0;
+      margin: 0;
+      color: #B6C3D5 !important;
+      cursor: default;
+    }
+
+    span {
+      .displayFlexMoloni;
+      justify-content: center;
+
+      a {
+        .displayFlexMoloni;
+        justify-content: center;
+        width: 5rem;
+        margin-left: 0;
+        border: 1px solid #1A4D80;
+        color: #1A4D80 !important;
+        font-size: 12px;
+        border-radius: 0;
+        background: white;
+      }
+
+      .current {
+        .displayFlexMoloni;
+        justify-content: center;
+        width: 5rem;
+        margin-left: 0;
+        border: 0;
+        color: white !important;
+        font-size: 12px;
+        border-radius: 0;
+        background: #1A4D80;
+      }
+    }
+  }
+
+  /* ***************************** */
+
+  .invoice-gen {
+    background-color: rgb(244, 244, 244) !important;
+    padding: 25px !important;
+    color: #2E619A;
+  }
+
+  .message_error {
+    height: 50px;
+    font-size: 20px;
+    color: white;
+    padding-top: 10px !important;
+    text-align: center;
+    cursor: pointer;
+    margin-bottom: 20px;
+  }
+
+  .message_error .check_error, .check_document {
+    float: right;
+    margin-top: 0px;
+    color: black !important;
+  }
+
+  .messagepop {
+    padding: 50px;
+    background-color: whitesmoke;
+  }
+
+  .messagepop pre {
+    background-color: white;
+  }
+
+  .messagepop a {
+    color: black !important;
+  }
+
+  /*-----------------CONFIG------------------- */
+
+  .configMoloni{
+    display:none;
+
+    label{
+      color: black;
+      font-weight:500;
+      font-size: 1.5rem;
+    }
+
+    .input-field{
+      margin-top:34px;
+      padding-left:2%;
+      width:30%
+    }
+
+    .select-wrapper{
+      color: #707070;
+    }
+
+    .checkboxConfigMoloni{
+      margin-top:12px;
+    }
+  }
+
+  .seccaoTituloConfig{
+    display:inline-flex;
+    width:100%;
+    border-bottom: 1px solid #1a4d80;
+    cursor: pointer;
+  }
+
+  .seccaoTituloConfig .configTitulo{
+    margin-top:0;
+    font-weight: 700;
+    padding: 0.8rem 0 0 0.9rem;
+  }
+
+  .saveConfigMoloni,
+  .saveConfigMoloni:hover{
+    background:#337AB7;
+    text-transform:none;
+    margin-top:2%;
+    width:14rem;
+  }
+
+  .input-field .select-dropdown, .input-field .datepicker{
+    font-size:1.4rem !important;
+  }
+}

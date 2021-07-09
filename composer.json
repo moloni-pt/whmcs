@@ -1,0 +1,27 @@
+{
+  "name": "moloni-pt/whmcs",
+  "description": "Module Moloni for WHMCS",
+  "authors": [
+    {
+      "name": "Nuno Almeida",
+      "email": "nuno@moloni.com"
+    }
+  ],
+  "autoload": {
+    "psr-4": {
+      "Moloni\\": [
+        "src/Moloni/"
+      ]
+    }
+  },
+  "scripts": {
+  },
+  "require": {
+    "leafo/lessphp": "^0.5.0"
+  },
+  "require-dev": {
+    "roave/security-advisories": "dev-latest",
+    "squizlabs/php_codesniffer": "3.*",
+    "friendsofphp/php-cs-fixer": "dev-master"
+  }
+}
