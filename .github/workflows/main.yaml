@@ -44,12 +44,12 @@ jobs:
       # Begin packaging process
       - name: Create Release Folder
         run: |
-          rsync -arv --list-only
-          --include './public'
-          --include './src'
-          --include './templates'
-          --include './hooks.php'
-          --include './moloni.php'
+          rsync -arv --list-only \
+          --include './public' \
+          --include './src' \
+          --include './templates' \
+          --include './hooks.php' \
+          --include './moloni.php' \
           . ./moloni
 
       - name: Zip realease folder
