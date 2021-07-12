@@ -35,8 +35,10 @@ jobs:
 
 
       # Begin npm stuff
-      - name: Begin node compiling process
+      - name: Setup node
         uses: actions/setup-node@v1
+
+      - name: Begin node compiling process
         run: npm build-prod
 
       # Begin packaging process
