@@ -69,7 +69,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           tag_name: ${{ steps.package-version.outputs.version }}
-          release_name: ${{ steps.package-version.outputs.title }}
+          release_name: ${{ steps.package-version.outputs.version }}
           body: ${{ steps.package-version.outputs.description }}
           draft: false
           prerelease: false

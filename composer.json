@@ -27,10 +27,10 @@
   "extra": {
     "changelog": [
       {
-        "version": "v0.0.3",
+        "version": "v3.2.0",
         "title": "Actions test",
         "description": [
-          ""
+          "Lançamento de repositório do plugin"
         ]
       }
     ]
