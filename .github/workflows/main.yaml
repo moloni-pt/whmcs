@@ -45,13 +45,14 @@ jobs:
       - name: Create Release Folder
         run: |
           rsync -arv \
-          --include './src' \
-          --include './templates' \
-          --include './public' \
-          --include './vendor' \
-          --include './hooks.php' \
-          --include './moloni.php' \
-          --exclude='*' \
+          --exclude './.github' \
+          --exclude './node_modules' \
+          --exclude './.gitignore' \
+          --exclude './composer.*' \
+          --exclude './gulpfile.js' \
+          --exclude './package.json' \
+          --exclude './package-lock.json' \
+          --exclude './README.md' \
           ./ ./moloni
 
       - name: Zip realease folder
