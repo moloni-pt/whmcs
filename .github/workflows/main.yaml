@@ -39,7 +39,7 @@ jobs:
         uses: actions/setup-node@v1
 
       - name: Begin node compiling process
-        run: npm build-prod
+        run: npm run build-prod
 
       # Begin packaging process
       - name: Create Release Folder
