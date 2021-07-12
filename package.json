@@ -4,7 +4,7 @@
   "description": "Moloni for WHMCS",
   "main": "index.js",
   "scripts": {
-    "build-prod": "gulp css:prod js:prod"
+    "build-prod": "npm i&&gulp css:prod js:prod"
   },
   "repository": {
     "type": "git",
