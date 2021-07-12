@@ -51,6 +51,7 @@ jobs:
           --include './vendor' \
           --include './hooks.php' \
           --include './moloni.php' \
+          --exclude='*' \
           ./ ./moloni
 
       - name: Zip realease folder
