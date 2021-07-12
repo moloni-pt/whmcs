@@ -2,7 +2,7 @@ name: Publishing new WHMCS release
 
 on:
   push:
-    branches: [ master ]
+    branches: [ master, main ]
 
 jobs:
   build:
