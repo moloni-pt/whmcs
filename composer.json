@@ -1,6 +1,7 @@
 {
   "name": "moloni-pt/whmcs",
   "description": "Module Moloni for WHMCS",
+  "license": "proprietary",
   "authors": [
     {
       "name": "Nuno Almeida",
