@@ -6,8 +6,13 @@ use Moloni\Curl;
 
 class TaxExemptions
 {
+    /**
+     * @return array
+     */
     public static function getAll()
     {
-        return Curl::simple("taxExemptions/getAll");
+        $exemptions = Curl::simple("taxExemptions/getAll");
+
+        return $exemptions && is_array($exemptions) ? $exemptions : [];
     }
 }

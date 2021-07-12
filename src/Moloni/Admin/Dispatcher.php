@@ -20,7 +20,6 @@ class Dispatcher
     {
         $this->moloni = new Start();
         $this->general = new General();
-        $this->compileCss();
         $this->actionDecide();
 
         $templatePath = MOLONI_TEMPLATE_PATH . $this->template . '.php';
@@ -33,21 +32,15 @@ class Dispatcher
         return false;
     }
 
-    private function compileCss()
-    {
-        $less = new \lessc();
-        $less->checkedCompile(MOLONI_PUBLIC_PATH . "style-moloni.less", MOLONI_PUBLIC_PATH . "compiled.css");
-    }
-
     private function actionDecide()
     {
         // Caso sejam enviados dados de login
-        if (isset($_REQUEST['mol-username']) && isset($_REQUEST['mol-password'])) {
+        if (isset($_REQUEST['mol-username'], $_REQUEST['mol-password'])) {
             $this->tryLogin();
             return true;
         }
 
-        if(defined('ACCESS')){
+        if (defined('ACCESS')) {
             $date_expire = strtotime(DATE_EXPIRE);
             if (time() > $date_expire) {
                 if (time() > strtotime('+5 days', $date_expire)) {
@@ -66,17 +59,17 @@ class Dispatcher
                 $this->moloni->setCompanyId($_REQUEST['company_id']);
             }
 
-            if(defined('COMPANY') && empty(COMPANY) && !isset($_REQUEST['company_id'])){
+            if (defined('COMPANY') && empty(COMPANY) && !isset($_REQUEST['company_id'])) {
                 $this->template = 'company';
                 return true;
             }
 
-            switch ($_GET['action']){
+            switch ($_GET['action']) {
                 case "config":
-                    if(isset($_GET['command']) && $_GET['command'] === "save"){
+                    if (isset($_GET['command']) && $_GET['command'] === "save") {
                         $this->moloni->variablesUpdate();
                         Error::success("Configurações guardadas com sucesso");
-                        breaK;
+                        break;
                     }
 
                     $this->moloni->variablesDefine();
@@ -84,15 +77,14 @@ class Dispatcher
                     return true;
                 case "invoice":
                     $this->moloni->variablesDefine();
-                    if(isset($_GET['command']) && $_GET['command'] === "gen"){
+                    if (isset($_GET['command']) && $_GET['command'] === "gen") {
                         $this->general->createInvoice($_GET['id']);
-                    } else if($this->deleteInvoice($_GET['id']))
-                    {
+                    } elseif ($this->deleteInvoice($_GET['id'])) {
                         Error::success('Encomenda apagada com sucesso');
                     }
                     break;
                 case 'docs':
-                    if(isset($_GET['command']) && $_GET['command'] === "redo"){
+                    if (isset($_GET['command']) && $_GET['command'] === "redo") {
                         $this->redoInvoice($_GET['id']);
                         Error::success('Documento revertido com sucesso');
                     }
@@ -135,16 +127,17 @@ class Dispatcher
     private function deleteInvoice($invoice_id)
     {
         $invoiceOrder = WhmcsDB::getInvoice($invoice_id);
-        $invoice['document_id'] = -1 ;
+        $invoice['document_id'] = -1;
         $invoice['net_value'] = 0;
-        if(WhmcsDB::insertMoloniInvoice($invoiceOrder, $invoice, '-1')){
+        if (WhmcsDB::insertMoloniInvoice($invoiceOrder, $invoice, '-1')) {
             return true;
-        }else{
-            return false;
         }
+
+        return false;
     }
 
-    private function redoInvoice($invoice_id){
+    private function redoInvoice($invoice_id)
+    {
         WhmcsDB::deleteMoloniInvoice($invoice_id);
         return true;
     }

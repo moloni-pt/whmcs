@@ -9,18 +9,18 @@ use Moloni\Model\WhmcsDB;
 
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" scope href="<?= Tools::getPublicUrl('compiled.css') ?>">
-    <link rel="stylesheet" type="text/css" href="../modules/addons/moloni/assets/datatables/css/jquery.dataTables.css">
+    <link rel="stylesheet" scope href="<?= Tools::getPublicUrl('compiled.min.css') ?>">
 
     <div class="row">
         <div class="col">
             <a href='https://moloni.com' target='_BLANK'>
-                <img src='<?= Tools::getPublicUrl('logo.png') ?>' class='moloni-logo'>
+                <img src='<?= Tools::getPublicUrl('img/logo.png') ?>' class='moloni-logo'>
             </a>
         </div>
         <div class="right">
             <div>
-                <a href="addonmodules.php?module=moloni&action=logout" class="waves-effect waves-light btn red logoutMoloni">
+                <a href="addonmodules.php?module=moloni&action=logout"
+                   class="waves-effect waves-light btn red logoutMoloni">
                     <span>Sair</span>
                     <i class='material-icons'>logout</i>
                 </a>
@@ -31,30 +31,32 @@ use Moloni\Model\WhmcsDB;
     <?php
 
     if (Error::$exists) {
-        if(!empty(Error::$success)){
+        if (!empty(Error::$success)) {
             $echoSuccess = "<div class='alert alert-success'>" . Error::$success['text'];
-            if(!empty(Error::$success['moloniURL']))
-            {
+            if (!empty(Error::$success['moloniURL'])) {
                 $echoSuccess .= " | <a target='_blank' rel='noopener noreferrer' href='" . Error::$success['moloniURL'] . "' style='cursor:pointer'> Consultar aqui documento no Moloni</a>";
             }
-            if(!empty(Error::$success['downloadURL']))
-            {
+            if (!empty(Error::$success['downloadURL'])) {
                 $echoSuccess .= " | <a target='_blank' rel='noopener noreferrer' href='" . Error::$success['downloadURL'] . "' style='cursor:pointer'> Fazer download de documento aqui</a>";
             }
             echo $echoSuccess . "</div>";
         }
 
-        if(!empty(Error::$error)){
+        if (!empty(Error::$error)) {
             $echoError = "<div class='alert alert-danger'>" . Error::$error['where'] . " - " . Error::$error['message'];
-            if(!empty(Error::$error['values_sent']) || !empty(Error::$error['values_receive'])){
-               $echoError .= " | <a id='debugMoloniAPI' style='cursor:pointer'> Ver mais</a>";
+            if (!empty(Error::$error['values_sent']) || !empty(Error::$error['values_receive'])) {
+                $echoError .= " | <a id='debugMoloniAPI' style='cursor:pointer'> Ver mais</a>";
             }
             echo $echoError . '</div>';
 
-            if(!empty(Error::$error['values_sent']) || !empty(Error::$error['values_receive'])){
+            if (!empty(Error::$error['values_sent']) || !empty(Error::$error['values_receive'])) {
                 echo '<div id="showDebugMoloni" style="display:none">';
-                echo '<pre class="alert alert-warning">'; print_r(Error::$error['values_sent']); echo '</pre>';
-                echo '<pre class="alert alert-warning">'; print_r(Error::$error['values_receive']); echo '</pre>';
+                echo '<pre class="alert alert-warning">';
+                print_r(Error::$error['values_sent']);
+                echo '</pre>';
+                echo '<pre class="alert alert-warning">';
+                print_r(Error::$error['values_receive']);
+                echo '</pre>';
                 echo '</div>';
             }
         }
@@ -75,9 +77,9 @@ use Moloni\Model\WhmcsDB;
     </div>
 
     <div class="row">
-        <div class="col s12" style='margin-top: 5px;'>
+        <div class="col s12">
             <div>
-                <?php $orders = WhmcsDB::getAllOrders();?>
+                <?php $orders = WhmcsDB::getAllOrders(); ?>
 
                 <table class='highlight display moloniTable'>
                     <thead>
@@ -101,10 +103,10 @@ use Moloni\Model\WhmcsDB;
                         $orderNumero = (!empty($order['invoice']->invoicenum)) ? $order['invoice']->invoicenum : $order['invoice']->id;
                         echo "<td class='center-align'><a style='text-transform: none' class='waves-effect waves-light btn blue white-text' href='invoices.php?action=edit&id=" . $order['invoice']->id . "' target='_BLANK'>" . $orderNumero . "</a></td>";
                         echo "<td><a href='clientssummary.php?userid=" . $order['client']->id . "' target='_BLANK'>" . $order['client']->firstname . " " . $order['client']->lastname . "</a></td>";
-                        echo "<td>" . $order['client']->email. "</td>";
-                        echo "<td>" . $order['invoice']->date. "</td>";
+                        echo "<td>" . $order['client']->email . "</td>";
+                        echo "<td>" . $order['invoice']->date . "</td>";
                         echo "<td>" . (($order['invoice']->status == 'Paid') ? 'Pago' : 'Não Pago') . "</td>";
-                        echo "<td>" . $order['currency']->prefix . ($order['invoice']->subtotal + $order['invoice']->tax + $order['invoice']->tax2) . $order['currency']->suffix ."</td>";
+                        echo "<td>" . $order['currency']->prefix . ($order['invoice']->subtotal + $order['invoice']->tax + $order['invoice']->tax2) . $order['currency']->suffix . "</td>";
                         echo "
 							<td class='acoesBtnMoloni'>
 							    <a class='waves-effect waves-light btn' style='background:#275F96' href='" . Tools::genURL("invoice", "gen&id=" . $order['invoice']->id) . "'><i class='material-icons'>add_circle_outline</i></a>
@@ -113,7 +115,6 @@ use Moloni\Model\WhmcsDB;
 						";
                         echo "</tr>";
                     }
-
                     ?>
                     </tbody>
                 </table>
@@ -124,16 +125,14 @@ use Moloni\Model\WhmcsDB;
 
 </section>
 
-<script type="text/javascript" src="<?= Tools::getPublicUrl('materialize/js/materialize.min.js') ?>"></script>
-<script type="text/javascript" charset="utf8"
-        src="../modules/addons/moloni/assets/datatables/js/jquery.dataTables.js"></script>
+<script type="text/javascript" src="<?= Tools::getPublicUrl('compiled.min.js') ?>"></script>
 
 <script>
-    $(document).ready(function () {
+    $(document).ready(function() {
         var index = 0;
         var order = 'asc';
-        if (localStorage.getItem("encIndex") !== null && localStorage.getItem("encOrder") !== null){
-            switch (localStorage.getItem("encIndex")){
+        if (localStorage.getItem("encIndex") !== null && localStorage.getItem("encOrder") !== null) {
+            switch (localStorage.getItem("encIndex")) {
                 case 'id':
                     index = 0;
                     break;
@@ -156,10 +155,11 @@ use Moloni\Model\WhmcsDB;
                     index = 6
                     break;
             }
-            if(localStorage.getItem("encOrder") == 'descending'){
+            if (localStorage.getItem("encOrder") === 'descending') {
                 order = 'desc';
             }
         }
+
         $('.highlight').dataTable({
             "aaSorting": [[index, order]],
             "sPaginationType": "simple_numbers",
@@ -167,7 +167,7 @@ use Moloni\Model\WhmcsDB;
             "oLanguage": {
                 "sLengthMenu": "_MENU_",
                 "sZeroRecords": "Sem resultados encontrados",
-                "sInfo": "A mostrar <b>_START_</b> - <b>_END_</b> de <b>_TOTAL_</b> Faturas",
+                "sInfo": "A mostrar <b>_START_</b> - <b>_END_</b> de <b>_TOTAL_</b> encomendas",
                 "sInfoEmpty": "Sem resultados para apresentar",
                 "sInfoFiltered": "(Filtrados de _MAX_)",
                 "sSearch": "",
@@ -177,13 +177,13 @@ use Moloni\Model\WhmcsDB;
                     "sNext": "Seguinte",
                 }
             }
-        }).on('draw.dt', function () {
+        }).on('draw.dt', function() {
             var info = ($(this).DataTable()).page.info();
             //ultima pagina
-            if(info.page + 1 === info.pages){
+            if (info.page + 1 === info.pages) {
                 $('.paginate_button.previous').removeClass('paginateInativo');
                 $('.paginate_button.next').addClass('paginateInativo');
-            } else if(info.page == 0){ //primeira pagina
+            } else if (info.page == 0) { //primeira pagina
                 $('.paginate_button.previous').addClass('paginateInativo');
                 $('.paginate_button.next').removeClass('paginateInativo');
             } else {
@@ -191,23 +191,22 @@ use Moloni\Model\WhmcsDB;
                 $('.paginate_button.previous').removeClass('paginateInativo');
             }
             $('#mydiv').hide();
-
         });
 
         $('.paginate_button.previous').addClass('paginateInativo');
         //unica pagina
-        if(($('.highlight').DataTable()).page.info().pages == 1) {
+        if (($('.highlight').DataTable()).page.info().pages == 1) {
             $('.paginate_button.next').addClass('paginateInativo');
         }
 
         function deselect(e) {
-            $('.pop').slideFadeToggle(function () {
+            $('.pop').slideFadeToggle(function() {
                 e.removeClass('selected');
             });
         }
 
-        $(function () {
-            $('.check_error').on('click', function () {
+        $(function() {
+            $('.check_error').on('click', function() {
                 if ($(this).hasClass('selected')) {
                     deselect($(this));
                 } else {
@@ -217,18 +216,18 @@ use Moloni\Model\WhmcsDB;
                 return false;
             });
 
-            $('.close').on('click', function () {
+            $('.close').on('click', function() {
                 deselect($('.check_error'));
                 return false;
             });
         });
 
-        $.fn.slideFadeToggle = function (easing, callback) {
+        $.fn.slideFadeToggle = function(easing, callback) {
             return this.animate({opacity: 'toggle', height: 'toggle'}, 'fast', easing, callback);
         };
 
         //guardar ultima ordenacao
-        $(".moloniTable th").on('click', function (){
+        $(".moloniTable th").on('click', function() {
             localStorage.setItem('encIndex', $(this).attr('data-field'));
             localStorage.setItem('encOrder', $(this).attr('aria-sort'));
         });
@@ -238,7 +237,7 @@ use Moloni\Model\WhmcsDB;
         var divArrayApi = $('#showDebugMoloni');
 
         verMais.click(function() {
-            if(divArrayApi.is(":visible")){
+            if (divArrayApi.is(":visible")) {
                 $('#showDebugMoloni').fadeOut(300);
                 verMais[0].innerHTML = ' Ver mais';
             } else {

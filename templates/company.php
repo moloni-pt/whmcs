@@ -7,15 +7,13 @@ $companies = Companies::getAll();
 
 ?>
 
-<section id="moloni">
-
+<section id="moloni" class="companySelect">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <link rel="stylesheet" href="<?= Tools::getPublicUrl('style-company.css') ?>">
-    <link rel="stylesheet" scope href="<?= Tools::getPublicUrl('compiled.css') ?>">
+    <link rel="stylesheet" scope href="<?= Tools::getPublicUrl('compiled.min.css') ?>">
 
     <div class="container">
         <div class="row center-align">
-            <img src="../modules/addons/moloni/assets/images/whmcs_logo.png" alt="">
+            <img src="<?= Tools::getPublicUrl('img/whmcs_logo.png') ?>" alt="">
         </div>
         <div class="row white">
             <div class="row center-align escolhaEmpresa">Escolha a sua empresa</div>
@@ -35,4 +33,4 @@ $companies = Companies::getAll();
     </div>
 </section>
 
-<script type="text/javascript" src="<?= Tools::getPublicUrl('materialize/js/materialize.min.js') ?>"></script>
+<script type="text/javascript" src="<?= Tools::getPublicUrl('compiled.min.js') ?>"></script>

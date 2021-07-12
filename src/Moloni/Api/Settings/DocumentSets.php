@@ -14,19 +14,19 @@ class DocumentSets
 
     public static function insert($values, $companyID = COMPANY)
     {
-        $values = ["company_id" => $companyID];
+        $values["company_id"] = $companyID;
         return Curl::simple("documentSets/insert", $values);
     }
 
     public static function update($values, $companyID = COMPANY)
     {
-        $values = ["company_id" => $companyID];
+        $values["company_id"] = $companyID;
         return Curl::simple("documentSets/update", $values);
     }
 
     public static function delete($values, $companyID = COMPANY)
     {
-        $values = ["company_id" => $companyID];
+        $values["company_id"] = $companyID;
         return Curl::simple("documentSets/delete", $values);
     }
 }

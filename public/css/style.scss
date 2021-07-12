@@ -1,0 +1,423 @@
+/* purgecss start ignore */
+
+#content {
+  font-family: "Roboto", serif !important;
+}
+
+.collection .collection-item {
+  font-size: 16px;
+  font-family: "Roboto", serif;
+  font-weight: 300;
+}
+
+#moloni .moloni-logo {
+  width: 200px;
+}
+
+#moloni .btn-tiny {
+  width: 30px;
+  height: 30px;
+}
+
+#moloni .btn-tiny i {
+  margin-top: -3px;
+  margin-left: 0px;
+}
+
+.message-top {
+  padding: 5px;
+  margin-bottom: 25px;
+  color: white;
+  cursor: pointer;
+}
+
+.invoice-gen {
+  background-color: rgb(244, 244, 244) !important;
+  padding: 25px !important;
+  color: #2E619A;
+}
+
+.message_error {
+  height: 50px;
+  font-size: 20px;
+  color: white;
+  padding-top: 10px !important;
+  text-align: center;
+  cursor: pointer;
+  margin-bottom: 20px;
+}
+
+.message_error .check_error, .check_document {
+  float: right;
+  margin-top: 0px;
+  color: black !important;
+}
+
+.messagepop {
+  padding: 50px;
+  background-color: whitesmoke;
+}
+
+.messagepop pre {
+  background-color: white;
+}
+
+.messagepop a {
+  color: black !important;
+}
+
+#moloni #content {
+  font-family: "Roboto", serif !important;
+}
+
+#moloni .moloni-logo {
+
+}
+
+#moloni .logoutMoloni {
+  padding: 0;
+  font-size: 15px;
+  text-transform: none;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  border-radius: 0;
+  width: 12rem;
+}
+
+#moloni .logoutMoloni i {
+  font-size: 20px;
+}
+
+#moloni .menuMoloni {
+  height: 7rem;
+  background: rgba(26, 77, 128, 0.24);
+}
+
+#moloni .menuMoloni .col {
+  font-size: 1vw;
+  height: 100%;
+  width: 13%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#moloni .menuMoloni .menuAtivo {
+  border: 1px solid #C1CFDD;
+  background: white;
+}
+
+#moloni .menuMoloni .menuAtivo a {
+  color: #1A4D80 !important;
+  font-weight: bold;
+}
+
+#moloni .message-top {
+  padding: 5px;
+  margin-bottom: 25px;
+  color: white;
+  cursor: pointer;
+}
+
+#moloni .moloniTable {
+  margin-bottom: 0 !important;
+}
+
+#moloni .moloniTable th {
+  padding: 10px 5px !important;
+  border-bottom: 1px solid #ddd;
+  background-color: #F5F5F9;
+}
+
+#moloni .moloniTable .sorting::after,
+#moloni .moloniTable .sorting_asc::after,
+#moloni .moloniTable .sorting_desc::after {
+  content: none;
+}
+
+#moloni .moloniTable .acoesBtnMoloni {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  padding: 15px 22% !important;
+}
+
+#moloni .moloniTable .acoesBtnMoloni .btn {
+  padding: 10% 15%;
+  border-radius: 0;
+  display: flex;
+  align-items: center;
+}
+
+#moloni .moloniTable .acoesBtnMoloniDocs {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+}
+
+#moloni .moloniTable .acoesBtnMoloniDocs .btn {
+  padding: 10%;
+  border-radius: 0;
+  margin-right: 7px;
+  display: flex;
+  align-items: center;
+}
+
+#moloni .naoGeradoMoloni td {
+  background-color: lightpink !important;
+}
+
+#moloni .moloniTable td,
+#moloni .moloniTable th {
+  border-right: 1px solid rgba(193, 207, 221, 0.5);
+  border-bottom: 1px solid rgba(193, 207, 221, 0.5);
+  padding: 15px 20px !important;
+}
+
+#moloni .dataTables_wrapper .top {
+  display: flex;
+  padding: 2rem;
+  background-color: #f5f5f9;
+  border-radius: 3px;
+}
+
+#moloni .dataTables_wrapper .bottom {
+  height: 3.5em;
+  border: 1px solid #EEEEEF;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+#moloni .MolShowing select {
+  display: block;
+}
+
+#moloni .MolSearch {
+  flex: 1;
+  display: flex;
+}
+
+#moloni .MolSearch .dataTables_filter input,
+#moloni .MolShowing select {
+  display: block;
+  width: 30rem;
+  height: 34px;
+  padding: 6px 12px;
+  font-size: 14px;
+  line-height: 1.42857143;
+  color: #555;
+  background-color: #fff;
+  background-image: none;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.08);
+  transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+}
+
+#moloni .MolShowing select {
+  width: 10rem;
+}
+
+#moloni .MolSearch .dataTables_filter input::-webkit-input-placeholder {
+  color: #555;
+}
+
+#moloni .MolPagination {
+  height: 100%;
+  padding: 0 !important;
+}
+
+#moloni #DataTables_Table_0_info {
+  padding-top: 0;
+}
+
+#moloni #DataTables_Table_0_paginate {
+  padding: 0;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  align-items: center;
+  height: 100%;
+}
+
+#moloni #DataTables_Table_0_paginate .previous,
+#moloni #DataTables_Table_0_paginate .next {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  font-size: 12px;
+  padding: 0.5em 2em;
+  background: rgba(26, 77, 128, 0.1);
+  border: 0;
+  margin: 0;
+  color: #275F96 !important;
+}
+
+#moloni #DataTables_Table_0_paginate .paginateInativo {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  font-size: 12px;
+  padding: 0.5em 2em;
+  background: rgba(182, 195, 213, 0.1);
+  border: 0;
+  margin: 0;
+  color: #B6C3D5 !important;
+  cursor: default;
+}
+
+#moloni #DataTables_Table_0_paginate span a {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  width: 5rem;
+  height: 100%;
+  margin-left: 0;
+  border: 1px solid #1A4D80;
+  background: white;
+  color: #1A4D80 !important;
+  font-size: 12px;
+  border-radius: 0;
+}
+
+#moloni #DataTables_Table_0_paginate span .current {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  width: 5rem;
+  height: 100%;
+  margin-left: 0;
+  border: 0;
+  color: white !important;
+  font-size: 12px;
+  border-radius: 0;
+  background: #1A4D80;
+}
+
+#moloni #DataTables_Table_0_paginate span {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+}
+
+#moloni .invoice-gen {
+  background-color: #f4f4f4 !important;
+  padding: 25px !important;
+  color: #2E619A;
+}
+
+#moloni .message_error {
+  height: 50px;
+  font-size: 20px;
+  color: white;
+  padding-top: 10px !important;
+  text-align: center;
+  cursor: pointer;
+  margin-bottom: 20px;
+}
+
+#moloni .message_error .check_error,
+#moloni .check_document {
+  float: right;
+  margin-top: 0;
+  color: black !important;
+}
+
+#moloni .messagepop {
+  padding: 50px;
+  background-color: whitesmoke;
+}
+
+#moloni .messagepop pre {
+  background-color: white;
+}
+
+#moloni .messagepop a {
+  color: black !important;
+}
+
+#moloni .configMoloni {
+  display: none;
+}
+
+#moloni .configMoloni .input-field {
+  margin-top: 34px;
+  padding-left: 2%;
+  width: 30%
+}
+
+#moloni .configMoloni .select-wrapper {
+  color: #707070;
+}
+
+#moloni .configMoloni .checkboxConfigMoloni {
+  margin-top: 12px;
+}
+
+#moloni .seccaoTituloConfig {
+  display: inline-flex;
+  width: 100%;
+  border-bottom: 1px solid #1a4d80;
+  cursor: pointer;
+}
+
+#moloni .seccaoTituloConfig .configTitulo {
+  margin-top: 0;
+  font-weight: 700;
+  padding: 0.8rem 0 0 0.9rem;
+}
+
+#moloni .saveConfigMoloni,
+#moloni .saveConfigMoloni:hover {
+  background: #337AB7;
+  text-transform: none;
+  margin-top: 2%;
+  width: 14rem;
+}
+
+#moloni .input-field .select-dropdown,
+#moloni .input-field .datepicker {
+  font-size: 1.4rem !important;
+}
+
+#moloni .select-wrapper + label {
+  top: -34px;
+  font-size: 16px;
+  font-weight: 500;
+}
+
+#moloni .input-field-date + label {
+  font-size: 16px;
+  font-weight: 500;
+  margin-top: -10px;
+}
+
+#moloni .configMoloni .input-field {
+  padding-left: 0;
+  margin-left: 4rem;
+  margin-top: 6rem;
+}
+
+#moloni .configMoloni .input-field-checkbox {
+  padding-left: 0;
+  margin-left: 4rem;
+  margin-top: 4rem;
+  display: flex;
+
+  span {
+    font-size: 18px;
+    font-weight: 500;
+  }
+}
+
+/* purgecss end ignore */

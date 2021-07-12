@@ -37,4 +37,17 @@ class Tools
             (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off')
             || $_SERVER['SERVER_PORT'] == 443;
     }
+
+    public static function isSelected($option, $value, $returnSelected = true)
+    {
+        if (defined($option) && constant($option) == $value) {
+            if ($returnSelected) {
+                return " selected ";
+            }
+
+            return true;
+        }
+
+        return false;
+    }
 }

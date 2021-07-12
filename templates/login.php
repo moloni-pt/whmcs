@@ -9,11 +9,11 @@ if (Error::$exists && !empty(Error::$error)) {
 
 ?>
 
-<link rel="stylesheet" type="text/css" href="<?= Tools::getPublicUrl('style-login.css') ?>"/>
+<link rel="stylesheet" type="text/css" href="<?= Tools::getPublicUrl('compiled.min.css') ?>"/>
 
-<form class='moloni-login-form' action='<?= Tools::genURL() ?>' method='POST' autocomplete="false">
+<form class='moloni-login-form' action='<?= Tools::genURL() ?>' method='POST' autocomplete="off">
     <a href='https://moloni.com' target='_BLANK'>
-        <img src='<?= Tools::getPublicUrl('logo.png') ?>' class='moloni-logo'>
+        <img src='<?= Tools::getPublicUrl('img/logo.png') ?>' class='moloni-logo--login' alt="">
     </a>
 
     <div class="group">
@@ -47,9 +47,9 @@ if (Error::$exists && !empty(Error::$error)) {
 </form>
 
 <script>
-    $(window, document, undefined).ready(function () {
+    $(window, document, undefined).ready(function() {
 
-        $('input').blur(function () {
+        $('input').blur(function() {
             var $this = $(this);
             if ($this.val())
                 $this.addClass('used');
@@ -59,7 +59,7 @@ if (Error::$exists && !empty(Error::$error)) {
 
         var $ripples = $('.ripples');
 
-        $ripples.on('click.Ripples', function (e) {
+        $ripples.on('click.Ripples', function(e) {
 
             var $this = $(this);
             var $offset = $this.parent().offset();
@@ -77,17 +77,17 @@ if (Error::$exists && !empty(Error::$error)) {
 
         });
 
-        $ripples.on('animationend webkitAnimationEnd mozAnimationEnd oanimationend MSAnimationEnd', function (e) {
+        $ripples.on('animationend webkitAnimationEnd mozAnimationEnd oanimationend MSAnimationEnd', function(e) {
             $(this).removeClass('is-active');
         });
 
     });
 
-    $(".moloni-login-form .button").click(function () {
+    $(".moloni-login-form .button").click(function() {
         $(".moloni-login-form").submit();
     });
 
-    $(".login-error").click(function () {
+    $(".login-error").click(function() {
         $(this).slideUp(500);
     });
 </script>

@@ -17,11 +17,21 @@
   "scripts": {
   },
   "require": {
-    "leafo/lessphp": "^0.5.0"
   },
   "require-dev": {
     "roave/security-advisories": "dev-latest",
     "squizlabs/php_codesniffer": "3.*",
     "friendsofphp/php-cs-fixer": "dev-master"
+  },
+  "extra": {
+    "changelog": [
+      {
+        "version": "v0.0.1",
+        "title": "Actions test",
+        "description": [
+          ""
+        ]
+      }
+    ]
   }
 }

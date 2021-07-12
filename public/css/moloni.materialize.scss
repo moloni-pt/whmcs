@@ -1,0 +1,15 @@
+/* purgecss start ignore */
+
+
+#moloni {
+  min-height: 100vh;
+
+  $label-font-size: 1rem;
+  $input-border-color: #333;
+
+  $secondary-color: #039be5;
+
+  @import "node_modules/materialize-css/sass/materialize";
+}
+
+/* purgecss end ignore */
