@@ -25,17 +25,16 @@ class Documents
 
         if (isset($result['document_id'])) {
             return ($result['document_id']);
-        } else {
-            Error::create("$type/insert", "Erro ao inserir documento", $values, $result);
-            return false;
         }
+
+        Error::create("$type/insert", "Erro ao inserir documento", $values, $result);
+        return false;
     }
 
     /**
-     * @param $document_id
-     * @param mixed $companyID
+     * @param bool $document_id
      * @param bool $your_reference
-     * * @param bool $our_reference
+     * @param mixed $companyID
      * @return mixed
      */
     public static function getOneInfo($document_id = false, $your_reference = false, $companyID = COMPANY)
@@ -74,10 +73,10 @@ class Documents
 
         if (isset($result['document_id'])) {
             return ($result['document_id']);
-        } else {
-            Error::create("$type/update", "Erro ao actualizar documento", $values, $result);
-            return false;
         }
+
+        Error::create("$type/update", "Erro ao actualizar documento", $values, $result);
+        return false;
     }
 
     /**
@@ -124,9 +123,9 @@ class Documents
 
     public static function getDocumentType($documentId = 0)
     {
-        if(!empty($documentId)){
+        if (!empty($documentId)) {
             $type = self::getOneInfo($documentId)['document_type']['saft_code'];
-        } elseif(defined('DOCUMENT_TYPE')){
+        } elseif (defined('DOCUMENT_TYPE')) {
             $type = DOCUMENT_TYPE;
         } else {
             Error::create('Document type', 'Tem que selecionar um tipo de documento');
@@ -135,22 +134,21 @@ class Documents
 
         switch ($type) {
             default:
-            case "FT" :
-            case "invoices" :
+            case "FT":
+            case "invoices":
                 return "Faturas";
-                break;
-            case "FR" :
-            case "invoiceReceipts" :
+
+            case "FR":
+            case "invoiceReceipts":
                 return "FaturasRecibo";
-                break;
-            case "GT" :
-            case "billsOfLading" :
+
+            case "GT":
+            case "billsOfLading":
                 return "GuiasTransporte";
-                break;
-            case "OR" :
-            case "estimates" :
+
+            case "OR":
+            case "estimates":
                 return "Orcamentos";
-                break;
         }
     }
 }

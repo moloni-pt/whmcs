@@ -4,7 +4,6 @@ namespace Moloni\Model;
 
 use Moloni\Api\Companies;
 use Moloni\Api\Documents;
-use Moloni\Curl;
 use Moloni\Error;
 use WHMCS\Database\Capsule;
 
@@ -68,7 +67,7 @@ class WhmcsDB
 
     public static function variablesDefineMoloni()
     {
-        foreach (Capsule::table('moloni_configs')->get() as $configs){
+        foreach (Capsule::table('moloni_configs')->get() as $configs) {
             if (!defined(strtoupper($configs->label))) {
                 define(strtoupper($configs->label), $configs->value);
             }
@@ -101,7 +100,7 @@ class WhmcsDB
 
         foreach ($_POST as $key => $value) {
             $val = (is_array($value) ? serialize($value) : $value);
-            if(isset($options[$key])){
+            if (isset($options[$key])) {
                 Capsule::table('moloni_configs')->updateOrInsert(['label' => $key, 'name' => $options[$key], 'description' => ''], ['value' => $val]);
             }
         }
@@ -111,7 +110,7 @@ class WhmcsDB
 
     public static function insertMoloniInvoice($invoiceInfo, $invoice, $value)
     {
-        if(defined('DOCUMENT_STATUS')){
+        if (defined('DOCUMENT_STATUS')) {
             $pdo = Capsule::connection()->getPdo();
             $pdo->beginTransaction();
 
@@ -137,7 +136,6 @@ class WhmcsDB
 
                 return false;
             }
-
         } else {
             Error::create('Documentos', 'Estado de documento não selecionado');
             return false;
@@ -154,7 +152,7 @@ class WhmcsDB
     public static function getCustomFieldClient()
     {
         $array = array();
-        foreach (Capsule::table('tblcustomfields')->distinct('fieldname')->where('type','client')->get() as $row){
+        foreach (Capsule::table('tblcustomfields')->distinct('fieldname')->where('type', 'client')->get() as $row) {
             $array[] = $row;
         }
 
@@ -163,22 +161,25 @@ class WhmcsDB
 
     public static function getCustomFieldValueClient($userId)
     {
-        if(defined('CUSTOM_CLIENT') && !empty(CUSTOM_CLIENT)){
-
-            $row = Capsule::table('tblcustomfieldsvalues')->select('value')->where('relid', $userId)->whereIn('fieldid', function ($query){
-                $query->select("id")
-                    ->from('tblcustomfields')
-                    ->whereRaw('fieldname = "'. CUSTOM_CLIENT .'"');
-            })->first();
+        if (defined('CUSTOM_CLIENT') && !empty(CUSTOM_CLIENT)) {
+            $row = Capsule::table('tblcustomfieldsvalues')
+                ->select('value')
+                ->where('relid', $userId)
+                ->whereIn('fieldid', function ($query) {
+                    $query->select("id")
+                        ->from('tblcustomfields')
+                        ->whereRaw('fieldname = "' . CUSTOM_CLIENT . '"');
+                })->first();
             return ($row->value);
         }
+
         return false;
     }
 
     public static function getCustomFieldProduct()
     {
         $array = array();
-        foreach (Capsule::table('tblcustomfields')->distinct('fieldname')->groupBy('fieldname')->where('type','product')->get() as $row){
+        foreach (Capsule::table('tblcustomfields')->distinct('fieldname')->groupBy('fieldname')->where('type', 'product')->get() as $row) {
             $array[] = $row;
         }
 
@@ -187,9 +188,8 @@ class WhmcsDB
 
     public static function getCustomFieldDescriptionProduct($packageId)
     {
-        if(defined('CUSTOM_REFERENCE') && !empty(CUSTOM_REFERENCE)){
-
-            $row = Capsule::table('tblcustomfields')->select('description')->where('type','product')->where('fieldname', CUSTOM_REFERENCE)->where('relid', $packageId)->first();
+        if (defined('CUSTOM_REFERENCE') && !empty(CUSTOM_REFERENCE)) {
+            $row = Capsule::table('tblcustomfields')->select('description')->where('type', 'product')->where('fieldname', CUSTOM_REFERENCE)->where('relid', $packageId)->first();
             return ($row->description);
         }
         return false;
@@ -199,12 +199,11 @@ class WhmcsDB
     {
         $array = array();
         foreach (Capsule::table('tblinvoices')
-                     ->whereNotExists(function ($query){
+                     ->whereNotExists(function ($query) {
                          $query->select("order_id")
                              ->from('moloni_invoices')
                              ->whereRaw('moloni_invoices.order_id = tblinvoices.id');
-                     })->whereIn('status', ['Paid','Unpaid','Payment Pending'])->where('date', '>=', (defined('AFTER_DATE') ? (string)AFTER_DATE : ''))->get() as $row){
-
+                     })->whereIn('status', ['Paid', 'Unpaid', 'Payment Pending'])->where('date', '>=', (defined('AFTER_DATE') ? (string)AFTER_DATE : ''))->get() as $row) {
             $client = self::getCustomer($row->userid);
             $array[] = [
                 'invoice' => $row,
@@ -224,11 +223,11 @@ class WhmcsDB
         foreach (Capsule::table('moloni_invoices')
                      ->join('tblinvoices', 'moloni_invoices.order_id', '=', 'tblinvoices.id')
                      ->select('moloni_invoices.*', 'tblinvoices.invoicenum')
-                     ->where('moloni_invoices.invoice_date', '>=', (defined('AFTER_DATE_DOC') ? (string)AFTER_DATE_DOC : ''))->get() as $row){
-            if($row->value != -1){
-                if((int)$row->invoice_id > 0){
+                     ->where('moloni_invoices.invoice_date', '>=', (defined('AFTER_DATE_DOC') ? (string)AFTER_DATE_DOC : ''))->get() as $row) {
+            if ($row->value != -1) {
+                if ((int)$row->invoice_id > 0) {
                     $document = Documents::getOneInfo($row->invoice_id);
-                    if($document){
+                    if ($document) {
                         $invoice['order_id'] = $row->order_id;
                         $invoice['invoicenum'] = $row->invoicenum;
                         $invoice['name'] = $document['entity_name'];
@@ -251,7 +250,7 @@ class WhmcsDB
                 $invoice['invoicenum'] = $row->invoicenum;
                 $invoice['name'] = 'Não gerado';
                 $invoice['set'] = 'Não gerado';
-                $invoice['date'] = date('c',strtotime($row->invoice_date));
+                $invoice['date'] = date('c', strtotime($row->invoice_date));
                 $invoice['status'] = -1;
                 $invoice['net_value'] = "";
 
@@ -268,29 +267,23 @@ class WhmcsDB
 
     public static function getOneOrder($id)
     {
-        $array = Capsule::table('tblorders')->where('id', $id)->first();
-
-        return $array;
+        return Capsule::table('tblorders')->where('id', $id)->first();
     }
 
     public static function getOrderByInvoice($id)
     {
-        $array = Capsule::table('tblorders')->where('invoiceid', $id)->first();
-
-        return $array;
+        return Capsule::table('tblorders')->where('invoiceid', $id)->first();
     }
 
     public static function getCustomer($id)
     {
-        $array = Capsule::table('tblclients')->where('id', $id)->first();
-
-        return ($array);
+        return Capsule::table('tblclients')->where('id', $id)->first();
     }
 
     public static function getInvoice($id)
     {
         $invoice = Capsule::table('tblinvoices')->where('id', $id)
-            ->whereNotExists(function ($query){
+            ->whereNotExists(function ($query) {
                 $query->select("order_id")
                     ->from('moloni_invoices')
                     ->whereRaw('moloni_invoices.order_id = tblinvoices.id');
@@ -307,7 +300,7 @@ class WhmcsDB
     public static function getInvoiceItems($id)
     {
         $array = array();
-        foreach (Capsule::table('tblinvoiceitems')->where('invoiceid', $id)->get() as $row){
+        foreach (Capsule::table('tblinvoiceitems')->where('invoiceid', $id)->get() as $row) {
             $array[] = $row;
         }
 
@@ -323,44 +316,57 @@ class WhmcsDB
 
     public static function getHostingInfo($id)
     {
-        $row = Capsule::table('tblhosting')->join('tblproducts', 'tblhosting.packageid', '=', 'tblproducts.id')->where('tblhosting.id', $id)->first();
+        $row = Capsule::table('tblhosting')
+            ->join('tblproducts', 'tblhosting.packageid', '=', 'tblproducts.id')
+            ->where('tblhosting.id', $id)
+            ->first();
 
         return ($row);
     }
 
     public static function getAddonInfo($id)
     {
-        $row = Capsule::table('tblhostingaddons')->join('tbladdons', 'tblhostingaddons.addonid', '=', 'tbladdons.id')->join('tblhosting', 'tblhostingaddons.hostingid', '=', 'tblhosting.id')->where('tblhostingaddons.id', $id)->first();
+        $row = Capsule::table('tblhostingaddons')
+            ->join('tbladdons', 'tblhostingaddons.addonid', '=', 'tbladdons.id')
+            ->join('tblhosting', 'tblhostingaddons.hostingid', '=', 'tblhosting.id')
+            ->where('tblhostingaddons.id', $id)
+            ->first();
 
         return ($row);
     }
 
     public static function getHostingDiscount($id, $relid)
     {
-        $row = Capsule::table('tblinvoiceitems')->where('invoiceid', $id)->where('type', 'PromoHosting')->where('relid', $relid)->first();
+        $row = Capsule::table('tblinvoiceitems')
+            ->where('invoiceid', $id)
+            ->where('type', 'PromoHosting')
+            ->where('relid', $relid)
+            ->first();
 
-        if(!empty($row)){
+        if (!empty($row)) {
             return ($row->amount < 0) ? abs($row->amount) : 0;
-        } else {
-            return 0;
         }
+
+        return 0;
     }
 
     public static function getDomainDiscount($id, $relid)
     {
-        $row = Capsule::table('tblinvoiceitems')->where('invoiceid', $id)->where('type', 'PromoDomain')->where('relid', $relid)->first();
+        $row = Capsule::table('tblinvoiceitems')
+            ->where('invoiceid', $id)
+            ->where('type', 'PromoDomain')
+            ->where('relid', $relid)
+            ->first();
 
-        if(!empty($row)){
+        if (!empty($row)) {
             return ($row->amount < 0) ? abs($row->amount) : 0;
-        } else {
-            return 0;
         }
+
+        return 0;
     }
 
     public static function getCustomerCurrency($id)
     {
-        $row = Capsule::table('tblcurrencies')->select('code', 'prefix', 'suffix')->where('id', $id)->first();
-
-        return $row;
+        return Capsule::table('tblcurrencies')->select('code', 'prefix', 'suffix')->where('id', $id)->first();
     }
 }
