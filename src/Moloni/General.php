@@ -263,11 +263,10 @@ class General
             $vat = 999999990;
         }
 
+
         if ((int)$vat !== 999999990) {
             $customer = Customers::getByVat(['vat' => $vat]);
-        }
-
-        if (!$customer && !empty($clientInfo->email)) {
+        } elseif (!empty($clientInfo->email)) {
             $customer = Customers::getByEmail(['email' => $clientInfo->email]);
         }
 

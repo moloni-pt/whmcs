@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "d7849738bf4d276215effd97cc93f3ac",
+    "content-hash": "33dba49c3f5c5972c7fb72d1ae516966",
     "packages": [],
     "packages-dev": [
         {
@@ -310,12 +310,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/FriendsOfPHP/PHP-CS-Fixer.git",
-                "reference": "bd82cfc8dc2260eb5f56fb317aee5dcdde9c95fc"
+                "reference": "f823cdd24e9e6538fb2a77fb4cca0eccb8a25a68"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/FriendsOfPHP/PHP-CS-Fixer/zipball/bd82cfc8dc2260eb5f56fb317aee5dcdde9c95fc",
-                "reference": "bd82cfc8dc2260eb5f56fb317aee5dcdde9c95fc",
+                "url": "https://api.github.com/repos/FriendsOfPHP/PHP-CS-Fixer/zipball/f823cdd24e9e6538fb2a77fb4cca0eccb8a25a68",
+                "reference": "f823cdd24e9e6538fb2a77fb4cca0eccb8a25a68",
                 "shasum": ""
             },
             "require": {
@@ -390,7 +390,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2021-08-04T19:29:27+00:00"
+            "time": "2021-08-05T17:34:55+00:00"
         },
         {
             "name": "php-cs-fixer/diff",
