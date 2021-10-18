@@ -202,7 +202,13 @@ class General
         } else {
             $product = array();
             $product['category_id'] = Categories::check("WHMCS");
-            $product['type'] = (defined('AT_CATEGORY') && AT_CATEGORY === "SS") ? "2" : "1";
+
+            if (isset($productDefined['type']) && in_array($productDefined['type'], [0, 1, 2])) {
+                $product['type'] = (int)$productDefined['type'];
+            } else {
+                $product['type'] = (defined('AT_CATEGORY') && AT_CATEGORY === "SS") ? 2 : 1;
+            }
+
             $product['name'] = $productDefined['name'];
             $product['summary'] = $productDefined['summary'];
             $product['reference'] = $reference;
@@ -221,7 +227,10 @@ class General
                 Error::create('Product', 'Não possui unidade de medida selecionada!');
                 return false;
             }
-            $product['has_stock'] = (defined('AT_CATEGORY') && AT_CATEGORY === "SS") ? "0" : "1";
+
+            $product['has_stock'] = $product['type'] === 1 ? 1 : 0;
+            $product['warehouse_id'] = 0;
+
             $product['stock'] = "0";
             $product['pos_favorite'] = "0";
             $product['at_product_category'] = (defined('AT_CATEGORY') && !empty(AT_CATEGORY)) ? AT_CATEGORY : '';
