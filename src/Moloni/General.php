@@ -115,20 +115,22 @@ class General
             if (!Error::$exists) {
                 if (!empty($invoice['your_reference']) &&
                     $documentExist = Documents::getOneInfo(false, $invoice['your_reference'])) {
-                    $value = ((int)$documentExist['status'] === 1) ? 2 : 0;
-                    WhmcsDB::insertMoloniInvoice($invoiceInfo, $documentExist, $value);
-                    $downloadURL = null;
-                    if ((int)$documentExist['status'] === 1) {
-                        $downloadURL = Documents::getPDFLink($documentExist['document_id']);
-                    }
+                    if ((int)$documentExist['customer_id'] > 0) {
+                        $value = ((int)$documentExist['status'] === 1) ? 2 : 0;
+                        WhmcsDB::insertMoloniInvoice($invoiceInfo, $documentExist, $value);
+                        $downloadURL = null;
+                        if ((int)$documentExist['status'] === 1) {
+                            $downloadURL = Documents::getPDFLink($documentExist['document_id']);
+                        }
 
-                    Error::success(
-                        "Documento já se encontra gerado no Moloni!",
-                        "https://www.moloni.com/" . $me['slug'] . "/" .
-                        Documents::getDocumentType() . "/showDetail/" . $documentExist['document_id'] . "/",
-                        $downloadURL
-                    );
-                    return false;
+                        Error::success(
+                            "Documento já se encontra gerado no Moloni!",
+                            "https://www.moloni.com/" . $me['slug'] . "/" .
+                            Documents::getDocumentType() . "/showDetail/" . $documentExist['document_id'] . "/",
+                            $downloadURL
+                        );
+                        return false;
+                    }
                 }
 
                 $documentID = Documents::insertInvoice($invoice);

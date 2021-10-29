@@ -39,10 +39,12 @@ class Documents
      */
     public static function getOneInfo($document_id = false, $your_reference = false, $companyID = COMPANY)
     {
+        $values = [];
         $values['company_id'] = $companyID;
         if ($document_id) {
             $values['document_id'] = $document_id;
         }
+
         if ($your_reference) {
             $values['your_reference'] = $your_reference;
         }
