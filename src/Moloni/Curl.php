@@ -5,7 +5,7 @@ namespace Moloni;
 class Curl
 {
 
-    private static $apiUrl = "https://api.moloni.com/v1/";
+    private static $apiUrl = "https://api.moloni.pt/v1/";
 
     public static function simple($action, $values = false, $print = false)
     {
