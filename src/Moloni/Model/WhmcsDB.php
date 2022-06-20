@@ -9,7 +9,12 @@ use WHMCS\Database\Capsule;
 
 class WhmcsDB
 {
-    // Moloni Tables --------------------------------------------------------------------------
+    private static $orderStatusToShow = [
+        'Paid',
+       // 'Unpaid',
+       // 'Payment Pending'
+    ];
+
     public static function getMoloniFirst()
     {
         return (Capsule::table('moloni')->first());
@@ -203,7 +208,7 @@ class WhmcsDB
                          $query->select("order_id")
                              ->from('moloni_invoices')
                              ->whereRaw('moloni_invoices.order_id = tblinvoices.id');
-                     })->whereIn('status', ['Paid', 'Unpaid', 'Payment Pending'])->where('date', '>=', (defined('AFTER_DATE') ? (string)AFTER_DATE : ''))->get() as $row) {
+                     })->whereIn('status', self::$orderStatusToShow)->where('date', '>=', (defined('AFTER_DATE') ? (string)AFTER_DATE : ''))->get() as $row) {
             $client = self::getCustomer($row->userid);
             $array[] = [
                 'invoice' => $row,

@@ -43,7 +43,7 @@ class Dispatcher
         if (defined('ACCESS')) {
             $date_expire = strtotime(DATE_EXPIRE);
             if (time() > $date_expire) {
-                if (time() > strtotime('+5 days', $date_expire)) {
+                if (time() > strtotime('+14 days', $date_expire)) {
                     Error::create('Login', 'Refresh token expirou');
                     $this->moloni->clearMoloniTokens();
                     $this->template = 'login';
@@ -51,7 +51,6 @@ class Dispatcher
                 }
 
                 $newtokens = Curl::refresh(REFRESH);
-
                 $this->moloni->updateTokens($newtokens['access_token'], $newtokens['refresh_token']);
             }
 

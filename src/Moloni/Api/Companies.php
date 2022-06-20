@@ -3,11 +3,12 @@
 
 namespace Moloni\Api;
 
-
 use Moloni\Curl;
 
 class Companies
 {
+    private static $cached = [];
+
     public static function getAll()
     {
         $companies = Curl::simple("companies/getAll");
@@ -25,8 +26,14 @@ class Companies
 
     public static function companyMe($companyID = COMPANY)
     {
-        $values = array();
+        if (isset(self::$cached[__FUNCTION__])) {
+            return self::$cached[__FUNCTION__];
+        }
+
+        $values = [];
         $values['company_id'] = $companyID;
-        return Curl::simple("companies/getOne", $values);
+        self::$cached[__FUNCTION__] = Curl::simple("companies/getOne", $values);
+
+        return self::$cached[__FUNCTION__];
     }
 }
