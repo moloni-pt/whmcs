@@ -12,7 +12,7 @@ if (Error::$exists && !empty(Error::$error)) {
 <link rel="stylesheet" type="text/css" href="<?= Tools::getPublicUrl('compiled.min.css') ?>"/>
 
 <form class='moloni-login-form' action='<?= Tools::genURL() ?>' method='POST' autocomplete="off">
-    <a href='https://moloni.com' target='_BLANK'>
+    <a href='https://moloni.pt' target='_BLANK'>
         <img src='<?= Tools::getPublicUrl('img/logo.png') ?>' class='moloni-logo--login' alt="">
     </a>
 

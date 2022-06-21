@@ -125,7 +125,7 @@ class General
 
                         Error::success(
                             "Documento já se encontra gerado no Moloni!",
-                            "https://www.moloni.com/" . $me['slug'] . "/" .
+                            "https://www.moloni.pt/" . $me['slug'] . "/" .
                             Documents::getDocumentType() . "/showDetail/" . $documentExist['document_id'] . "/",
                             $downloadURL
                         );
@@ -173,7 +173,7 @@ class General
                         $downloadURL = ($documentInfo['status'] == 1) ? Documents::getPDFLink($documentID) : null;
                         Error::success(
                             $insertMessage,
-                            "https://www.moloni.com/" . $me['slug'] . "/" .
+                            "https://www.moloni.pt/" . $me['slug'] . "/" .
                             Documents::getDocumentType() . "/showDetail/" . $documentID . "/",
                             $downloadURL
                         );

@@ -18,7 +18,7 @@ use Moloni\Model\WhmcsDB;
 
     <div class="row">
         <div class="col">
-            <a href='https://moloni.com' target='_BLANK'>
+            <a href='https://moloni.pt' target='_BLANK'>
                 <img src='<?= Tools::getPublicUrl('logo.png') ?>' class='moloni-logo' alt="">
             </a>
         </div>

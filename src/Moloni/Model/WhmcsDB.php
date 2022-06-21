@@ -245,7 +245,7 @@ class WhmcsDB
 
                         $array[] = [
                             'invoice' => $invoice,
-                            'detail' => "https://www.moloni.com/" . $me['slug'] . "/" . Documents::getDocumentType($row->invoice_id) . "/showDetail/" . $row->invoice_id . "/",
+                            'detail' => "https://www.moloni.pt/" . $me['slug'] . "/" . Documents::getDocumentType($row->invoice_id) . "/showDetail/" . $row->invoice_id . "/",
                             'download' => ($row->invoice_status == 1) ? Documents::getPDFLink($row->invoice_id) : null,
                         ];
                     }
