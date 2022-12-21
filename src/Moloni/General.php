@@ -293,7 +293,7 @@ class General
         $returning['name'] = $name;
         $returning['currency_code'] = WhmcsDB::getCustomerCurrency($clientInfo->currency);
 
-        if (count($customer) > 0) {
+        if ($customer && count($customer) > 0) {
             if (!$number || (int)$number !== 9990) {
                 if (defined('UPDATE_CUSTOMER') && UPDATE_CUSTOMER) {
                     $values['customer_id'] = $customer['customer_id'];
