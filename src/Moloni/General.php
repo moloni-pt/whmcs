@@ -199,7 +199,7 @@ class General
         $reference = $productDefined['reference'];
         $productExists = Products::getByReference($reference);
 
-        if ($productExists && $productExists['product_id'] > 0) {
+        if ($productExists && is_array($productExists) && $productExists['product_id'] > 0) {
             return $productExists['product_id'];
         }
 
