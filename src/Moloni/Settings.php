@@ -18,6 +18,8 @@ class Settings
 
     public function buildProduct()
     {
+        $invoicedItem = [];
+
         switch ($this->item->type) {
             case "DomainTransfer":
                 $domainInfo = WhmcsDB::getDomainInfo($this->item->relid);

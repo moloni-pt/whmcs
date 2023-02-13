@@ -224,7 +224,8 @@ class WhmcsDB
     public static function getAllDocuments()
     {
         $me = Companies::companyMe();
-        $array = array();
+        $array = [];
+        $invoice = [];
         foreach (Capsule::table('moloni_invoices')
                      ->join('tblinvoices', 'moloni_invoices.order_id', '=', 'tblinvoices.id')
                      ->select('moloni_invoices.*', 'tblinvoices.invoicenum')

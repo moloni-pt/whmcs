@@ -1,4 +1,4 @@
-<?php
+<?php /** @noinspection PhpUndefinedConstantInspection */
 
 namespace Moloni;
 
@@ -26,6 +26,7 @@ class General
         } else {
             $invoiceItems = WhmcsDB::getInvoiceItems($invoiceInfo->id);
 
+            $invoice = [];
             $invoice['company_id'] = COMPANY;
             $invoice['date'] = date('Y-m-d');
             $invoice['expiration_date'] = date('Y-m-d');
@@ -50,7 +51,7 @@ class General
             $invoice['maturity_date_id'] = defined('MATURITY_DATE') && !empty(MATURITY_DATE) ? MATURITY_DATE : null;
             $invoice['payment_method_id'] = defined('PAYMENT_METHOD') && !empty(PAYMENT_METHOD) ? PAYMENT_METHOD : null;
 
-            if (!empty($fullCurrency['whmcs_curr'])) {
+            if (isset($fullCurrency['whmcs_curr']) && !empty($fullCurrency['whmcs_curr'])) {
                 if (!($fullCurrency['same_curr'])) {
                     $invoice['exchange_currency_id'] = $fullCurrency['whmcs_curr'];
                     $invoice['exchange_rate'] = $fullCurrency['exchange_value'];
@@ -60,7 +61,7 @@ class General
                 return false;
             }
 
-            $invoice['products'] = array();
+            $invoice['products'] = [];
             $x = 0;
 
             foreach ($invoiceItems as $item) {
@@ -79,11 +80,13 @@ class General
                     $invoice['products'][$x]['qty'] = "1";
                     $invoiceTaxRate = ($invoiceInfo->taxrate == 0) ? $invoiceInfo->taxrate2 : $invoiceInfo->taxrate;
                     $productPrice = (!($fullCurrency['same_curr'])) ? $item->amount * $fullCurrency['exchange_value_product'] : $item->amount;
+
                     if (defined('REMOVE_TAX') && REMOVE_TAX) {
                         $invoice['products'][$x]['price'] = $productPrice - (($productPrice / (100 + $invoiceTaxRate)) * $invoiceTaxRate);
                     } else {
                         $invoice['products'][$x]['price'] = $productPrice;
                     }
+
                     $invoice['products'][$x]['order'] = $x;
                     if ($item->taxed == 1 && !empty((float)$invoiceTaxRate)) {
                         $invoice['products'][$x]['taxes'][0]['tax_id'] = Taxes::check($invoiceTaxRate);
@@ -95,6 +98,7 @@ class General
                         Error::create('Produtos', 'Não existe razão de isenção selecionada');
                         return false;
                     }
+
                     unset($invoicedItem);
                     $x++;
                 }
@@ -115,10 +119,11 @@ class General
             if (!Error::$exists) {
                 if (!empty($invoice['your_reference']) &&
                     $documentExist = Documents::getOneInfo(false, $invoice['your_reference'])) {
-                    if ((int)$documentExist['customer_id'] > 0) {
+                    if (isset($documentExist['customer_id']) && (int)$documentExist['customer_id'] > 0) {
                         $value = ((int)$documentExist['status'] === 1) ? 2 : 0;
                         WhmcsDB::insertMoloniInvoice($invoiceInfo, $documentExist, $value);
                         $downloadURL = null;
+
                         if ((int)$documentExist['status'] === 1) {
                             $downloadURL = Documents::getPDFLink($documentExist['document_id']);
                         }
@@ -147,7 +152,7 @@ class General
                         $insertMessage = "Documento inserido como rascunho com sucesso!";
 
                         if (defined('DOCUMENT_STATUS') && DOCUMENT_STATUS == 1 && !$forceDraft && !$hasMassPay) {
-                            $update = array();
+                            $update = [];
                             $update['document_id'] = $documentID;
                             $update['status'] = 1;
                             $insertValue = 2;
@@ -194,7 +199,7 @@ class General
         return false;
     }
 
-    public function product($productDefined, $item, $invoice, $moeda)
+    public function product($productDefined, $item, $invoice, $exchange)
     {
         $reference = $productDefined['reference'];
         $productExists = Products::getByReference($reference);
@@ -203,7 +208,7 @@ class General
             return $productExists['product_id'];
         }
 
-        $product = array();
+        $product = [];
         $product['category_id'] = Categories::check("WHMCS");
 
         if (isset($productDefined['type']) && in_array($productDefined['type'], [0, 1, 2])) {
@@ -217,7 +222,7 @@ class General
         $product['reference'] = $reference;
         $product['ean'] = "";
         $invoiceTaxRate = ($invoice->taxrate == 0) ? $invoice->taxrate2 : $invoice->taxrate;
-        $productPrice = (!($moeda['same_curr'])) ? $item->amount * $moeda['exchange_value_product'] : $item->amount;
+        $productPrice = (!($exchange['same_curr'])) ? $item->amount * $exchange['exchange_value_product'] : $item->amount;
         if (defined('REMOVE_TAX') && REMOVE_TAX) {
             $product['price'] = $productPrice - (($productPrice / (100 + $invoiceTaxRate)) * $invoiceTaxRate);
         } else {
@@ -251,9 +256,8 @@ class General
             $product['taxes'][0]['order'] = "0";
             $product['taxes'][0]['cumulative'] = "0";
         }
-        $productID = Products::insert($product);
 
-        return $productID;
+        return Products::insert($product, $productDefined);
     }
 
     public function verifyCustomer($id)
@@ -288,6 +292,7 @@ class General
 
         $values = [];
 
+        $returning = [];
         $returning['customer_id'] = $customer['customer_id'];
         $returning['email'] = $clientInfo->email;
         $returning['name'] = $name;
@@ -317,6 +322,7 @@ class General
         } else {
             $me = Companies::companyMe();
 
+            $MoloniCustomer = [];
             $MoloniCustomer['vat'] = $vat;
             $MoloniCustomer['number'] = Customers::getNextNumber();
 

@@ -126,6 +126,7 @@ class Dispatcher
     private function deleteInvoice($invoice_id)
     {
         $invoiceOrder = WhmcsDB::getInvoice($invoice_id);
+        $invoice = [];
         $invoice['document_id'] = -1;
         $invoice['net_value'] = 0;
         if (WhmcsDB::insertMoloniInvoice($invoiceOrder, $invoice, '-1')) {

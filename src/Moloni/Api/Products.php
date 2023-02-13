@@ -113,7 +113,7 @@ class Products
         return Curl::simple("products/getModifiedSince", $values);
     }
 
-    public static function insert($values)
+    public static function insert($values, $rawValues = [])
     {
         $values['company_id'] = COMPANY;
 
@@ -122,7 +122,7 @@ class Products
             return $result['product_id'];
         }
 
-        Error::create("products/insert", "Erro ao inserir artigo", $values, $result);
+        Error::create("products/insert", "Erro ao inserir artigo", array_merge($values, $rawValues), $result);
         return false;
     }
 
