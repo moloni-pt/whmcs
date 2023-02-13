@@ -12,7 +12,7 @@ class Error
     public static function create($where, $message, $values_sent = null, $values_receive = null)
     {
         self::$exists = true;
-        self::$error = array();
+        self::$error = [];
         self::$error['where'] = $where;
         self::$error['message'] = $message;
         self::$error['values_sent'] = (empty($values_sent) ? "" : $values_sent);
@@ -22,6 +22,7 @@ class Error
     public static function success($message, $moloniURL = false, $downloadURL = false)
     {
         self::$exists = true;
+        self::$success = [];
         self::$success['text'] = $message;
         self::$success['moloniURL'] = $moloniURL;
         self::$success['downloadURL'] = $downloadURL;

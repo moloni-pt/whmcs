@@ -9,7 +9,6 @@ class MeasurementUnits
 {
     public static function check($name)
     {
-
         $units = self::getAll();
         foreach ($units as $unit) {
             if (mb_strtolower($name) == mb_strtolower($unit['name'])) {
@@ -21,7 +20,6 @@ class MeasurementUnits
         $values['short_name'] = "Uni.";
 
         return self::insert($values);
-
     }
 
     public static function getAll()

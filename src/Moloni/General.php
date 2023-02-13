@@ -199,59 +199,59 @@ class General
         $reference = $productDefined['reference'];
         $productExists = Products::getByReference($reference);
 
-        if (!empty($productExists) && is_array($productExists) && isset($productExists['product_id'])) {
-            $productID = $productExists['product_id'];
+        if ($productExists && $productExists['product_id'] > 0) {
+            return $productExists['product_id'];
+        }
+
+        $product = array();
+        $product['category_id'] = Categories::check("WHMCS");
+
+        if (isset($productDefined['type']) && in_array($productDefined['type'], [0, 1, 2])) {
+            $product['type'] = (int)$productDefined['type'];
         } else {
-            $product = array();
-            $product['category_id'] = Categories::check("WHMCS");
+            $product['type'] = (defined('AT_CATEGORY') && AT_CATEGORY === "SS") ? 2 : 1;
+        }
 
-            if (isset($productDefined['type']) && in_array($productDefined['type'], [0, 1, 2])) {
-                $product['type'] = (int)$productDefined['type'];
-            } else {
-                $product['type'] = (defined('AT_CATEGORY') && AT_CATEGORY === "SS") ? 2 : 1;
-            }
+        $product['name'] = $productDefined['name'];
+        $product['summary'] = $productDefined['summary'];
+        $product['reference'] = $reference;
+        $product['ean'] = "";
+        $invoiceTaxRate = ($invoice->taxrate == 0) ? $invoice->taxrate2 : $invoice->taxrate;
+        $productPrice = (!($moeda['same_curr'])) ? $item->amount * $moeda['exchange_value_product'] : $item->amount;
+        if (defined('REMOVE_TAX') && REMOVE_TAX) {
+            $product['price'] = $productPrice - (($productPrice / (100 + $invoiceTaxRate)) * $invoiceTaxRate);
+        } else {
+            $product['price'] = $productPrice;
+        }
 
-            $product['name'] = $productDefined['name'];
-            $product['summary'] = $productDefined['summary'];
-            $product['reference'] = $reference;
-            $product['ean'] = "";
-            $invoiceTaxRate = ($invoice->taxrate == 0) ? $invoice->taxrate2 : $invoice->taxrate;
-            $productPrice = (!($moeda['same_curr'])) ? $item->amount * $moeda['exchange_value_product'] : $item->amount;
-            if (defined('REMOVE_TAX') && REMOVE_TAX) {
-                $product['price'] = $productPrice - (($productPrice / (100 + $invoiceTaxRate)) * $invoiceTaxRate);
-            } else {
-                $product['price'] = $productPrice;
-            }
+        if (defined('MEASURE_UNIT') && !empty(MEASURE_UNIT)) {
+            $product['unit_id'] = MEASURE_UNIT;
+        } else {
+            Error::create('Product', 'Não possui unidade de medida selecionada!');
+            return false;
+        }
 
-            if (defined('MEASURE_UNIT') && !empty(MEASURE_UNIT)) {
-                $product['unit_id'] = MEASURE_UNIT;
+        $product['has_stock'] = $product['type'] === 1 ? 1 : 0;
+        $product['warehouse_id'] = 0;
+
+        $product['stock'] = "0";
+        $product['pos_favorite'] = "0";
+        $product['at_product_category'] = (defined('AT_CATEGORY') && !empty(AT_CATEGORY)) ? AT_CATEGORY : '';
+
+        if ((int)$invoice->taxrate === 0 && (int)$invoice->taxrate2 === 0) {
+            if (defined('EXEMPTION_REASON') && !empty(EXEMPTION_REASON)) {
+                $product['exemption_reason'] = EXEMPTION_REASON;
             } else {
-                Error::create('Product', 'Não possui unidade de medida selecionada!');
+                Error::create('Product', 'Não possui razão de isenção selecionada!');
                 return false;
             }
-
-            $product['has_stock'] = $product['type'] === 1 ? 1 : 0;
-            $product['warehouse_id'] = 0;
-
-            $product['stock'] = "0";
-            $product['pos_favorite'] = "0";
-            $product['at_product_category'] = (defined('AT_CATEGORY') && !empty(AT_CATEGORY)) ? AT_CATEGORY : '';
-
-            if ((int)$invoice->taxrate === 0 && (int)$invoice->taxrate2 === 0) {
-                if (defined('EXEMPTION_REASON') && !empty(EXEMPTION_REASON)) {
-                    $product['exemption_reason'] = EXEMPTION_REASON;
-                } else {
-                    Error::create('Product', 'Não possui razão de isenção selecionada!');
-                    return false;
-                }
-            } else {
-                $product['taxes'][0]['tax_id'] = Taxes::check($invoiceTaxRate);
-                $product['taxes'][0]['value'] = round($productPrice * ($invoiceTaxRate / 100));
-                $product['taxes'][0]['order'] = "0";
-                $product['taxes'][0]['cumulative'] = "0";
-            }
-            $productID = Products::insert($product);
+        } else {
+            $product['taxes'][0]['tax_id'] = Taxes::check($invoiceTaxRate);
+            $product['taxes'][0]['value'] = round($productPrice * ($invoiceTaxRate / 100));
+            $product['taxes'][0]['order'] = "0";
+            $product['taxes'][0]['cumulative'] = "0";
         }
+        $productID = Products::insert($product);
 
         return $productID;
     }

@@ -70,7 +70,6 @@ class Products
         }
 
         return $reference;
-
     }
 
     public static function countByReference($values)
@@ -87,7 +86,7 @@ class Products
         $values['exact'] = "1";
         $result = Curl::simple("products/getByReference", $values);
 
-        return (isset($result[0]) ? $result[0] : false);
+        return (is_array($result) && isset($result[0]) ? $result[0] : false);
     }
 
     public static function countByEAN($values)
@@ -121,10 +120,9 @@ class Products
         $result = Curl::simple("products/insert", $values);
         if (isset($result['product_id'])) {
             return $result['product_id'];
-        } else {
-            Error::create("products/insert", "Erro ao inserir artigo", $values, $result);
         }
 
+        Error::create("products/insert", "Erro ao inserir artigo", $values, $result);
         return false;
     }
 

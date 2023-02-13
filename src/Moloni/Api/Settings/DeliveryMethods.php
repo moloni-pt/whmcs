@@ -14,19 +14,31 @@ class DeliveryMethods
 
     public static function insert($values, $companyID = COMPANY)
     {
-        $values = ["company_id" => $companyID];
+        if (!is_array($values)) {
+            $values = [];
+        }
+
+        $values["company_id"] = $companyID;
         return Curl::simple("deliveryMethods/insert", $values);
     }
 
     public static function update($values, $companyID = COMPANY)
     {
-        $values = ["company_id" => $companyID];
+        if (!is_array($values)) {
+            $values = [];
+        }
+
+        $values["company_id"] = $companyID;
         return Curl::simple("deliveryMethods/update", $values);
     }
 
     public static function delete($values, $companyID = COMPANY)
     {
-        $values = ["company_id" => $companyID];
+        if (!is_array($values)) {
+            $values = [];
+        }
+
+        $values["company_id"] = $companyID;
         return Curl::simple("deliveryMethods/delete", $values);
     }
 }
