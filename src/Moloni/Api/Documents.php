@@ -41,6 +41,7 @@ class Documents
     {
         $values = [];
         $values['company_id'] = $companyID;
+
         if ($document_id) {
             $values['document_id'] = $document_id;
         }
@@ -92,7 +93,7 @@ class Documents
 
         $total = 0;
         $offset = (isset($values['offset']) ? $values['offset'] : "0");
-        $results = array();
+        $results = [];
 
         while ($total < $max) {
             $values['offset'] = $offset;
@@ -115,7 +116,7 @@ class Documents
      */
     public static function getPDFLink($document_id)
     {
-        $values = array();
+        $values = [];
         $values['company_id'] = COMPANY;
         $values['document_id'] = $document_id;
 

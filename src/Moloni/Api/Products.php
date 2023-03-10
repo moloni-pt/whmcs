@@ -57,13 +57,14 @@ class Products
 
     public function getReferenceByName($name)
     {
+        $values = [];
         $values['company_id'] = COMPANY;
         $values['name'] = $name;
         $values['exact'] = "1";
 
         $return = curl::simple("products/getByName", $values);
 
-        if (count($return) > 0) {
+        if (is_array($return) && count($return) > 0) {
             $reference = $return[0]['reference'];
         } else {
             $reference = "Extra";
@@ -118,6 +119,7 @@ class Products
         $values['company_id'] = COMPANY;
 
         $result = Curl::simple("products/insert", $values);
+
         if (isset($result['product_id'])) {
             return $result['product_id'];
         }

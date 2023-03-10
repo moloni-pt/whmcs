@@ -9,12 +9,14 @@ class Categories
     public static function check($name)
     {
         $categories = self::getAll();
+
         foreach ($categories as $category) {
             if (mb_strtolower($name) == mb_strtolower($category['name'])) {
                 return $category['category_id'];
             }
         }
 
+        $values = [];
         $values['parent_id'] = "0";
         $values['name'] = $name;
         $values['description'] = "";
@@ -26,8 +28,10 @@ class Categories
 
     public static function getAll()
     {
+        $values = [];
         $values['company_id'] = COMPANY;
         $values['parent_id'] = "0";
+
         return Curl::simple("productCategories/getAll", $values);
     }
 
@@ -35,6 +39,7 @@ class Categories
     {
         $values['company_id'] = COMPANY;
         $result = Curl::simple("productCategories/insert", $values);
+
         if (isset($result['category_id'])) {
             return $result['category_id'];
         } else {
