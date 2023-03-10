@@ -1,5 +1,4 @@
-function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
-
+function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (obj) { return typeof obj; } : function (obj) { return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }, _typeof(obj); }
 /*!
  * Materialize v1.0.0 (http://materializecss.com)
  * Copyright 2014-2017 Materialize
@@ -8,10 +7,8 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
 var _get = function get(object, property, receiver) {
   if (object === null) object = Function.prototype;
   var desc = Object.getOwnPropertyDescriptor(object, property);
-
   if (desc === undefined) {
     var parent = Object.getPrototypeOf(object);
-
     if (parent === null) {
       return undefined;
     } else {
@@ -21,15 +18,12 @@ var _get = function get(object, property, receiver) {
     return desc.value;
   } else {
     var getter = desc.get;
-
     if (getter === undefined) {
       return undefined;
     }
-
     return getter.call(receiver);
   }
 };
-
 var _createClass = function () {
   function defineProperties(target, props) {
     for (var i = 0; i < props.length; i++) {
@@ -40,27 +34,22 @@ var _createClass = function () {
       Object.defineProperty(target, descriptor.key, descriptor);
     }
   }
-
   return function (Constructor, protoProps, staticProps) {
     if (protoProps) defineProperties(Constructor.prototype, protoProps);
     if (staticProps) defineProperties(Constructor, staticProps);
     return Constructor;
   };
 }();
-
 function _possibleConstructorReturn(self, call) {
   if (!self) {
     throw new ReferenceError("this hasn't been initialised - super() hasn't been called");
   }
-
   return call && (_typeof(call) === "object" || typeof call === "function") ? call : self;
 }
-
 function _inherits(subClass, superClass) {
   if (typeof superClass !== "function" && superClass !== null) {
     throw new TypeError("Super expression must either be null or a function, not " + _typeof(superClass));
   }
-
   subClass.prototype = Object.create(superClass && superClass.prototype, {
     constructor: {
       value: subClass,
@@ -71,47 +60,40 @@ function _inherits(subClass, superClass) {
   });
   if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass;
 }
-
 function _classCallCheck(instance, Constructor) {
   if (!(instance instanceof Constructor)) {
     throw new TypeError("Cannot call a class as a function");
   }
 }
+
 /*! cash-dom 1.3.5, https://github.com/kenwheeler/cash @license MIT */
-
-
 (function (factory) {
   window.cash = factory();
 })(function () {
   var doc = document,
-      win = window,
-      ArrayProto = Array.prototype,
-      slice = ArrayProto.slice,
-      _filter = ArrayProto.filter,
-      push = ArrayProto.push;
-
+    win = window,
+    ArrayProto = Array.prototype,
+    slice = ArrayProto.slice,
+    _filter = ArrayProto.filter,
+    push = ArrayProto.push;
   var noop = function noop() {},
-      isFunction = function isFunction(item) {
-    // @see https://crbug.com/568448
-    return _typeof(item) === _typeof(noop) && item.call;
-  },
-      isString = function isString(item) {
-    return _typeof(item) === _typeof("");
-  };
-
+    isFunction = function isFunction(item) {
+      // @see https://crbug.com/568448
+      return _typeof(item) === _typeof(noop) && item.call;
+    },
+    isString = function isString(item) {
+      return _typeof(item) === _typeof("");
+    };
   var idMatch = /^#[\w-]*$/,
-      classMatch = /^\.[\w-]*$/,
-      htmlMatch = /<.+>/,
-      singlet = /^\w+$/;
-
+    classMatch = /^\.[\w-]*$/,
+    htmlMatch = /<.+>/,
+    singlet = /^\w+$/;
   function _find(selector, context) {
     context = context || doc;
     var elems = classMatch.test(selector) ? context.getElementsByClassName(selector.slice(1)) : singlet.test(selector) ? context.getElementsByTagName(selector) : context.querySelectorAll(selector);
     return elems;
   }
-
   var frag;
-
   function parseHTML(str) {
     if (!frag) {
       frag = doc.implementation.createHTMLDocument(null);
@@ -119,11 +101,9 @@ function _classCallCheck(instance, Constructor) {
       base.href = doc.location.href;
       frag.head.appendChild(base);
     }
-
     frag.body.innerHTML = str;
     return frag.body.childNodes;
   }
-
   function onReady(fn) {
     if (doc.readyState !== "loading") {
       fn();
@@ -131,55 +111,52 @@ function _classCallCheck(instance, Constructor) {
       doc.addEventListener("DOMContentLoaded", fn);
     }
   }
-
   function Init(selector, context) {
     if (!selector) {
       return this;
-    } // If already a cash collection, don't do any further processing
+    }
 
-
+    // If already a cash collection, don't do any further processing
     if (selector.cash && selector !== win) {
       return selector;
     }
-
     var elems = selector,
-        i = 0,
-        length;
-
+      i = 0,
+      length;
     if (isString(selector)) {
-      elems = idMatch.test(selector) ? // If an ID use the faster getElementById check
-      doc.getElementById(selector.slice(1)) : htmlMatch.test(selector) ? // If HTML, parse it into real elements
-      parseHTML(selector) : // else use `find`
-      _find(selector, context); // If function, use as shortcut for DOM ready
+      elems = idMatch.test(selector) ?
+      // If an ID use the faster getElementById check
+      doc.getElementById(selector.slice(1)) : htmlMatch.test(selector) ?
+      // If HTML, parse it into real elements
+      parseHTML(selector) :
+      // else use `find`
+      _find(selector, context);
+
+      // If function, use as shortcut for DOM ready
     } else if (isFunction(selector)) {
       onReady(selector);
       return this;
     }
-
     if (!elems) {
       return this;
-    } // If a single DOM element is passed in or received via ID, return the single element
+    }
 
-
+    // If a single DOM element is passed in or received via ID, return the single element
     if (elems.nodeType || elems === win) {
       this[0] = elems;
       this.length = 1;
     } else {
       // Treat like an array and loop through each item.
       length = this.length = elems.length;
-
       for (; i < length; i++) {
         this[i] = elems[i];
       }
     }
-
     return this;
   }
-
   function cash(selector, context) {
     return new Init(selector, context);
   }
-
   var fn = cash.fn = cash.prototype = Init.prototype = {
     // jshint ignore:line
     cash: true,
@@ -196,80 +173,64 @@ function _classCallCheck(instance, Constructor) {
   cash.noop = noop;
   cash.isFunction = isFunction;
   cash.isString = isString;
-
   cash.extend = fn.extend = function (target) {
     target = target || {};
     var args = slice.call(arguments),
-        length = args.length,
-        i = 1;
-
+      length = args.length,
+      i = 1;
     if (args.length === 1) {
       target = this;
       i = 0;
     }
-
     for (; i < length; i++) {
       if (!args[i]) {
         continue;
       }
-
       for (var key in args[i]) {
         if (args[i].hasOwnProperty(key)) {
           target[key] = args[i][key];
         }
       }
     }
-
     return target;
   };
-
   function _each(collection, callback) {
     var l = collection.length,
-        i = 0;
-
+      i = 0;
     for (; i < l; i++) {
       if (callback.call(collection[i], collection[i], i, collection) === false) {
         break;
       }
     }
   }
-
   function matches(el, selector) {
     var m = el && (el.matches || el.webkitMatchesSelector || el.mozMatchesSelector || el.msMatchesSelector || el.oMatchesSelector);
     return !!m && m.call(el, selector);
   }
-
   function getCompareFunction(selector) {
-    return (
-      /* Use browser's `matches` function if string */
-      isString(selector) ? matches :
-      /* Match a cash element */
+    return (/* Use browser's `matches` function if string */
+      isString(selector) ? matches : /* Match a cash element */
       selector.cash ? function (el) {
         return selector.is(el);
-      } :
-      /* Direct comparison */
+      } : /* Direct comparison */
       function (el, selector) {
         return el === selector;
       }
     );
   }
-
   function unique(collection) {
     return cash(slice.call(collection).filter(function (item, index, self) {
       return self.indexOf(item) === index;
     }));
   }
-
   cash.extend({
     merge: function merge(first, second) {
       var len = +second.length,
-          i = first.length,
-          j = 0;
-
+        i = first.length,
+        j = 0;
       for (; j < len; i++, j++) {
         first[i] = second[j];
       }
-
       first.length = i;
       return first;
     },
@@ -282,28 +243,21 @@ function _classCallCheck(instance, Constructor) {
     }
   });
   var uid = cash.uid = "_cash" + Date.now();
-
   function getDataCache(node) {
     return node[uid] = node[uid] || {};
   }
-
   function setData(node, key, value) {
     return getDataCache(node)[key] = value;
   }
-
   function getData(node, key) {
     var c = getDataCache(node);
-
     if (c[key] === undefined) {
       c[key] = node.dataset ? node.dataset[key] : cash(node).attr("data-" + key);
     }
-
     return c[key];
   }
-
   function _removeData(node, key) {
     var c = getDataCache(node);
-
     if (c) {
       delete c[key];
     } else if (node.dataset) {
@@ -312,7 +266,6 @@ function _classCallCheck(instance, Constructor) {
       cash(node).removeAttr("data-" + name);
     }
   }
-
   fn.extend({
     data: function data(name, value) {
       if (isString(name)) {
@@ -320,11 +273,9 @@ function _classCallCheck(instance, Constructor) {
           return setData(v, name, value);
         });
       }
-
       for (var key in name) {
         this.data(key, name[key]);
       }
-
       return this;
     },
     removeData: function removeData(key) {
@@ -334,15 +285,12 @@ function _classCallCheck(instance, Constructor) {
     }
   });
   var notWhiteMatch = /\S+/g;
-
   function getClasses(c) {
     return isString(c) && c.match(notWhiteMatch);
   }
-
   function _hasClass(v, c) {
     return v.classList ? v.classList.contains(c) : new RegExp("(^| )" + c + "( |$)", "gi").test(v.className);
   }
-
   function _addClass(v, c, spacedName) {
     if (v.classList) {
       v.classList.add(c);
@@ -350,7 +298,6 @@ function _classCallCheck(instance, Constructor) {
       v.className += " " + c;
     }
   }
-
   function _removeClass(v, c) {
     if (v.classList) {
       v.classList.remove(c);
@@ -358,13 +305,11 @@ function _classCallCheck(instance, Constructor) {
       v.className = v.className.replace(c, "");
     }
   }
-
   fn.extend({
     addClass: function addClass(c) {
       var classes = getClasses(c);
       return classes ? this.each(function (v) {
         var spacedName = " " + v.className + " ";
-
         _each(classes, function (c) {
           _addClass(v, c, spacedName);
         });
@@ -374,12 +319,10 @@ function _classCallCheck(instance, Constructor) {
       if (!name) {
         return undefined;
       }
-
       if (isString(name)) {
         if (value === undefined) {
           return this[0] ? this[0].getAttribute ? this[0].getAttribute(name) : this[0][name] : undefined;
         }
-
         return this.each(function (v) {
           if (v.setAttribute) {
             v.setAttribute(name, value);
@@ -388,24 +331,20 @@ function _classCallCheck(instance, Constructor) {
           }
         });
       }
-
       for (var key in name) {
         this.attr(key, name[key]);
       }
-
       return this;
     },
     hasClass: function hasClass(c) {
       var check = false,
-          classes = getClasses(c);
-
+        classes = getClasses(c);
       if (classes && classes.length) {
         this.each(function (v) {
           check = _hasClass(v, classes[0]);
           return !check;
         });
       }
-
       return check;
     },
     prop: function prop(name, value) {
@@ -414,11 +353,9 @@ function _classCallCheck(instance, Constructor) {
           v[name] = value;
         });
       }
-
       for (var key in name) {
         this.prop(key, name[key]);
       }
-
       return this;
     },
     removeAttr: function removeAttr(name) {
@@ -434,7 +371,6 @@ function _classCallCheck(instance, Constructor) {
       if (!arguments.length) {
         return this.attr("class", "");
       }
-
       var classes = getClasses(c);
       return classes ? this.each(function (v) {
         _each(classes, function (c) {
@@ -451,11 +387,9 @@ function _classCallCheck(instance, Constructor) {
       if (state !== undefined) {
         return this[state ? "addClass" : "removeClass"](c);
       }
-
       var classes = getClasses(c);
       return classes ? this.each(function (v) {
         var spacedName = " " + v.className + " ";
-
         _each(classes, function (c) {
           if (_hasClass(v, c)) {
             _removeClass(v, c);
@@ -472,7 +406,6 @@ function _classCallCheck(instance, Constructor) {
     },
     each: function each(callback) {
       _each(this, callback);
-
       return this;
     },
     eq: function eq(index) {
@@ -482,7 +415,6 @@ function _classCallCheck(instance, Constructor) {
       if (!selector) {
         return this;
       }
-
       var comparator = isFunction(selector) ? selector : getCompareFunction(selector);
       return cash(_filter.call(this, function (e) {
         return comparator(e, selector);
@@ -495,56 +427,48 @@ function _classCallCheck(instance, Constructor) {
       if (index === undefined) {
         return slice.call(this);
       }
-
       return index < 0 ? this[index + this.length] : this[index];
     },
     index: function index(elem) {
       var child = elem ? cash(elem)[0] : this[0],
-          collection = elem ? this : cash(child).parent().children();
+        collection = elem ? this : cash(child).parent().children();
       return slice.call(collection).indexOf(child);
     },
     last: function last() {
       return this.eq(-1);
     }
   });
-
   var camelCase = function () {
     var camelRegex = /(?:^\w|[A-Z]|\b\w)/g,
-        whiteSpace = /[\s-_]+/g;
+      whiteSpace = /[\s-_]+/g;
     return function (str) {
       return str.replace(camelRegex, function (letter, index) {
         return letter[index === 0 ? "toLowerCase" : "toUpperCase"]();
       }).replace(whiteSpace, "");
     };
   }();
-
   var getPrefixedProp = function () {
     var cache = {},
-        doc = document,
-        div = doc.createElement("div"),
-        style = div.style;
+      doc = document,
+      div = doc.createElement("div"),
+      style = div.style;
     return function (prop) {
       prop = camelCase(prop);
-
       if (cache[prop]) {
         return cache[prop];
       }
-
       var ucProp = prop.charAt(0).toUpperCase() + prop.slice(1),
-          prefixes = ["webkit", "moz", "ms", "o"],
-          props = (prop + " " + prefixes.join(ucProp + " ") + ucProp).split(" ");
-
+        prefixes = ["webkit", "moz", "ms", "o"],
+        props = (prop + " " + prefixes.join(ucProp + " ") + ucProp).split(" ");
       _each(props, function (p) {
         if (p in style) {
           cache[p] = prop = cache[prop] = p;
           return false;
         }
       });
-
       return cache[prop];
     };
   }();
-
   cash.prefixedProp = getPrefixedProp;
   cash.camelCase = camelCase;
   fn.extend({
@@ -555,55 +479,43 @@ function _classCallCheck(instance, Constructor) {
           return v.style[prop] = value;
         }) : win.getComputedStyle(this[0])[prop];
       }
-
       for (var key in prop) {
         this.css(key, prop[key]);
       }
-
       return this;
     }
   });
-
   function compute(el, prop) {
     return parseInt(win.getComputedStyle(el[0], null)[prop], 10) || 0;
   }
-
   _each(["Width", "Height"], function (v) {
     var lower = v.toLowerCase();
-
     fn[lower] = function () {
       return this[0].getBoundingClientRect()[lower];
     };
-
     fn["inner" + v] = function () {
       return this[0]["client" + v];
     };
-
     fn["outer" + v] = function (margins) {
       return this[0]["offset" + v] + (margins ? compute(this, "margin" + (v === "Width" ? "Left" : "Top")) + compute(this, "margin" + (v === "Width" ? "Right" : "Bottom")) : 0);
     };
   });
-
   function registerEvent(node, eventName, callback) {
     var eventCache = getData(node, "_cashEvents") || setData(node, "_cashEvents", {});
     eventCache[eventName] = eventCache[eventName] || [];
     eventCache[eventName].push(callback);
     node.addEventListener(eventName, callback);
   }
-
   function removeEvent(node, eventName, callback) {
     var events = getData(node, "_cashEvents"),
-        eventCache = events && events[eventName],
-        index;
-
+      eventCache = events && events[eventName],
+      index;
     if (!eventCache) {
       return;
     }
-
     if (callback) {
       node.removeEventListener(eventName, callback);
       index = eventCache.indexOf(callback);
-
       if (index >= 0) {
         eventCache.splice(index, 1);
       }
@@ -611,11 +523,9 @@ function _classCallCheck(instance, Constructor) {
       _each(eventCache, function (event) {
         node.removeEventListener(eventName, event);
       });
-
       eventCache = [];
     }
   }
-
   fn.extend({
     off: function off(eventName, callback) {
       return this.each(function (v) {
@@ -625,55 +535,43 @@ function _classCallCheck(instance, Constructor) {
     on: function on(eventName, delegate, callback, runOnce) {
       // jshint ignore:line
       var originalCallback;
-
       if (!isString(eventName)) {
         for (var key in eventName) {
           this.on(key, delegate, eventName[key]);
         }
-
         return this;
       }
-
       if (isFunction(delegate)) {
         callback = delegate;
         delegate = null;
       }
-
       if (eventName === "ready") {
         onReady(callback);
         return this;
       }
-
       if (delegate) {
         originalCallback = callback;
-
         callback = function callback(e) {
           var t = e.target;
-
           while (!matches(t, delegate)) {
             if (t === this || t === null) {
               return t = false;
             }
-
             t = t.parentNode;
           }
-
           if (t) {
             originalCallback.call(t, e);
           }
         };
       }
-
       return this.each(function (v) {
         var _finalCallback = callback;
-
         if (runOnce) {
           _finalCallback = function finalCallback() {
             callback.apply(this, arguments);
             removeEvent(v, eventName, _finalCallback);
           };
         }
-
         registerEvent(v, eventName, _finalCallback);
       });
     },
@@ -681,7 +579,6 @@ function _classCallCheck(instance, Constructor) {
       return this.on(eventName, delegate, callback, true);
     },
     ready: onReady,
-
     /**
      * Modified
      * Triggers browser event
@@ -699,105 +596,80 @@ function _classCallCheck(instance, Constructor) {
       }
     }
   });
-
   function encode(name, value) {
     return "&" + encodeURIComponent(name) + "=" + encodeURIComponent(value).replace(/%20/g, "+");
   }
-
   function getSelectMultiple_(el) {
     var values = [];
-
     _each(el.options, function (o) {
       if (o.selected) {
         values.push(o.value);
       }
     });
-
     return values.length ? values : null;
   }
-
   function getSelectSingle_(el) {
     var selectedIndex = el.selectedIndex;
     return selectedIndex >= 0 ? el.options[selectedIndex].value : null;
   }
-
   function getValue(el) {
     var type = el.type;
-
     if (!type) {
       return null;
     }
-
     switch (type.toLowerCase()) {
       case "select-one":
         return getSelectSingle_(el);
-
       case "select-multiple":
         return getSelectMultiple_(el);
-
       case "radio":
         return el.checked ? el.value : null;
-
       case "checkbox":
         return el.checked ? el.value : null;
-
       default:
         return el.value ? el.value : null;
     }
   }
-
   fn.extend({
     serialize: function serialize() {
       var query = "";
-
       _each(this[0].elements || this, function (el) {
         if (el.disabled || el.tagName === "FIELDSET") {
           return;
         }
-
         var name = el.name;
-
         switch (el.type.toLowerCase()) {
           case "file":
           case "reset":
           case "submit":
           case "button":
             break;
-
           case "select-multiple":
             var values = getValue(el);
-
             if (values !== null) {
               _each(values, function (value) {
                 query += encode(name, value);
               });
             }
-
             break;
-
           default:
             var value = getValue(el);
-
             if (value !== null) {
               query += encode(name, value);
             }
-
         }
       });
-
       return query.substr(1);
     },
     val: function val(value) {
       if (value === undefined) {
         return getValue(this[0]);
       }
-
       return this.each(function (v) {
         return v.value = value;
       });
     }
   });
-
   function insertElement(el, child, prepend) {
     if (prepend) {
       var first = el.childNodes[0];
@@ -806,25 +678,20 @@ function _classCallCheck(instance, Constructor) {
       el.appendChild(child);
     }
   }
-
   function insertContent(parent, child, prepend) {
     var str = isString(child);
-
     if (!str && child.length) {
       _each(child, function (v) {
         return insertContent(parent, v, prepend);
       });
-
       return;
     }
-
     _each(parent, str ? function (v) {
       return v.insertAdjacentHTML(prepend ? "afterbegin" : "beforeend", child);
     } : function (v, i) {
       return insertElement(v, i === 0 ? child : child.cloneNode(true), prepend);
     });
   }
-
   fn.extend({
     after: function after(selector) {
       cash(selector).insertAfter(this);
@@ -855,7 +722,6 @@ function _classCallCheck(instance, Constructor) {
       if (content === undefined) {
         return this[0].innerHTML;
       }
-
       var source = content.nodeType ? content[0].outerHTML : content;
       return this.each(function (v) {
         return v.innerHTML = source;
@@ -863,11 +729,9 @@ function _classCallCheck(instance, Constructor) {
     },
     insertAfter: function insertAfter(selector) {
       var _this = this;
-
       cash(selector).each(function (el, i) {
         var parent = el.parentNode,
-            sibling = el.nextSibling;
-
+          sibling = el.nextSibling;
         _this.each(function (v) {
           parent.insertBefore(i === 0 ? v : v.cloneNode(true), sibling);
         });
@@ -876,10 +740,8 @@ function _classCallCheck(instance, Constructor) {
     },
     insertBefore: function insertBefore(selector) {
       var _this2 = this;
-
       cash(selector).each(function (el, i) {
         var parent = el.parentNode;
-
         _this2.each(function (v) {
           parent.insertBefore(i === 0 ? v : v.cloneNode(true), el);
         });
@@ -905,7 +767,6 @@ function _classCallCheck(instance, Constructor) {
       if (content === undefined) {
         return this[0].textContent;
       }
-
       return this.each(function (v) {
         return v.textContent = content;
       });
@@ -946,20 +807,17 @@ function _classCallCheck(instance, Constructor) {
       if (!selector || this.length < 1) {
         return cash();
       }
-
       if (this.is(selector)) {
         return this.filter(selector);
       }
-
       return this.parent().closest(selector);
     },
     is: function is(selector) {
       if (!selector) {
         return false;
       }
-
       var match = false,
-          comparator = getCompareFunction(selector);
+        comparator = getCompareFunction(selector);
       this.each(function (el) {
         match = comparator(el, selector);
         return !match;
@@ -970,7 +828,6 @@ function _classCallCheck(instance, Constructor) {
       if (!selector || selector.nodeType) {
         return cash(selector && this.has(selector).length ? selector : null);
       }
-
       var elems = [];
       this.each(function (el) {
         push.apply(elems, _find(selector, el));
@@ -992,7 +849,6 @@ function _classCallCheck(instance, Constructor) {
       if (!selector) {
         return this;
       }
-
       var comparator = getCompareFunction(selector);
       return this.filter(function (el) {
         return !comparator(el, selector);
@@ -1009,13 +865,11 @@ function _classCallCheck(instance, Constructor) {
     },
     parents: function parents(selector) {
       var last,
-          result = [];
+        result = [];
       this.each(function (item) {
         last = item;
-
         while (last && last.parentNode && last !== doc.body.parentNode) {
           last = last.parentNode;
-
           if (!selector || selector && matches(last, selector)) {
             result.push(last);
           }
@@ -1028,7 +882,7 @@ function _classCallCheck(instance, Constructor) {
     },
     siblings: function siblings(selector) {
       var collection = this.parent().children(selector),
-          el = this[0];
+        el = this[0];
       return collection.filter(function (i) {
         return i !== el;
       });
@@ -1036,9 +890,7 @@ function _classCallCheck(instance, Constructor) {
   });
   return cash;
 });
-
 ;
-
 var Component = function () {
   /**
    * Generic constructor for all components
@@ -1047,23 +899,22 @@ var Component = function () {
    * @param {Object} options
    */
   function Component(classDef, el, options) {
-    _classCallCheck(this, Component); // Display error if el is valid HTML Element
+    _classCallCheck(this, Component);
 
-
+    // Display error if el is valid HTML Element
     if (!(el instanceof Element)) {
       console.error(Error(el + ' is not an HTML Element'));
-    } // If exists, destroy and reinitialize in child
+    }
 
-
+    // If exists, destroy and reinitialize in child
     var ins = classDef.getInstance(el);
-
     if (!!ins) {
       ins.destroy();
     }
-
     this.el = el;
     this.$el = cash(el);
   }
+
   /**
    * Initializes components
    * @param {class} classDef
@@ -1071,57 +922,49 @@ var Component = function () {
    * @param {Object} options
    */
 
-
   _createClass(Component, null, [{
     key: "init",
     value: function init(classDef, els, options) {
       var instances = null;
-
       if (els instanceof Element) {
         instances = new classDef(els, options);
       } else if (!!els && (els.jquery || els.cash || els instanceof NodeList)) {
         var instancesArr = [];
-
         for (var i = 0; i < els.length; i++) {
           instancesArr.push(new classDef(els[i], options));
         }
-
         instances = instancesArr;
       }
-
       return instances;
     }
   }]);
-
   return Component;
 }();
-
 ; // Required for Meteor package, the use of window prevents export by Meteor
-
 (function (window) {
   if (window.Package) {
     M = {};
   } else {
     window.M = {};
-  } // Check for jQuery
+  }
 
-
+  // Check for jQuery
   M.jQueryLoaded = !!window.jQuery;
-})(window); // AMD
+})(window);
 
-
+// AMD
 if (typeof define === 'function' && define.amd) {
   define('M', [], function () {
     return M;
-  }); // Common JS
+  });
+
+  // Common JS
 } else if (typeof exports !== 'undefined' && !exports.nodeType) {
   if (typeof module !== 'undefined' && !module.nodeType && module.exports) {
     exports = module.exports = M;
   }
-
   exports.default = M;
 }
-
 M.version = '1.0.0';
 M.keys = {
   TAB: 9,
@@ -1130,81 +973,76 @@ M.keys = {
   ARROW_UP: 38,
   ARROW_DOWN: 40
 };
+
 /**
  * TabPress Keydown handler
  */
-
 M.tabPressed = false;
 M.keyDown = false;
-
 var docHandleKeydown = function docHandleKeydown(e) {
   M.keyDown = true;
-
   if (e.which === M.keys.TAB || e.which === M.keys.ARROW_DOWN || e.which === M.keys.ARROW_UP) {
     M.tabPressed = true;
   }
 };
-
 var docHandleKeyup = function docHandleKeyup(e) {
   M.keyDown = false;
-
   if (e.which === M.keys.TAB || e.which === M.keys.ARROW_DOWN || e.which === M.keys.ARROW_UP) {
     M.tabPressed = false;
   }
 };
-
 var docHandleFocus = function docHandleFocus(e) {
   if (M.keyDown) {
     document.body.classList.add('keyboard-focused');
   }
 };
-
 var docHandleBlur = function docHandleBlur(e) {
   document.body.classList.remove('keyboard-focused');
 };
-
 document.addEventListener('keydown', docHandleKeydown, true);
 document.addEventListener('keyup', docHandleKeyup, true);
 document.addEventListener('focus', docHandleFocus, true);
 document.addEventListener('blur', docHandleBlur, true);
+
 /**
  * Initialize jQuery wrapper for plugin
  * @param {Class} plugin  javascript class
  * @param {string} pluginName  jQuery plugin name
  * @param {string} classRef  Class reference name
  */
-
 M.initializeJqueryWrapper = function (plugin, pluginName, classRef) {
   jQuery.fn[pluginName] = function (methodOrOptions) {
     // Call plugin method if valid method name is passed in
     if (plugin.prototype[methodOrOptions]) {
-      var params = Array.prototype.slice.call(arguments, 1); // Getter methods
+      var params = Array.prototype.slice.call(arguments, 1);
 
+      // Getter methods
       if (methodOrOptions.slice(0, 3) === 'get') {
         var instance = this.first()[0][classRef];
         return instance[methodOrOptions].apply(instance, params);
-      } // Void methods
+      }
 
-
+      // Void methods
       return this.each(function () {
         var instance = this[classRef];
         instance[methodOrOptions].apply(instance, params);
-      }); // Initialize plugin if options or no argument is passed in
+      });
+
+      // Initialize plugin if options or no argument is passed in
     } else if (_typeof(methodOrOptions) === 'object' || !methodOrOptions) {
       plugin.init(this, arguments[0]);
       return this;
-    } // Return error if an unrecognized  method name is passed in
+    }
 
-
+    // Return error if an unrecognized  method name is passed in
     jQuery.error("Method " + methodOrOptions + " does not exist on jQuery." + pluginName);
   };
 };
+
 /**
  * Automatically initialize components
  * @param {Element} context  DOM Element to search within for components
  */
-
-
 M.AutoInit = function (context) {
   // Use document.body if no context is given
   var root = !!context ? context : document.body;
@@ -1228,47 +1066,42 @@ M.AutoInit = function (context) {
     Tooltip: root.querySelectorAll('.tooltipped:not(.no-autoinit)'),
     FloatingActionButton: root.querySelectorAll('.fixed-action-btn:not(.no-autoinit)')
   };
-
   for (var pluginName in registry) {
     var plugin = M[pluginName];
     plugin.init(registry[pluginName]);
   }
 };
+
 /**
  * Generate approximated selector string for a jQuery object
  * @param {jQuery} obj  jQuery object to be parsed
  * @returns {string}
  */
-
-
 M.objectSelectorString = function (obj) {
   var tagStr = obj.prop('tagName') || '';
   var idStr = obj.attr('id') || '';
   var classStr = obj.attr('class') || '';
   return (tagStr + idStr + classStr).replace(/\s/g, '');
-}; // Unique Random ID
+};
 
-
+// Unique Random ID
 M.guid = function () {
   function s4() {
     return Math.floor((1 + Math.random()) * 0x10000).toString(16).substring(1);
   }
-
   return function () {
     return s4() + s4() + '-' + s4() + '-' + s4() + '-' + s4() + '-' + s4() + s4() + s4();
   };
 }();
+
 /**
  * Escapes hash from special characters
  * @param {string} hash  String returned from this.hash
  * @returns {string}
  */
-
-
 M.escapeHash = function (hash) {
   return hash.replace(/(:|\.|\[|\]|,|=|\/)/g, '\\$1');
 };
-
 M.elementOrParentIsFixed = function (element) {
   var $element = $(element);
   var $checkElements = $element.add($element.parents());
@@ -1281,6 +1114,7 @@ M.elementOrParentIsFixed = function (element) {
   });
   return isFixed;
 };
+
 /**
  * @typedef {Object} Edges
  * @property {Boolean} top  If the top edge was exceeded
@@ -1304,8 +1138,6 @@ M.elementOrParentIsFixed = function (element) {
  * @param {Number} offset  offset from edge that counts as exceeding
  * @returns {Edges}
  */
-
-
 M.checkWithinContainer = function (container, bounding, offset) {
   var edges = {
     top: false,
@@ -1313,33 +1145,29 @@ M.checkWithinContainer = function (container, bounding, offset) {
     bottom: false,
     left: false
   };
-  var containerRect = container.getBoundingClientRect(); // If body element is smaller than viewport, use viewport height instead.
-
+  var containerRect = container.getBoundingClientRect();
+  // If body element is smaller than viewport, use viewport height instead.
   var containerBottom = container === document.body ? Math.max(containerRect.bottom, window.innerHeight) : containerRect.bottom;
   var scrollLeft = container.scrollLeft;
   var scrollTop = container.scrollTop;
   var scrolledX = bounding.left - scrollLeft;
-  var scrolledY = bounding.top - scrollTop; // Check for container and viewport for each edge
+  var scrolledY = bounding.top - scrollTop;
 
+  // Check for container and viewport for each edge
   if (scrolledX < containerRect.left + offset || scrolledX < offset) {
     edges.left = true;
   }
-
   if (scrolledX + bounding.width > containerRect.right - offset || scrolledX + bounding.width > window.innerWidth - offset) {
     edges.right = true;
   }
-
   if (scrolledY < containerRect.top + offset || scrolledY < offset) {
     edges.top = true;
   }
-
   if (scrolledY + bounding.height > containerBottom - offset || scrolledY + bounding.height > window.innerHeight - offset) {
     edges.bottom = true;
   }
-
   return edges;
 };
-
 M.checkPossibleAlignments = function (el, container, bounding, offset) {
   var canAlign = {
     top: true,
@@ -1360,89 +1188,77 @@ M.checkPossibleAlignments = function (el, container, bounding, offset) {
   var scrollTop = container.scrollTop;
   var scrolledX = bounding.left - scrollLeft;
   var scrolledYTopEdge = bounding.top - scrollTop;
-  var scrolledYBottomEdge = bounding.top + elOffsetRect.height - scrollTop; // Check for container and viewport for left
+  var scrolledYBottomEdge = bounding.top + elOffsetRect.height - scrollTop;
 
+  // Check for container and viewport for left
   canAlign.spaceOnRight = !containerAllowsOverflow ? containerWidth - (scrolledX + bounding.width) : window.innerWidth - (elOffsetRect.left + bounding.width);
-
   if (canAlign.spaceOnRight < 0) {
     canAlign.left = false;
-  } // Check for container and viewport for Right
+  }
 
-
+  // Check for container and viewport for Right
   canAlign.spaceOnLeft = !containerAllowsOverflow ? scrolledX - bounding.width + elOffsetRect.width : elOffsetRect.right - bounding.width;
-
   if (canAlign.spaceOnLeft < 0) {
     canAlign.right = false;
-  } // Check for container and viewport for Top
+  }
 
-
+  // Check for container and viewport for Top
   canAlign.spaceOnBottom = !containerAllowsOverflow ? containerHeight - (scrolledYTopEdge + bounding.height + offset) : window.innerHeight - (elOffsetRect.top + bounding.height + offset);
-
   if (canAlign.spaceOnBottom < 0) {
     canAlign.top = false;
-  } // Check for container and viewport for Bottom
+  }
 
-
+  // Check for container and viewport for Bottom
   canAlign.spaceOnTop = !containerAllowsOverflow ? scrolledYBottomEdge - (bounding.height - offset) : elOffsetRect.bottom - (bounding.height + offset);
-
   if (canAlign.spaceOnTop < 0) {
     canAlign.bottom = false;
   }
-
   return canAlign;
 };
-
 M.getOverflowParent = function (element) {
   if (element == null) {
     return null;
   }
-
   if (element === document.body || getComputedStyle(element).overflow !== 'visible') {
     return element;
   }
-
   return M.getOverflowParent(element.parentElement);
 };
+
 /**
  * Gets id of component from a trigger
  * @param {Element} trigger  trigger
  * @returns {string}
  */
-
-
 M.getIdFromTrigger = function (trigger) {
   var id = trigger.getAttribute('data-target');
-
   if (!id) {
     id = trigger.getAttribute('href');
-
     if (id) {
       id = id.slice(1);
     } else {
       id = '';
     }
   }
-
   return id;
 };
+
 /**
  * Multi browser support for document scroll top
  * @returns {Number}
  */
-
-
 M.getDocumentScrollTop = function () {
   return window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop || 0;
 };
+
 /**
  * Multi browser support for document scroll left
  * @returns {Number}
  */
-
-
 M.getDocumentScrollLeft = function () {
   return window.pageXOffset || document.documentElement.scrollLeft || document.body.scrollLeft || 0;
 };
+
 /**
  * @typedef {Object} Edges
  * @property {Boolean} top  If the top edge was exceeded
@@ -1465,11 +1281,10 @@ M.getDocumentScrollLeft = function () {
  * @type {function}
  * @return {number}
  */
-
-
 var getTime = Date.now || function () {
   return new Date().getTime();
 };
+
 /**
  * Returns a function, that, when invoked, will only be triggered at most once
  * during a given window of time. Normally, the throttled function will run
@@ -1482,30 +1297,25 @@ var getTime = Date.now || function () {
  * @param {Object=} options
  * @returns {Function}
  */
-
-
 M.throttle = function (func, wait, options) {
   var context = void 0,
-      args = void 0,
-      result = void 0;
+    args = void 0,
+    result = void 0;
   var timeout = null;
   var previous = 0;
   options || (options = {});
-
   var later = function later() {
     previous = options.leading === false ? 0 : getTime();
     timeout = null;
     result = func.apply(context, args);
     context = args = null;
   };
-
   return function () {
     var now = getTime();
     if (!previous && options.leading === false) previous = now;
     var remaining = wait - (now - previous);
     context = this;
     args = arguments;
-
     if (remaining <= 0) {
       clearTimeout(timeout);
       timeout = null;
@@ -1515,18 +1325,14 @@ M.throttle = function (func, wait, options) {
     } else if (!timeout && options.trailing !== false) {
       timeout = setTimeout(later, remaining);
     }
-
     return result;
   };
 };
-
-;
-/*
-v2.2.0
-2017 Julian Garnier
-Released under the MIT license
-*/
-
+; /*
+  v2.2.0
+  2017 Julian Garnier
+  Released under the MIT license
+  */
 var $jscomp = {
   scope: {}
 };
@@ -1534,26 +1340,19 @@ $jscomp.defineProperty = "function" == typeof Object.defineProperties ? Object.d
   if (p.get || p.set) throw new TypeError("ES3 does not support getters and setters.");
   e != Array.prototype && e != Object.prototype && (e[r] = p.value);
 };
-
 $jscomp.getGlobal = function (e) {
   return "undefined" != typeof window && window === e ? e : "undefined" != typeof global && null != global ? global : e;
 };
-
 $jscomp.global = $jscomp.getGlobal(this);
 $jscomp.SYMBOL_PREFIX = "jscomp_symbol_";
-
 $jscomp.initSymbol = function () {
   $jscomp.initSymbol = function () {};
-
   $jscomp.global.Symbol || ($jscomp.global.Symbol = $jscomp.Symbol);
 };
-
 $jscomp.symbolCounter_ = 0;
-
 $jscomp.Symbol = function (e) {
   return $jscomp.SYMBOL_PREFIX + (e || "") + $jscomp.symbolCounter_++;
 };
-
 $jscomp.initSymbolIterator = function () {
   $jscomp.initSymbol();
   var e = $jscomp.global.Symbol.iterator;
@@ -1565,10 +1364,8 @@ $jscomp.initSymbolIterator = function () {
       return $jscomp.arrayIterator(this);
     }
   });
-
   $jscomp.initSymbolIterator = function () {};
 };
-
 $jscomp.arrayIterator = function (e) {
   var r = 0;
   return $jscomp.iteratorPrototype(function () {
@@ -1580,65 +1377,53 @@ $jscomp.arrayIterator = function (e) {
     };
   });
 };
-
 $jscomp.iteratorPrototype = function (e) {
   $jscomp.initSymbolIterator();
   e = {
     next: e
   };
-
   e[$jscomp.global.Symbol.iterator] = function () {
     return this;
   };
-
   return e;
 };
-
 $jscomp.array = $jscomp.array || {};
-
 $jscomp.iteratorFromArray = function (e, r) {
   $jscomp.initSymbolIterator();
   e instanceof String && (e += "");
   var p = 0,
-      m = {
-    next: function next() {
-      if (p < e.length) {
-        var u = p++;
-        return {
-          value: r(u, e[u]),
-          done: !1
+    m = {
+      next: function next() {
+        if (p < e.length) {
+          var u = p++;
+          return {
+            value: r(u, e[u]),
+            done: !1
+          };
+        }
+        m.next = function () {
+          return {
+            done: !0,
+            value: void 0
+          };
         };
+        return m.next();
       }
-
-      m.next = function () {
-        return {
-          done: !0,
-          value: void 0
-        };
-      };
-
-      return m.next();
-    }
-  };
-
+    };
   m[Symbol.iterator] = function () {
     return m;
   };
-
   return m;
 };
-
 $jscomp.polyfill = function (e, r, p, m) {
   if (r) {
     p = $jscomp.global;
     e = e.split(".");
-
     for (m = 0; m < e.length - 1; m++) {
       var u = e[m];
       u in p || (p[u] = {});
       p = p[u];
     }
-
     e = e[e.length - 1];
     m = p[e];
     r = r(m);
@@ -1649,7 +1434,6 @@ $jscomp.polyfill = function (e, r, p, m) {
     });
   }
 };
-
 $jscomp.polyfill("Array.prototype.keys", function (e) {
   return e ? e : function () {
     return $jscomp.iteratorFromArray(this, function (e) {
@@ -1658,7 +1442,6 @@ $jscomp.polyfill("Array.prototype.keys", function (e) {
   };
 }, "es6-impl", "es3");
 var $jscomp$this = this;
-
 (function (r) {
   M.anime = r();
 })(function () {
@@ -1667,7 +1450,6 @@ var $jscomp$this = this;
       return document.querySelectorAll(a);
     } catch (c) {}
   }
-
   function r(a, c) {
     for (var d = a.length, b = 2 <= arguments.length ? arguments[1] : void 0, f = [], n = 0; n < d; n++) {
       if (n in a) {
@@ -1675,61 +1457,47 @@ var $jscomp$this = this;
         c.call(b, k, n, a) && f.push(k);
       }
     }
-
     return f;
   }
-
   function p(a) {
     return a.reduce(function (a, d) {
       return a.concat(h.arr(d) ? p(d) : d);
     }, []);
   }
-
   function m(a) {
     if (h.arr(a)) return a;
     h.str(a) && (a = e(a) || a);
     return a instanceof NodeList || a instanceof HTMLCollection ? [].slice.call(a) : [a];
   }
-
   function u(a, c) {
     return a.some(function (a) {
       return a === c;
     });
   }
-
   function C(a) {
     var c = {},
-        d;
-
+      d;
     for (d in a) {
       c[d] = a[d];
     }
-
     return c;
   }
-
   function D(a, c) {
     var d = C(a),
-        b;
-
+      b;
     for (b in a) {
       d[b] = c.hasOwnProperty(b) ? c[b] : a[b];
     }
-
     return d;
   }
-
   function z(a, c) {
     var d = C(a),
-        b;
-
+      b;
     for (b in c) {
       d[b] = h.und(a[b]) ? c[b] : a[b];
     }
-
     return d;
   }
-
   function T(a) {
     a = a.replace(/^#?([a-f\d])([a-f\d])([a-f\d])$/i, function (a, c, d, k) {
       return c + c + d + d + k + k;
@@ -1737,132 +1505,106 @@ var $jscomp$this = this;
     var c = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(a);
     a = parseInt(c[1], 16);
     var d = parseInt(c[2], 16),
-        c = parseInt(c[3], 16);
+      c = parseInt(c[3], 16);
     return "rgba(" + a + "," + d + "," + c + ",1)";
   }
-
   function U(a) {
     function c(a, c, b) {
       0 > b && (b += 1);
       1 < b && --b;
       return b < 1 / 6 ? a + 6 * (c - a) * b : .5 > b ? c : b < 2 / 3 ? a + (c - a) * (2 / 3 - b) * 6 : a;
     }
-
     var d = /hsl\((\d+),\s*([\d.]+)%,\s*([\d.]+)%\)/g.exec(a) || /hsla\((\d+),\s*([\d.]+)%,\s*([\d.]+)%,\s*([\d.]+)\)/g.exec(a);
     a = parseInt(d[1]) / 360;
     var b = parseInt(d[2]) / 100,
-        f = parseInt(d[3]) / 100,
-        d = d[4] || 1;
+      f = parseInt(d[3]) / 100,
+      d = d[4] || 1;
     if (0 == b) f = b = a = f;else {
       var n = .5 > f ? f * (1 + b) : f + b - f * b,
-          k = 2 * f - n,
-          f = c(k, n, a + 1 / 3),
-          b = c(k, n, a);
+        k = 2 * f - n,
+        f = c(k, n, a + 1 / 3),
+        b = c(k, n, a);
       a = c(k, n, a - 1 / 3);
     }
     return "rgba(" + 255 * f + "," + 255 * b + "," + 255 * a + "," + d + ")";
   }
-
   function y(a) {
     if (a = /([\+\-]?[0-9#\.]+)(%|px|pt|em|rem|in|cm|mm|ex|ch|pc|vw|vh|vmin|vmax|deg|rad|turn)?$/.exec(a)) return a[2];
   }
-
   function V(a) {
     if (-1 < a.indexOf("translate") || "perspective" === a) return "px";
     if (-1 < a.indexOf("rotate") || -1 < a.indexOf("skew")) return "deg";
   }
-
   function I(a, c) {
     return h.fnc(a) ? a(c.target, c.id, c.total) : a;
   }
-
   function E(a, c) {
     if (c in a.style) return getComputedStyle(a).getPropertyValue(c.replace(/([a-z])([A-Z])/g, "$1-$2").toLowerCase()) || "0";
   }
-
   function J(a, c) {
     if (h.dom(a) && u(W, c)) return "transform";
     if (h.dom(a) && (a.getAttribute(c) || h.svg(a) && a[c])) return "attribute";
     if (h.dom(a) && "transform" !== c && E(a, c)) return "css";
     if (null != a[c]) return "object";
   }
-
   function X(a, c) {
     var d = V(c),
-        d = -1 < c.indexOf("scale") ? 1 : 0 + d;
+      d = -1 < c.indexOf("scale") ? 1 : 0 + d;
     a = a.style.transform;
     if (!a) return d;
-
     for (var b = [], f = [], n = [], k = /(\w+)\((.+?)\)/g; b = k.exec(a);) {
       f.push(b[1]), n.push(b[2]);
     }
-
     a = r(n, function (a, b) {
       return f[b] === c;
     });
     return a.length ? a[0] : d;
   }
-
   function K(a, c) {
     switch (J(a, c)) {
       case "transform":
         return X(a, c);
-
       case "css":
         return E(a, c);
-
       case "attribute":
         return a.getAttribute(c);
     }
-
     return a[c] || 0;
   }
-
   function L(a, c) {
     var d = /^(\*=|\+=|-=)/.exec(a);
     if (!d) return a;
     var b = y(a) || 0;
     c = parseFloat(c);
     a = parseFloat(a.replace(d[0], ""));
-
     switch (d[0][0]) {
       case "+":
         return c + a + b;
-
       case "-":
         return c - a + b;
-
       case "*":
         return c * a + b;
     }
   }
-
   function F(a, c) {
     return Math.sqrt(Math.pow(c.x - a.x, 2) + Math.pow(c.y - a.y, 2));
   }
-
   function M(a) {
     a = a.points;
-
     for (var c = 0, d, b = 0; b < a.numberOfItems; b++) {
       var f = a.getItem(b);
       0 < b && (c += F(d, f));
       d = f;
     }
-
     return c;
   }
-
   function N(a) {
     if (a.getTotalLength) return a.getTotalLength();
-
     switch (a.tagName.toLowerCase()) {
       case "circle":
         return 2 * Math.PI * a.getAttribute("r");
-
       case "rect":
         return 2 * a.getAttribute("width") + 2 * a.getAttribute("height");
-
       case "line":
         return F({
           x: a.getAttribute("x1"),
@@ -1871,50 +1613,40 @@ var $jscomp$this = this;
           x: a.getAttribute("x2"),
           y: a.getAttribute("y2")
         });
-
       case "polyline":
         return M(a);
-
       case "polygon":
         var c = a.points;
         return M(a) + F(c.getItem(c.numberOfItems - 1), c.getItem(0));
     }
   }
-
   function Y(a, c) {
     function d(b) {
       b = void 0 === b ? 0 : b;
       return a.el.getPointAtLength(1 <= c + b ? c + b : 0);
     }
-
     var b = d(),
-        f = d(-1),
-        n = d(1);
-
+      f = d(-1),
+      n = d(1);
     switch (a.property) {
       case "x":
         return b.x;
-
       case "y":
         return b.y;
-
       case "angle":
         return 180 * Math.atan2(n.y - f.y, n.x - f.x) / Math.PI;
     }
   }
-
   function O(a, c) {
     var d = /-?\d*\.?\d+/g,
-        b;
+      b;
     b = h.pth(a) ? a.totalLength : a;
-
     if (h.col(b)) {
       if (h.rgb(b)) {
         var f = /rgb\((\d+,\s*[\d]+,\s*[\d]+)\)/g.exec(b);
         b = f ? "rgba(" + f[1] + ",1)" : b;
       } else b = h.hex(b) ? T(b) : h.hsl(b) ? U(b) : void 0;
     } else f = (f = y(b)) ? b.substr(0, b.length - f.length) : b, b = c && !/\s/g.test(b) ? f + c : f;
-
     b += "";
     return {
       original: b,
@@ -1922,14 +1654,12 @@ var $jscomp$this = this;
       strings: h.str(a) || c ? b.split(d) : []
     };
   }
-
   function P(a) {
     a = a ? p(h.arr(a) ? a.map(m) : m(a)) : [];
     return r(a, function (a, d, b) {
       return b.indexOf(a) === d;
     });
   }
-
   function Z(a) {
     var c = P(a);
     return c.map(function (a, b) {
@@ -1940,17 +1670,14 @@ var $jscomp$this = this;
       };
     });
   }
-
   function aa(a, c) {
     var d = C(c);
-
     if (h.arr(a)) {
       var b = a.length;
       2 !== b || h.obj(a[0]) ? h.fnc(c.duration) || (d.duration = c.duration / b) : a = {
         value: a
       };
     }
-
     return m(a).map(function (a, b) {
       b = b ? 0 : c.delay;
       a = h.obj(a) && !h.pth(a) ? a : {
@@ -1962,11 +1689,9 @@ var $jscomp$this = this;
       return z(a, d);
     });
   }
-
   function ba(a, c) {
     var d = {},
-        b;
-
+      b;
     for (b in a) {
       var f = I(a[b], c);
       h.arr(f) && (f = f.map(function (a) {
@@ -1974,26 +1699,23 @@ var $jscomp$this = this;
       }), 1 === f.length && (f = f[0]));
       d[b] = f;
     }
-
     d.duration = parseFloat(d.duration);
     d.delay = parseFloat(d.delay);
     return d;
   }
-
   function ca(a) {
     return h.arr(a) ? A.apply(this, a) : Q[a];
   }
-
   function da(a, c) {
     var d;
     return a.tweens.map(function (b) {
       b = ba(b, c);
       var f = b.value,
-          e = K(c.target, a.name),
-          k = d ? d.to.original : e,
-          k = h.arr(f) ? f[0] : k,
-          w = L(h.arr(f) ? f[1] : f, k),
-          e = y(w) || y(k) || y(e);
+        e = K(c.target, a.name),
+        k = d ? d.to.original : e,
+        k = h.arr(f) ? f[0] : k,
+        w = L(h.arr(f) ? f[1] : f, k),
+        e = y(w) || y(k) || y(e);
       b.from = O(k, e);
       b.to = O(w, e);
       b.start = d ? d.end : a.offset;
@@ -2006,12 +1728,10 @@ var $jscomp$this = this;
       return d = b;
     });
   }
-
   function ea(a, c) {
     return r(p(a.map(function (a) {
       return c.map(function (b) {
         var c = J(a.target, b.name);
-
         if (c) {
           var d = da(b, a);
           b = {
@@ -2023,29 +1743,25 @@ var $jscomp$this = this;
             delay: d[0].delay
           };
         } else b = void 0;
-
         return b;
       });
     })), function (a) {
       return !h.und(a);
     });
   }
-
   function R(a, c, d, b) {
     var f = "delay" === a;
     return c.length ? (f ? Math.min : Math.max).apply(Math, c.map(function (b) {
       return b[a];
     })) : f ? b.delay : d.offset + b.delay + b.duration;
   }
-
   function fa(a) {
     var c = D(ga, a),
-        d = D(S, a),
-        b = Z(a.targets),
-        f = [],
-        e = z(c, d),
-        k;
-
+      d = D(S, a),
+      b = Z(a.targets),
+      f = [],
+      e = z(c, d),
+      k;
     for (k in a) {
       e.hasOwnProperty(k) || "targets" === k || f.push({
         name: k,
@@ -2053,7 +1769,6 @@ var $jscomp$this = this;
         tweens: aa(a[k], d)
       });
     }
-
     a = ea(b, f);
     return z(c, {
       children: [],
@@ -2063,38 +1778,33 @@ var $jscomp$this = this;
       delay: R("delay", a, c, d)
     });
   }
-
   function q(a) {
     function c() {
       return window.Promise && new Promise(function (a) {
         return p = a;
       });
     }
-
     function d(a) {
       return g.reversed ? g.duration - a : a;
     }
-
     function b(a) {
       for (var b = 0, c = {}, d = g.animations, f = d.length; b < f;) {
         var e = d[b],
-            k = e.animatable,
-            h = e.tweens,
-            n = h.length - 1,
-            l = h[n];
+          k = e.animatable,
+          h = e.tweens,
+          n = h.length - 1,
+          l = h[n];
         n && (l = r(h, function (b) {
           return a < b.end;
         })[0] || l);
-
         for (var h = Math.min(Math.max(a - l.start - l.delay, 0), l.duration) / l.duration, w = isNaN(h) ? 1 : l.easing(h, l.elasticity), h = l.to.strings, p = l.round, n = [], m = void 0, m = l.to.numbers.length, t = 0; t < m; t++) {
           var x = void 0,
-              x = l.to.numbers[t],
-              q = l.from.numbers[t],
-              x = l.isPath ? Y(l.value, w * x) : q + w * (x - q);
+            x = l.to.numbers[t],
+            q = l.from.numbers[t],
+            x = l.isPath ? Y(l.value, w * x) : q + w * (x - q);
           p && (l.isColor && 2 < t || (x = Math.round(x * p) / p));
           n.push(x);
         }
-
         if (l = h.length) for (m = h[0], w = 0; w < l; w++) {
           p = h[w + 1], t = n[w], isNaN(t) || (m = p ? m + (t + p) : m + (t + " "));
         } else m = n[0];
@@ -2102,57 +1812,49 @@ var $jscomp$this = this;
         e.currentValue = m;
         b++;
       }
-
       if (b = Object.keys(c).length) for (d = 0; d < b; d++) {
         H || (H = E(document.body, "transform") ? "transform" : "-webkit-transform"), g.animatables[d].target.style[H] = c[d].join(" ");
       }
       g.currentTime = a;
       g.progress = a / g.duration * 100;
     }
-
     function f(a) {
       if (g[a]) g[a](g);
     }
-
     function e() {
       g.remaining && !0 !== g.remaining && g.remaining--;
     }
-
     function k(a) {
       var k = g.duration,
-          n = g.offset,
-          w = n + g.delay,
-          r = g.currentTime,
-          x = g.reversed,
-          q = d(a);
-
+        n = g.offset,
+        w = n + g.delay,
+        r = g.currentTime,
+        x = g.reversed,
+        q = d(a);
       if (g.children.length) {
         var u = g.children,
-            v = u.length;
+          v = u.length;
         if (q >= g.currentTime) for (var G = 0; G < v; G++) {
           u[G].seek(q);
         } else for (; v--;) {
           u[v].seek(q);
         }
       }
-
       if (q >= w || !k) g.began || (g.began = !0, f("begin")), f("run");
       if (q > n && q < k) b(q);else if (q <= n && 0 !== r && (b(0), x && e()), q >= k && r !== k || !k) b(k), x || e();
       f("update");
       a >= k && (g.remaining ? (t = h, "alternate" === g.direction && (g.reversed = !g.reversed)) : (g.pause(), g.completed || (g.completed = !0, f("complete"), "Promise" in window && (p(), m = c()))), l = 0);
     }
-
     a = void 0 === a ? {} : a;
     var h,
-        t,
-        l = 0,
-        p = null,
-        m = c(),
-        g = fa(a);
-
+      t,
+      l = 0,
+      p = null,
+      m = c(),
+      g = fa(a);
     g.reset = function () {
       var a = g.direction,
-          c = g.loop;
+        c = g.loop;
       g.currentTime = 0;
       g.progress = 0;
       g.paused = !0;
@@ -2161,246 +1863,217 @@ var $jscomp$this = this;
       g.reversed = "reverse" === a;
       g.remaining = "alternate" === a && 1 === c ? 2 : c;
       b(0);
-
       for (a = g.children.length; a--;) {
         g.children[a].reset();
       }
     };
-
     g.tick = function (a) {
       h = a;
       t || (t = h);
       k((l + h - t) * q.speed);
     };
-
     g.seek = function (a) {
       k(d(a));
     };
-
     g.pause = function () {
       var a = v.indexOf(g);
       -1 < a && v.splice(a, 1);
       g.paused = !0;
     };
-
     g.play = function () {
       g.paused && (g.paused = !1, t = 0, l = d(g.currentTime), v.push(g), B || ia());
     };
-
     g.reverse = function () {
       g.reversed = !g.reversed;
       t = 0;
       l = d(g.currentTime);
     };
-
     g.restart = function () {
       g.pause();
       g.reset();
       g.play();
     };
-
     g.finished = m;
     g.reset();
     g.autoplay && g.play();
     return g;
   }
-
   var ga = {
-    update: void 0,
-    begin: void 0,
-    run: void 0,
-    complete: void 0,
-    loop: 1,
-    direction: "normal",
-    autoplay: !0,
-    offset: 0
-  },
-      S = {
-    duration: 1E3,
-    delay: 0,
-    easing: "easeOutElastic",
-    elasticity: 500,
-    round: 0
-  },
-      W = "translateX translateY translateZ rotate rotateX rotateY rotateZ scale scaleX scaleY scaleZ skewX skewY perspective".split(" "),
-      H,
-      h = {
-    arr: function arr(a) {
-      return Array.isArray(a);
+      update: void 0,
+      begin: void 0,
+      run: void 0,
+      complete: void 0,
+      loop: 1,
+      direction: "normal",
+      autoplay: !0,
+      offset: 0
     },
-    obj: function obj(a) {
-      return -1 < Object.prototype.toString.call(a).indexOf("Object");
+    S = {
+      duration: 1E3,
+      delay: 0,
+      easing: "easeOutElastic",
+      elasticity: 500,
+      round: 0
     },
-    pth: function pth(a) {
-      return h.obj(a) && a.hasOwnProperty("totalLength");
+    W = "translateX translateY translateZ rotate rotateX rotateY rotateZ scale scaleX scaleY scaleZ skewX skewY perspective".split(" "),
+    H,
+    h = {
+      arr: function arr(a) {
+        return Array.isArray(a);
+      },
+      obj: function obj(a) {
+        return -1 < Object.prototype.toString.call(a).indexOf("Object");
+      },
+      pth: function pth(a) {
+        return h.obj(a) && a.hasOwnProperty("totalLength");
+      },
+      svg: function svg(a) {
+        return a instanceof SVGElement;
+      },
+      dom: function dom(a) {
+        return a.nodeType || h.svg(a);
+      },
+      str: function str(a) {
+        return "string" === typeof a;
+      },
+      fnc: function fnc(a) {
+        return "function" === typeof a;
+      },
+      und: function und(a) {
+        return "undefined" === typeof a;
+      },
+      hex: function hex(a) {
+        return /(^#[0-9A-F]{6}$)|(^#[0-9A-F]{3}$)/i.test(a);
+      },
+      rgb: function rgb(a) {
+        return /^rgb/.test(a);
+      },
+      hsl: function hsl(a) {
+        return /^hsl/.test(a);
+      },
+      col: function col(a) {
+        return h.hex(a) || h.rgb(a) || h.hsl(a);
+      }
     },
-    svg: function svg(a) {
-      return a instanceof SVGElement;
-    },
-    dom: function dom(a) {
-      return a.nodeType || h.svg(a);
-    },
-    str: function str(a) {
-      return "string" === typeof a;
-    },
-    fnc: function fnc(a) {
-      return "function" === typeof a;
-    },
-    und: function und(a) {
-      return "undefined" === typeof a;
-    },
-    hex: function hex(a) {
-      return /(^#[0-9A-F]{6}$)|(^#[0-9A-F]{3}$)/i.test(a);
-    },
-    rgb: function rgb(a) {
-      return /^rgb/.test(a);
-    },
-    hsl: function hsl(a) {
-      return /^hsl/.test(a);
-    },
-    col: function col(a) {
-      return h.hex(a) || h.rgb(a) || h.hsl(a);
-    }
-  },
-      A = function () {
-    function a(a, d, b) {
-      return (((1 - 3 * b + 3 * d) * a + (3 * b - 6 * d)) * a + 3 * d) * a;
-    }
-
-    return function (c, d, b, f) {
-      if (0 <= c && 1 >= c && 0 <= b && 1 >= b) {
-        var e = new Float32Array(11);
-        if (c !== d || b !== f) for (var k = 0; 11 > k; ++k) {
-          e[k] = a(.1 * k, c, b);
-        }
-        return function (k) {
-          if (c === d && b === f) return k;
-          if (0 === k) return 0;
-          if (1 === k) return 1;
-
-          for (var h = 0, l = 1; 10 !== l && e[l] <= k; ++l) {
-            h += .1;
+    A = function () {
+      function a(a, d, b) {
+        return (((1 - 3 * b + 3 * d) * a + (3 * b - 6 * d)) * a + 3 * d) * a;
+      }
+      return function (c, d, b, f) {
+        if (0 <= c && 1 >= c && 0 <= b && 1 >= b) {
+          var e = new Float32Array(11);
+          if (c !== d || b !== f) for (var k = 0; 11 > k; ++k) {
+            e[k] = a(.1 * k, c, b);
           }
-
-          --l;
-          var l = h + (k - e[l]) / (e[l + 1] - e[l]) * .1,
-              n = 3 * (1 - 3 * b + 3 * c) * l * l + 2 * (3 * b - 6 * c) * l + 3 * c;
-
-          if (.001 <= n) {
-            for (h = 0; 4 > h; ++h) {
-              n = 3 * (1 - 3 * b + 3 * c) * l * l + 2 * (3 * b - 6 * c) * l + 3 * c;
-              if (0 === n) break;
-              var m = a(l, c, b) - k,
-                  l = l - m / n;
+          return function (k) {
+            if (c === d && b === f) return k;
+            if (0 === k) return 0;
+            if (1 === k) return 1;
+            for (var h = 0, l = 1; 10 !== l && e[l] <= k; ++l) {
+              h += .1;
             }
-
-            k = l;
-          } else if (0 === n) k = l;else {
-            var l = h,
+            --l;
+            var l = h + (k - e[l]) / (e[l + 1] - e[l]) * .1,
+              n = 3 * (1 - 3 * b + 3 * c) * l * l + 2 * (3 * b - 6 * c) * l + 3 * c;
+            if (.001 <= n) {
+              for (h = 0; 4 > h; ++h) {
+                n = 3 * (1 - 3 * b + 3 * c) * l * l + 2 * (3 * b - 6 * c) * l + 3 * c;
+                if (0 === n) break;
+                var m = a(l, c, b) - k,
+                  l = l - m / n;
+              }
+              k = l;
+            } else if (0 === n) k = l;else {
+              var l = h,
                 h = h + .1,
                 g = 0;
-
-            do {
-              m = l + (h - l) / 2, n = a(m, c, b) - k, 0 < n ? h = m : l = m;
-            } while (1e-7 < Math.abs(n) && 10 > ++g);
-
-            k = m;
-          }
-
-          return a(k, d, f);
-        };
+              do {
+                m = l + (h - l) / 2, n = a(m, c, b) - k, 0 < n ? h = m : l = m;
+              } while (1e-7 < Math.abs(n) && 10 > ++g);
+              k = m;
+            }
+            return a(k, d, f);
+          };
+        }
+      };
+    }(),
+    Q = function () {
+      function a(a, b) {
+        return 0 === a || 1 === a ? a : -Math.pow(2, 10 * (a - 1)) * Math.sin(2 * (a - 1 - b / (2 * Math.PI) * Math.asin(1)) * Math.PI / b);
       }
-    };
-  }(),
-      Q = function () {
-    function a(a, b) {
-      return 0 === a || 1 === a ? a : -Math.pow(2, 10 * (a - 1)) * Math.sin(2 * (a - 1 - b / (2 * Math.PI) * Math.asin(1)) * Math.PI / b);
-    }
-
-    var c = "Quad Cubic Quart Quint Sine Expo Circ Back Elastic".split(" "),
+      var c = "Quad Cubic Quart Quint Sine Expo Circ Back Elastic".split(" "),
         d = {
-      In: [[.55, .085, .68, .53], [.55, .055, .675, .19], [.895, .03, .685, .22], [.755, .05, .855, .06], [.47, 0, .745, .715], [.95, .05, .795, .035], [.6, .04, .98, .335], [.6, -.28, .735, .045], a],
-      Out: [[.25, .46, .45, .94], [.215, .61, .355, 1], [.165, .84, .44, 1], [.23, 1, .32, 1], [.39, .575, .565, 1], [.19, 1, .22, 1], [.075, .82, .165, 1], [.175, .885, .32, 1.275], function (b, c) {
-        return 1 - a(1 - b, c);
-      }],
-      InOut: [[.455, .03, .515, .955], [.645, .045, .355, 1], [.77, 0, .175, 1], [.86, 0, .07, 1], [.445, .05, .55, .95], [1, 0, 0, 1], [.785, .135, .15, .86], [.68, -.55, .265, 1.55], function (b, c) {
-        return .5 > b ? a(2 * b, c) / 2 : 1 - a(-2 * b + 2, c) / 2;
-      }]
-    },
+          In: [[.55, .085, .68, .53], [.55, .055, .675, .19], [.895, .03, .685, .22], [.755, .05, .855, .06], [.47, 0, .745, .715], [.95, .05, .795, .035], [.6, .04, .98, .335], [.6, -.28, .735, .045], a],
+          Out: [[.25, .46, .45, .94], [.215, .61, .355, 1], [.165, .84, .44, 1], [.23, 1, .32, 1], [.39, .575, .565, 1], [.19, 1, .22, 1], [.075, .82, .165, 1], [.175, .885, .32, 1.275], function (b, c) {
+            return 1 - a(1 - b, c);
+          }],
+          InOut: [[.455, .03, .515, .955], [.645, .045, .355, 1], [.77, 0, .175, 1], [.86, 0, .07, 1], [.445, .05, .55, .95], [1, 0, 0, 1], [.785, .135, .15, .86], [.68, -.55, .265, 1.55], function (b, c) {
+            return .5 > b ? a(2 * b, c) / 2 : 1 - a(-2 * b + 2, c) / 2;
+          }]
+        },
         b = {
-      linear: A(.25, .25, .75, .75)
-    },
+          linear: A(.25, .25, .75, .75)
+        },
         f = {},
         e;
-
-    for (e in d) {
-      f.type = e, d[f.type].forEach(function (a) {
-        return function (d, f) {
-          b["ease" + a.type + c[f]] = h.fnc(d) ? d : A.apply($jscomp$this, d);
+      for (e in d) {
+        f.type = e, d[f.type].forEach(function (a) {
+          return function (d, f) {
+            b["ease" + a.type + c[f]] = h.fnc(d) ? d : A.apply($jscomp$this, d);
+          };
+        }(f)), f = {
+          type: f.type
         };
-      }(f)), f = {
-        type: f.type
-      };
-    }
-
-    return b;
-  }(),
-      ha = {
-    css: function css(a, c, d) {
-      return a.style[c] = d;
+      }
+      return b;
+    }(),
+    ha = {
+      css: function css(a, c, d) {
+        return a.style[c] = d;
+      },
+      attribute: function attribute(a, c, d) {
+        return a.setAttribute(c, d);
+      },
+      object: function object(a, c, d) {
+        return a[c] = d;
+      },
+      transform: function transform(a, c, d, b, f) {
+        b[f] || (b[f] = []);
+        b[f].push(c + "(" + d + ")");
+      }
     },
-    attribute: function attribute(a, c, d) {
-      return a.setAttribute(c, d);
-    },
-    object: function object(a, c, d) {
-      return a[c] = d;
-    },
-    transform: function transform(a, c, d, b, f) {
-      b[f] || (b[f] = []);
-      b[f].push(c + "(" + d + ")");
-    }
-  },
-      v = [],
-      B = 0,
-      ia = function () {
-    function a() {
-      B = requestAnimationFrame(c);
-    }
-
-    function c(c) {
-      var b = v.length;
-
-      if (b) {
-        for (var d = 0; d < b;) {
-          v[d] && v[d].tick(c), d++;
-        }
-
-        a();
-      } else cancelAnimationFrame(B), B = 0;
-    }
-
-    return a;
-  }();
-
+    v = [],
+    B = 0,
+    ia = function () {
+      function a() {
+        B = requestAnimationFrame(c);
+      }
+      function c(c) {
+        var b = v.length;
+        if (b) {
+          for (var d = 0; d < b;) {
+            v[d] && v[d].tick(c), d++;
+          }
+          a();
+        } else cancelAnimationFrame(B), B = 0;
+      }
+      return a;
+    }();
   q.version = "2.2.0";
   q.speed = 1;
   q.running = v;
-
   q.remove = function (a) {
     a = P(a);
-
     for (var c = v.length; c--;) {
       for (var d = v[c], b = d.animations, f = b.length; f--;) {
         u(a, b[f].animatable.target) && (b.splice(f, 1), b.length || d.pause());
       }
     }
   };
-
   q.getValue = K;
-
   q.path = function (a, c) {
     var d = h.str(a) ? e(a)[0] : a,
-        b = c || 100;
+      b = c || 100;
     return function (a) {
       return {
         el: d,
@@ -2409,21 +2082,17 @@ var $jscomp$this = this;
       };
     };
   };
-
   q.setDashoffset = function (a) {
     var c = N(a);
     a.setAttribute("stroke-dasharray", c);
     return c;
   };
-
   q.bezier = A;
   q.easings = Q;
-
   q.timeline = function (a) {
     var c = q(a);
     c.pause();
     c.duration = 0;
-
     c.add = function (d) {
       c.children.forEach(function (a) {
         a.began = !0;
@@ -2451,19 +2120,14 @@ var $jscomp$this = this;
       c.autoplay && c.restart();
       return c;
     };
-
     return c;
   };
-
   q.random = function (a, c) {
     return Math.floor(Math.random() * (c - a + 1)) + a;
   };
-
   return q;
 });
-
 ;
-
 (function ($, anim) {
   'use strict';
 
@@ -2476,6 +2140,7 @@ var $jscomp$this = this;
     inDuration: 300,
     outDuration: 300
   };
+
   /**
    * @class
    *
@@ -2483,20 +2148,18 @@ var $jscomp$this = this;
 
   var Collapsible = function (_Component) {
     _inherits(Collapsible, _Component);
+
     /**
      * Construct Collapsible instance
      * @constructor
      * @param {Element} el
      * @param {Object} options
      */
-
-
     function Collapsible(el, options) {
       _classCallCheck(this, Collapsible);
-
       var _this3 = _possibleConstructorReturn(this, (Collapsible.__proto__ || Object.getPrototypeOf(Collapsible)).call(this, Collapsible, el, options));
-
       _this3.el.M_Collapsible = _this3;
+
       /**
        * Options for the collapsible
        * @member Collapsible#options
@@ -2508,18 +2171,15 @@ var $jscomp$this = this;
        * @prop {Number} inDuration - Transition in duration in milliseconds.
        * @prop {Number} outDuration - Transition duration in milliseconds.
        */
+      _this3.options = $.extend({}, Collapsible.defaults, options);
 
-      _this3.options = $.extend({}, Collapsible.defaults, options); // Setup tab indices
-
+      // Setup tab indices
       _this3.$headers = _this3.$el.children('li').children('.collapsible-header');
-
       _this3.$headers.attr('tabindex', 0);
+      _this3._setupEventHandlers();
 
-      _this3._setupEventHandlers(); // Open first active
-
-
+      // Open first active
       var $activeBodies = _this3.$el.children('li.active').children('.collapsible-body');
-
       if (_this3.options.accordion) {
         // Handle Accordion
         $activeBodies.first().css('display', 'block');
@@ -2527,30 +2187,25 @@ var $jscomp$this = this;
         // Handle Expandables
         $activeBodies.css('display', 'block');
       }
-
       return _this3;
     }
-
     _createClass(Collapsible, [{
       key: "destroy",
-
       /**
        * Teardown component
        */
       value: function destroy() {
         this._removeEventHandlers();
-
         this.el.M_Collapsible = undefined;
       }
+
       /**
        * Setup Event Handlers
        */
-
     }, {
       key: "_setupEventHandlers",
       value: function _setupEventHandlers() {
         var _this4 = this;
-
         this._handleCollapsibleClickBound = this._handleCollapsibleClick.bind(this);
         this._handleCollapsibleKeydownBound = this._handleCollapsibleKeydown.bind(this);
         this.el.addEventListener('click', this._handleCollapsibleClickBound);
@@ -2558,39 +2213,35 @@ var $jscomp$this = this;
           header.addEventListener('keydown', _this4._handleCollapsibleKeydownBound);
         });
       }
+
       /**
        * Remove Event Handlers
        */
-
     }, {
       key: "_removeEventHandlers",
       value: function _removeEventHandlers() {
         var _this5 = this;
-
         this.el.removeEventListener('click', this._handleCollapsibleClickBound);
         this.$headers.each(function (header) {
           header.removeEventListener('keydown', _this5._handleCollapsibleKeydownBound);
         });
       }
+
       /**
        * Handle Collapsible Click
        * @param {Event} e
        */
-
     }, {
       key: "_handleCollapsibleClick",
       value: function _handleCollapsibleClick(e) {
         var $header = $(e.target).closest('.collapsible-header');
-
         if (e.target && $header.length) {
           var $collapsible = $header.closest('.collapsible');
-
           if ($collapsible[0] === this.el) {
             var $collapsibleLi = $header.closest('li');
             var $collapsibleLis = $collapsible.children('li');
             var isActive = $collapsibleLi[0].classList.contains('active');
             var index = $collapsibleLis.index($collapsibleLi);
-
             if (isActive) {
               this.close(index);
             } else {
@@ -2599,11 +2250,11 @@ var $jscomp$this = this;
           }
         }
       }
+
       /**
        * Handle Collapsible Keydown
        * @param {Event} e
        */
-
     }, {
       key: "_handleCollapsibleKeydown",
       value: function _handleCollapsibleKeydown(e) {
@@ -2611,18 +2262,16 @@ var $jscomp$this = this;
           this._handleCollapsibleClickBound(e);
         }
       }
+
       /**
        * Animate in collapsible slide
        * @param {Number} index - 0th index of slide
        */
-
     }, {
       key: "_animateIn",
       value: function _animateIn(index) {
         var _this6 = this;
-
         var $collapsibleLi = this.$el.children('li').eq(index);
-
         if ($collapsibleLi.length) {
           var $body = $collapsibleLi.children('.collapsible-body');
           anim.remove($body[0]);
@@ -2653,8 +2302,9 @@ var $jscomp$this = this;
                 paddingTop: '',
                 paddingBottom: '',
                 height: ''
-              }); // onOpenEnd callback
+              });
 
+              // onOpenEnd callback
               if (typeof _this6.options.onOpenEnd === 'function') {
                 _this6.options.onOpenEnd.call(_this6, $collapsibleLi[0]);
               }
@@ -2662,18 +2312,16 @@ var $jscomp$this = this;
           });
         }
       }
+
       /**
        * Animate out collapsible slide
        * @param {Number} index - 0th index of slide to open
        */
-
     }, {
       key: "_animateOut",
       value: function _animateOut(index) {
         var _this7 = this;
-
         var $collapsibleLi = this.$el.children('li').eq(index);
-
         if ($collapsibleLi.length) {
           var $body = $collapsibleLi.children('.collapsible-body');
           anim.remove($body[0]);
@@ -2691,8 +2339,9 @@ var $jscomp$this = this;
                 overflow: '',
                 padding: '',
                 display: ''
-              }); // onCloseEnd callback
+              });
 
+              // onCloseEnd callback
               if (typeof _this7.options.onCloseEnd === 'function') {
                 _this7.options.onCloseEnd.call(_this7, $collapsibleLi[0]);
               }
@@ -2700,60 +2349,54 @@ var $jscomp$this = this;
           });
         }
       }
+
       /**
        * Open Collapsible
        * @param {Number} index - 0th index of slide
        */
-
     }, {
       key: "open",
       value: function open(index) {
         var _this8 = this;
-
         var $collapsibleLi = this.$el.children('li').eq(index);
-
         if ($collapsibleLi.length && !$collapsibleLi[0].classList.contains('active')) {
           // onOpenStart callback
           if (typeof this.options.onOpenStart === 'function') {
             this.options.onOpenStart.call(this, $collapsibleLi[0]);
-          } // Handle accordion behavior
+          }
 
-
+          // Handle accordion behavior
           if (this.options.accordion) {
             var $collapsibleLis = this.$el.children('li');
             var $activeLis = this.$el.children('li.active');
             $activeLis.each(function (el) {
               var index = $collapsibleLis.index($(el));
-
               _this8.close(index);
             });
-          } // Animate in
+          }
 
-
+          // Animate in
           $collapsibleLi[0].classList.add('active');
-
           this._animateIn(index);
         }
       }
+
       /**
        * Close Collapsible
        * @param {Number} index - 0th index of slide
        */
-
     }, {
       key: "close",
       value: function close(index) {
         var $collapsibleLi = this.$el.children('li').eq(index);
-
         if ($collapsibleLi.length && $collapsibleLi[0].classList.contains('active')) {
           // onCloseStart callback
           if (typeof this.options.onCloseStart === 'function') {
             this.options.onCloseStart.call(this, $collapsibleLi[0]);
-          } // Animate out
+          }
 
-
+          // Animate out
           $collapsibleLi[0].classList.remove('active');
-
           this._animateOut(index);
         }
       }
@@ -2762,10 +2405,10 @@ var $jscomp$this = this;
       value: function init(els, options) {
         return _get(Collapsible.__proto__ || Object.getPrototypeOf(Collapsible), "init", this).call(this, this, els, options);
       }
+
       /**
        * Get Instance
        */
-
     }, {
       key: "getInstance",
       value: function getInstance(el) {
@@ -2778,19 +2421,14 @@ var $jscomp$this = this;
         return _defaults;
       }
     }]);
-
     return Collapsible;
   }(Component);
-
   M.Collapsible = Collapsible;
-
   if (M.jQueryLoaded) {
     M.initializeJqueryWrapper(Collapsible, 'collapsible', 'M_Collapsible');
   }
 })(cash, M.anime);
-
 ;
-
 (function ($, anim) {
   'use strict';
 
@@ -2810,25 +2448,22 @@ var $jscomp$this = this;
     onCloseEnd: null,
     onItemClick: null
   };
+
   /**
    * @class
    */
 
   var Dropdown = function (_Component2) {
     _inherits(Dropdown, _Component2);
-
     function Dropdown(el, options) {
       _classCallCheck(this, Dropdown);
-
       var _this9 = _possibleConstructorReturn(this, (Dropdown.__proto__ || Object.getPrototypeOf(Dropdown)).call(this, Dropdown, el, options));
-
       _this9.el.M_Dropdown = _this9;
-
       Dropdown._dropdowns.push(_this9);
-
       _this9.id = M.getIdFromTrigger(el);
       _this9.dropdownEl = document.getElementById(_this9.id);
       _this9.$dropdownEl = $(_this9.dropdownEl);
+
       /**
        * Options for the dropdown
        * @member Dropdown#options
@@ -2846,97 +2481,91 @@ var $jscomp$this = this;
        * @prop {Function} onCloseStart - Function called when dropdown starts closing
        * @prop {Function} onCloseEnd - Function called when dropdown finishes closing
        */
-
       _this9.options = $.extend({}, Dropdown.defaults, options);
+
       /**
        * Describes open/close state of dropdown
        * @type {Boolean}
        */
-
       _this9.isOpen = false;
+
       /**
        * Describes if dropdown content is scrollable
        * @type {Boolean}
        */
-
       _this9.isScrollable = false;
+
       /**
        * Describes if touch moving on dropdown content
        * @type {Boolean}
        */
-
       _this9.isTouchMoving = false;
       _this9.focusedIndex = -1;
-      _this9.filterQuery = []; // Move dropdown-content after dropdown-trigger
+      _this9.filterQuery = [];
 
+      // Move dropdown-content after dropdown-trigger
       if (!!_this9.options.container) {
         $(_this9.options.container).append(_this9.dropdownEl);
       } else {
         _this9.$el.after(_this9.dropdownEl);
       }
-
       _this9._makeDropdownFocusable();
-
       _this9._resetFilterQueryBound = _this9._resetFilterQuery.bind(_this9);
       _this9._handleDocumentClickBound = _this9._handleDocumentClick.bind(_this9);
       _this9._handleDocumentTouchmoveBound = _this9._handleDocumentTouchmove.bind(_this9);
       _this9._handleDropdownClickBound = _this9._handleDropdownClick.bind(_this9);
       _this9._handleDropdownKeydownBound = _this9._handleDropdownKeydown.bind(_this9);
       _this9._handleTriggerKeydownBound = _this9._handleTriggerKeydown.bind(_this9);
-
       _this9._setupEventHandlers();
-
       return _this9;
     }
-
     _createClass(Dropdown, [{
       key: "destroy",
-
       /**
        * Teardown component
        */
       value: function destroy() {
         this._resetDropdownStyles();
-
         this._removeEventHandlers();
-
         Dropdown._dropdowns.splice(Dropdown._dropdowns.indexOf(this), 1);
-
         this.el.M_Dropdown = undefined;
       }
+
       /**
        * Setup Event Handlers
        */
-
     }, {
       key: "_setupEventHandlers",
       value: function _setupEventHandlers() {
         // Trigger keydown handler
-        this.el.addEventListener('keydown', this._handleTriggerKeydownBound); // Item click handler
+        this.el.addEventListener('keydown', this._handleTriggerKeydownBound);
 
-        this.dropdownEl.addEventListener('click', this._handleDropdownClickBound); // Hover event handlers
+        // Item click handler
+        this.dropdownEl.addEventListener('click', this._handleDropdownClickBound);
 
+        // Hover event handlers
         if (this.options.hover) {
           this._handleMouseEnterBound = this._handleMouseEnter.bind(this);
           this.el.addEventListener('mouseenter', this._handleMouseEnterBound);
           this._handleMouseLeaveBound = this._handleMouseLeave.bind(this);
           this.el.addEventListener('mouseleave', this._handleMouseLeaveBound);
-          this.dropdownEl.addEventListener('mouseleave', this._handleMouseLeaveBound); // Click event handlers
+          this.dropdownEl.addEventListener('mouseleave', this._handleMouseLeaveBound);
+
+          // Click event handlers
         } else {
           this._handleClickBound = this._handleClick.bind(this);
           this.el.addEventListener('click', this._handleClickBound);
         }
       }
+
       /**
        * Remove Event Handlers
        */
-
     }, {
       key: "_removeEventHandlers",
       value: function _removeEventHandlers() {
         this.el.removeEventListener('keydown', this._handleTriggerKeydownBound);
         this.dropdownEl.removeEventListener('click', this._handleDropdownClickBound);
-
         if (this.options.hover) {
           this.el.removeEventListener('mouseenter', this._handleMouseEnterBound);
           this.el.removeEventListener('mouseleave', this._handleMouseLeaveBound);
@@ -2981,12 +2610,11 @@ var $jscomp$this = this;
         var leaveToDropdownContent = !!$(toEl).closest('.dropdown-content').length;
         var leaveToActiveDropdownTrigger = false;
         var $closestTrigger = $(toEl).closest('.dropdown-trigger');
-
         if ($closestTrigger.length && !!$closestTrigger[0].M_Dropdown && $closestTrigger[0].M_Dropdown.isOpen) {
           leaveToActiveDropdownTrigger = true;
-        } // Close hover dropdown if mouse did not leave to either active dropdown-trigger or dropdown-content
+        }
 
-
+        // Close hover dropdown if mouse did not leave to either active dropdown-trigger or dropdown-content
         if (!leaveToActiveDropdownTrigger && !leaveToDropdownContent) {
           this.close();
         }
@@ -2995,9 +2623,7 @@ var $jscomp$this = this;
       key: "_handleDocumentClick",
       value: function _handleDocumentClick(e) {
         var _this10 = this;
-
         var $target = $(e.target);
-
         if (this.options.closeOnClick && $target.closest('.dropdown-content').length && !this.isTouchMoving) {
           // isTouchMoving to check if scrolling on mobile.
           setTimeout(function () {
@@ -3008,7 +2634,6 @@ var $jscomp$this = this;
             _this10.close();
           }, 0);
         }
-
         this.isTouchMoving = false;
       }
     }, {
@@ -3020,25 +2645,24 @@ var $jscomp$this = this;
           this.open();
         }
       }
+
       /**
        * Handle Document Touchmove
        * @param {Event} e
        */
-
     }, {
       key: "_handleDocumentTouchmove",
       value: function _handleDocumentTouchmove(e) {
         var $target = $(e.target);
-
         if ($target.closest('.dropdown-content').length) {
           this.isTouchMoving = true;
         }
       }
+
       /**
        * Handle Dropdown Click
        * @param {Event} e
        */
-
     }, {
       key: "_handleDropdownClick",
       value: function _handleDropdownClick(e) {
@@ -3048,78 +2672,75 @@ var $jscomp$this = this;
           this.options.onItemClick.call(this, itemEl);
         }
       }
+
       /**
        * Handle Dropdown Keydown
        * @param {Event} e
        */
-
     }, {
       key: "_handleDropdownKeydown",
       value: function _handleDropdownKeydown(e) {
         if (e.which === M.keys.TAB) {
           e.preventDefault();
-          this.close(); // Navigate down dropdown list
+          this.close();
+
+          // Navigate down dropdown list
         } else if ((e.which === M.keys.ARROW_DOWN || e.which === M.keys.ARROW_UP) && this.isOpen) {
           e.preventDefault();
           var direction = e.which === M.keys.ARROW_DOWN ? 1 : -1;
           var newFocusedIndex = this.focusedIndex;
           var foundNewIndex = false;
-
           do {
             newFocusedIndex = newFocusedIndex + direction;
-
             if (!!this.dropdownEl.children[newFocusedIndex] && this.dropdownEl.children[newFocusedIndex].tabIndex !== -1) {
               foundNewIndex = true;
               break;
             }
           } while (newFocusedIndex < this.dropdownEl.children.length && newFocusedIndex >= 0);
-
           if (foundNewIndex) {
             this.focusedIndex = newFocusedIndex;
-
             this._focusFocusedItem();
-          } // ENTER selects choice on focused item
+          }
 
+          // ENTER selects choice on focused item
         } else if (e.which === M.keys.ENTER && this.isOpen) {
           // Search for <a> and <button>
           var focusedElement = this.dropdownEl.children[this.focusedIndex];
-          var $activatableElement = $(focusedElement).find('a, button').first(); // Click a or button tag if exists, otherwise click li tag
+          var $activatableElement = $(focusedElement).find('a, button').first();
 
+          // Click a or button tag if exists, otherwise click li tag
           if (!!$activatableElement.length) {
             $activatableElement[0].click();
           } else if (!!focusedElement) {
             focusedElement.click();
-          } // Close dropdown on ESC
+          }
 
+          // Close dropdown on ESC
         } else if (e.which === M.keys.ESC && this.isOpen) {
           e.preventDefault();
           this.close();
-        } // CASE WHEN USER TYPE LETTERS
+        }
 
-
+        // CASE WHEN USER TYPE LETTERS
         var letter = String.fromCharCode(e.which).toLowerCase(),
-            nonLetters = [9, 13, 27, 38, 40];
-
+          nonLetters = [9, 13, 27, 38, 40];
         if (letter && nonLetters.indexOf(e.which) === -1) {
           this.filterQuery.push(letter);
           var string = this.filterQuery.join(''),
-              newOptionEl = $(this.dropdownEl).find('li').filter(function (el) {
-            return $(el).text().toLowerCase().indexOf(string) === 0;
-          })[0];
-
+            newOptionEl = $(this.dropdownEl).find('li').filter(function (el) {
+              return $(el).text().toLowerCase().indexOf(string) === 0;
+            })[0];
           if (newOptionEl) {
             this.focusedIndex = $(newOptionEl).index();
-
             this._focusFocusedItem();
           }
         }
-
         this.filterTimeout = setTimeout(this._resetFilterQueryBound, 1000);
       }
+
       /**
        * Setup dropdown
        */
-
     }, {
       key: "_resetFilterQuery",
       value: function _resetFilterQuery() {
@@ -3143,8 +2764,9 @@ var $jscomp$this = this;
       key: "_makeDropdownFocusable",
       value: function _makeDropdownFocusable() {
         // Needed for arrow key navigation
-        this.dropdownEl.tabIndex = 0; // Only set tabindex if it hasn't been set by user
+        this.dropdownEl.tabIndex = 0;
 
+        // Only set tabindex if it hasn't been set by user
         $(this.dropdownEl).children().each(function (el) {
           if (!el.getAttribute('tabindex')) {
             el.setAttribute('tabindex', 0);
@@ -3173,22 +2795,24 @@ var $jscomp$this = this;
           top: idealYPos,
           height: idealHeight,
           width: idealWidth
-        }; // Countainer here will be closest ancestor with overflow: hidden
+        };
 
+        // Countainer here will be closest ancestor with overflow: hidden
         var closestOverflowParent = !!this.dropdownEl.offsetParent ? this.dropdownEl.offsetParent : this.dropdownEl.parentNode;
         var alignments = M.checkPossibleAlignments(this.el, closestOverflowParent, dropdownBounds, this.options.coverTrigger ? 0 : triggerBRect.height);
         var verticalAlignment = 'top';
         var horizontalAlignment = this.options.alignment;
-        idealYPos += this.options.coverTrigger ? 0 : triggerBRect.height; // Reset isScrollable
+        idealYPos += this.options.coverTrigger ? 0 : triggerBRect.height;
 
+        // Reset isScrollable
         this.isScrollable = false;
-
         if (!alignments.top) {
           if (alignments.bottom) {
             verticalAlignment = 'bottom';
           } else {
-            this.isScrollable = true; // Determine which side has most space and cutoff at correct height
+            this.isScrollable = true;
 
+            // Determine which side has most space and cutoff at correct height
             if (alignments.spaceOnTop > alignments.spaceOnBottom) {
               verticalAlignment = 'bottom';
               idealHeight += alignments.spaceOnTop;
@@ -3197,12 +2821,11 @@ var $jscomp$this = this;
               idealHeight += alignments.spaceOnBottom;
             }
           }
-        } // If preferred horizontal alignment is possible
+        }
 
-
+        // If preferred horizontal alignment is possible
         if (!alignments[horizontalAlignment]) {
           var oppositeAlignment = horizontalAlignment === 'left' ? 'right' : 'left';
-
           if (alignments[oppositeAlignment]) {
             horizontalAlignment = oppositeAlignment;
           } else {
@@ -3217,15 +2840,12 @@ var $jscomp$this = this;
             }
           }
         }
-
         if (verticalAlignment === 'bottom') {
           idealYPos = idealYPos - dropdownBRect.height + (this.options.coverTrigger ? triggerBRect.height : 0);
         }
-
         if (horizontalAlignment === 'right') {
           idealXPos = idealXPos - dropdownBRect.width + triggerBRect.width;
         }
-
         return {
           x: idealXPos,
           y: idealYPos,
@@ -3235,15 +2855,14 @@ var $jscomp$this = this;
           width: idealWidth
         };
       }
+
       /**
        * Animate in dropdown
        */
-
     }, {
       key: "_animateIn",
       value: function _animateIn() {
         var _this11 = this;
-
         anim.remove(this.dropdownEl);
         anim({
           targets: this.dropdownEl,
@@ -3258,24 +2877,23 @@ var $jscomp$this = this;
           complete: function complete(anim) {
             if (_this11.options.autoFocus) {
               _this11.dropdownEl.focus();
-            } // onOpenEnd callback
+            }
 
-
+            // onOpenEnd callback
             if (typeof _this11.options.onOpenEnd === 'function') {
               _this11.options.onOpenEnd.call(_this11, _this11.el);
             }
           }
         });
       }
+
       /**
        * Animate out dropdown
        */
-
     }, {
       key: "_animateOut",
       value: function _animateOut() {
         var _this12 = this;
-
         anim.remove(this.dropdownEl);
         anim({
           targets: this.dropdownEl,
@@ -3288,92 +2906,83 @@ var $jscomp$this = this;
           duration: this.options.outDuration,
           easing: 'easeOutQuint',
           complete: function complete(anim) {
-            _this12._resetDropdownStyles(); // onCloseEnd callback
+            _this12._resetDropdownStyles();
 
-
+            // onCloseEnd callback
             if (typeof _this12.options.onCloseEnd === 'function') {
               _this12.options.onCloseEnd.call(_this12, _this12.el);
             }
           }
         });
       }
+
       /**
        * Place dropdown
        */
-
     }, {
       key: "_placeDropdown",
       value: function _placeDropdown() {
         // Set width before calculating positionInfo
         var idealWidth = this.options.constrainWidth ? this.el.getBoundingClientRect().width : this.dropdownEl.getBoundingClientRect().width;
         this.dropdownEl.style.width = idealWidth + 'px';
-
         var positionInfo = this._getDropdownPosition();
-
         this.dropdownEl.style.left = positionInfo.x + 'px';
         this.dropdownEl.style.top = positionInfo.y + 'px';
         this.dropdownEl.style.height = positionInfo.height + 'px';
         this.dropdownEl.style.width = positionInfo.width + 'px';
         this.dropdownEl.style.transformOrigin = (positionInfo.horizontalAlignment === 'left' ? '0' : '100%') + " " + (positionInfo.verticalAlignment === 'top' ? '0' : '100%');
       }
+
       /**
        * Open Dropdown
        */
-
     }, {
       key: "open",
       value: function open() {
         if (this.isOpen) {
           return;
         }
+        this.isOpen = true;
 
-        this.isOpen = true; // onOpenStart callback
-
+        // onOpenStart callback
         if (typeof this.options.onOpenStart === 'function') {
           this.options.onOpenStart.call(this, this.el);
-        } // Reset styles
+        }
 
-
+        // Reset styles
         this._resetDropdownStyles();
-
         this.dropdownEl.style.display = 'block';
-
         this._placeDropdown();
-
         this._animateIn();
-
         this._setupTemporaryEventHandlers();
       }
+
       /**
        * Close Dropdown
        */
-
     }, {
       key: "close",
       value: function close() {
         if (!this.isOpen) {
           return;
         }
-
         this.isOpen = false;
-        this.focusedIndex = -1; // onCloseStart callback
+        this.focusedIndex = -1;
 
+        // onCloseStart callback
         if (typeof this.options.onCloseStart === 'function') {
           this.options.onCloseStart.call(this, this.el);
         }
-
         this._animateOut();
-
         this._removeTemporaryEventHandlers();
-
         if (this.options.autoFocus) {
           this.el.focus();
         }
       }
+
       /**
        * Recalculate dimensions
        */
-
     }, {
       key: "recalculateDimensions",
       value: function recalculateDimensions() {
@@ -3385,7 +2994,6 @@ var $jscomp$this = this;
             top: '',
             'transform-origin': ''
           });
-
           this._placeDropdown();
         }
       }
@@ -3394,10 +3002,10 @@ var $jscomp$this = this;
       value: function init(els, options) {
         return _get(Dropdown.__proto__ || Object.getPrototypeOf(Dropdown), "init", this).call(this, this, els, options);
       }
+
       /**
        * Get Instance
        */
-
     }, {
       key: "getInstance",
       value: function getInstance(el) {
@@ -3410,25 +3018,21 @@ var $jscomp$this = this;
         return _defaults;
       }
     }]);
-
     return Dropdown;
   }(Component);
+
   /**
    * @static
    * @memberof Dropdown
    */
 
-
   Dropdown._dropdowns = [];
   M.Dropdown = Dropdown;
-
   if (M.jQueryLoaded) {
     M.initializeJqueryWrapper(Dropdown, 'dropdown', 'M_Dropdown');
   }
 })(cash, M.anime);
-
 ;
-
 (function ($, anim) {
   'use strict';
 
@@ -3445,6 +3049,7 @@ var $jscomp$this = this;
     startingTop: '4%',
     endingTop: '10%'
   };
+
   /**
    * @class
    *
@@ -3452,20 +3057,18 @@ var $jscomp$this = this;
 
   var Modal = function (_Component3) {
     _inherits(Modal, _Component3);
+
     /**
      * Construct Modal instance and set up overlay
      * @constructor
      * @param {Element} el
      * @param {Object} options
      */
-
-
     function Modal(el, options) {
       _classCallCheck(this, Modal);
-
       var _this13 = _possibleConstructorReturn(this, (Modal.__proto__ || Object.getPrototypeOf(Modal)).call(this, Modal, el, options));
-
       _this13.el.M_Modal = _this13;
+
       /**
        * Options for the modal
        * @member Modal#options
@@ -3480,13 +3083,12 @@ var $jscomp$this = this;
        * @prop {String} [startingTop='4%'] - startingTop
        * @prop {String} [endingTop='10%'] - endingTop
        */
-
       _this13.options = $.extend({}, Modal.defaults, options);
+
       /**
        * Describes open/close state of modal
        * @type {Boolean}
        */
-
       _this13.isOpen = false;
       _this13.id = _this13.$el.attr('id');
       _this13._openingTrigger = undefined;
@@ -3494,83 +3096,71 @@ var $jscomp$this = this;
       _this13.el.tabIndex = 0;
       _this13._nthModalOpened = 0;
       Modal._count++;
-
       _this13._setupEventHandlers();
-
       return _this13;
     }
-
     _createClass(Modal, [{
       key: "destroy",
-
       /**
        * Teardown component
        */
       value: function destroy() {
         Modal._count--;
-
         this._removeEventHandlers();
-
         this.el.removeAttribute('style');
         this.$overlay.remove();
         this.el.M_Modal = undefined;
       }
+
       /**
        * Setup Event Handlers
        */
-
     }, {
       key: "_setupEventHandlers",
       value: function _setupEventHandlers() {
         this._handleOverlayClickBound = this._handleOverlayClick.bind(this);
         this._handleModalCloseClickBound = this._handleModalCloseClick.bind(this);
-
         if (Modal._count === 1) {
           document.body.addEventListener('click', this._handleTriggerClick);
         }
-
         this.$overlay[0].addEventListener('click', this._handleOverlayClickBound);
         this.el.addEventListener('click', this._handleModalCloseClickBound);
       }
+
       /**
        * Remove Event Handlers
        */
-
     }, {
       key: "_removeEventHandlers",
       value: function _removeEventHandlers() {
         if (Modal._count === 0) {
           document.body.removeEventListener('click', this._handleTriggerClick);
         }
-
         this.$overlay[0].removeEventListener('click', this._handleOverlayClickBound);
         this.el.removeEventListener('click', this._handleModalCloseClickBound);
       }
+
       /**
        * Handle Trigger Click
        * @param {Event} e
        */
-
     }, {
       key: "_handleTriggerClick",
       value: function _handleTriggerClick(e) {
         var $trigger = $(e.target).closest('.modal-trigger');
-
         if ($trigger.length) {
           var modalId = M.getIdFromTrigger($trigger[0]);
           var modalInstance = document.getElementById(modalId).M_Modal;
-
           if (modalInstance) {
             modalInstance.open($trigger);
           }
-
           e.preventDefault();
         }
       }
+
       /**
        * Handle Overlay Click
        */
-
     }, {
       key: "_handleOverlayClick",
       value: function _handleOverlayClick() {
@@ -3578,25 +3168,24 @@ var $jscomp$this = this;
           this.close();
         }
       }
+
       /**
        * Handle Modal Close Click
        * @param {Event} e
        */
-
     }, {
       key: "_handleModalCloseClick",
       value: function _handleModalCloseClick(e) {
         var $closeTrigger = $(e.target).closest('.modal-close');
-
         if ($closeTrigger.length) {
           this.close();
         }
       }
+
       /**
        * Handle Keydown
        * @param {Event} e
        */
-
     }, {
       key: "_handleKeydown",
       value: function _handleKeydown(e) {
@@ -3605,11 +3194,11 @@ var $jscomp$this = this;
           this.close();
         }
       }
+
       /**
        * Handle Focus
        * @param {Event} e
        */
-
     }, {
       key: "_handleFocus",
       value: function _handleFocus(e) {
@@ -3618,16 +3207,16 @@ var $jscomp$this = this;
           this.el.focus();
         }
       }
+
       /**
        * Animate in modal
        */
-
     }, {
       key: "_animateIn",
       value: function _animateIn() {
-        var _this14 = this; // Set initial styles
+        var _this14 = this;
 
-
+        // Set initial styles
         $.extend(this.el.style, {
           display: 'block',
           opacity: 0
@@ -3635,15 +3224,17 @@ var $jscomp$this = this;
         $.extend(this.$overlay[0].style, {
           display: 'block',
           opacity: 0
-        }); // Animate overlay
+        });
 
+        // Animate overlay
         anim({
           targets: this.$overlay[0],
           opacity: this.options.opacity,
           duration: this.options.inDuration,
           easing: 'easeOutQuad'
-        }); // Define modal animation options
+        });
 
+        // Define modal animation options
         var enterAnimOptions = {
           targets: this.el,
           duration: this.options.inDuration,
@@ -3654,14 +3245,17 @@ var $jscomp$this = this;
               _this14.options.onOpenEnd.call(_this14, _this14.el, _this14._openingTrigger);
             }
           }
-        }; // Bottom sheet animation
+        };
 
+        // Bottom sheet animation
         if (this.el.classList.contains('bottom-sheet')) {
           $.extend(enterAnimOptions, {
             bottom: 0,
             opacity: 1
           });
-          anim(enterAnimOptions); // Normal modal animation
+          anim(enterAnimOptions);
+
+          // Normal modal animation
         } else {
           $.extend(enterAnimOptions, {
             top: [this.options.startingTop, this.options.endingTop],
@@ -3672,23 +3266,24 @@ var $jscomp$this = this;
           anim(enterAnimOptions);
         }
       }
+
       /**
        * Animate out modal
        */
-
     }, {
       key: "_animateOut",
       value: function _animateOut() {
-        var _this15 = this; // Animate overlay
+        var _this15 = this;
 
-
+        // Animate overlay
         anim({
           targets: this.$overlay[0],
           opacity: 0,
           duration: this.options.outDuration,
           easing: 'easeOutQuart'
-        }); // Define modal animation options
+        });
 
+        // Define modal animation options
         var exitAnimOptions = {
           targets: this.el,
           duration: this.options.outDuration,
@@ -3696,22 +3291,24 @@ var $jscomp$this = this;
           // Handle modal ready callback
           complete: function complete() {
             _this15.el.style.display = 'none';
+            _this15.$overlay.remove();
 
-            _this15.$overlay.remove(); // Call onCloseEnd callback
-
-
+            // Call onCloseEnd callback
             if (typeof _this15.options.onCloseEnd === 'function') {
               _this15.options.onCloseEnd.call(_this15, _this15.el);
             }
           }
-        }; // Bottom sheet animation
+        };
 
+        // Bottom sheet animation
         if (this.el.classList.contains('bottom-sheet')) {
           $.extend(exitAnimOptions, {
             bottom: '-100%',
             opacity: 0
           });
-          anim(exitAnimOptions); // Normal modal animation
+          anim(exitAnimOptions);
+
+          // Normal modal animation
         } else {
           $.extend(exitAnimOptions, {
             top: [this.options.endingTop, this.options.startingTop],
@@ -3722,89 +3319,82 @@ var $jscomp$this = this;
           anim(exitAnimOptions);
         }
       }
+
       /**
        * Open Modal
        * @param {cash} [$trigger]
        */
-
     }, {
       key: "open",
       value: function open($trigger) {
         if (this.isOpen) {
           return;
         }
-
         this.isOpen = true;
         Modal._modalsOpen++;
-        this._nthModalOpened = Modal._modalsOpen; // Set Z-Index based on number of currently open modals
+        this._nthModalOpened = Modal._modalsOpen;
 
+        // Set Z-Index based on number of currently open modals
         this.$overlay[0].style.zIndex = 1000 + Modal._modalsOpen * 2;
-        this.el.style.zIndex = 1000 + Modal._modalsOpen * 2 + 1; // Set opening trigger, undefined indicates modal was opened by javascript
+        this.el.style.zIndex = 1000 + Modal._modalsOpen * 2 + 1;
 
-        this._openingTrigger = !!$trigger ? $trigger[0] : undefined; // onOpenStart callback
+        // Set opening trigger, undefined indicates modal was opened by javascript
+        this._openingTrigger = !!$trigger ? $trigger[0] : undefined;
 
+        // onOpenStart callback
         if (typeof this.options.onOpenStart === 'function') {
           this.options.onOpenStart.call(this, this.el, this._openingTrigger);
         }
-
         if (this.options.preventScrolling) {
           document.body.style.overflow = 'hidden';
         }
-
         this.el.classList.add('open');
         this.el.insertAdjacentElement('afterend', this.$overlay[0]);
-
         if (this.options.dismissible) {
           this._handleKeydownBound = this._handleKeydown.bind(this);
           this._handleFocusBound = this._handleFocus.bind(this);
           document.addEventListener('keydown', this._handleKeydownBound);
           document.addEventListener('focus', this._handleFocusBound, true);
         }
-
         anim.remove(this.el);
         anim.remove(this.$overlay[0]);
+        this._animateIn();
 
-        this._animateIn(); // Focus modal
-
-
+        // Focus modal
         this.el.focus();
         return this;
       }
+
       /**
        * Close Modal
        */
-
     }, {
       key: "close",
       value: function close() {
         if (!this.isOpen) {
           return;
         }
-
         this.isOpen = false;
         Modal._modalsOpen--;
-        this._nthModalOpened = 0; // Call onCloseStart callback
+        this._nthModalOpened = 0;
 
+        // Call onCloseStart callback
         if (typeof this.options.onCloseStart === 'function') {
           this.options.onCloseStart.call(this, this.el);
         }
+        this.el.classList.remove('open');
 
-        this.el.classList.remove('open'); // Enable body scrolling only if there are no more modals open.
-
+        // Enable body scrolling only if there are no more modals open.
         if (Modal._modalsOpen === 0) {
           document.body.style.overflow = '';
         }
-
         if (this.options.dismissible) {
           document.removeEventListener('keydown', this._handleKeydownBound);
           document.removeEventListener('focus', this._handleFocusBound, true);
         }
-
         anim.remove(this.el);
         anim.remove(this.$overlay[0]);
-
         this._animateOut();
-
         return this;
       }
     }], [{
@@ -3812,10 +3402,10 @@ var $jscomp$this = this;
       value: function init(els, options) {
         return _get(Modal.__proto__ || Object.getPrototypeOf(Modal), "init", this).call(this, this, els, options);
       }
+
       /**
        * Get Instance
        */
-
     }, {
       key: "getInstance",
       value: function getInstance(el) {
@@ -3828,31 +3418,27 @@ var $jscomp$this = this;
         return _defaults;
       }
     }]);
-
     return Modal;
   }(Component);
+
   /**
    * @static
    * @memberof Modal
    */
-
 
   Modal._modalsOpen = 0;
+
   /**
    * @static
    * @memberof Modal
    */
-
   Modal._count = 0;
   M.Modal = Modal;
-
   if (M.jQueryLoaded) {
     M.initializeJqueryWrapper(Modal, 'modal', 'M_Modal');
   }
 })(cash, M.anime);
-
 ;
-
 (function ($, anim) {
   'use strict';
 
@@ -3864,6 +3450,7 @@ var $jscomp$this = this;
     onCloseStart: null,
     onCloseEnd: null
   };
+
   /**
    * @class
    *
@@ -3871,20 +3458,18 @@ var $jscomp$this = this;
 
   var Materialbox = function (_Component4) {
     _inherits(Materialbox, _Component4);
+
     /**
      * Construct Materialbox instance
      * @constructor
      * @param {Element} el
      * @param {Object} options
      */
-
-
     function Materialbox(el, options) {
       _classCallCheck(this, Materialbox);
-
       var _this16 = _possibleConstructorReturn(this, (Materialbox.__proto__ || Object.getPrototypeOf(Materialbox)).call(this, Materialbox, el, options));
-
       _this16.el.M_Materialbox = _this16;
+
       /**
        * Options for the modal
        * @member Materialbox#options
@@ -3895,7 +3480,6 @@ var $jscomp$this = this;
        * @prop {Function} onCloseStart - Callback function called before materialbox is closed
        * @prop {Function} onCloseEnd - Callback function called after materialbox is closed
        */
-
       _this16.options = $.extend({}, Materialbox.defaults, options);
       _this16.overlayActive = false;
       _this16.doneAnimating = true;
@@ -3903,55 +3487,51 @@ var $jscomp$this = this;
       _this16.originalWidth = 0;
       _this16.originalHeight = 0;
       _this16.originInlineStyles = _this16.$el.attr('style');
-      _this16.caption = _this16.el.getAttribute('data-caption') || ''; // Wrap
+      _this16.caption = _this16.el.getAttribute('data-caption') || '';
 
+      // Wrap
       _this16.$el.before(_this16.placeholder);
-
       _this16.placeholder.append(_this16.$el);
-
       _this16._setupEventHandlers();
-
       return _this16;
     }
-
     _createClass(Materialbox, [{
       key: "destroy",
-
       /**
        * Teardown component
        */
       value: function destroy() {
         this._removeEventHandlers();
+        this.el.M_Materialbox = undefined;
 
-        this.el.M_Materialbox = undefined; // Unwrap image
-
+        // Unwrap image
         $(this.placeholder).after(this.el).remove();
         this.$el.removeAttr('style');
       }
+
       /**
        * Setup Event Handlers
        */
-
     }, {
       key: "_setupEventHandlers",
       value: function _setupEventHandlers() {
         this._handleMaterialboxClickBound = this._handleMaterialboxClick.bind(this);
         this.el.addEventListener('click', this._handleMaterialboxClickBound);
       }
+
       /**
        * Remove Event Handlers
        */
-
     }, {
       key: "_removeEventHandlers",
       value: function _removeEventHandlers() {
         this.el.removeEventListener('click', this._handleMaterialboxClickBound);
       }
+
       /**
        * Handle Materialbox Click
        * @param {Event} e
        */
-
     }, {
       key: "_handleMaterialboxClick",
       value: function _handleMaterialboxClick(e) {
@@ -3962,10 +3542,10 @@ var $jscomp$this = this;
           this.open();
         }
       }
+
       /**
        * Handle Window Scroll
        */
-
     }, {
       key: "_handleWindowScroll",
       value: function _handleWindowScroll() {
@@ -3973,10 +3553,10 @@ var $jscomp$this = this;
           this.close();
         }
       }
+
       /**
        * Handle Window Resize
        */
-
     }, {
       key: "_handleWindowResize",
       value: function _handleWindowResize() {
@@ -3984,11 +3564,11 @@ var $jscomp$this = this;
           this.close();
         }
       }
+
       /**
        * Handle Window Resize
        * @param {Event} e
        */
-
     }, {
       key: "_handleWindowEscape",
       value: function _handleWindowEscape(e) {
@@ -3997,41 +3577,36 @@ var $jscomp$this = this;
           this.close();
         }
       }
+
       /**
        * Find ancestors with overflow: hidden; and make visible
        */
-
     }, {
       key: "_makeAncestorsOverflowVisible",
       value: function _makeAncestorsOverflowVisible() {
         this.ancestorsChanged = $();
         var ancestor = this.placeholder[0].parentNode;
-
         while (ancestor !== null && !$(ancestor).is(document)) {
           var curr = $(ancestor);
-
           if (curr.css('overflow') !== 'visible') {
             curr.css('overflow', 'visible');
-
             if (this.ancestorsChanged === undefined) {
               this.ancestorsChanged = curr;
             } else {
               this.ancestorsChanged = this.ancestorsChanged.add(curr);
             }
           }
-
           ancestor = ancestor.parentNode;
         }
       }
+
       /**
        * Animate image in
        */
-
     }, {
       key: "_animateImageIn",
       value: function _animateImageIn() {
         var _this17 = this;
-
         var animOptions = {
           targets: this.el,
           height: [this.originalHeight, this.newHeight],
@@ -4041,36 +3616,34 @@ var $jscomp$this = this;
           duration: this.options.inDuration,
           easing: 'easeOutQuad',
           complete: function complete() {
-            _this17.doneAnimating = true; // onOpenEnd callback
+            _this17.doneAnimating = true;
 
+            // onOpenEnd callback
             if (typeof _this17.options.onOpenEnd === 'function') {
               _this17.options.onOpenEnd.call(_this17, _this17.el);
             }
           }
-        }; // Override max-width or max-height if needed
+        };
 
+        // Override max-width or max-height if needed
         this.maxWidth = this.$el.css('max-width');
         this.maxHeight = this.$el.css('max-height');
-
         if (this.maxWidth !== 'none') {
           animOptions.maxWidth = this.newWidth;
         }
-
         if (this.maxHeight !== 'none') {
           animOptions.maxHeight = this.newHeight;
         }
-
         anim(animOptions);
       }
+
       /**
        * Animate image out
        */
-
     }, {
       key: "_animateImageOut",
       value: function _animateImageOut() {
         var _this18 = this;
-
         var animOptions = {
           targets: this.el,
           width: this.originalWidth,
@@ -4086,30 +3659,28 @@ var $jscomp$this = this;
               position: '',
               top: '',
               left: ''
-            }); // Revert to width or height attribute
+            });
 
-
+            // Revert to width or height attribute
             if (_this18.attrWidth) {
               _this18.$el.attr('width', _this18.attrWidth);
             }
-
             if (_this18.attrHeight) {
               _this18.$el.attr('height', _this18.attrHeight);
             }
-
             _this18.$el.removeAttr('style');
+            _this18.originInlineStyles && _this18.$el.attr('style', _this18.originInlineStyles);
 
-            _this18.originInlineStyles && _this18.$el.attr('style', _this18.originInlineStyles); // Remove class
-
+            // Remove class
             _this18.$el.removeClass('active');
+            _this18.doneAnimating = true;
 
-            _this18.doneAnimating = true; // Remove overflow overrides on ancestors
-
+            // Remove overflow overrides on ancestors
             if (_this18.ancestorsChanged.length) {
               _this18.ancestorsChanged.css('overflow', '');
-            } // onCloseEnd callback
+            }
 
-
+            // onCloseEnd callback
             if (typeof _this18.options.onCloseEnd === 'function') {
               _this18.options.onCloseEnd.call(_this18, _this18.el);
             }
@@ -4117,10 +3688,10 @@ var $jscomp$this = this;
         };
         anim(animOptions);
       }
+
       /**
        * Update open and close vars
        */
-
     }, {
       key: "_updateVars",
       value: function _updateVars() {
@@ -4128,29 +3699,29 @@ var $jscomp$this = this;
         this.windowHeight = window.innerHeight;
         this.caption = this.el.getAttribute('data-caption') || '';
       }
+
       /**
        * Open Materialbox
        */
-
     }, {
       key: "open",
       value: function open() {
         var _this19 = this;
-
         this._updateVars();
-
         this.originalWidth = this.el.getBoundingClientRect().width;
-        this.originalHeight = this.el.getBoundingClientRect().height; // Set states
+        this.originalHeight = this.el.getBoundingClientRect().height;
 
+        // Set states
         this.doneAnimating = false;
         this.$el.addClass('active');
-        this.overlayActive = true; // onOpenStart callback
+        this.overlayActive = true;
 
+        // onOpenStart callback
         if (typeof this.options.onOpenStart === 'function') {
           this.options.onOpenStart.call(this, this.el);
-        } // Set positioning for placeholder
+        }
 
-
+        // Set positioning for placeholder
         this.placeholder.css({
           width: this.placeholder[0].getBoundingClientRect().width + 'px',
           height: this.placeholder[0].getBoundingClientRect().height + 'px',
@@ -4158,40 +3729,40 @@ var $jscomp$this = this;
           top: 0,
           left: 0
         });
+        this._makeAncestorsOverflowVisible();
 
-        this._makeAncestorsOverflowVisible(); // Set css on origin
-
-
+        // Set css on origin
         this.$el.css({
           position: 'absolute',
           'z-index': 1000,
           'will-change': 'left, top, width, height'
-        }); // Change from width or height attribute to css
+        });
 
+        // Change from width or height attribute to css
         this.attrWidth = this.$el.attr('width');
         this.attrHeight = this.$el.attr('height');
-
         if (this.attrWidth) {
           this.$el.css('width', this.attrWidth + 'px');
           this.$el.removeAttr('width');
         }
-
         if (this.attrHeight) {
           this.$el.css('width', this.attrHeight + 'px');
           this.$el.removeAttr('height');
-        } // Add overlay
+        }
 
-
+        // Add overlay
         this.$overlay = $('<div id="materialbox-overlay"></div>').css({
           opacity: 0
         }).one('click', function () {
           if (_this19.doneAnimating) {
             _this19.close();
           }
-        }); // Put before in origin image to preserve z-index layering.
+        });
 
-        this.$el.before(this.$overlay); // Set dimensions if needed
+        // Put before in origin image to preserve z-index layering.
+        this.$el.before(this.$overlay);
 
+        // Set dimensions if needed
         var overlayOffset = this.$overlay[0].getBoundingClientRect();
         this.$overlay.css({
           width: this.windowWidth + 'px',
@@ -4200,20 +3771,21 @@ var $jscomp$this = this;
           top: -1 * overlayOffset.top + 'px'
         });
         anim.remove(this.el);
-        anim.remove(this.$overlay[0]); // Animate Overlay
+        anim.remove(this.$overlay[0]);
 
+        // Animate Overlay
         anim({
           targets: this.$overlay[0],
           opacity: 1,
           duration: this.options.inDuration,
           easing: 'easeOutQuad'
-        }); // Add and animate caption if it exists
+        });
 
+        // Add and animate caption if it exists
         if (this.caption !== '') {
           if (this.$photocaption) {
             anim.remove(this.$photoCaption[0]);
           }
-
           this.$photoCaption = $('<div class="materialbox-caption"></div>');
           this.$photoCaption.text(this.caption);
           $('body').append(this.$photoCaption);
@@ -4226,15 +3798,14 @@ var $jscomp$this = this;
             duration: this.options.inDuration,
             easing: 'easeOutQuad'
           });
-        } // Resize Image
+        }
 
-
+        // Resize Image
         var ratio = 0;
         var widthPercent = this.originalWidth / this.windowWidth;
         var heightPercent = this.originalHeight / this.windowHeight;
         this.newWidth = 0;
         this.newHeight = 0;
-
         if (widthPercent > heightPercent) {
           ratio = this.originalHeight / this.originalWidth;
           this.newWidth = this.windowWidth * 0.9;
@@ -4244,10 +3815,9 @@ var $jscomp$this = this;
           this.newWidth = this.windowHeight * 0.9 * ratio;
           this.newHeight = this.windowHeight * 0.9;
         }
+        this._animateImageIn();
 
-        this._animateImageIn(); // Handle Exit triggers
-
-
+        // Handle Exit triggers
         this._handleWindowScrollBound = this._handleWindowScroll.bind(this);
         this._handleWindowResizeBound = this._handleWindowResize.bind(this);
         this._handleWindowEscapeBound = this._handleWindowEscape.bind(this);
@@ -4255,31 +3825,28 @@ var $jscomp$this = this;
         window.addEventListener('resize', this._handleWindowResizeBound);
         window.addEventListener('keyup', this._handleWindowEscapeBound);
       }
+
       /**
        * Close Materialbox
        */
-
     }, {
       key: "close",
       value: function close() {
         var _this20 = this;
-
         this._updateVars();
+        this.doneAnimating = false;
 
-        this.doneAnimating = false; // onCloseStart callback
-
+        // onCloseStart callback
         if (typeof this.options.onCloseStart === 'function') {
           this.options.onCloseStart.call(this, this.el);
         }
-
         anim.remove(this.el);
         anim.remove(this.$overlay[0]);
-
         if (this.caption !== '') {
           anim.remove(this.$photoCaption[0]);
-        } // disable exit handlers
+        }
 
-
+        // disable exit handlers
         window.removeEventListener('scroll', this._handleWindowScrollBound);
         window.removeEventListener('resize', this._handleWindowResizeBound);
         window.removeEventListener('keyup', this._handleWindowEscapeBound);
@@ -4290,14 +3857,12 @@ var $jscomp$this = this;
           easing: 'easeOutQuad',
           complete: function complete() {
             _this20.overlayActive = false;
-
             _this20.$overlay.remove();
           }
         });
+        this._animateImageOut();
 
-        this._animateImageOut(); // Remove Caption + reset css settings on image
-
-
+        // Remove Caption + reset css settings on image
         if (this.caption !== '') {
           anim({
             targets: this.$photoCaption[0],
@@ -4315,10 +3880,10 @@ var $jscomp$this = this;
       value: function init(els, options) {
         return _get(Materialbox.__proto__ || Object.getPrototypeOf(Materialbox), "init", this).call(this, this, els, options);
       }
+
       /**
        * Get Instance
        */
-
     }, {
       key: "getInstance",
       value: function getInstance(el) {
@@ -4331,75 +3896,55 @@ var $jscomp$this = this;
         return _defaults;
       }
     }]);
-
     return Materialbox;
   }(Component);
-
   M.Materialbox = Materialbox;
-
   if (M.jQueryLoaded) {
     M.initializeJqueryWrapper(Materialbox, 'materialbox', 'M_Materialbox');
   }
 })(cash, M.anime);
-
 ;
-
 (function ($) {
   'use strict';
 
   var _defaults = {
     responsiveThreshold: 0 // breakpoint for swipeable
-
   };
 
   var Parallax = function (_Component5) {
     _inherits(Parallax, _Component5);
-
     function Parallax(el, options) {
       _classCallCheck(this, Parallax);
-
       var _this21 = _possibleConstructorReturn(this, (Parallax.__proto__ || Object.getPrototypeOf(Parallax)).call(this, Parallax, el, options));
-
       _this21.el.M_Parallax = _this21;
+
       /**
        * Options for the Parallax
        * @member Parallax#options
        * @prop {Number} responsiveThreshold
        */
-
       _this21.options = $.extend({}, Parallax.defaults, options);
       _this21._enabled = window.innerWidth > _this21.options.responsiveThreshold;
       _this21.$img = _this21.$el.find('img').first();
-
       _this21.$img.each(function () {
         var el = this;
         if (el.complete) $(el).trigger('load');
       });
-
       _this21._updateParallax();
-
       _this21._setupEventHandlers();
-
       _this21._setupStyles();
-
       Parallax._parallaxes.push(_this21);
-
       return _this21;
     }
-
     _createClass(Parallax, [{
       key: "destroy",
-
       /**
        * Teardown component
        */
       value: function destroy() {
         Parallax._parallaxes.splice(Parallax._parallaxes.indexOf(this), 1);
-
         this.$img[0].style.transform = '';
-
         this._removeEventHandlers();
-
         this.$el[0].M_Parallax = undefined;
       }
     }, {
@@ -4407,7 +3952,6 @@ var $jscomp$this = this;
       value: function _setupEventHandlers() {
         this._handleImageLoadBound = this._handleImageLoad.bind(this);
         this.$img[0].addEventListener('load', this._handleImageLoadBound);
-
         if (Parallax._parallaxes.length === 0) {
           Parallax._handleScrollThrottled = M.throttle(Parallax._handleScroll, 5);
           window.addEventListener('scroll', Parallax._handleScrollThrottled);
@@ -4419,7 +3963,6 @@ var $jscomp$this = this;
       key: "_removeEventHandlers",
       value: function _removeEventHandlers() {
         this.$img[0].removeEventListener('load', this._handleImageLoadBound);
-
         if (Parallax._parallaxes.length === 0) {
           window.removeEventListener('scroll', Parallax._handleScrollThrottled);
           window.removeEventListener('resize', Parallax._handleWindowResizeThrottled);
@@ -4448,7 +3991,6 @@ var $jscomp$this = this;
         var windowBottom = scrollTop + windowHeight;
         var percentScrolled = (windowBottom - top) / (containerHeight + windowHeight);
         var parallax = parallaxDist * percentScrolled;
-
         if (!this._enabled) {
           this.$img[0].style.transform = '';
         } else if (bottom > scrollTop && top < scrollTop + windowHeight) {
@@ -4460,10 +4002,10 @@ var $jscomp$this = this;
       value: function init(els, options) {
         return _get(Parallax.__proto__ || Object.getPrototypeOf(Parallax), "init", this).call(this, this, els, options);
       }
+
       /**
        * Get Instance
        */
-
     }, {
       key: "getInstance",
       value: function getInstance(el) {
@@ -4475,7 +4017,6 @@ var $jscomp$this = this;
       value: function _handleScroll() {
         for (var i = 0; i < Parallax._parallaxes.length; i++) {
           var parallaxInstance = Parallax._parallaxes[i];
-
           parallaxInstance._updateParallax.call(parallaxInstance);
         }
       }
@@ -4493,25 +4034,21 @@ var $jscomp$this = this;
         return _defaults;
       }
     }]);
-
     return Parallax;
   }(Component);
+
   /**
    * @static
    * @memberof Parallax
    */
 
-
   Parallax._parallaxes = [];
   M.Parallax = Parallax;
-
   if (M.jQueryLoaded) {
     M.initializeJqueryWrapper(Parallax, 'parallax', 'M_Parallax');
   }
 })(cash);
-
 ;
-
 (function ($, anim) {
   'use strict';
 
@@ -4520,8 +4057,8 @@ var $jscomp$this = this;
     onShow: null,
     swipeable: false,
     responsiveThreshold: Infinity // breakpoint for swipeable
-
   };
+
   /**
    * @class
    *
@@ -4529,20 +4066,18 @@ var $jscomp$this = this;
 
   var Tabs = function (_Component6) {
     _inherits(Tabs, _Component6);
+
     /**
      * Construct Tabs instance
      * @constructor
      * @param {Element} el
      * @param {Object} options
      */
-
-
     function Tabs(el, options) {
       _classCallCheck(this, Tabs);
-
       var _this22 = _possibleConstructorReturn(this, (Tabs.__proto__ || Object.getPrototypeOf(Tabs)).call(this, Tabs, el, options));
-
       _this22.el.M_Tabs = _this22;
+
       /**
        * Options for the Tabs
        * @member Tabs#options
@@ -4551,54 +4086,45 @@ var $jscomp$this = this;
        * @prop {Boolean} swipeable
        * @prop {Number} responsiveThreshold
        */
+      _this22.options = $.extend({}, Tabs.defaults, options);
 
-      _this22.options = $.extend({}, Tabs.defaults, options); // Setup
-
+      // Setup
       _this22.$tabLinks = _this22.$el.children('li.tab').children('a');
       _this22.index = 0;
+      _this22._setupActiveTabLink();
 
-      _this22._setupActiveTabLink(); // Setup tabs content
-
-
+      // Setup tabs content
       if (_this22.options.swipeable) {
         _this22._setupSwipeableTabs();
       } else {
         _this22._setupNormalTabs();
-      } // Setup tabs indicator after content to ensure accurate widths
+      }
 
-
+      // Setup tabs indicator after content to ensure accurate widths
       _this22._setTabsAndTabWidth();
-
       _this22._createIndicator();
-
       _this22._setupEventHandlers();
-
       return _this22;
     }
-
     _createClass(Tabs, [{
       key: "destroy",
-
       /**
        * Teardown component
        */
       value: function destroy() {
         this._removeEventHandlers();
-
         this._indicator.parentNode.removeChild(this._indicator);
-
         if (this.options.swipeable) {
           this._teardownSwipeableTabs();
         } else {
           this._teardownNormalTabs();
         }
-
         this.$el[0].M_Tabs = undefined;
       }
+
       /**
        * Setup Event Handlers
        */
-
     }, {
       key: "_setupEventHandlers",
       value: function _setupEventHandlers() {
@@ -4607,69 +4133,70 @@ var $jscomp$this = this;
         this._handleTabClickBound = this._handleTabClick.bind(this);
         this.el.addEventListener('click', this._handleTabClickBound);
       }
+
       /**
        * Remove Event Handlers
        */
-
     }, {
       key: "_removeEventHandlers",
       value: function _removeEventHandlers() {
         window.removeEventListener('resize', this._handleWindowResizeBound);
         this.el.removeEventListener('click', this._handleTabClickBound);
       }
+
       /**
        * Handle window Resize
        */
-
     }, {
       key: "_handleWindowResize",
       value: function _handleWindowResize() {
         this._setTabsAndTabWidth();
-
         if (this.tabWidth !== 0 && this.tabsWidth !== 0) {
           this._indicator.style.left = this._calcLeftPos(this.$activeTabLink) + 'px';
           this._indicator.style.right = this._calcRightPos(this.$activeTabLink) + 'px';
         }
       }
+
       /**
        * Handle tab click
        * @param {Event} e
        */
-
     }, {
       key: "_handleTabClick",
       value: function _handleTabClick(e) {
         var _this23 = this;
-
         var tab = $(e.target).closest('li.tab');
-        var tabLink = $(e.target).closest('a'); // Handle click on tab link only
+        var tabLink = $(e.target).closest('a');
 
+        // Handle click on tab link only
         if (!tabLink.length || !tabLink.parent().hasClass('tab')) {
           return;
         }
-
         if (tab.hasClass('disabled')) {
           e.preventDefault();
           return;
-        } // Act as regular link if target attribute is specified.
+        }
 
-
+        // Act as regular link if target attribute is specified.
         if (!!tabLink.attr('target')) {
           return;
-        } // Make the old tab inactive.
+        }
 
-
+        // Make the old tab inactive.
         this.$activeTabLink.removeClass('active');
-        var $oldContent = this.$content; // Update the variables with the new link and content
+        var $oldContent = this.$content;
 
+        // Update the variables with the new link and content
         this.$activeTabLink = tabLink;
         this.$content = $(M.escapeHash(tabLink[0].hash));
-        this.$tabLinks = this.$el.children('li.tab').children('a'); // Make the tab active.
+        this.$tabLinks = this.$el.children('li.tab').children('a');
 
+        // Make the tab active.
         this.$activeTabLink.addClass('active');
         var prevIndex = this.index;
-        this.index = Math.max(this.$tabLinks.index(tabLink), 0); // Swap content
+        this.index = Math.max(this.$tabLinks.index(tabLink), 0);
 
+        // Swap content
         if (this.options.swipeable) {
           if (this._tabsCarousel) {
             this._tabsCarousel.set(this.index, function () {
@@ -4682,36 +4209,33 @@ var $jscomp$this = this;
           if (this.$content.length) {
             this.$content[0].style.display = 'block';
             this.$content.addClass('active');
-
             if (typeof this.options.onShow === 'function') {
               this.options.onShow.call(this, this.$content[0]);
             }
-
             if ($oldContent.length && !$oldContent.is(this.$content)) {
               $oldContent[0].style.display = 'none';
               $oldContent.removeClass('active');
             }
           }
-        } // Update widths after content is swapped (scrollbar bugfix)
+        }
 
+        // Update widths after content is swapped (scrollbar bugfix)
+        this._setTabsAndTabWidth();
 
-        this._setTabsAndTabWidth(); // Update indicator
+        // Update indicator
+        this._animateIndicator(prevIndex);
 
-
-        this._animateIndicator(prevIndex); // Prevent the anchor's default click action
-
-
+        // Prevent the anchor's default click action
         e.preventDefault();
       }
+
       /**
        * Generate elements for tab indicator.
        */
-
     }, {
       key: "_createIndicator",
       value: function _createIndicator() {
         var _this24 = this;
-
         var indicator = document.createElement('li');
         indicator.classList.add('indicator');
         this.el.appendChild(indicator);
@@ -4721,47 +4245,44 @@ var $jscomp$this = this;
           _this24._indicator.style.right = _this24._calcRightPos(_this24.$activeTabLink) + 'px';
         }, 0);
       }
+
       /**
        * Setup first active tab link.
        */
-
     }, {
       key: "_setupActiveTabLink",
       value: function _setupActiveTabLink() {
         // If the location.hash matches one of the links, use that as the active tab.
-        this.$activeTabLink = $(this.$tabLinks.filter('[href="' + location.hash + '"]')); // If no match is found, use the first link or any with class 'active' as the initial active tab.
+        this.$activeTabLink = $(this.$tabLinks.filter('[href="' + location.hash + '"]'));
 
+        // If no match is found, use the first link or any with class 'active' as the initial active tab.
         if (this.$activeTabLink.length === 0) {
           this.$activeTabLink = this.$el.children('li.tab').children('a.active').first();
         }
-
         if (this.$activeTabLink.length === 0) {
           this.$activeTabLink = this.$el.children('li.tab').children('a').first();
         }
-
         this.$tabLinks.removeClass('active');
         this.$activeTabLink[0].classList.add('active');
         this.index = Math.max(this.$tabLinks.index(this.$activeTabLink), 0);
-
         if (this.$activeTabLink.length) {
           this.$content = $(M.escapeHash(this.$activeTabLink[0].hash));
           this.$content.addClass('active');
         }
       }
+
       /**
        * Setup swipeable tabs
        */
-
     }, {
       key: "_setupSwipeableTabs",
       value: function _setupSwipeableTabs() {
-        var _this25 = this; // Change swipeable according to responsive threshold
+        var _this25 = this;
 
-
+        // Change swipeable according to responsive threshold
         if (window.innerWidth > this.options.responsiveThreshold) {
           this.options.swipeable = false;
         }
-
         var $tabsContent = $();
         this.$tabLinks.each(function (link) {
           var $currContent = $(M.escapeHash(link.hash));
@@ -4771,8 +4292,9 @@ var $jscomp$this = this;
         var $tabsWrapper = $('<div class="tabs-content carousel carousel-slider"></div>');
         $tabsContent.first().before($tabsWrapper);
         $tabsWrapper.append($tabsContent);
-        $tabsContent[0].style.display = ''; // Keep active tab index to set initial carousel slide
+        $tabsContent[0].style.display = '';
 
+        // Keep active tab index to set initial carousel slide
         var activeTabIndex = this.$activeTabLink.closest('.tab').index();
         this._tabsCarousel = M.Carousel.init($tabsWrapper[0], {
           fullWidth: true,
@@ -4780,42 +4302,37 @@ var $jscomp$this = this;
           onCycleTo: function onCycleTo(item) {
             var prevIndex = _this25.index;
             _this25.index = $(item).index();
-
             _this25.$activeTabLink.removeClass('active');
-
             _this25.$activeTabLink = _this25.$tabLinks.eq(_this25.index);
-
             _this25.$activeTabLink.addClass('active');
-
             _this25._animateIndicator(prevIndex);
-
             if (typeof _this25.options.onShow === 'function') {
               _this25.options.onShow.call(_this25, _this25.$content[0]);
             }
           }
-        }); // Set initial carousel slide to active tab
+        });
 
+        // Set initial carousel slide to active tab
         this._tabsCarousel.set(activeTabIndex);
       }
+
       /**
        * Teardown normal tabs.
        */
-
     }, {
       key: "_teardownSwipeableTabs",
       value: function _teardownSwipeableTabs() {
         var $tabsWrapper = this._tabsCarousel.$el;
+        this._tabsCarousel.destroy();
 
-        this._tabsCarousel.destroy(); // Unwrap
-
-
+        // Unwrap
         $tabsWrapper.after($tabsWrapper.children());
         $tabsWrapper.remove();
       }
+
       /**
        * Setup normal tabs.
        */
-
     }, {
       key: "_setupNormalTabs",
       value: function _setupNormalTabs() {
@@ -4823,17 +4340,16 @@ var $jscomp$this = this;
         this.$tabLinks.not(this.$activeTabLink).each(function (link) {
           if (!!link.hash) {
             var $currContent = $(M.escapeHash(link.hash));
-
             if ($currContent.length) {
               $currContent[0].style.display = 'none';
             }
           }
         });
       }
+
       /**
        * Teardown normal tabs.
        */
-
     }, {
       key: "_teardownNormalTabs",
       value: function _teardownNormalTabs() {
@@ -4841,38 +4357,37 @@ var $jscomp$this = this;
         this.$tabLinks.each(function (link) {
           if (!!link.hash) {
             var $currContent = $(M.escapeHash(link.hash));
-
             if ($currContent.length) {
               $currContent[0].style.display = '';
             }
           }
         });
       }
+
       /**
        * set tabs and tab width
        */
-
     }, {
       key: "_setTabsAndTabWidth",
       value: function _setTabsAndTabWidth() {
         this.tabsWidth = this.$el.width();
         this.tabWidth = Math.max(this.tabsWidth, this.el.scrollWidth) / this.$tabLinks.length;
       }
+
       /**
        * Finds right attribute for indicator based on active tab.
        * @param {cash} el
        */
-
     }, {
       key: "_calcRightPos",
       value: function _calcRightPos(el) {
         return Math.ceil(this.tabsWidth - el.position().left - el[0].getBoundingClientRect().width);
       }
+
       /**
        * Finds left attribute for indicator based on active tab.
        * @param {cash} el
        */
-
     }, {
       key: "_calcLeftPos",
       value: function _calcLeftPos(el) {
@@ -4882,27 +4397,25 @@ var $jscomp$this = this;
       key: "updateTabIndicator",
       value: function updateTabIndicator() {
         this._setTabsAndTabWidth();
-
         this._animateIndicator(this.index);
       }
+
       /**
        * Animates Indicator to active tab.
        * @param {Number} prevIndex
        */
-
     }, {
       key: "_animateIndicator",
       value: function _animateIndicator(prevIndex) {
         var leftDelay = 0,
-            rightDelay = 0;
-
+          rightDelay = 0;
         if (this.index - prevIndex >= 0) {
           leftDelay = 90;
         } else {
           rightDelay = 90;
-        } // Animate
+        }
 
-
+        // Animate
         var animOptions = {
           targets: this._indicator,
           left: {
@@ -4919,16 +4432,15 @@ var $jscomp$this = this;
         anim.remove(this._indicator);
         anim(animOptions);
       }
+
       /**
        * Select tab.
        * @param {String} tabId
        */
-
     }, {
       key: "select",
       value: function select(tabId) {
         var tab = this.$tabLinks.filter('[href="#' + tabId + '"]');
-
         if (tab.length) {
           tab.trigger('click');
         }
@@ -4938,10 +4450,10 @@ var $jscomp$this = this;
       value: function init(els, options) {
         return _get(Tabs.__proto__ || Object.getPrototypeOf(Tabs), "init", this).call(this, this, els, options);
       }
+
       /**
        * Get Instance
        */
-
     }, {
       key: "getInstance",
       value: function getInstance(el) {
@@ -4954,19 +4466,14 @@ var $jscomp$this = this;
         return _defaults;
       }
     }]);
-
     return Tabs;
   }(Component);
-
   M.Tabs = Tabs;
-
   if (M.jQueryLoaded) {
     M.initializeJqueryWrapper(Tabs, 'tabs', 'M_Tabs');
   }
 })(cash, M.anime);
-
 ;
-
 (function ($, anim) {
   'use strict';
 
@@ -4980,6 +4487,7 @@ var $jscomp$this = this;
     position: 'bottom',
     transitionMovement: 10
   };
+
   /**
    * @class
    *
@@ -4987,43 +4495,33 @@ var $jscomp$this = this;
 
   var Tooltip = function (_Component7) {
     _inherits(Tooltip, _Component7);
+
     /**
      * Construct Tooltip instance
      * @constructor
      * @param {Element} el
      * @param {Object} options
      */
-
-
     function Tooltip(el, options) {
       _classCallCheck(this, Tooltip);
-
       var _this26 = _possibleConstructorReturn(this, (Tooltip.__proto__ || Object.getPrototypeOf(Tooltip)).call(this, Tooltip, el, options));
-
       _this26.el.M_Tooltip = _this26;
       _this26.options = $.extend({}, Tooltip.defaults, options);
       _this26.isOpen = false;
       _this26.isHovered = false;
       _this26.isFocused = false;
-
       _this26._appendTooltipEl();
-
       _this26._setupEventHandlers();
-
       return _this26;
     }
-
     _createClass(Tooltip, [{
       key: "destroy",
-
       /**
        * Teardown component
        */
       value: function destroy() {
         $(this.tooltipEl).remove();
-
         this._removeEventHandlers();
-
         this.el.M_Tooltip = undefined;
       }
     }, {
@@ -5069,15 +4567,11 @@ var $jscomp$this = this;
         if (this.isOpen) {
           return;
         }
-
         isManual = isManual === undefined ? true : undefined; // Default value true
-
-        this.isOpen = true; // Update tooltip content with HTML attribute options
-
+        this.isOpen = true;
+        // Update tooltip content with HTML attribute options
         this.options = $.extend({}, this.options, this._getAttributeOptions());
-
         this._updateTooltipContent();
-
         this._setEnterDelayTimeout(isManual);
       }
     }, {
@@ -5086,46 +4580,40 @@ var $jscomp$this = this;
         if (!this.isOpen) {
           return;
         }
-
         this.isHovered = false;
         this.isFocused = false;
         this.isOpen = false;
-
         this._setExitDelayTimeout();
       }
+
       /**
        * Create timeout which delays when the tooltip closes
        */
-
     }, {
       key: "_setExitDelayTimeout",
       value: function _setExitDelayTimeout() {
         var _this27 = this;
-
         clearTimeout(this._exitDelayTimeout);
         this._exitDelayTimeout = setTimeout(function () {
           if (_this27.isHovered || _this27.isFocused) {
             return;
           }
-
           _this27._animateOut();
         }, this.options.exitDelay);
       }
+
       /**
        * Create timeout which delays when the toast closes
        */
-
     }, {
       key: "_setEnterDelayTimeout",
       value: function _setEnterDelayTimeout(isManual) {
         var _this28 = this;
-
         clearTimeout(this._enterDelayTimeout);
         this._enterDelayTimeout = setTimeout(function () {
           if (!_this28.isHovered && !_this28.isFocused && !isManual) {
             return;
           }
-
           _this28._animateIn();
         }, this.options.enterDelay);
       }
@@ -5133,19 +4621,18 @@ var $jscomp$this = this;
       key: "_positionTooltip",
       value: function _positionTooltip() {
         var origin = this.el,
-            tooltip = this.tooltipEl,
-            originHeight = origin.offsetHeight,
-            originWidth = origin.offsetWidth,
-            tooltipHeight = tooltip.offsetHeight,
-            tooltipWidth = tooltip.offsetWidth,
-            newCoordinates = void 0,
-            margin = this.options.margin,
-            targetTop = void 0,
-            targetLeft = void 0;
+          tooltip = this.tooltipEl,
+          originHeight = origin.offsetHeight,
+          originWidth = origin.offsetWidth,
+          tooltipHeight = tooltip.offsetHeight,
+          tooltipWidth = tooltip.offsetWidth,
+          newCoordinates = void 0,
+          margin = this.options.margin,
+          targetTop = void 0,
+          targetLeft = void 0;
         this.xMovement = 0, this.yMovement = 0;
         targetTop = origin.getBoundingClientRect().top + M.getDocumentScrollTop();
         targetLeft = origin.getBoundingClientRect().left + M.getDocumentScrollLeft();
-
         if (this.options.position === 'top') {
           targetTop += -tooltipHeight - margin;
           targetLeft += originWidth / 2 - tooltipWidth / 2;
@@ -5163,7 +4650,6 @@ var $jscomp$this = this;
           targetLeft += originWidth / 2 - tooltipWidth / 2;
           this.yMovement = this.options.transitionMovement;
         }
-
         newCoordinates = this._repositionWithinScreen(targetLeft, targetTop, tooltipWidth, tooltipHeight);
         $(tooltip).css({
           top: newCoordinates.y + 'px',
@@ -5185,19 +4671,16 @@ var $jscomp$this = this;
         };
         var offset = this.options.margin + this.options.transitionMovement;
         var edges = M.checkWithinContainer(document.body, bounding, offset);
-
         if (edges.left) {
           newX = offset;
         } else if (edges.right) {
           newX -= newX + width - window.innerWidth;
         }
-
         if (edges.top) {
           newY = offset;
         } else if (edges.bottom) {
           newY -= newY + height - window.innerHeight;
         }
-
         return {
           x: newX + scrollLeft,
           y: newY + scrollTop
@@ -5207,7 +4690,6 @@ var $jscomp$this = this;
       key: "_animateIn",
       value: function _animateIn() {
         this._positionTooltip();
-
         this.tooltipEl.style.visibility = 'visible';
         anim.remove(this.tooltipEl);
         anim({
@@ -5237,7 +4719,6 @@ var $jscomp$this = this;
       value: function _handleMouseEnter() {
         this.isHovered = true;
         this.isFocused = false; // Allows close of tooltip when opened by focus.
-
         this.open(false);
       }
     }, {
@@ -5245,7 +4726,6 @@ var $jscomp$this = this;
       value: function _handleMouseLeave() {
         this.isHovered = false;
         this.isFocused = false; // Allows close of tooltip when opened by focus.
-
         this.close();
       }
     }, {
@@ -5268,15 +4748,12 @@ var $jscomp$this = this;
         var attributeOptions = {};
         var tooltipTextOption = this.el.getAttribute('data-tooltip');
         var positionOption = this.el.getAttribute('data-position');
-
         if (tooltipTextOption) {
           attributeOptions.html = tooltipTextOption;
         }
-
         if (positionOption) {
           attributeOptions.position = positionOption;
         }
-
         return attributeOptions;
       }
     }], [{
@@ -5284,10 +4761,10 @@ var $jscomp$this = this;
       value: function init(els, options) {
         return _get(Tooltip.__proto__ || Object.getPrototypeOf(Tooltip), "init", this).call(this, this, els, options);
       }
+
       /**
        * Get Instance
        */
-
     }, {
       key: "getInstance",
       value: function getInstance(el) {
@@ -5300,76 +4777,63 @@ var $jscomp$this = this;
         return _defaults;
       }
     }]);
-
     return Tooltip;
   }(Component);
-
   M.Tooltip = Tooltip;
-
   if (M.jQueryLoaded) {
     M.initializeJqueryWrapper(Tooltip, 'tooltip', 'M_Tooltip');
   }
 })(cash, M.anime);
+; /*!
+  * Waves v0.6.4
+  * http://fian.my.id/Waves
+  *
+  * Copyright 2014 Alfiana E. Sibuea and other contributors
+  * Released under the MIT license
+  * https://github.com/fians/Waves/blob/master/LICENSE
+  */
 
 ;
-/*!
-* Waves v0.6.4
-* http://fian.my.id/Waves
-*
-* Copyright 2014 Alfiana E. Sibuea and other contributors
-* Released under the MIT license
-* https://github.com/fians/Waves/blob/master/LICENSE
-*/
-
-;
-
 (function (window) {
   'use strict';
 
   var Waves = Waves || {};
-  var $$ = document.querySelectorAll.bind(document); // Find exact position of element
+  var $$ = document.querySelectorAll.bind(document);
 
+  // Find exact position of element
   function isWindow(obj) {
     return obj !== null && obj === obj.window;
   }
-
   function getWindow(elem) {
     return isWindow(elem) ? elem : elem.nodeType === 9 && elem.defaultView;
   }
-
   function offset(elem) {
     var docElem,
-        win,
-        box = {
-      top: 0,
-      left: 0
-    },
-        doc = elem && elem.ownerDocument;
+      win,
+      box = {
+        top: 0,
+        left: 0
+      },
+      doc = elem && elem.ownerDocument;
     docElem = doc.documentElement;
-
     if (_typeof(elem.getBoundingClientRect) !== (typeof undefined === "undefined" ? "undefined" : _typeof(undefined))) {
       box = elem.getBoundingClientRect();
     }
-
     win = getWindow(doc);
     return {
       top: box.top + win.pageYOffset - docElem.clientTop,
       left: box.left + win.pageXOffset - docElem.clientLeft
     };
   }
-
   function convertStyle(obj) {
     var style = '';
-
     for (var a in obj) {
       if (obj.hasOwnProperty(a)) {
         style += a + ':' + obj[a] + ';';
       }
     }
-
     return style;
   }
-
   var Effect = {
     // Effect delay
     duration: 750,
@@ -5378,37 +4842,41 @@ var $jscomp$this = this;
       if (e.button === 2) {
         return false;
       }
+      var el = element || this;
 
-      var el = element || this; // Create ripple
-
+      // Create ripple
       var ripple = document.createElement('div');
       ripple.className = 'waves-ripple';
-      el.appendChild(ripple); // Get click coordinate and element witdh
+      el.appendChild(ripple);
 
+      // Get click coordinate and element witdh
       var pos = offset(el);
       var relativeY = e.pageY - pos.top;
       var relativeX = e.pageX - pos.left;
-      var scale = 'scale(' + el.clientWidth / 100 * 10 + ')'; // Support for touch devices
+      var scale = 'scale(' + el.clientWidth / 100 * 10 + ')';
 
+      // Support for touch devices
       if ('touches' in e) {
         relativeY = e.touches[0].pageY - pos.top;
         relativeX = e.touches[0].pageX - pos.left;
-      } // Attach data to element
+      }
 
-
+      // Attach data to element
       ripple.setAttribute('data-hold', Date.now());
       ripple.setAttribute('data-scale', scale);
       ripple.setAttribute('data-x', relativeX);
-      ripple.setAttribute('data-y', relativeY); // Set ripple position
+      ripple.setAttribute('data-y', relativeY);
 
+      // Set ripple position
       var rippleStyle = {
         'top': relativeY + 'px',
         'left': relativeX + 'px'
       };
       ripple.className = ripple.className + ' waves-notransition';
       ripple.setAttribute('style', convertStyle(rippleStyle));
-      ripple.className = ripple.className.replace('waves-notransition', ''); // Scale the ripple
+      ripple.className = ripple.className.replace('waves-notransition', '');
 
+      // Scale the ripple
       rippleStyle['-webkit-transform'] = scale;
       rippleStyle['-moz-transform'] = scale;
       rippleStyle['-ms-transform'] = scale;
@@ -5428,29 +4896,28 @@ var $jscomp$this = this;
     hide: function hide(e) {
       TouchHandler.touchup(e);
       var el = this;
-      var width = el.clientWidth * 1.4; // Get first ripple
+      var width = el.clientWidth * 1.4;
 
+      // Get first ripple
       var ripple = null;
       var ripples = el.getElementsByClassName('waves-ripple');
-
       if (ripples.length > 0) {
         ripple = ripples[ripples.length - 1];
       } else {
         return false;
       }
-
       var relativeX = ripple.getAttribute('data-x');
       var relativeY = ripple.getAttribute('data-y');
-      var scale = ripple.getAttribute('data-scale'); // Get delay beetween mousedown and mouse leave
+      var scale = ripple.getAttribute('data-scale');
 
+      // Get delay beetween mousedown and mouse leave
       var diff = Date.now() - Number(ripple.getAttribute('data-hold'));
       var delay = 350 - diff;
-
       if (delay < 0) {
         delay = 0;
-      } // Fade out ripple after delay
+      }
 
-
+      // Fade out ripple after delay
       setTimeout(function () {
         var style = {
           'top': relativeY + 'px',
@@ -5481,37 +4948,36 @@ var $jscomp$this = this;
     wrapInput: function wrapInput(elements) {
       for (var a = 0; a < elements.length; a++) {
         var el = elements[a];
-
         if (el.tagName.toLowerCase() === 'input') {
-          var parent = el.parentNode; // If input already have parent just pass through
+          var parent = el.parentNode;
 
+          // If input already have parent just pass through
           if (parent.tagName.toLowerCase() === 'i' && parent.className.indexOf('waves-effect') !== -1) {
             continue;
-          } // Put element class and style to the specified parent
+          }
 
-
+          // Put element class and style to the specified parent
           var wrapper = document.createElement('i');
           wrapper.className = el.className + ' waves-input-wrapper';
           var elementStyle = el.getAttribute('style');
-
           if (!elementStyle) {
             elementStyle = '';
           }
-
           wrapper.setAttribute('style', elementStyle);
           el.className = 'waves-button-input';
-          el.removeAttribute('style'); // Put element as child
+          el.removeAttribute('style');
 
+          // Put element as child
           parent.replaceChild(wrapper, el);
           wrapper.appendChild(el);
         }
       }
     }
   };
+
   /**
    * Disable mousedown event for 500ms during and after touch
    */
-
   var TouchHandler = {
     /* uses an integer rather than bool so there's no issues with
      * needing to clear timeouts if another touch event occurred
@@ -5520,7 +4986,6 @@ var $jscomp$this = this;
     touches: 0,
     allowEvent: function allowEvent(e) {
       var allow = true;
-
       if (e.type === 'touchstart') {
         TouchHandler.touches += 1; //push
       } else if (e.type === 'touchend' || e.type === 'touchcancel') {
@@ -5532,83 +4997,69 @@ var $jscomp$this = this;
       } else if (e.type === 'mousedown' && TouchHandler.touches > 0) {
         allow = false;
       }
-
       return allow;
     },
     touchup: function touchup(e) {
       TouchHandler.allowEvent(e);
     }
   };
+
   /**
    * Delegated click handler for .waves-effect element.
    * returns null when .waves-effect element not in "click tree"
    */
-
   function getWavesEffectElement(e) {
     if (TouchHandler.allowEvent(e) === false) {
       return null;
     }
-
     var element = null;
     var target = e.target || e.srcElement;
-
     while (target.parentNode !== null) {
       if (!(target instanceof SVGElement) && target.className.indexOf('waves-effect') !== -1) {
         element = target;
         break;
       }
-
       target = target.parentNode;
     }
-
     return element;
   }
+
   /**
    * Bubble the click and show effect if .waves-effect elem was found
    */
-
-
   function showEffect(e) {
     var element = getWavesEffectElement(e);
-
     if (element !== null) {
       Effect.show(e, element);
-
       if ('ontouchstart' in window) {
         element.addEventListener('touchend', Effect.hide, false);
         element.addEventListener('touchcancel', Effect.hide, false);
       }
-
       element.addEventListener('mouseup', Effect.hide, false);
       element.addEventListener('mouseleave', Effect.hide, false);
       element.addEventListener('dragend', Effect.hide, false);
     }
   }
-
   Waves.displayEffect = function (options) {
     options = options || {};
-
     if ('duration' in options) {
       Effect.duration = options.duration;
-    } //Wrap input inside <i> tag
+    }
 
-
+    //Wrap input inside <i> tag
     Effect.wrapInput($$('.waves-effect'));
-
     if ('ontouchstart' in window) {
       document.body.addEventListener('touchstart', showEffect, false);
     }
-
     document.body.addEventListener('mousedown', showEffect, false);
   };
+
   /**
    * Attach Waves to an input element (or any element which doesn't
    * bubble mouseup/mousedown events).
    *   Intended to be used with dynamically loaded forms/inputs, or
    * where the user doesn't want a delegated click handler.
    */
-
-
   Waves.attach = function (element) {
     //FUTURE: automatically add waves classes and allow users
     // to specify them with an options param? Eg. light/classic/button
@@ -5616,22 +5067,17 @@ var $jscomp$this = this;
       Effect.wrapInput([element]);
       element = element.parentNode;
     }
-
     if ('ontouchstart' in window) {
       element.addEventListener('touchstart', showEffect, false);
     }
-
     element.addEventListener('mousedown', showEffect, false);
   };
-
   window.Waves = Waves;
   document.addEventListener('DOMContentLoaded', function () {
     Waves.displayEffect();
   }, false);
 })(window);
-
 ;
-
 (function ($, anim) {
   'use strict';
 
@@ -5644,80 +5090,75 @@ var $jscomp$this = this;
     completeCallback: null,
     activationPercent: 0.8
   };
-
   var Toast = function () {
     function Toast(options) {
       _classCallCheck(this, Toast);
+
       /**
        * Options for the toast
        * @member Toast#options
        */
-
-
       this.options = $.extend({}, Toast.defaults, options);
       this.message = this.options.html;
+
       /**
        * Describes current pan state toast
        * @type {Boolean}
        */
-
       this.panning = false;
+
       /**
        * Time remaining until toast is removed
        */
-
       this.timeRemaining = this.options.displayLength;
-
       if (Toast._toasts.length === 0) {
         Toast._createContainer();
-      } // Create new toast
+      }
 
-
+      // Create new toast
       Toast._toasts.push(this);
-
       var toastElement = this._createToast();
-
       toastElement.M_Toast = this;
       this.el = toastElement;
       this.$el = $(toastElement);
-
       this._animateIn();
-
       this._setTimer();
     }
-
     _createClass(Toast, [{
       key: "_createToast",
-
       /**
        * Create toast and append it to toast container
        */
       value: function _createToast() {
         var toast = document.createElement('div');
-        toast.classList.add('toast'); // Add custom classes onto toast
+        toast.classList.add('toast');
 
+        // Add custom classes onto toast
         if (!!this.options.classes.length) {
           $(toast).addClass(this.options.classes);
-        } // Set content
+        }
 
-
+        // Set content
         if ((typeof HTMLElement === "undefined" ? "undefined" : _typeof(HTMLElement)) === 'object' ? this.message instanceof HTMLElement : this.message && _typeof(this.message) === 'object' && this.message !== null && this.message.nodeType === 1 && typeof this.message.nodeName === 'string') {
-          toast.appendChild(this.message); // Check if it is jQuery object
+          toast.appendChild(this.message);
+
+          // Check if it is jQuery object
         } else if (!!this.message.jquery) {
-          $(toast).append(this.message[0]); // Insert as html;
+          $(toast).append(this.message[0]);
+
+          // Insert as html;
         } else {
           toast.innerHTML = this.message;
-        } // Append toasft
+        }
 
-
+        // Append toasft
         Toast._container.appendChild(toast);
-
         return toast;
       }
+
       /**
        * Animate in toast
        */
-
     }, {
       key: "_animateIn",
       value: function _animateIn() {
@@ -5730,48 +5171,44 @@ var $jscomp$this = this;
           easing: 'easeOutCubic'
         });
       }
+
       /**
        * Create setInterval which automatically removes toast when timeRemaining >= 0
        * has been reached
        */
-
     }, {
       key: "_setTimer",
       value: function _setTimer() {
         var _this29 = this;
-
         if (this.timeRemaining !== Infinity) {
           this.counterInterval = setInterval(function () {
             // If toast is not being dragged, decrease its time remaining
             if (!_this29.panning) {
               _this29.timeRemaining -= 20;
-            } // Animate toast out
+            }
 
-
+            // Animate toast out
             if (_this29.timeRemaining <= 0) {
               _this29.dismiss();
             }
           }, 20);
         }
       }
+
       /**
        * Dismiss toast with animation
        */
-
     }, {
       key: "dismiss",
       value: function dismiss() {
         var _this30 = this;
-
         window.clearInterval(this.counterInterval);
         var activationDistance = this.el.offsetWidth * this.options.activationPercent;
-
         if (this.wasSwiped) {
           this.el.style.transition = 'transform .05s, opacity .05s';
           this.el.style.transform = "translateX(" + activationDistance + "px)";
           this.el.style.opacity = 0;
         }
-
         anim({
           targets: this.el,
           opacity: 0,
@@ -5782,13 +5219,10 @@ var $jscomp$this = this;
             // Call the optional callback
             if (typeof _this30.options.completeCallback === 'function') {
               _this30.options.completeCallback();
-            } // Remove toast from DOM
-
-
+            }
+            // Remove toast from DOM
             _this30.$el.remove();
-
             Toast._toasts.splice(Toast._toasts.indexOf(_this30), 1);
-
             if (Toast._toasts.length === 0) {
               Toast._removeContainer();
             }
@@ -5797,7 +5231,6 @@ var $jscomp$this = this;
       }
     }], [{
       key: "getInstance",
-
       /**
        * Get Instance
        */
@@ -5805,16 +5238,17 @@ var $jscomp$this = this;
         var domElem = !!el.jquery ? el[0] : el;
         return domElem.M_Toast;
       }
+
       /**
        * Append toast container and add event handlers
        */
-
     }, {
       key: "_createContainer",
       value: function _createContainer() {
         var container = document.createElement('div');
-        container.setAttribute('id', 'toast-container'); // Add event handler
+        container.setAttribute('id', 'toast-container');
 
+        // Add event handler
         container.addEventListener('touchstart', Toast._onDragStart);
         container.addEventListener('touchmove', Toast._onDragMove);
         container.addEventListener('touchend', Toast._onDragEnd);
@@ -5824,10 +5258,10 @@ var $jscomp$this = this;
         document.body.appendChild(container);
         Toast._container = container;
       }
+
       /**
        * Remove toast container and event handlers
        */
-
     }, {
       key: "_removeContainer",
       value: function _removeContainer() {
@@ -5837,11 +5271,11 @@ var $jscomp$this = this;
         $(Toast._container).remove();
         Toast._container = null;
       }
+
       /**
        * Begin drag handler
        * @param {Event} e
        */
-
     }, {
       key: "_onDragStart",
       value: function _onDragStart(e) {
@@ -5857,11 +5291,11 @@ var $jscomp$this = this;
           toast.xPos = Toast._xPos(e);
         }
       }
+
       /**
        * Drag move handler
        * @param {Event} e
        */
-
     }, {
       key: "_onDragMove",
       value: function _onDragMove(e) {
@@ -5878,10 +5312,10 @@ var $jscomp$this = this;
           toast.el.style.opacity = 1 - Math.abs(totalDeltaX / activationDistance);
         }
       }
+
       /**
        * End drag handler
        */
-
     }, {
       key: "_onDragEnd",
       value: function _onDragEnd() {
@@ -5891,39 +5325,40 @@ var $jscomp$this = this;
           toast.el.classList.remove('panning');
           var totalDeltaX = toast.xPos - toast.startingXPos;
           var activationDistance = toast.el.offsetWidth * toast.options.activationPercent;
-          var shouldBeDismissed = Math.abs(totalDeltaX) > activationDistance || toast.velocityX > 1; // Remove toast
+          var shouldBeDismissed = Math.abs(totalDeltaX) > activationDistance || toast.velocityX > 1;
 
+          // Remove toast
           if (shouldBeDismissed) {
             toast.wasSwiped = true;
-            toast.dismiss(); // Animate toast back to original position
+            toast.dismiss();
+
+            // Animate toast back to original position
           } else {
             toast.el.style.transition = 'transform .2s, opacity .2s';
             toast.el.style.transform = '';
             toast.el.style.opacity = '';
           }
-
           Toast._draggedToast = null;
         }
       }
+
       /**
        * Get x position of mouse or touch event
        * @param {Event} e
        */
-
     }, {
       key: "_xPos",
       value: function _xPos(e) {
         if (e.targetTouches && e.targetTouches.length >= 1) {
           return e.targetTouches[0].clientX;
-        } // mouse event
-
-
+        }
+        // mouse event
         return e.clientX;
       }
+
       /**
        * Remove all toasts
        */
-
     }, {
       key: "dismissAll",
       value: function dismissAll() {
@@ -5937,39 +5372,35 @@ var $jscomp$this = this;
         return _defaults;
       }
     }]);
-
     return Toast;
   }();
+
   /**
    * @static
    * @memberof Toast
    * @type {Array.<Toast>}
    */
 
-
   Toast._toasts = [];
+
   /**
    * @static
    * @memberof Toast
    */
-
   Toast._container = null;
+
   /**
    * @static
    * @memberof Toast
    * @type {Toast}
    */
-
   Toast._draggedToast = null;
   M.Toast = Toast;
-
   M.toast = function (options) {
     return new Toast(options);
   };
 })(cash, M.anime);
-
 ;
-
 (function ($, anim) {
   'use strict';
 
@@ -5984,27 +5415,26 @@ var $jscomp$this = this;
     onCloseEnd: null,
     preventScrolling: true
   };
+
   /**
    * @class
    */
 
   var Sidenav = function (_Component8) {
     _inherits(Sidenav, _Component8);
+
     /**
      * Construct Sidenav instance and set up overlay
      * @constructor
      * @param {Element} el
      * @param {Object} options
      */
-
-
     function Sidenav(el, options) {
       _classCallCheck(this, Sidenav);
-
       var _this31 = _possibleConstructorReturn(this, (Sidenav.__proto__ || Object.getPrototypeOf(Sidenav)).call(this, Sidenav, el, options));
-
       _this31.el.M_Sidenav = _this31;
       _this31.id = _this31.$el.attr('id');
+
       /**
        * Options for the Sidenav
        * @member Sidenav#options
@@ -6017,64 +5447,50 @@ var $jscomp$this = this;
        * @prop {Function} onCloseStart - Function called when sidenav starts exiting
        * @prop {Function} onCloseEnd - Function called when sidenav finishes exiting
        */
-
       _this31.options = $.extend({}, Sidenav.defaults, options);
+
       /**
        * Describes open/close state of Sidenav
        * @type {Boolean}
        */
-
       _this31.isOpen = false;
+
       /**
        * Describes if Sidenav is fixed
        * @type {Boolean}
        */
-
       _this31.isFixed = _this31.el.classList.contains('sidenav-fixed');
+
       /**
        * Describes if Sidenav is being draggeed
        * @type {Boolean}
        */
+      _this31.isDragged = false;
 
-      _this31.isDragged = false; // Window size variables for window resize checks
-
+      // Window size variables for window resize checks
       _this31.lastWindowWidth = window.innerWidth;
       _this31.lastWindowHeight = window.innerHeight;
-
       _this31._createOverlay();
-
       _this31._createDragTarget();
-
       _this31._setupEventHandlers();
-
       _this31._setupClasses();
-
       _this31._setupFixed();
-
       Sidenav._sidenavs.push(_this31);
-
       return _this31;
     }
-
     _createClass(Sidenav, [{
       key: "destroy",
-
       /**
        * Teardown component
        */
       value: function destroy() {
         this._removeEventHandlers();
-
         this._enableBodyScrolling();
-
         this._overlay.parentNode.removeChild(this._overlay);
-
         this.dragTarget.parentNode.removeChild(this.dragTarget);
         this.el.M_Sidenav = undefined;
         this.el.style.transform = '';
-
         var index = Sidenav._sidenavs.indexOf(this);
-
         if (index >= 0) {
           Sidenav._sidenavs.splice(index, 1);
         }
@@ -6095,7 +5511,6 @@ var $jscomp$this = this;
         if (Sidenav._sidenavs.length === 0) {
           document.body.addEventListener('click', this._handleTriggerClick);
         }
-
         this._handleDragTargetDragBound = this._handleDragTargetDrag.bind(this);
         this._handleDragTargetReleaseBound = this._handleDragTargetRelease.bind(this);
         this._handleCloseDragBound = this._handleCloseDrag.bind(this);
@@ -6103,15 +5518,13 @@ var $jscomp$this = this;
         this._handleCloseTriggerClickBound = this._handleCloseTriggerClick.bind(this);
         this.dragTarget.addEventListener('touchmove', this._handleDragTargetDragBound);
         this.dragTarget.addEventListener('touchend', this._handleDragTargetReleaseBound);
-
         this._overlay.addEventListener('touchmove', this._handleCloseDragBound);
-
         this._overlay.addEventListener('touchend', this._handleCloseReleaseBound);
-
         this.el.addEventListener('touchmove', this._handleCloseDragBound);
         this.el.addEventListener('touchend', this._handleCloseReleaseBound);
-        this.el.addEventListener('click', this._handleCloseTriggerClickBound); // Add resize for side nav fixed
+        this.el.addEventListener('click', this._handleCloseTriggerClickBound);
 
+        // Add resize for side nav fixed
         if (this.isFixed) {
           this._handleWindowResizeBound = this._handleWindowResize.bind(this);
           window.addEventListener('resize', this._handleWindowResizeBound);
@@ -6123,49 +5536,43 @@ var $jscomp$this = this;
         if (Sidenav._sidenavs.length === 1) {
           document.body.removeEventListener('click', this._handleTriggerClick);
         }
-
         this.dragTarget.removeEventListener('touchmove', this._handleDragTargetDragBound);
         this.dragTarget.removeEventListener('touchend', this._handleDragTargetReleaseBound);
-
         this._overlay.removeEventListener('touchmove', this._handleCloseDragBound);
-
         this._overlay.removeEventListener('touchend', this._handleCloseReleaseBound);
-
         this.el.removeEventListener('touchmove', this._handleCloseDragBound);
         this.el.removeEventListener('touchend', this._handleCloseReleaseBound);
-        this.el.removeEventListener('click', this._handleCloseTriggerClickBound); // Remove resize for side nav fixed
+        this.el.removeEventListener('click', this._handleCloseTriggerClickBound);
 
+        // Remove resize for side nav fixed
         if (this.isFixed) {
           window.removeEventListener('resize', this._handleWindowResizeBound);
         }
       }
+
       /**
        * Handle Trigger Click
        * @param {Event} e
        */
-
     }, {
       key: "_handleTriggerClick",
       value: function _handleTriggerClick(e) {
         var $trigger = $(e.target).closest('.sidenav-trigger');
-
         if (e.target && $trigger.length) {
           var sidenavId = M.getIdFromTrigger($trigger[0]);
           var sidenavInstance = document.getElementById(sidenavId).M_Sidenav;
-
           if (sidenavInstance) {
             sidenavInstance.open($trigger);
           }
-
           e.preventDefault();
         }
       }
+
       /**
        * Set variables needed at the beggining of drag
        * and stop any current transition.
        * @param {Event} e
        */
-
     }, {
       key: "_startDrag",
       value: function _startDrag(e) {
@@ -6181,11 +5588,11 @@ var $jscomp$this = this;
         anim.remove(this.el);
         anim.remove(this._overlay);
       }
+
       /**
        * Set variables needed at each drag move update tick
        * @param {Event} e
        */
-
     }, {
       key: "_dragMoveUpdate",
       value: function _dragMoveUpdate(e) {
@@ -6195,67 +5602,66 @@ var $jscomp$this = this;
         this._xPos = clientX;
         this.velocityX = this.deltaX / (Date.now() - this._time);
         this._time = Date.now();
-
         if (this._initialScrollTop !== currentScrollTop) {
           this._verticallyScrolling = true;
         }
       }
+
       /**
        * Handles Dragging of Sidenav
        * @param {Event} e
        */
-
     }, {
       key: "_handleDragTargetDrag",
       value: function _handleDragTargetDrag(e) {
         // Check if draggable
         if (!this.options.draggable || this._isCurrentlyFixed() || this._verticallyScrolling) {
           return;
-        } // If not being dragged, set initial drag start variables
+        }
 
-
+        // If not being dragged, set initial drag start variables
         if (!this.isDragged) {
           this._startDrag(e);
-        } // Run touchmove updates
+        }
 
+        // Run touchmove updates
+        this._dragMoveUpdate(e);
 
-        this._dragMoveUpdate(e); // Calculate raw deltaX
+        // Calculate raw deltaX
+        var totalDeltaX = this._xPos - this._startingXpos;
 
+        // dragDirection is the attempted user drag direction
+        var dragDirection = totalDeltaX > 0 ? 'right' : 'left';
 
-        var totalDeltaX = this._xPos - this._startingXpos; // dragDirection is the attempted user drag direction
-
-        var dragDirection = totalDeltaX > 0 ? 'right' : 'left'; // Don't allow totalDeltaX to exceed Sidenav width or be dragged in the opposite direction
-
+        // Don't allow totalDeltaX to exceed Sidenav width or be dragged in the opposite direction
         totalDeltaX = Math.min(this._width, Math.abs(totalDeltaX));
-
         if (this.options.edge === dragDirection) {
           totalDeltaX = 0;
         }
+
         /**
          * transformX is the drag displacement
          * transformPrefix is the initial transform placement
          * Invert values if Sidenav is right edge
          */
-
-
         var transformX = totalDeltaX;
         var transformPrefix = 'translateX(-100%)';
-
         if (this.options.edge === 'right') {
           transformPrefix = 'translateX(100%)';
           transformX = -transformX;
-        } // Calculate open/close percentage of sidenav, with open = 1 and close = 0
+        }
 
+        // Calculate open/close percentage of sidenav, with open = 1 and close = 0
+        this.percentOpen = Math.min(1, totalDeltaX / this._width);
 
-        this.percentOpen = Math.min(1, totalDeltaX / this._width); // Set transform and opacity styles
-
+        // Set transform and opacity styles
         this.el.style.transform = transformPrefix + " translateX(" + transformX + "px)";
         this._overlay.style.opacity = this.percentOpen;
       }
+
       /**
        * Handle Drag Target Release
        */
-
     }, {
       key: "_handleDragTargetRelease",
       value: function _handleDragTargetRelease() {
@@ -6265,16 +5671,15 @@ var $jscomp$this = this;
           } else {
             this._animateOut();
           }
-
           this.isDragged = false;
           this._verticallyScrolling = false;
         }
       }
+
       /**
        * Handle Close Drag
        * @param {Event} e
        */
-
     }, {
       key: "_handleCloseDrag",
       value: function _handleCloseDrag(e) {
@@ -6282,44 +5687,44 @@ var $jscomp$this = this;
           // Check if draggable
           if (!this.options.draggable || this._isCurrentlyFixed() || this._verticallyScrolling) {
             return;
-          } // If not being dragged, set initial drag start variables
+          }
 
-
+          // If not being dragged, set initial drag start variables
           if (!this.isDragged) {
             this._startDrag(e);
-          } // Run touchmove updates
+          }
 
+          // Run touchmove updates
+          this._dragMoveUpdate(e);
 
-          this._dragMoveUpdate(e); // Calculate raw deltaX
+          // Calculate raw deltaX
+          var totalDeltaX = this._xPos - this._startingXpos;
 
+          // dragDirection is the attempted user drag direction
+          var dragDirection = totalDeltaX > 0 ? 'right' : 'left';
 
-          var totalDeltaX = this._xPos - this._startingXpos; // dragDirection is the attempted user drag direction
-
-          var dragDirection = totalDeltaX > 0 ? 'right' : 'left'; // Don't allow totalDeltaX to exceed Sidenav width or be dragged in the opposite direction
-
+          // Don't allow totalDeltaX to exceed Sidenav width or be dragged in the opposite direction
           totalDeltaX = Math.min(this._width, Math.abs(totalDeltaX));
-
           if (this.options.edge !== dragDirection) {
             totalDeltaX = 0;
           }
-
           var transformX = -totalDeltaX;
-
           if (this.options.edge === 'right') {
             transformX = -transformX;
-          } // Calculate open/close percentage of sidenav, with open = 1 and close = 0
+          }
 
+          // Calculate open/close percentage of sidenav, with open = 1 and close = 0
+          this.percentOpen = Math.min(1, 1 - totalDeltaX / this._width);
 
-          this.percentOpen = Math.min(1, 1 - totalDeltaX / this._width); // Set transform and opacity styles
-
+          // Set transform and opacity styles
           this.el.style.transform = "translateX(" + transformX + "px)";
           this._overlay.style.opacity = this.percentOpen;
         }
       }
+
       /**
        * Handle Close Release
        */
-
     }, {
       key: "_handleCloseRelease",
       value: function _handleCloseRelease() {
@@ -6329,28 +5734,26 @@ var $jscomp$this = this;
           } else {
             this.close();
           }
-
           this.isDragged = false;
           this._verticallyScrolling = false;
         }
       }
+
       /**
        * Handles closing of Sidenav when element with class .sidenav-close
        */
-
     }, {
       key: "_handleCloseTriggerClick",
       value: function _handleCloseTriggerClick(e) {
         var $closeTrigger = $(e.target).closest('.sidenav-close');
-
         if ($closeTrigger.length && !this._isCurrentlyFixed()) {
           this.close();
         }
       }
+
       /**
        * Handle Window Resize
        */
-
     }, {
       key: "_handleWindowResize",
       value: function _handleWindowResize() {
@@ -6362,7 +5765,6 @@ var $jscomp$this = this;
             this.close();
           }
         }
-
         this.lastWindowWidth = window.innerWidth;
         this.lastWindowHeight = window.innerHeight;
       }
@@ -6418,14 +5820,14 @@ var $jscomp$this = this;
         if (this.isOpen === true) {
           return;
         }
+        this.isOpen = true;
 
-        this.isOpen = true; // Run onOpenStart callback
-
+        // Run onOpenStart callback
         if (typeof this.options.onOpenStart === 'function') {
           this.options.onOpenStart.call(this, this.el);
-        } // Handle fixed Sidenav
+        }
 
-
+        // Handle fixed Sidenav
         if (this._isCurrentlyFixed()) {
           anim.remove(this.el);
           anim({
@@ -6434,15 +5836,14 @@ var $jscomp$this = this;
             duration: 0,
             easing: 'easeOutQuad'
           });
-
           this._enableBodyScrolling();
+          this._overlay.style.display = 'none';
 
-          this._overlay.style.display = 'none'; // Handle non-fixed Sidenav
+          // Handle non-fixed Sidenav
         } else {
           if (this.options.preventScrolling) {
             this._preventBodyScrolling();
           }
-
           if (!this.isDragged || this.percentOpen != 1) {
             this._animateIn();
           }
@@ -6454,20 +5855,21 @@ var $jscomp$this = this;
         if (this.isOpen === false) {
           return;
         }
+        this.isOpen = false;
 
-        this.isOpen = false; // Run onCloseStart callback
-
+        // Run onCloseStart callback
         if (typeof this.options.onCloseStart === 'function') {
           this.options.onCloseStart.call(this, this.el);
-        } // Handle fixed Sidenav
+        }
 
-
+        // Handle fixed Sidenav
         if (this._isCurrentlyFixed()) {
           var transformX = this.options.edge === 'left' ? '-105%' : '105%';
-          this.el.style.transform = "translateX(" + transformX + ")"; // Handle non-fixed Sidenav
+          this.el.style.transform = "translateX(" + transformX + ")";
+
+          // Handle non-fixed Sidenav
         } else {
           this._enableBodyScrolling();
-
           if (!this.isDragged || this.percentOpen != 0) {
             this._animateOut();
           } else {
@@ -6479,20 +5881,16 @@ var $jscomp$this = this;
       key: "_animateIn",
       value: function _animateIn() {
         this._animateSidenavIn();
-
         this._animateOverlayIn();
       }
     }, {
       key: "_animateSidenavIn",
       value: function _animateSidenavIn() {
         var _this32 = this;
-
         var slideOutPercent = this.options.edge === 'left' ? -1 : 1;
-
         if (this.isDragged) {
           slideOutPercent = this.options.edge === 'left' ? slideOutPercent + this.percentOpen : slideOutPercent - this.percentOpen;
         }
-
         anim.remove(this.el);
         anim({
           targets: this.el,
@@ -6511,7 +5909,6 @@ var $jscomp$this = this;
       key: "_animateOverlayIn",
       value: function _animateOverlayIn() {
         var start = 0;
-
         if (this.isDragged) {
           start = this.percentOpen;
         } else {
@@ -6519,7 +5916,6 @@ var $jscomp$this = this;
             display: 'block'
           });
         }
-
         anim.remove(this._overlay);
         anim({
           targets: this._overlay,
@@ -6532,21 +5928,17 @@ var $jscomp$this = this;
       key: "_animateOut",
       value: function _animateOut() {
         this._animateSidenavOut();
-
         this._animateOverlayOut();
       }
     }, {
       key: "_animateSidenavOut",
       value: function _animateSidenavOut() {
         var _this33 = this;
-
         var endPercent = this.options.edge === 'left' ? -1 : 1;
         var slideOutPercent = 0;
-
         if (this.isDragged) {
           slideOutPercent = this.options.edge === 'left' ? endPercent + this.percentOpen : endPercent - this.percentOpen;
         }
-
         anim.remove(this.el);
         anim({
           targets: this.el,
@@ -6565,7 +5957,6 @@ var $jscomp$this = this;
       key: "_animateOverlayOut",
       value: function _animateOverlayOut() {
         var _this34 = this;
-
         anim.remove(this._overlay);
         anim({
           targets: this._overlay,
@@ -6582,10 +5973,10 @@ var $jscomp$this = this;
       value: function init(els, options) {
         return _get(Sidenav.__proto__ || Object.getPrototypeOf(Sidenav), "init", this).call(this, this, els, options);
       }
+
       /**
        * Get Instance
        */
-
     }, {
       key: "getInstance",
       value: function getInstance(el) {
@@ -6598,26 +5989,22 @@ var $jscomp$this = this;
         return _defaults;
       }
     }]);
-
     return Sidenav;
   }(Component);
+
   /**
    * @static
    * @memberof Sidenav
    * @type {Array.<Sidenav>}
    */
 
-
   Sidenav._sidenavs = [];
   M.Sidenav = Sidenav;
-
   if (M.jQueryLoaded) {
     M.initializeJqueryWrapper(Sidenav, 'sidenav', 'M_Sidenav');
   }
 })(cash, M.anime);
-
 ;
-
 (function ($, anim) {
   'use strict';
 
@@ -6630,6 +6017,7 @@ var $jscomp$this = this;
       return 'a[href="#' + id + '"]';
     }
   };
+
   /**
    * @class
    *
@@ -6637,20 +6025,18 @@ var $jscomp$this = this;
 
   var ScrollSpy = function (_Component9) {
     _inherits(ScrollSpy, _Component9);
+
     /**
      * Construct ScrollSpy instance
      * @constructor
      * @param {Element} el
      * @param {Object} options
      */
-
-
     function ScrollSpy(el, options) {
       _classCallCheck(this, ScrollSpy);
-
       var _this35 = _possibleConstructorReturn(this, (ScrollSpy.__proto__ || Object.getPrototypeOf(ScrollSpy)).call(this, ScrollSpy, el, options));
-
       _this35.el.M_ScrollSpy = _this35;
+
       /**
        * Options for the modal
        * @member Modal#options
@@ -6659,64 +6045,52 @@ var $jscomp$this = this;
        * @prop {String} [activeClass='active'] - Class applied to active elements
        * @prop {Function} [getActiveElement] - Used to find active element
        */
+      _this35.options = $.extend({}, ScrollSpy.defaults, options);
 
-      _this35.options = $.extend({}, ScrollSpy.defaults, options); // setup
-
+      // setup
       ScrollSpy._elements.push(_this35);
-
       ScrollSpy._count++;
       ScrollSpy._increment++;
       _this35.tickId = -1;
       _this35.id = ScrollSpy._increment;
-
       _this35._setupEventHandlers();
-
       _this35._handleWindowScroll();
-
       return _this35;
     }
-
     _createClass(ScrollSpy, [{
       key: "destroy",
-
       /**
        * Teardown component
        */
       value: function destroy() {
         ScrollSpy._elements.splice(ScrollSpy._elements.indexOf(this), 1);
-
         ScrollSpy._elementsInView.splice(ScrollSpy._elementsInView.indexOf(this), 1);
-
         ScrollSpy._visibleElements.splice(ScrollSpy._visibleElements.indexOf(this.$el), 1);
-
         ScrollSpy._count--;
-
         this._removeEventHandlers();
-
         $(this.options.getActiveElement(this.$el.attr('id'))).removeClass(this.options.activeClass);
         this.el.M_ScrollSpy = undefined;
       }
+
       /**
        * Setup Event Handlers
        */
-
     }, {
       key: "_setupEventHandlers",
       value: function _setupEventHandlers() {
         var throttledResize = M.throttle(this._handleWindowScroll, 200);
         this._handleThrottledResizeBound = throttledResize.bind(this);
         this._handleWindowScrollBound = this._handleWindowScroll.bind(this);
-
         if (ScrollSpy._count === 1) {
           window.addEventListener('scroll', this._handleWindowScrollBound);
           window.addEventListener('resize', this._handleThrottledResizeBound);
           document.body.addEventListener('click', this._handleTriggerClick);
         }
       }
+
       /**
        * Remove Event Handlers
        */
-
     }, {
       key: "_removeEventHandlers",
       value: function _removeEventHandlers() {
@@ -6726,19 +6100,17 @@ var $jscomp$this = this;
           document.body.removeEventListener('click', this._handleTriggerClick);
         }
       }
+
       /**
        * Handle Trigger Click
        * @param {Event} e
        */
-
     }, {
       key: "_handleTriggerClick",
       value: function _handleTriggerClick(e) {
         var $trigger = $(e.target);
-
         for (var i = ScrollSpy._elements.length - 1; i >= 0; i--) {
           var scrollspy = ScrollSpy._elements[i];
-
           if ($trigger.is('a[href="#' + scrollspy.$el.attr('id') + '"]')) {
             e.preventDefault();
             var offset = scrollspy.$el.offset().top + 1;
@@ -6752,51 +6124,49 @@ var $jscomp$this = this;
           }
         }
       }
+
       /**
        * Handle Window Scroll
        */
-
     }, {
       key: "_handleWindowScroll",
       value: function _handleWindowScroll() {
         // unique tick id
-        ScrollSpy._ticks++; // viewport rectangle
+        ScrollSpy._ticks++;
 
+        // viewport rectangle
         var top = M.getDocumentScrollTop(),
-            left = M.getDocumentScrollLeft(),
-            right = left + window.innerWidth,
-            bottom = top + window.innerHeight; // determine which elements are in view
+          left = M.getDocumentScrollLeft(),
+          right = left + window.innerWidth,
+          bottom = top + window.innerHeight;
 
+        // determine which elements are in view
         var intersections = ScrollSpy._findElements(top, right, bottom, left);
-
         for (var i = 0; i < intersections.length; i++) {
           var scrollspy = intersections[i];
           var lastTick = scrollspy.tickId;
-
           if (lastTick < 0) {
             // entered into view
             scrollspy._enter();
-          } // update tick id
+          }
 
-
+          // update tick id
           scrollspy.tickId = ScrollSpy._ticks;
         }
-
         for (var _i = 0; _i < ScrollSpy._elementsInView.length; _i++) {
           var _scrollspy = ScrollSpy._elementsInView[_i];
           var _lastTick = _scrollspy.tickId;
-
           if (_lastTick >= 0 && _lastTick !== ScrollSpy._ticks) {
             // exited from view
             _scrollspy._exit();
-
             _scrollspy.tickId = -1;
           }
-        } // remember elements in view for next tick
+        }
 
-
+        // remember elements in view for next tick
         ScrollSpy._elementsInView = intersections;
       }
+
       /**
        * Find elements that are within the boundary
        * @param {number} top
@@ -6805,17 +6175,14 @@ var $jscomp$this = this;
        * @param {number} left
        * @return {Array.<ScrollSpy>}   A collection of elements
        */
-
     }, {
       key: "_enter",
       value: function _enter() {
         ScrollSpy._visibleElements = ScrollSpy._visibleElements.filter(function (value) {
           return value.height() != 0;
         });
-
         if (ScrollSpy._visibleElements[0]) {
           $(this.options.getActiveElement(ScrollSpy._visibleElements[0].attr('id'))).removeClass(this.options.activeClass);
-
           if (ScrollSpy._visibleElements[0][0].M_ScrollSpy && this.id < ScrollSpy._visibleElements[0][0].M_ScrollSpy.id) {
             ScrollSpy._visibleElements.unshift(this.$el);
           } else {
@@ -6824,24 +6191,20 @@ var $jscomp$this = this;
         } else {
           ScrollSpy._visibleElements.push(this.$el);
         }
-
         $(this.options.getActiveElement(ScrollSpy._visibleElements[0].attr('id'))).addClass(this.options.activeClass);
       }
     }, {
       key: "_exit",
       value: function _exit() {
         var _this36 = this;
-
         ScrollSpy._visibleElements = ScrollSpy._visibleElements.filter(function (value) {
           return value.height() != 0;
         });
-
         if (ScrollSpy._visibleElements[0]) {
           $(this.options.getActiveElement(ScrollSpy._visibleElements[0].attr('id'))).removeClass(this.options.activeClass);
           ScrollSpy._visibleElements = ScrollSpy._visibleElements.filter(function (el) {
             return el.attr('id') != _this36.$el.attr('id');
           });
-
           if (ScrollSpy._visibleElements[0]) {
             // Check if empty
             $(this.options.getActiveElement(ScrollSpy._visibleElements[0].attr('id'))).addClass(this.options.activeClass);
@@ -6853,10 +6216,10 @@ var $jscomp$this = this;
       value: function init(els, options) {
         return _get(ScrollSpy.__proto__ || Object.getPrototypeOf(ScrollSpy), "init", this).call(this, this, els, options);
       }
+
       /**
        * Get Instance
        */
-
     }, {
       key: "getInstance",
       value: function getInstance(el) {
@@ -6867,24 +6230,20 @@ var $jscomp$this = this;
       key: "_findElements",
       value: function _findElements(top, right, bottom, left) {
         var hits = [];
-
         for (var i = 0; i < ScrollSpy._elements.length; i++) {
           var scrollspy = ScrollSpy._elements[i];
           var currTop = top + scrollspy.options.scrollOffset || 200;
-
           if (scrollspy.$el.height() > 0) {
             var elTop = scrollspy.$el.offset().top,
-                elLeft = scrollspy.$el.offset().left,
-                elRight = elLeft + scrollspy.$el.width(),
-                elBottom = elTop + scrollspy.$el.height();
+              elLeft = scrollspy.$el.offset().left,
+              elRight = elLeft + scrollspy.$el.width(),
+              elBottom = elTop + scrollspy.$el.height();
             var isIntersect = !(elLeft > right || elRight < left || elTop > bottom || elBottom < currTop);
-
             if (isIntersect) {
               hits.push(scrollspy);
             }
           }
         }
-
         return hits;
       }
     }, {
@@ -6893,58 +6252,54 @@ var $jscomp$this = this;
         return _defaults;
       }
     }]);
-
     return ScrollSpy;
   }(Component);
+
   /**
    * @static
    * @memberof ScrollSpy
    * @type {Array.<ScrollSpy>}
    */
-
 
   ScrollSpy._elements = [];
+
   /**
    * @static
    * @memberof ScrollSpy
    * @type {Array.<ScrollSpy>}
    */
-
   ScrollSpy._elementsInView = [];
+
   /**
    * @static
    * @memberof ScrollSpy
    * @type {Array.<cash>}
    */
-
   ScrollSpy._visibleElements = [];
+
   /**
    * @static
    * @memberof ScrollSpy
    */
-
   ScrollSpy._count = 0;
+
   /**
    * @static
    * @memberof ScrollSpy
    */
-
   ScrollSpy._increment = 0;
+
   /**
    * @static
    * @memberof ScrollSpy
    */
-
   ScrollSpy._ticks = 0;
   M.ScrollSpy = ScrollSpy;
-
   if (M.jQueryLoaded) {
     M.initializeJqueryWrapper(ScrollSpy, 'scrollSpy', 'M_ScrollSpy');
   }
 })(cash, M.anime);
-
 ;
-
 (function ($) {
   'use strict';
 
@@ -6962,6 +6317,7 @@ var $jscomp$this = this;
       return a.indexOf(inputString) - b.indexOf(inputString);
     }
   };
+
   /**
    * @class
    *
@@ -6969,20 +6325,18 @@ var $jscomp$this = this;
 
   var Autocomplete = function (_Component10) {
     _inherits(Autocomplete, _Component10);
+
     /**
      * Construct Autocomplete instance
      * @constructor
      * @param {Element} el
      * @param {Object} options
      */
-
-
     function Autocomplete(el, options) {
       _classCallCheck(this, Autocomplete);
-
       var _this37 = _possibleConstructorReturn(this, (Autocomplete.__proto__ || Object.getPrototypeOf(Autocomplete)).call(this, Autocomplete, el, options));
-
       _this37.el.M_Autocomplete = _this37;
+
       /**
        * Options for the autocomplete
        * @member Autocomplete#options
@@ -6995,9 +6349,9 @@ var $jscomp$this = this;
        * @prop {Boolean} noWrap
        * @prop {Function} onCycleTo
        */
+      _this37.options = $.extend({}, Autocomplete.defaults, options);
 
-      _this37.options = $.extend({}, Autocomplete.defaults, options); // Setup
-
+      // Setup
       _this37.isOpen = false;
       _this37.count = 0;
       _this37.activeIndex = -1;
@@ -7005,31 +6359,24 @@ var $jscomp$this = this;
       _this37.$inputField = _this37.$el.closest('.input-field');
       _this37.$active = $();
       _this37._mousedown = false;
-
       _this37._setupDropdown();
-
       _this37._setupEventHandlers();
-
       return _this37;
     }
-
     _createClass(Autocomplete, [{
       key: "destroy",
-
       /**
        * Teardown component
        */
       value: function destroy() {
         this._removeEventHandlers();
-
         this._removeDropdown();
-
         this.el.M_Autocomplete = undefined;
       }
+
       /**
        * Setup Event Handlers
        */
-
     }, {
       key: "_setupEventHandlers",
       value: function _setupEventHandlers() {
@@ -7046,16 +6393,15 @@ var $jscomp$this = this;
         this.el.addEventListener('click', this._handleInputClickBound);
         this.container.addEventListener('mousedown', this._handleContainerMousedownAndTouchstartBound);
         this.container.addEventListener('mouseup', this._handleContainerMouseupAndTouchendBound);
-
         if (typeof window.ontouchstart !== 'undefined') {
           this.container.addEventListener('touchstart', this._handleContainerMousedownAndTouchstartBound);
           this.container.addEventListener('touchend', this._handleContainerMouseupAndTouchendBound);
         }
       }
+
       /**
        * Remove Event Handlers
        */
-
     }, {
       key: "_removeEventHandlers",
       value: function _removeEventHandlers() {
@@ -7066,21 +6412,19 @@ var $jscomp$this = this;
         this.el.removeEventListener('click', this._handleInputClickBound);
         this.container.removeEventListener('mousedown', this._handleContainerMousedownAndTouchstartBound);
         this.container.removeEventListener('mouseup', this._handleContainerMouseupAndTouchendBound);
-
         if (typeof window.ontouchstart !== 'undefined') {
           this.container.removeEventListener('touchstart', this._handleContainerMousedownAndTouchstartBound);
           this.container.removeEventListener('touchend', this._handleContainerMouseupAndTouchendBound);
         }
       }
+
       /**
        * Setup dropdown
        */
-
     }, {
       key: "_setupDropdown",
       value: function _setupDropdown() {
         var _this38 = this;
-
         this.container = document.createElement('ul');
         this.container.id = "autocomplete-options-" + M.guid();
         $(this.container).addClass('autocomplete-content dropdown-content');
@@ -7093,221 +6437,211 @@ var $jscomp$this = this;
           onItemClick: function onItemClick(itemEl) {
             _this38.selectOption($(itemEl));
           }
-        }); // Sketchy removal of dropdown click handler
+        });
 
+        // Sketchy removal of dropdown click handler
         this.el.removeEventListener('click', this.dropdown._handleClickBound);
       }
+
       /**
        * Remove dropdown
        */
-
     }, {
       key: "_removeDropdown",
       value: function _removeDropdown() {
         this.container.parentNode.removeChild(this.container);
       }
+
       /**
        * Handle Input Blur
        */
-
     }, {
       key: "_handleInputBlur",
       value: function _handleInputBlur() {
         if (!this._mousedown) {
           this.close();
-
           this._resetAutocomplete();
         }
       }
+
       /**
        * Handle Input Keyup and Focus
        * @param {Event} e
        */
-
     }, {
       key: "_handleInputKeyupAndFocus",
       value: function _handleInputKeyupAndFocus(e) {
         if (e.type === 'keyup') {
           Autocomplete._keydown = false;
         }
-
         this.count = 0;
-        var val = this.el.value.toLowerCase(); // Don't capture enter or arrow key usage.
+        var val = this.el.value.toLowerCase();
 
+        // Don't capture enter or arrow key usage.
         if (e.keyCode === 13 || e.keyCode === 38 || e.keyCode === 40) {
           return;
-        } // Check if the input isn't empty
+        }
+
+        // Check if the input isn't empty
         // Check if focus triggered by tab
-
-
         if (this.oldVal !== val && (M.tabPressed || e.type !== 'focus')) {
           this.open();
-        } // Update oldVal
+        }
 
-
+        // Update oldVal
         this.oldVal = val;
       }
+
       /**
        * Handle Input Keydown
        * @param {Event} e
        */
-
     }, {
       key: "_handleInputKeydown",
       value: function _handleInputKeydown(e) {
-        Autocomplete._keydown = true; // Arrow keys and enter key usage
+        Autocomplete._keydown = true;
 
+        // Arrow keys and enter key usage
         var keyCode = e.keyCode,
-            liElement = void 0,
-            numItems = $(this.container).children('li').length; // select element on Enter
+          liElement = void 0,
+          numItems = $(this.container).children('li').length;
 
+        // select element on Enter
         if (keyCode === M.keys.ENTER && this.activeIndex >= 0) {
           liElement = $(this.container).children('li').eq(this.activeIndex);
-
           if (liElement.length) {
             this.selectOption(liElement);
             e.preventDefault();
           }
-
           return;
-        } // Capture up and down key
+        }
 
-
+        // Capture up and down key
         if (keyCode === M.keys.ARROW_UP || keyCode === M.keys.ARROW_DOWN) {
           e.preventDefault();
-
           if (keyCode === M.keys.ARROW_UP && this.activeIndex > 0) {
             this.activeIndex--;
           }
-
           if (keyCode === M.keys.ARROW_DOWN && this.activeIndex < numItems - 1) {
             this.activeIndex++;
           }
-
           this.$active.removeClass('active');
-
           if (this.activeIndex >= 0) {
             this.$active = $(this.container).children('li').eq(this.activeIndex);
             this.$active.addClass('active');
           }
         }
       }
+
       /**
        * Handle Input Click
        * @param {Event} e
        */
-
     }, {
       key: "_handleInputClick",
       value: function _handleInputClick(e) {
         this.open();
       }
+
       /**
        * Handle Container Mousedown and Touchstart
        * @param {Event} e
        */
-
     }, {
       key: "_handleContainerMousedownAndTouchstart",
       value: function _handleContainerMousedownAndTouchstart(e) {
         this._mousedown = true;
       }
+
       /**
        * Handle Container Mouseup and Touchend
        * @param {Event} e
        */
-
     }, {
       key: "_handleContainerMouseupAndTouchend",
       value: function _handleContainerMouseupAndTouchend(e) {
         this._mousedown = false;
       }
+
       /**
        * Highlight partial match
        */
-
     }, {
       key: "_highlight",
       value: function _highlight(string, $el) {
         var img = $el.find('img');
         var matchStart = $el.text().toLowerCase().indexOf('' + string.toLowerCase() + ''),
-            matchEnd = matchStart + string.length - 1,
-            beforeMatch = $el.text().slice(0, matchStart),
-            matchText = $el.text().slice(matchStart, matchEnd + 1),
-            afterMatch = $el.text().slice(matchEnd + 1);
+          matchEnd = matchStart + string.length - 1,
+          beforeMatch = $el.text().slice(0, matchStart),
+          matchText = $el.text().slice(matchStart, matchEnd + 1),
+          afterMatch = $el.text().slice(matchEnd + 1);
         $el.html("<span>" + beforeMatch + "<span class='highlight'>" + matchText + "</span>" + afterMatch + "</span>");
-
         if (img.length) {
           $el.prepend(img);
         }
       }
+
       /**
        * Reset current element position
        */
-
     }, {
       key: "_resetCurrentElement",
       value: function _resetCurrentElement() {
         this.activeIndex = -1;
         this.$active.removeClass('active');
       }
+
       /**
        * Reset autocomplete elements
        */
-
     }, {
       key: "_resetAutocomplete",
       value: function _resetAutocomplete() {
         $(this.container).empty();
-
         this._resetCurrentElement();
-
         this.oldVal = null;
         this.isOpen = false;
         this._mousedown = false;
       }
+
       /**
        * Select autocomplete option
        * @param {Element} el  Autocomplete option list item element
        */
-
     }, {
       key: "selectOption",
       value: function selectOption(el) {
         var text = el.text().trim();
         this.el.value = text;
         this.$el.trigger('change');
-
         this._resetAutocomplete();
+        this.close();
 
-        this.close(); // Handle onAutocomplete callback.
-
+        // Handle onAutocomplete callback.
         if (typeof this.options.onAutocomplete === 'function') {
           this.options.onAutocomplete.call(this, text);
         }
       }
+
       /**
        * Render dropdown content
        * @param {Object} data  data set
        * @param {String} val  current input value
        */
-
     }, {
       key: "_renderDropdown",
       value: function _renderDropdown(data, val) {
         var _this39 = this;
-
         this._resetAutocomplete();
+        var matchingData = [];
 
-        var matchingData = []; // Gather all matching data
-
+        // Gather all matching data
         for (var key in data) {
           if (data.hasOwnProperty(key) && key.toLowerCase().indexOf(val) !== -1) {
             // Break if past limit
             if (this.count >= this.options.limit) {
               break;
             }
-
             var entry = {
               data: data[key],
               key: key
@@ -7315,51 +6649,44 @@ var $jscomp$this = this;
             matchingData.push(entry);
             this.count++;
           }
-        } // Sort
+        }
 
-
+        // Sort
         if (this.options.sortFunction) {
           var sortFunctionBound = function sortFunctionBound(a, b) {
             return _this39.options.sortFunction(a.key.toLowerCase(), b.key.toLowerCase(), val.toLowerCase());
           };
-
           matchingData.sort(sortFunctionBound);
-        } // Render
+        }
 
-
+        // Render
         for (var i = 0; i < matchingData.length; i++) {
           var _entry = matchingData[i];
           var $autocompleteOption = $('<li></li>');
-
           if (!!_entry.data) {
             $autocompleteOption.append("<img src=\"" + _entry.data + "\" class=\"right circle\"><span>" + _entry.key + "</span>");
           } else {
             $autocompleteOption.append('<span>' + _entry.key + '</span>');
           }
-
           $(this.container).append($autocompleteOption);
-
           this._highlight(val, $autocompleteOption);
         }
       }
+
       /**
        * Open Autocomplete Dropdown
        */
-
     }, {
       key: "open",
       value: function open() {
         var val = this.el.value.toLowerCase();
-
         this._resetAutocomplete();
-
         if (val.length >= this.options.minLength) {
           this.isOpen = true;
-
           this._renderDropdown(this.options.data, val);
-        } // Open dropdown
+        }
 
-
+        // Open dropdown
         if (!this.dropdown.isOpen) {
           this.dropdown.open();
         } else {
@@ -7367,26 +6694,25 @@ var $jscomp$this = this;
           this.dropdown.recalculateDimensions();
         }
       }
+
       /**
        * Close Autocomplete Dropdown
        */
-
     }, {
       key: "close",
       value: function close() {
         this.dropdown.close();
       }
+
       /**
        * Update Data
        * @param {Object} data
        */
-
     }, {
       key: "updateData",
       value: function updateData(data) {
         var val = this.el.value.toLowerCase();
         this.options.data = data;
-
         if (this.isOpen) {
           this._renderDropdown(data, val);
         }
@@ -7396,10 +6722,10 @@ var $jscomp$this = this;
       value: function init(els, options) {
         return _get(Autocomplete.__proto__ || Object.getPrototypeOf(Autocomplete), "init", this).call(this, this, els, options);
       }
+
       /**
        * Get Instance
        */
-
     }, {
       key: "getInstance",
       value: function getInstance(el) {
@@ -7412,32 +6738,27 @@ var $jscomp$this = this;
         return _defaults;
       }
     }]);
-
     return Autocomplete;
   }(Component);
+
   /**
    * @static
    * @memberof Autocomplete
    */
 
-
   Autocomplete._keydown = false;
   M.Autocomplete = Autocomplete;
-
   if (M.jQueryLoaded) {
     M.initializeJqueryWrapper(Autocomplete, 'autocomplete', 'M_Autocomplete');
   }
 })(cash);
-
 ;
-
 (function ($) {
   // Function to update labels of text fields
   M.updateTextFields = function () {
     var input_selector = 'input[type=text], input[type=password], input[type=email], input[type=url], input[type=tel], input[type=number], input[type=search], input[type=date], input[type=time], textarea';
     $(input_selector).each(function (element, index) {
       var $this = $(this);
-
       if (element.value.length > 0 || $(element).is(':focus') || element.autofocus || $this.attr('placeholder') !== null) {
         $this.siblings('label').addClass('active');
       } else if (element.validity) {
@@ -7447,12 +6768,10 @@ var $jscomp$this = this;
       }
     });
   };
-
   M.validate_field = function (object) {
     var hasLength = object.attr('data-length') !== null;
     var lenAttr = parseInt(object.attr('data-length'));
     var len = object[0].value.length;
-
     if (len === 0 && object[0].validity.badInput === false && !object.is(':required')) {
       if (object.hasClass('validate')) {
         object.removeClass('valid');
@@ -7471,76 +6790,67 @@ var $jscomp$this = this;
       }
     }
   };
-
   M.textareaAutoResize = function ($textarea) {
     // Wrap if native element
     if ($textarea instanceof Element) {
       $textarea = $($textarea);
     }
-
     if (!$textarea.length) {
       console.error('No textarea element found');
       return;
-    } // Textarea Auto Resize
+    }
 
-
+    // Textarea Auto Resize
     var hiddenDiv = $('.hiddendiv').first();
-
     if (!hiddenDiv.length) {
       hiddenDiv = $('<div class="hiddendiv common"></div>');
       $('body').append(hiddenDiv);
-    } // Set font properties of hiddenDiv
+    }
 
-
+    // Set font properties of hiddenDiv
     var fontFamily = $textarea.css('font-family');
     var fontSize = $textarea.css('font-size');
-    var lineHeight = $textarea.css('line-height'); // Firefox can't handle padding shorthand.
+    var lineHeight = $textarea.css('line-height');
 
+    // Firefox can't handle padding shorthand.
     var paddingTop = $textarea.css('padding-top');
     var paddingRight = $textarea.css('padding-right');
     var paddingBottom = $textarea.css('padding-bottom');
     var paddingLeft = $textarea.css('padding-left');
-
     if (fontSize) {
       hiddenDiv.css('font-size', fontSize);
     }
-
     if (fontFamily) {
       hiddenDiv.css('font-family', fontFamily);
     }
-
     if (lineHeight) {
       hiddenDiv.css('line-height', lineHeight);
     }
-
     if (paddingTop) {
       hiddenDiv.css('padding-top', paddingTop);
     }
-
     if (paddingRight) {
       hiddenDiv.css('padding-right', paddingRight);
     }
-
     if (paddingBottom) {
       hiddenDiv.css('padding-bottom', paddingBottom);
     }
-
     if (paddingLeft) {
       hiddenDiv.css('padding-left', paddingLeft);
-    } // Set original-height, if none
+    }
 
-
+    // Set original-height, if none
     if (!$textarea.data('original-height')) {
       $textarea.data('original-height', $textarea.height());
     }
-
     if ($textarea.attr('wrap') === 'off') {
       hiddenDiv.css('overflow-wrap', 'normal').css('white-space', 'pre');
     }
-
     hiddenDiv.text($textarea[0].value + '\n');
     var content = hiddenDiv.html().replace(/\n/g, '<br>');
-    hiddenDiv.html(content); // When textarea is hidden, width goes crazy.
+    hiddenDiv.html(content);
+
+    // When textarea is hidden, width goes crazy.
     // Approximate with half of window size
 
     if ($textarea[0].offsetWidth > 0 && $textarea[0].offsetHeight > 0) {
@@ -7548,12 +6858,11 @@ var $jscomp$this = this;
     } else {
       hiddenDiv.css('width', window.innerWidth / 2 + 'px');
     }
+
     /**
      * Resize if the new height is greater than the
      * original height of the textarea
      */
-
-
     if ($textarea.data('original-height') <= hiddenDiv.innerHeight()) {
       $textarea.css('height', hiddenDiv.innerHeight() + 'px');
     } else if ($textarea[0].value.length < $textarea.data('previous-length')) {
@@ -7564,37 +6873,37 @@ var $jscomp$this = this;
        */
       $textarea.css('height', $textarea.data('original-height') + 'px');
     }
-
     $textarea.data('previous-length', $textarea[0].value.length);
   };
-
   $(document).ready(function () {
     // Text based inputs
-    var input_selector = 'input[type=text], input[type=password], input[type=email], input[type=url], input[type=tel], input[type=number], input[type=search], input[type=date], input[type=time], textarea'; // Add active if form auto complete
+    var input_selector = 'input[type=text], input[type=password], input[type=email], input[type=url], input[type=tel], input[type=number], input[type=search], input[type=date], input[type=time], textarea';
 
+    // Add active if form auto complete
     $(document).on('change', input_selector, function () {
       if (this.value.length !== 0 || $(this).attr('placeholder') !== null) {
         $(this).siblings('label').addClass('active');
       }
-
       M.validate_field($(this));
-    }); // Add active if input element has been pre-populated on document ready
+    });
 
+    // Add active if input element has been pre-populated on document ready
     $(document).ready(function () {
       M.updateTextFields();
-    }); // HTML DOM FORM RESET handling
+    });
 
+    // HTML DOM FORM RESET handling
     $(document).on('reset', function (e) {
       var formReset = $(e.target);
-
       if (formReset.is('form')) {
         formReset.find(input_selector).removeClass('valid').removeClass('invalid');
         formReset.find(input_selector).each(function (e) {
           if (this.value.length) {
             $(this).siblings('label').removeClass('active');
           }
-        }); // Reset select (after native reset)
+        });
 
+        // Reset select (after native reset)
         setTimeout(function () {
           formReset.find('select').each(function () {
             // check if initialized
@@ -7605,36 +6914,34 @@ var $jscomp$this = this;
         }, 0);
       }
     });
+
     /**
      * Add active when element has focus
      * @param {Event} e
      */
-
     document.addEventListener('focus', function (e) {
       if ($(e.target).is(input_selector)) {
         $(e.target).siblings('label, .prefix').addClass('active');
       }
     }, true);
+
     /**
      * Remove active when element is blurred
      * @param {Event} e
      */
-
     document.addEventListener('blur', function (e) {
       var $inputElement = $(e.target);
-
       if ($inputElement.is(input_selector)) {
         var selector = '.prefix';
-
         if ($inputElement[0].value.length === 0 && $inputElement[0].validity.badInput !== true && $inputElement.attr('placeholder') === null) {
           selector += ', label';
         }
-
         $inputElement.siblings(selector).removeClass('active');
         M.validate_field($inputElement);
       }
-    }, true); // Radio and Checkbox focus class
+    }, true);
 
+    // Radio and Checkbox focus class
     var radio_checkbox = 'input[type=radio], input[type=checkbox]';
     $(document).on('keyup', radio_checkbox, function (e) {
       // TAB, check if tabbing to radio or checkbox.
@@ -7654,7 +6961,6 @@ var $jscomp$this = this;
        * Resize textarea on document load after storing
        * the original height and the original length
        */
-
       $textarea.data('original-height', $textarea.height());
       $textarea.data('previous-length', this.value.length);
       M.textareaAutoResize($textarea);
@@ -7664,26 +6970,23 @@ var $jscomp$this = this;
     });
     $(document).on('keydown', text_area_selector, function () {
       M.textareaAutoResize($(this));
-    }); // File Input Path
+    });
 
+    // File Input Path
     $(document).on('change', '.file-field input[type="file"]', function () {
       var file_field = $(this).closest('.file-field');
       var path_input = file_field.find('input.file-path');
       var files = $(this)[0].files;
       var file_names = [];
-
       for (var i = 0; i < files.length; i++) {
         file_names.push(files[i].name);
       }
-
       path_input[0].value = file_names.join(', ');
       path_input.trigger('change');
     });
   }); // End of $(document).ready
 })(cash);
-
 ;
-
 (function ($, anim) {
   'use strict';
 
@@ -7693,6 +6996,7 @@ var $jscomp$this = this;
     duration: 500,
     interval: 6000
   };
+
   /**
    * @class
    *
@@ -7700,20 +7004,18 @@ var $jscomp$this = this;
 
   var Slider = function (_Component11) {
     _inherits(Slider, _Component11);
+
     /**
      * Construct Slider instance and set up overlay
      * @constructor
      * @param {Element} el
      * @param {Object} options
      */
-
-
     function Slider(el, options) {
       _classCallCheck(this, Slider);
-
       var _this40 = _possibleConstructorReturn(this, (Slider.__proto__ || Object.getPrototypeOf(Slider)).call(this, Slider, el, options));
-
       _this40.el.M_Slider = _this40;
+
       /**
        * Options for the modal
        * @member Slider#options
@@ -7722,44 +7024,39 @@ var $jscomp$this = this;
        * @prop {Number} [duration=500] - Length in ms of slide transition
        * @prop {Number} [interval=6000] - Length in ms of slide interval
        */
+      _this40.options = $.extend({}, Slider.defaults, options);
 
-      _this40.options = $.extend({}, Slider.defaults, options); // setup
-
+      // setup
       _this40.$slider = _this40.$el.find('.slides');
       _this40.$slides = _this40.$slider.children('li');
       _this40.activeIndex = _this40.$slides.filter(function (item) {
         return $(item).hasClass('active');
       }).first().index();
-
       if (_this40.activeIndex != -1) {
         _this40.$active = _this40.$slides.eq(_this40.activeIndex);
       }
+      _this40._setSliderHeight();
 
-      _this40._setSliderHeight(); // Set initial positions of captions
-
-
+      // Set initial positions of captions
       _this40.$slides.find('.caption').each(function (el) {
         _this40._animateCaptionIn(el, 0);
-      }); // Move img src into background-image
+      });
 
-
+      // Move img src into background-image
       _this40.$slides.find('img').each(function (el) {
         var placeholderBase64 = 'data:image/gif;base64,R0lGODlhAQABAIABAP///wAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==';
-
         if ($(el).attr('src') !== placeholderBase64) {
           $(el).css('background-image', 'url("' + $(el).attr('src') + '")');
           $(el).attr('src', placeholderBase64);
         }
       });
+      _this40._setupIndicators();
 
-      _this40._setupIndicators(); // Show active slide
-
-
+      // Show active slide
       if (_this40.$active) {
         _this40.$active.css('display', 'block');
       } else {
         _this40.$slides.first().addClass('active');
-
         anim({
           targets: _this40.$slides.first()[0],
           opacity: 1,
@@ -7767,14 +7064,15 @@ var $jscomp$this = this;
           easing: 'easeOutQuad'
         });
         _this40.activeIndex = 0;
-        _this40.$active = _this40.$slides.eq(_this40.activeIndex); // Update indicators
+        _this40.$active = _this40.$slides.eq(_this40.activeIndex);
 
+        // Update indicators
         if (_this40.options.indicators) {
           _this40.$indicators.eq(_this40.activeIndex).addClass('active');
         }
-      } // Adjust height to current slide
+      }
 
-
+      // Adjust height to current slide
       _this40.$active.find('img').each(function (el) {
         anim({
           targets: _this40.$active.find('.caption')[0],
@@ -7785,92 +7083,83 @@ var $jscomp$this = this;
           easing: 'easeOutQuad'
         });
       });
+      _this40._setupEventHandlers();
 
-      _this40._setupEventHandlers(); // auto scroll
-
-
+      // auto scroll
       _this40.start();
-
       return _this40;
     }
-
     _createClass(Slider, [{
       key: "destroy",
-
       /**
        * Teardown component
        */
       value: function destroy() {
         this.pause();
-
         this._removeIndicators();
-
         this._removeEventHandlers();
-
         this.el.M_Slider = undefined;
       }
+
       /**
        * Setup Event Handlers
        */
-
     }, {
       key: "_setupEventHandlers",
       value: function _setupEventHandlers() {
         var _this41 = this;
-
         this._handleIntervalBound = this._handleInterval.bind(this);
         this._handleIndicatorClickBound = this._handleIndicatorClick.bind(this);
-
         if (this.options.indicators) {
           this.$indicators.each(function (el) {
             el.addEventListener('click', _this41._handleIndicatorClickBound);
           });
         }
       }
+
       /**
        * Remove Event Handlers
        */
-
     }, {
       key: "_removeEventHandlers",
       value: function _removeEventHandlers() {
         var _this42 = this;
-
         if (this.options.indicators) {
           this.$indicators.each(function (el) {
             el.removeEventListener('click', _this42._handleIndicatorClickBound);
           });
         }
       }
+
       /**
        * Handle indicator click
        * @param {Event} e
        */
-
     }, {
       key: "_handleIndicatorClick",
       value: function _handleIndicatorClick(e) {
         var currIndex = $(e.target).index();
         this.set(currIndex);
       }
+
       /**
        * Handle Interval
        */
-
     }, {
       key: "_handleInterval",
       value: function _handleInterval() {
         var newActiveIndex = this.$slider.find('.active').index();
-        if (this.$slides.length === newActiveIndex + 1) newActiveIndex = 0; // loop to start
+        if (this.$slides.length === newActiveIndex + 1) newActiveIndex = 0;
+        // loop to start
         else newActiveIndex += 1;
         this.set(newActiveIndex);
       }
+
       /**
        * Animate in caption
        * @param {Element} caption
        * @param {Number} duration
        */
-
     }, {
       key: "_animateCaptionIn",
       value: function _animateCaptionIn(caption, duration) {
@@ -7880,7 +7169,6 @@ var $jscomp$this = this;
           duration: duration,
           easing: 'easeOutQuad'
         };
-
         if ($(caption).hasClass('center-align')) {
           animOptions.translateY = -100;
         } else if ($(caption).hasClass('right-align')) {
@@ -7888,13 +7176,12 @@ var $jscomp$this = this;
         } else if ($(caption).hasClass('left-align')) {
           animOptions.translateX = -100;
         }
-
         anim(animOptions);
       }
+
       /**
        * Set height of slider
        */
-
     }, {
       key: "_setSliderHeight",
       value: function _setSliderHeight() {
@@ -7906,52 +7193,50 @@ var $jscomp$this = this;
           } else {
             this.$el.css('height', this.options.height + 'px');
           }
-
           this.$slider.css('height', this.options.height + 'px');
         }
       }
+
       /**
        * Setup indicators
        */
-
     }, {
       key: "_setupIndicators",
       value: function _setupIndicators() {
         var _this43 = this;
-
         if (this.options.indicators) {
           this.$indicators = $('<ul class="indicators"></ul>');
           this.$slides.each(function (el, index) {
             var $indicator = $('<li class="indicator-item"></li>');
-
             _this43.$indicators.append($indicator[0]);
           });
           this.$el.append(this.$indicators[0]);
           this.$indicators = this.$indicators.children('li.indicator-item');
         }
       }
+
       /**
        * Remove indicators
        */
-
     }, {
       key: "_removeIndicators",
       value: function _removeIndicators() {
         this.$el.find('ul.indicators').remove();
       }
+
       /**
        * Cycle to nth item
        * @param {Number} index
        */
-
     }, {
       key: "set",
       value: function set(index) {
-        var _this44 = this; // Wrap around indices.
+        var _this44 = this;
 
+        // Wrap around indices.
+        if (index >= this.$slides.length) index = 0;else if (index < 0) index = this.$slides.length - 1;
 
-        if (index >= this.$slides.length) index = 0;else if (index < 0) index = this.$slides.length - 1; // Only do if index changes
-
+        // Only do if index changes
         if (this.activeIndex != index) {
           this.$active = this.$slides.eq(this.activeIndex);
           var $caption = this.$active.find('.caption');
@@ -7974,15 +7259,13 @@ var $jscomp$this = this;
               });
             }
           });
+          this._animateCaptionIn($caption[0], this.options.duration);
 
-          this._animateCaptionIn($caption[0], this.options.duration); // Update indicators
-
-
+          // Update indicators
           if (this.options.indicators) {
             this.$indicators.eq(this.activeIndex).removeClass('active');
             this.$indicators.eq(index).addClass('active');
           }
-
           anim({
             targets: this.$slides.eq(index)[0],
             opacity: 1,
@@ -7999,51 +7282,54 @@ var $jscomp$this = this;
             easing: 'easeOutQuad'
           });
           this.$slides.eq(index).addClass('active');
-          this.activeIndex = index; // Reset interval
+          this.activeIndex = index;
 
+          // Reset interval
           this.start();
         }
       }
+
       /**
        * Pause slider interval
        */
-
     }, {
       key: "pause",
       value: function pause() {
         clearInterval(this.interval);
       }
+
       /**
        * Start slider interval
        */
-
     }, {
       key: "start",
       value: function start() {
         clearInterval(this.interval);
         this.interval = setInterval(this._handleIntervalBound, this.options.duration + this.options.interval);
       }
+
       /**
        * Move to next slide
        */
-
     }, {
       key: "next",
       value: function next() {
-        var newIndex = this.activeIndex + 1; // Wrap around indices.
+        var newIndex = this.activeIndex + 1;
 
+        // Wrap around indices.
         if (newIndex >= this.$slides.length) newIndex = 0;else if (newIndex < 0) newIndex = this.$slides.length - 1;
         this.set(newIndex);
       }
+
       /**
        * Move to previous slide
        */
-
     }, {
       key: "prev",
       value: function prev() {
-        var newIndex = this.activeIndex - 1; // Wrap around indices.
+        var newIndex = this.activeIndex - 1;
 
+        // Wrap around indices.
         if (newIndex >= this.$slides.length) newIndex = 0;else if (newIndex < 0) newIndex = this.$slides.length - 1;
         this.set(newIndex);
       }
@@ -8052,10 +7338,10 @@ var $jscomp$this = this;
       value: function init(els, options) {
         return _get(Slider.__proto__ || Object.getPrototypeOf(Slider), "init", this).call(this, this, els, options);
       }
+
       /**
        * Get Instance
        */
-
     }, {
       key: "getInstance",
       value: function getInstance(el) {
@@ -8068,30 +7354,22 @@ var $jscomp$this = this;
         return _defaults;
       }
     }]);
-
     return Slider;
   }(Component);
-
   M.Slider = Slider;
-
   if (M.jQueryLoaded) {
     M.initializeJqueryWrapper(Slider, 'slider', 'M_Slider');
   }
 })(cash, M.anime);
-
 ;
-
 (function ($, anim) {
   $(document).on('click', '.card', function (e) {
     if ($(this).children('.card-reveal').length) {
       var $card = $(e.target).closest('.card');
-
       if ($card.data('initialOverflow') === undefined) {
         $card.data('initialOverflow', $card.css('overflow') === undefined ? '' : $card.css('overflow'));
       }
-
       var $cardReveal = $(this).find('.card-reveal');
-
       if ($(e.target).is($('.card-reveal .card-title')) || $(e.target).is($('.card-reveal .card-title i'))) {
         // Make Reveal animate down and display none
         anim({
@@ -8122,9 +7400,7 @@ var $jscomp$this = this;
     }
   });
 })(cash, M.anime);
-
 ;
-
 (function ($) {
   'use strict';
 
@@ -8138,6 +7414,7 @@ var $jscomp$this = this;
     onChipSelect: null,
     onChipDelete: null
   };
+
   /**
    * @typedef {Object} chip
    * @property {String} tag  chip tag string
@@ -8151,20 +7428,18 @@ var $jscomp$this = this;
 
   var Chips = function (_Component12) {
     _inherits(Chips, _Component12);
+
     /**
      * Construct Chips instance and set up overlay
      * @constructor
      * @param {Element} el
      * @param {Object} options
      */
-
-
     function Chips(el, options) {
       _classCallCheck(this, Chips);
-
       var _this45 = _possibleConstructorReturn(this, (Chips.__proto__ || Object.getPrototypeOf(Chips)).call(this, Chips, el, options));
-
       _this45.el.M_Chips = _this45;
+
       /**
        * Options for the modal
        * @member Chips#options
@@ -8173,68 +7448,56 @@ var $jscomp$this = this;
        * @prop {String} secondaryPlaceholder
        * @prop {Object} autocompleteOptions
        */
-
       _this45.options = $.extend({}, Chips.defaults, options);
-
       _this45.$el.addClass('chips input-field');
-
       _this45.chipsData = [];
       _this45.$chips = $();
-
       _this45._setupInput();
+      _this45.hasAutocomplete = Object.keys(_this45.options.autocompleteOptions).length > 0;
 
-      _this45.hasAutocomplete = Object.keys(_this45.options.autocompleteOptions).length > 0; // Set input id
-
+      // Set input id
       if (!_this45.$input.attr('id')) {
         _this45.$input.attr('id', M.guid());
-      } // Render initial chips
+      }
 
-
+      // Render initial chips
       if (_this45.options.data.length) {
         _this45.chipsData = _this45.options.data;
-
         _this45._renderChips(_this45.chipsData);
-      } // Setup autocomplete if needed
+      }
 
-
+      // Setup autocomplete if needed
       if (_this45.hasAutocomplete) {
         _this45._setupAutocomplete();
       }
-
       _this45._setPlaceholder();
-
       _this45._setupLabel();
-
       _this45._setupEventHandlers();
-
       return _this45;
     }
-
     _createClass(Chips, [{
       key: "getData",
-
       /**
        * Get Chips Data
        */
       value: function getData() {
         return this.chipsData;
       }
+
       /**
        * Teardown component
        */
-
     }, {
       key: "destroy",
       value: function destroy() {
         this._removeEventHandlers();
-
         this.$chips.remove();
         this.el.M_Chips = undefined;
       }
+
       /**
        * Setup Event Handlers
        */
-
     }, {
       key: "_setupEventHandlers",
       value: function _setupEventHandlers() {
@@ -8250,10 +7513,10 @@ var $jscomp$this = this;
         this.$input[0].addEventListener('blur', this._handleInputBlurBound);
         this.$input[0].addEventListener('keydown', this._handleInputKeydownBound);
       }
+
       /**
        * Remove Event Handlers
        */
-
     }, {
       key: "_removeEventHandlers",
       value: function _removeEventHandlers() {
@@ -8265,20 +7528,18 @@ var $jscomp$this = this;
         this.$input[0].removeEventListener('blur', this._handleInputBlurBound);
         this.$input[0].removeEventListener('keydown', this._handleInputKeydownBound);
       }
+
       /**
        * Handle Chip Click
        * @param {Event} e
        */
-
     }, {
       key: "_handleChipClick",
       value: function _handleChipClick(e) {
         var $chip = $(e.target).closest('.chip');
         var clickedClose = $(e.target).is('.close');
-
         if ($chip.length) {
           var index = $chip.index();
-
           if (clickedClose) {
             // delete chip
             this.deleteChip(index);
@@ -8286,164 +7547,156 @@ var $jscomp$this = this;
           } else {
             // select chip
             this.selectChip(index);
-          } // Default handle click to focus on input
+          }
 
+          // Default handle click to focus on input
         } else {
           this.$input[0].focus();
         }
       }
+
       /**
        * Handle Chips Keydown
        * @param {Event} e
        */
-
     }, {
       key: "_handleInputFocus",
-
       /**
        * Handle Input Focus
        */
       value: function _handleInputFocus() {
         this.$el.addClass('focus');
       }
+
       /**
        * Handle Input Blur
        */
-
     }, {
       key: "_handleInputBlur",
       value: function _handleInputBlur() {
         this.$el.removeClass('focus');
       }
+
       /**
        * Handle Input Keydown
        * @param {Event} e
        */
-
     }, {
       key: "_handleInputKeydown",
       value: function _handleInputKeydown(e) {
-        Chips._keydown = true; // enter
+        Chips._keydown = true;
 
+        // enter
         if (e.keyCode === 13) {
           // Override enter if autocompleting.
           if (this.hasAutocomplete && this.autocomplete && this.autocomplete.isOpen) {
             return;
           }
-
           e.preventDefault();
           this.addChip({
             tag: this.$input[0].value
           });
-          this.$input[0].value = ''; // delete or left
+          this.$input[0].value = '';
+
+          // delete or left
         } else if ((e.keyCode === 8 || e.keyCode === 37) && this.$input[0].value === '' && this.chipsData.length) {
           e.preventDefault();
           this.selectChip(this.chipsData.length - 1);
         }
       }
+
       /**
        * Render Chip
        * @param {chip} chip
        * @return {Element}
        */
-
     }, {
       key: "_renderChip",
       value: function _renderChip(chip) {
         if (!chip.tag) {
           return;
         }
-
         var renderedChip = document.createElement('div');
         var closeIcon = document.createElement('i');
         renderedChip.classList.add('chip');
         renderedChip.textContent = chip.tag;
         renderedChip.setAttribute('tabindex', 0);
         $(closeIcon).addClass('material-icons close');
-        closeIcon.textContent = 'close'; // attach image if needed
+        closeIcon.textContent = 'close';
 
+        // attach image if needed
         if (chip.image) {
           var img = document.createElement('img');
           img.setAttribute('src', chip.image);
           renderedChip.insertBefore(img, renderedChip.firstChild);
         }
-
         renderedChip.appendChild(closeIcon);
         return renderedChip;
       }
+
       /**
        * Render Chips
        */
-
     }, {
       key: "_renderChips",
       value: function _renderChips() {
         this.$chips.remove();
-
         for (var i = 0; i < this.chipsData.length; i++) {
           var chipEl = this._renderChip(this.chipsData[i]);
-
           this.$el.append(chipEl);
           this.$chips.add(chipEl);
-        } // move input to end
+        }
 
-
+        // move input to end
         this.$el.append(this.$input[0]);
       }
+
       /**
        * Setup Autocomplete
        */
-
     }, {
       key: "_setupAutocomplete",
       value: function _setupAutocomplete() {
         var _this46 = this;
-
         this.options.autocompleteOptions.onAutocomplete = function (val) {
           _this46.addChip({
             tag: val
           });
-
           _this46.$input[0].value = '';
-
           _this46.$input[0].focus();
         };
-
         this.autocomplete = M.Autocomplete.init(this.$input[0], this.options.autocompleteOptions);
       }
+
       /**
        * Setup Input
        */
-
     }, {
       key: "_setupInput",
       value: function _setupInput() {
         this.$input = this.$el.find('input');
-
         if (!this.$input.length) {
           this.$input = $('<input></input>');
           this.$el.append(this.$input);
         }
-
         this.$input.addClass('input');
       }
+
       /**
        * Setup Label
        */
-
     }, {
       key: "_setupLabel",
       value: function _setupLabel() {
         this.$label = this.$el.find('label');
-
         if (this.$label.length) {
           this.$label.setAttribute('for', this.$input.attr('id'));
         }
       }
+
       /**
        * Set placeholder
        */
-
     }, {
       key: "_setPlaceholder",
       value: function _setPlaceholder() {
@@ -8453,59 +7706,53 @@ var $jscomp$this = this;
           $(this.$input).prop('placeholder', this.options.secondaryPlaceholder);
         }
       }
+
       /**
        * Check if chip is valid
        * @param {chip} chip
        */
-
     }, {
       key: "_isValid",
       value: function _isValid(chip) {
         if (chip.hasOwnProperty('tag') && chip.tag !== '') {
           var exists = false;
-
           for (var i = 0; i < this.chipsData.length; i++) {
             if (this.chipsData[i].tag === chip.tag) {
               exists = true;
               break;
             }
           }
-
           return !exists;
         }
-
         return false;
       }
+
       /**
        * Add chip
        * @param {chip} chip
        */
-
     }, {
       key: "addChip",
       value: function addChip(chip) {
         if (!this._isValid(chip) || this.chipsData.length >= this.options.limit) {
           return;
         }
-
         var renderedChip = this._renderChip(chip);
-
         this.$chips.add(renderedChip);
         this.chipsData.push(chip);
         $(this.$input).before(renderedChip);
+        this._setPlaceholder();
 
-        this._setPlaceholder(); // fire chipAdd callback
-
-
+        // fire chipAdd callback
         if (typeof this.options.onChipAdd === 'function') {
           this.options.onChipAdd.call(this, this.$el, renderedChip);
         }
       }
+
       /**
        * Delete chip
        * @param {Number} chip
        */
-
     }, {
       key: "deleteChip",
       value: function deleteChip(chipIndex) {
@@ -8515,26 +7762,26 @@ var $jscomp$this = this;
           return $(el).index() >= 0;
         });
         this.chipsData.splice(chipIndex, 1);
+        this._setPlaceholder();
 
-        this._setPlaceholder(); // fire chipDelete callback
-
-
+        // fire chipDelete callback
         if (typeof this.options.onChipDelete === 'function') {
           this.options.onChipDelete.call(this, this.$el, $chip[0]);
         }
       }
+
       /**
        * Select chip
        * @param {Number} chip
        */
-
     }, {
       key: "selectChip",
       value: function selectChip(chipIndex) {
         var $chip = this.$chips.eq(chipIndex);
         this._selectedChip = $chip;
-        $chip[0].focus(); // fire chipSelect callback
+        $chip[0].focus();
 
+        // fire chipSelect callback
         if (typeof this.options.onChipSelect === 'function') {
           this.options.onChipSelect.call(this, this.$el, $chip[0]);
         }
@@ -8544,10 +7791,10 @@ var $jscomp$this = this;
       value: function init(els, options) {
         return _get(Chips.__proto__ || Object.getPrototypeOf(Chips), "init", this).call(this, this, els, options);
       }
+
       /**
        * Get Instance
        */
-
     }, {
       key: "getInstance",
       value: function getInstance(el) {
@@ -8559,46 +7806,44 @@ var $jscomp$this = this;
       value: function _handleChipsKeydown(e) {
         Chips._keydown = true;
         var $chips = $(e.target).closest('.chips');
-        var chipsKeydown = e.target && $chips.length; // Don't handle keydown inputs on input and textarea
+        var chipsKeydown = e.target && $chips.length;
 
+        // Don't handle keydown inputs on input and textarea
         if ($(e.target).is('input, textarea') || !chipsKeydown) {
           return;
         }
+        var currChips = $chips[0].M_Chips;
 
-        var currChips = $chips[0].M_Chips; // backspace and delete
-
+        // backspace and delete
         if (e.keyCode === 8 || e.keyCode === 46) {
           e.preventDefault();
           var selectIndex = currChips.chipsData.length;
-
           if (currChips._selectedChip) {
             var index = currChips._selectedChip.index();
-
             currChips.deleteChip(index);
-            currChips._selectedChip = null; // Make sure selectIndex doesn't go negative
+            currChips._selectedChip = null;
 
+            // Make sure selectIndex doesn't go negative
             selectIndex = Math.max(index - 1, 0);
           }
-
           if (currChips.chipsData.length) {
             currChips.selectChip(selectIndex);
-          } // left arrow key
+          }
 
+          // left arrow key
         } else if (e.keyCode === 37) {
           if (currChips._selectedChip) {
             var _selectIndex = currChips._selectedChip.index() - 1;
-
             if (_selectIndex < 0) {
               return;
             }
-
             currChips.selectChip(_selectIndex);
-          } // right arrow key
+          }
 
+          // right arrow key
         } else if (e.keyCode === 39) {
           if (currChips._selectedChip) {
             var _selectIndex2 = currChips._selectedChip.index() + 1;
-
             if (_selectIndex2 >= currChips.chipsData.length) {
               currChips.$input[0].focus();
             } else {
@@ -8607,21 +7852,21 @@ var $jscomp$this = this;
           }
         }
       }
+
       /**
        * Handle Chips Keyup
        * @param {Event} e
        */
-
     }, {
       key: "_handleChipsKeyup",
       value: function _handleChipsKeyup(e) {
         Chips._keydown = false;
       }
+
       /**
        * Handle Chips Blur
        * @param {Event} e
        */
-
     }, {
       key: "_handleChipsBlur",
       value: function _handleChipsBlur(e) {
@@ -8637,38 +7882,31 @@ var $jscomp$this = this;
         return _defaults;
       }
     }]);
-
     return Chips;
   }(Component);
+
   /**
    * @static
    * @memberof Chips
    */
 
-
   Chips._keydown = false;
   M.Chips = Chips;
-
   if (M.jQueryLoaded) {
     M.initializeJqueryWrapper(Chips, 'chips', 'M_Chips');
   }
-
   $(document).ready(function () {
     // Handle removal of static chips.
     $(document.body).on('click', '.chip .close', function () {
       var $chips = $(this).closest('.chips');
-
       if ($chips.length && $chips[0].M_Chips) {
         return;
       }
-
       $(this).closest('.chip').remove();
     });
   });
 })(cash);
-
 ;
-
 (function ($) {
   'use strict';
 
@@ -8678,6 +7916,7 @@ var $jscomp$this = this;
     offset: 0,
     onPositionChange: null
   };
+
   /**
    * @class
    *
@@ -8685,53 +7924,41 @@ var $jscomp$this = this;
 
   var Pushpin = function (_Component13) {
     _inherits(Pushpin, _Component13);
+
     /**
      * Construct Pushpin instance
      * @constructor
      * @param {Element} el
      * @param {Object} options
      */
-
-
     function Pushpin(el, options) {
       _classCallCheck(this, Pushpin);
-
       var _this47 = _possibleConstructorReturn(this, (Pushpin.__proto__ || Object.getPrototypeOf(Pushpin)).call(this, Pushpin, el, options));
-
       _this47.el.M_Pushpin = _this47;
+
       /**
        * Options for the modal
        * @member Pushpin#options
        */
-
       _this47.options = $.extend({}, Pushpin.defaults, options);
       _this47.originalOffset = _this47.el.offsetTop;
-
       Pushpin._pushpins.push(_this47);
-
       _this47._setupEventHandlers();
-
       _this47._updatePosition();
-
       return _this47;
     }
-
     _createClass(Pushpin, [{
       key: "destroy",
-
       /**
        * Teardown component
        */
       value: function destroy() {
         this.el.style.top = null;
-
         this._removePinClasses();
+        this._removeEventHandlers();
 
-        this._removeEventHandlers(); // Remove pushpin Inst
-
-
+        // Remove pushpin Inst
         var index = Pushpin._pushpins.indexOf(this);
-
         Pushpin._pushpins.splice(index, 1);
       }
     }, {
@@ -8748,37 +7975,36 @@ var $jscomp$this = this;
       key: "_updatePosition",
       value: function _updatePosition() {
         var scrolled = M.getDocumentScrollTop() + this.options.offset;
-
         if (this.options.top <= scrolled && this.options.bottom >= scrolled && !this.el.classList.contains('pinned')) {
           this._removePinClasses();
-
           this.el.style.top = this.options.offset + "px";
-          this.el.classList.add('pinned'); // onPositionChange callback
+          this.el.classList.add('pinned');
 
+          // onPositionChange callback
           if (typeof this.options.onPositionChange === 'function') {
             this.options.onPositionChange.call(this, 'pinned');
           }
-        } // Add pin-top (when scrolled position is above top)
+        }
 
-
+        // Add pin-top (when scrolled position is above top)
         if (scrolled < this.options.top && !this.el.classList.contains('pin-top')) {
           this._removePinClasses();
-
           this.el.style.top = 0;
-          this.el.classList.add('pin-top'); // onPositionChange callback
+          this.el.classList.add('pin-top');
 
+          // onPositionChange callback
           if (typeof this.options.onPositionChange === 'function') {
             this.options.onPositionChange.call(this, 'pin-top');
           }
-        } // Add pin-bottom (when scrolled position is below bottom)
+        }
 
-
+        // Add pin-bottom (when scrolled position is below bottom)
         if (scrolled > this.options.bottom && !this.el.classList.contains('pin-bottom')) {
           this._removePinClasses();
-
           this.el.classList.add('pin-bottom');
-          this.el.style.top = this.options.bottom - this.originalOffset + "px"; // onPositionChange callback
+          this.el.style.top = this.options.bottom - this.originalOffset + "px";
 
+          // onPositionChange callback
           if (typeof this.options.onPositionChange === 'function') {
             this.options.onPositionChange.call(this, 'pin-bottom');
           }
@@ -8797,10 +8023,10 @@ var $jscomp$this = this;
       value: function init(els, options) {
         return _get(Pushpin.__proto__ || Object.getPrototypeOf(Pushpin), "init", this).call(this, this, els, options);
       }
+
       /**
        * Get Instance
        */
-
     }, {
       key: "getInstance",
       value: function getInstance(el) {
@@ -8812,7 +8038,6 @@ var $jscomp$this = this;
       value: function _updateElements() {
         for (var elIndex in Pushpin._pushpins) {
           var pInstance = Pushpin._pushpins[elIndex];
-
           pInstance._updatePosition();
         }
       }
@@ -8822,25 +8047,21 @@ var $jscomp$this = this;
         return _defaults;
       }
     }]);
-
     return Pushpin;
   }(Component);
+
   /**
    * @static
    * @memberof Pushpin
    */
 
-
   Pushpin._pushpins = [];
   M.Pushpin = Pushpin;
-
   if (M.jQueryLoaded) {
     M.initializeJqueryWrapper(Pushpin, 'pushpin', 'M_Pushpin');
   }
 })(cash);
-
 ;
-
 (function ($, anim) {
   'use strict';
 
@@ -8850,6 +8071,7 @@ var $jscomp$this = this;
     toolbarEnabled: false
   };
   $.fn.reverse = [].reverse;
+
   /**
    * @class
    *
@@ -8857,20 +8079,18 @@ var $jscomp$this = this;
 
   var FloatingActionButton = function (_Component14) {
     _inherits(FloatingActionButton, _Component14);
+
     /**
      * Construct FloatingActionButton instance
      * @constructor
      * @param {Element} el
      * @param {Object} options
      */
-
-
     function FloatingActionButton(el, options) {
       _classCallCheck(this, FloatingActionButton);
-
       var _this48 = _possibleConstructorReturn(this, (FloatingActionButton.__proto__ || Object.getPrototypeOf(FloatingActionButton)).call(this, FloatingActionButton, el, options));
-
       _this48.el.M_FloatingActionButton = _this48;
+
       /**
        * Options for the fab
        * @member FloatingActionButton#options
@@ -8878,7 +8098,6 @@ var $jscomp$this = this;
        * @prop {Boolean} [hoverEnabled=true] - Enable hover vs click
        * @prop {Boolean} [toolbarEnabled=false] - Enable toolbar transition
        */
-
       _this48.options = $.extend({}, FloatingActionButton.defaults, options);
       _this48.isOpen = false;
       _this48.$anchor = _this48.$el.children('a').first();
@@ -8887,9 +8106,7 @@ var $jscomp$this = this;
       _this48.$floatingBtnsReverse = _this48.$el.find('ul .btn-floating').reverse();
       _this48.offsetY = 0;
       _this48.offsetX = 0;
-
       _this48.$el.addClass("direction-" + _this48.options.direction);
-
       if (_this48.options.direction === 'top') {
         _this48.offsetY = 40;
       } else if (_this48.options.direction === 'right') {
@@ -8899,34 +8116,28 @@ var $jscomp$this = this;
       } else {
         _this48.offsetX = 40;
       }
-
       _this48._setupEventHandlers();
-
       return _this48;
     }
-
     _createClass(FloatingActionButton, [{
       key: "destroy",
-
       /**
        * Teardown component
        */
       value: function destroy() {
         this._removeEventHandlers();
-
         this.el.M_FloatingActionButton = undefined;
       }
+
       /**
        * Setup Event Handlers
        */
-
     }, {
       key: "_setupEventHandlers",
       value: function _setupEventHandlers() {
         this._handleFABClickBound = this._handleFABClick.bind(this);
         this._handleOpenBound = this.open.bind(this);
         this._handleCloseBound = this.close.bind(this);
-
         if (this.options.hoverEnabled && !this.options.toolbarEnabled) {
           this.el.addEventListener('mouseenter', this._handleOpenBound);
           this.el.addEventListener('mouseleave', this._handleCloseBound);
@@ -8934,10 +8145,10 @@ var $jscomp$this = this;
           this.el.addEventListener('click', this._handleFABClickBound);
         }
       }
+
       /**
        * Remove Event Handlers
        */
-
     }, {
       key: "_removeEventHandlers",
       value: function _removeEventHandlers() {
@@ -8948,10 +8159,10 @@ var $jscomp$this = this;
           this.el.removeEventListener('click', this._handleFABClickBound);
         }
       }
+
       /**
        * Handle FAB Click
        */
-
     }, {
       key: "_handleFABClick",
       value: function _handleFABClick() {
@@ -8961,11 +8172,11 @@ var $jscomp$this = this;
           this.open();
         }
       }
+
       /**
        * Handle Document Click
        * @param {Event} e
        */
-
     }, {
       key: "_handleDocumentClick",
       value: function _handleDocumentClick(e) {
@@ -8973,56 +8184,50 @@ var $jscomp$this = this;
           this.close();
         }
       }
+
       /**
        * Open FAB
        */
-
     }, {
       key: "open",
       value: function open() {
         if (this.isOpen) {
           return;
         }
-
         if (this.options.toolbarEnabled) {
           this._animateInToolbar();
         } else {
           this._animateInFAB();
         }
-
         this.isOpen = true;
       }
+
       /**
        * Close FAB
        */
-
     }, {
       key: "close",
       value: function close() {
         if (!this.isOpen) {
           return;
         }
-
         if (this.options.toolbarEnabled) {
           window.removeEventListener('scroll', this._handleCloseBound, true);
           document.body.removeEventListener('click', this._handleDocumentClickBound, true);
-
           this._animateOutToolbar();
         } else {
           this._animateOutFAB();
         }
-
         this.isOpen = false;
       }
+
       /**
        * Classic FAB Menu open
        */
-
     }, {
       key: "_animateInFAB",
       value: function _animateInFAB() {
         var _this49 = this;
-
         this.$el.addClass('active');
         var time = 0;
         this.$floatingBtnsReverse.each(function (el) {
@@ -9039,15 +8244,14 @@ var $jscomp$this = this;
           time += 40;
         });
       }
+
       /**
        * Classic FAB Menu close
        */
-
     }, {
       key: "_animateOutFAB",
       value: function _animateOutFAB() {
         var _this50 = this;
-
         this.$floatingBtnsReverse.each(function (el) {
           anim.remove(el);
           anim({
@@ -9064,15 +8268,14 @@ var $jscomp$this = this;
           });
         });
       }
+
       /**
        * Toolbar transition Menu open
        */
-
     }, {
       key: "_animateInToolbar",
       value: function _animateInToolbar() {
         var _this51 = this;
-
         var scaleFactor = void 0;
         var windowWidth = window.innerWidth;
         var windowHeight = window.innerHeight;
@@ -9085,8 +8288,9 @@ var $jscomp$this = this;
         scaleFactor = windowWidth / backdrop[0].clientWidth;
         this.btnBottom = btnRect.bottom;
         this.btnLeft = btnRect.left;
-        this.btnWidth = btnRect.width; // Set initial state
+        this.btnWidth = btnRect.width;
 
+        // Set initial state
         this.$el.addClass('active');
         this.$el.css({
           'text-align': 'center',
@@ -9108,51 +8312,47 @@ var $jscomp$this = this;
             transform: '',
             transition: 'transform .2s cubic-bezier(0.550, 0.085, 0.680, 0.530), background-color 0s linear .2s'
           });
-
           _this51.$anchor.css({
             overflow: 'visible',
             transform: '',
             transition: 'transform .2s'
           });
-
           setTimeout(function () {
             _this51.$el.css({
               overflow: 'hidden',
               'background-color': fabColor
             });
-
             backdrop.css({
               transform: 'scale(' + scaleFactor + ')',
               transition: 'transform .2s cubic-bezier(0.550, 0.055, 0.675, 0.190)'
             });
-
             _this51.$menu.children('li').children('a').css({
               opacity: 1
-            }); // Scroll to close.
+            });
 
-
+            // Scroll to close.
             _this51._handleDocumentClickBound = _this51._handleDocumentClick.bind(_this51);
             window.addEventListener('scroll', _this51._handleCloseBound, true);
             document.body.addEventListener('click', _this51._handleDocumentClickBound, true);
           }, 100);
         }, 0);
       }
+
       /**
        * Toolbar transition Menu close
        */
-
     }, {
       key: "_animateOutToolbar",
       value: function _animateOutToolbar() {
         var _this52 = this;
-
         var windowWidth = window.innerWidth;
         var windowHeight = window.innerHeight;
         var backdrop = this.$el.find('.fab-backdrop');
         var fabColor = this.$anchor.css('background-color');
         this.offsetX = this.btnLeft - windowWidth / 2 + this.btnWidth / 2;
-        this.offsetY = windowHeight - this.btnBottom; // Hide backdrop
+        this.offsetY = windowHeight - this.btnBottom;
 
+        // Hide backdrop
         this.$el.removeClass('active');
         this.$el.css({
           'background-color': 'transparent',
@@ -9169,8 +8369,9 @@ var $jscomp$this = this;
           opacity: ''
         });
         setTimeout(function () {
-          backdrop.remove(); // Set initial state.
+          backdrop.remove();
 
+          // Set initial state.
           _this52.$el.css({
             'text-align': '',
             width: '',
@@ -9180,18 +8381,15 @@ var $jscomp$this = this;
             'background-color': '',
             transform: 'translate3d(' + -_this52.offsetX + 'px,0,0)'
           });
-
           _this52.$anchor.css({
             overflow: '',
             transform: 'translate3d(0,' + _this52.offsetY + 'px,0)'
           });
-
           setTimeout(function () {
             _this52.$el.css({
               transform: 'translate3d(0,0,0)',
               transition: 'transform .2s'
             });
-
             _this52.$anchor.css({
               transform: 'translate3d(0,0,0)',
               transition: 'transform .2s cubic-bezier(0.550, 0.055, 0.675, 0.190)'
@@ -9204,10 +8402,10 @@ var $jscomp$this = this;
       value: function init(els, options) {
         return _get(FloatingActionButton.__proto__ || Object.getPrototypeOf(FloatingActionButton), "init", this).call(this, this, els, options);
       }
+
       /**
        * Get Instance
        */
-
     }, {
       key: "getInstance",
       value: function getInstance(el) {
@@ -9220,19 +8418,14 @@ var $jscomp$this = this;
         return _defaults;
       }
     }]);
-
     return FloatingActionButton;
   }(Component);
-
   M.FloatingActionButton = FloatingActionButton;
-
   if (M.jQueryLoaded) {
     M.initializeJqueryWrapper(FloatingActionButton, 'floatingActionButton', 'M_FloatingActionButton');
   }
 })(cash, M.anime);
-
 ;
-
 (function ($) {
   'use strict';
 
@@ -9294,6 +8487,7 @@ var $jscomp$this = this;
     onClose: null,
     onDraw: null
   };
+
   /**
    * @class
    *
@@ -9301,49 +8495,39 @@ var $jscomp$this = this;
 
   var Datepicker = function (_Component15) {
     _inherits(Datepicker, _Component15);
+
     /**
      * Construct Datepicker instance and set up overlay
      * @constructor
      * @param {Element} el
      * @param {Object} options
      */
-
-
     function Datepicker(el, options) {
       _classCallCheck(this, Datepicker);
-
       var _this53 = _possibleConstructorReturn(this, (Datepicker.__proto__ || Object.getPrototypeOf(Datepicker)).call(this, Datepicker, el, options));
-
       _this53.el.M_Datepicker = _this53;
-      _this53.options = $.extend({}, Datepicker.defaults, options); // make sure i18n defaults are not lost when only few i18n option properties are passed
+      _this53.options = $.extend({}, Datepicker.defaults, options);
 
+      // make sure i18n defaults are not lost when only few i18n option properties are passed
       if (!!options && options.hasOwnProperty('i18n') && _typeof(options.i18n) === 'object') {
         _this53.options.i18n = $.extend({}, Datepicker.defaults.i18n, options.i18n);
-      } // Remove time component from minDate and maxDate options
+      }
 
-
+      // Remove time component from minDate and maxDate options
       if (_this53.options.minDate) _this53.options.minDate.setHours(0, 0, 0, 0);
       if (_this53.options.maxDate) _this53.options.maxDate.setHours(0, 0, 0, 0);
       _this53.id = M.guid();
-
       _this53._setupVariables();
-
       _this53._insertHTMLIntoDOM();
-
       _this53._setupModal();
-
       _this53._setupEventHandlers();
-
       if (!_this53.options.defaultDate) {
         _this53.options.defaultDate = new Date(Date.parse(_this53.el.value));
       }
-
       var defDate = _this53.options.defaultDate;
-
       if (Datepicker._isDate(defDate)) {
         if (_this53.options.setDefaultDate) {
           _this53.setDate(defDate, true);
-
           _this53.setInputValue();
         } else {
           _this53.gotoDate(defDate);
@@ -9351,25 +8535,21 @@ var $jscomp$this = this;
       } else {
         _this53.gotoDate(new Date());
       }
+
       /**
        * Describes open/close state of datepicker
        * @type {Boolean}
        */
-
-
       _this53.isOpen = false;
       return _this53;
     }
-
     _createClass(Datepicker, [{
       key: "destroy",
-
       /**
        * Teardown component
        */
       value: function destroy() {
         this._removeEventHandlers();
-
         this.modal.destroy();
         $(this.modalEl).remove();
         this.destroySelects();
@@ -9379,13 +8559,10 @@ var $jscomp$this = this;
       key: "destroySelects",
       value: function destroySelects() {
         var oldYearSelect = this.calendarEl.querySelector('.orig-select-year');
-
         if (oldYearSelect) {
           M.FormSelect.getInstance(oldYearSelect).destroy();
         }
-
         var oldMonthSelect = this.calendarEl.querySelector('.orig-select-month');
-
         if (oldMonthSelect) {
           M.FormSelect.getInstance(oldMonthSelect).destroy();
         }
@@ -9399,10 +8576,8 @@ var $jscomp$this = this;
           });
           this.clearBtn.innerHTML = this.options.i18n.clear;
         }
-
         this.doneBtn.innerHTML = this.options.i18n.done;
         this.cancelBtn.innerHTML = this.options.i18n.cancel;
-
         if (this.options.container) {
           this.$modalEl.appendTo(this.options.container);
         } else {
@@ -9413,7 +8588,6 @@ var $jscomp$this = this;
       key: "_setupModal",
       value: function _setupModal() {
         var _this54 = this;
-
         this.modalEl.id = 'modal-' + this.id;
         this.modal = M.Modal.init(this.modalEl, {
           onCloseEnd: function onCloseEnd() {
@@ -9425,19 +8599,15 @@ var $jscomp$this = this;
       key: "toString",
       value: function toString(format) {
         var _this55 = this;
-
         format = format || this.options.format;
-
         if (!Datepicker._isDate(this.date)) {
           return '';
         }
-
         var formatArray = format.split(/(d{1,4}|m{1,4}|y{4}|yy|!.)/g);
         var formattedDate = formatArray.map(function (label) {
           if (_this55.formats[label]) {
             return _this55.formats[label]();
           }
-
           return label;
         }).join('');
         return formattedDate;
@@ -9447,37 +8617,26 @@ var $jscomp$this = this;
       value: function setDate(date, preventOnSelect) {
         if (!date) {
           this.date = null;
-
           this._renderDateDisplay();
-
           return this.draw();
         }
-
         if (typeof date === 'string') {
           date = new Date(Date.parse(date));
         }
-
         if (!Datepicker._isDate(date)) {
           return;
         }
-
         var min = this.options.minDate,
-            max = this.options.maxDate;
-
+          max = this.options.maxDate;
         if (Datepicker._isDate(min) && date < min) {
           date = min;
         } else if (Datepicker._isDate(max) && date > max) {
           date = max;
         }
-
         this.date = new Date(date.getTime());
-
         this._renderDateDisplay();
-
         Datepicker._setToStartOfDay(this.date);
-
         this.gotoDate(this.date);
-
         if (!preventOnSelect && typeof this.options.onSelect === 'function') {
           this.options.onSelect.call(this, this.date);
         }
@@ -9501,36 +8660,32 @@ var $jscomp$this = this;
         this.yearTextEl.innerHTML = displayDate.getFullYear();
         this.dateTextEl.innerHTML = day + ", " + month + " " + date;
       }
+
       /**
        * change view to a specific date
        */
-
     }, {
       key: "gotoDate",
       value: function gotoDate(date) {
         var newCalendar = true;
-
         if (!Datepicker._isDate(date)) {
           return;
         }
-
         if (this.calendars) {
           var firstVisibleDate = new Date(this.calendars[0].year, this.calendars[0].month, 1),
-              lastVisibleDate = new Date(this.calendars[this.calendars.length - 1].year, this.calendars[this.calendars.length - 1].month, 1),
-              visibleDate = date.getTime(); // get the end of the month
-
+            lastVisibleDate = new Date(this.calendars[this.calendars.length - 1].year, this.calendars[this.calendars.length - 1].month, 1),
+            visibleDate = date.getTime();
+          // get the end of the month
           lastVisibleDate.setMonth(lastVisibleDate.getMonth() + 1);
           lastVisibleDate.setDate(lastVisibleDate.getDate() - 1);
           newCalendar = visibleDate < firstVisibleDate.getTime() || lastVisibleDate.getTime() < visibleDate;
         }
-
         if (newCalendar) {
           this.calendars = [{
             month: date.getMonth(),
             year: date.getFullYear()
           }];
         }
-
         this.adjustCalendars();
       }
     }, {
@@ -9546,12 +8701,10 @@ var $jscomp$this = this;
           calendar.year -= Math.ceil(Math.abs(calendar.month) / 12);
           calendar.month += 12;
         }
-
         if (calendar.month > 11) {
           calendar.year += Math.floor(Math.abs(calendar.month) / 12);
           calendar.month -= 12;
         }
-
         return calendar;
       }
     }, {
@@ -9570,52 +8723,43 @@ var $jscomp$this = this;
       key: "render",
       value: function render(year, month, randId) {
         var opts = this.options,
-            now = new Date(),
-            days = Datepicker._getDaysInMonth(year, month),
-            before = new Date(year, month, 1).getDay(),
-            data = [],
-            row = [];
-
+          now = new Date(),
+          days = Datepicker._getDaysInMonth(year, month),
+          before = new Date(year, month, 1).getDay(),
+          data = [],
+          row = [];
         Datepicker._setToStartOfDay(now);
-
         if (opts.firstDay > 0) {
           before -= opts.firstDay;
-
           if (before < 0) {
             before += 7;
           }
         }
-
         var previousMonth = month === 0 ? 11 : month - 1,
-            nextMonth = month === 11 ? 0 : month + 1,
-            yearOfPreviousMonth = month === 0 ? year - 1 : year,
-            yearOfNextMonth = month === 11 ? year + 1 : year,
-            daysInPreviousMonth = Datepicker._getDaysInMonth(yearOfPreviousMonth, previousMonth);
-
+          nextMonth = month === 11 ? 0 : month + 1,
+          yearOfPreviousMonth = month === 0 ? year - 1 : year,
+          yearOfNextMonth = month === 11 ? year + 1 : year,
+          daysInPreviousMonth = Datepicker._getDaysInMonth(yearOfPreviousMonth, previousMonth);
         var cells = days + before,
-            after = cells;
-
+          after = cells;
         while (after > 7) {
           after -= 7;
         }
-
         cells += 7 - after;
         var isWeekSelected = false;
-
         for (var i = 0, r = 0; i < cells; i++) {
           var day = new Date(year, month, 1 + (i - before)),
-              isSelected = Datepicker._isDate(this.date) ? Datepicker._compareDates(day, this.date) : false,
-              isToday = Datepicker._compareDates(day, now),
-              hasEvent = opts.events.indexOf(day.toDateString()) !== -1 ? true : false,
-              isEmpty = i < before || i >= days + before,
-              dayNumber = 1 + (i - before),
-              monthNumber = month,
-              yearNumber = year,
-              isStartRange = opts.startRange && Datepicker._compareDates(opts.startRange, day),
-              isEndRange = opts.endRange && Datepicker._compareDates(opts.endRange, day),
-              isInRange = opts.startRange && opts.endRange && opts.startRange < day && day < opts.endRange,
-              isDisabled = opts.minDate && day < opts.minDate || opts.maxDate && day > opts.maxDate || opts.disableWeekends && Datepicker._isWeekend(day) || opts.disableDayFn && opts.disableDayFn(day);
-
+            isSelected = Datepicker._isDate(this.date) ? Datepicker._compareDates(day, this.date) : false,
+            isToday = Datepicker._compareDates(day, now),
+            hasEvent = opts.events.indexOf(day.toDateString()) !== -1 ? true : false,
+            isEmpty = i < before || i >= days + before,
+            dayNumber = 1 + (i - before),
+            monthNumber = month,
+            yearNumber = year,
+            isStartRange = opts.startRange && Datepicker._compareDates(opts.startRange, day),
+            isEndRange = opts.endRange && Datepicker._compareDates(opts.endRange, day),
+            isInRange = opts.startRange && opts.endRange && opts.startRange < day && day < opts.endRange,
+            isDisabled = opts.minDate && day < opts.minDate || opts.maxDate && day > opts.maxDate || opts.disableWeekends && Datepicker._isWeekend(day) || opts.disableDayFn && opts.disableDayFn(day);
           if (isEmpty) {
             if (i < before) {
               dayNumber = daysInPreviousMonth + dayNumber;
@@ -9627,7 +8771,6 @@ var $jscomp$this = this;
               yearNumber = yearOfNextMonth;
             }
           }
-
           var dayConfig = {
             day: dayNumber,
             month: monthNumber,
@@ -9643,7 +8786,6 @@ var $jscomp$this = this;
             showDaysInNextAndPreviousMonths: opts.showDaysInNextAndPreviousMonths
           };
           row.push(this.renderDay(dayConfig));
-
           if (++r === 7) {
             data.push(this.renderRow(row, opts.isRTL, isWeekSelected));
             row = [];
@@ -9651,7 +8793,6 @@ var $jscomp$this = this;
             isWeekSelected = false;
           }
         }
-
         return this.renderTable(opts, data, randId);
       }
     }, {
@@ -9659,7 +8800,6 @@ var $jscomp$this = this;
       value: function renderDay(opts) {
         var arr = [];
         var ariaSelected = 'false';
-
         if (opts.isEmpty) {
           if (opts.showDaysInNextAndPreviousMonths) {
             arr.push('is-outside-current-month');
@@ -9668,36 +8808,28 @@ var $jscomp$this = this;
             return '<td class="is-empty"></td>';
           }
         }
-
         if (opts.isDisabled) {
           arr.push('is-disabled');
         }
-
         if (opts.isToday) {
           arr.push('is-today');
         }
-
         if (opts.isSelected) {
           arr.push('is-selected');
           ariaSelected = 'true';
         }
-
         if (opts.hasEvent) {
           arr.push('has-event');
         }
-
         if (opts.isInRange) {
           arr.push('is-inrange');
         }
-
         if (opts.isStartRange) {
           arr.push('is-startrange');
         }
-
         if (opts.isEndRange) {
           arr.push('is-endrange');
         }
-
         return "<td data-day=\"" + opts.day + "\" class=\"" + arr.join(' ') + "\" aria-selected=\"" + ariaSelected + "\">" + ("<button class=\"datepicker-day-button\" type=\"button\" data-year=\"" + opts.year + "\" data-month=\"" + opts.month + "\" data-day=\"" + opts.day + "\">" + opts.day + "</button>") + '</td>';
       }
     }, {
@@ -9714,12 +8846,10 @@ var $jscomp$this = this;
       key: "renderHead",
       value: function renderHead(opts) {
         var i = void 0,
-            arr = [];
-
+          arr = [];
         for (i = 0; i < 7; i++) {
           arr.push("<th scope=\"col\"><abbr title=\"" + this.renderDayName(opts, i) + "\">" + this.renderDayName(opts, i, true) + "</abbr></th>");
         }
-
         return '<thead><tr>' + (opts.isRTL ? arr.reverse() : arr).join('') + '</tr></thead>';
       }
     }, {
@@ -9731,23 +8861,20 @@ var $jscomp$this = this;
       key: "renderTitle",
       value: function renderTitle(instance, c, year, month, refYear, randId) {
         var i = void 0,
-            j = void 0,
-            arr = void 0,
-            opts = this.options,
-            isMinYear = year === opts.minYear,
-            isMaxYear = year === opts.maxYear,
-            html = '<div id="' + randId + '" class="datepicker-controls" role="heading" aria-live="assertive">',
-            monthHtml = void 0,
-            yearHtml = void 0,
-            prev = true,
-            next = true;
-
+          j = void 0,
+          arr = void 0,
+          opts = this.options,
+          isMinYear = year === opts.minYear,
+          isMaxYear = year === opts.maxYear,
+          html = '<div id="' + randId + '" class="datepicker-controls" role="heading" aria-live="assertive">',
+          monthHtml = void 0,
+          yearHtml = void 0,
+          prev = true,
+          next = true;
         for (arr = [], i = 0; i < 12; i++) {
           arr.push('<option value="' + (year === refYear ? i - c : 12 + i - c) + '"' + (i === month ? ' selected="selected"' : '') + (isMinYear && i < opts.minMonth || isMaxYear && i > opts.maxMonth ? 'disabled="disabled"' : '') + '>' + opts.i18n.months[i] + '</option>');
         }
-
         monthHtml = '<select class="datepicker-select orig-select-month" tabindex="-1">' + arr.join('') + '</select>';
-
         if ($.isArray(opts.yearRange)) {
           i = opts.yearRange[0];
           j = opts.yearRange[1] + 1;
@@ -9755,84 +8882,69 @@ var $jscomp$this = this;
           i = year - opts.yearRange;
           j = 1 + year + opts.yearRange;
         }
-
         for (arr = []; i < j && i <= opts.maxYear; i++) {
           if (i >= opts.minYear) {
             arr.push("<option value=\"" + i + "\" " + (i === year ? 'selected="selected"' : '') + ">" + i + "</option>");
           }
         }
-
         yearHtml = "<select class=\"datepicker-select orig-select-year\" tabindex=\"-1\">" + arr.join('') + "</select>";
         var leftArrow = '<svg fill="#000000" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M15.41 16.09l-4.58-4.59 4.58-4.59L14 5.5l-6 6 6 6z"/><path d="M0-.5h24v24H0z" fill="none"/></svg>';
         html += "<button class=\"month-prev" + (prev ? '' : ' is-disabled') + "\" type=\"button\">" + leftArrow + "</button>";
         html += '<div class="selects-container">';
-
         if (opts.showMonthAfterYear) {
           html += yearHtml + monthHtml;
         } else {
           html += monthHtml + yearHtml;
         }
-
         html += '</div>';
-
         if (isMinYear && (month === 0 || opts.minMonth >= month)) {
           prev = false;
         }
-
         if (isMaxYear && (month === 11 || opts.maxMonth <= month)) {
           next = false;
         }
-
         var rightArrow = '<svg fill="#000000" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M8.59 16.34l4.58-4.59-4.58-4.59L10 5.75l6 6-6 6z"/><path d="M0-.25h24v24H0z" fill="none"/></svg>';
         html += "<button class=\"month-next" + (next ? '' : ' is-disabled') + "\" type=\"button\">" + rightArrow + "</button>";
         return html += '</div>';
       }
+
       /**
        * refresh the HTML
        */
-
     }, {
       key: "draw",
       value: function draw(force) {
         if (!this.isOpen && !force) {
           return;
         }
-
         var opts = this.options,
-            minYear = opts.minYear,
-            maxYear = opts.maxYear,
-            minMonth = opts.minMonth,
-            maxMonth = opts.maxMonth,
-            html = '',
-            randId = void 0;
-
+          minYear = opts.minYear,
+          maxYear = opts.maxYear,
+          minMonth = opts.minMonth,
+          maxMonth = opts.maxMonth,
+          html = '',
+          randId = void 0;
         if (this._y <= minYear) {
           this._y = minYear;
-
           if (!isNaN(minMonth) && this._m < minMonth) {
             this._m = minMonth;
           }
         }
-
         if (this._y >= maxYear) {
           this._y = maxYear;
-
           if (!isNaN(maxMonth) && this._m > maxMonth) {
             this._m = maxMonth;
           }
         }
-
         randId = 'datepicker-title-' + Math.random().toString(36).replace(/[^a-z]+/g, '').substr(0, 2);
-
         for (var c = 0; c < 1; c++) {
           this._renderDateDisplay();
-
           html += this.renderTitle(this, c, this.calendars[c].year, this.calendars[c].month, this.calendars[0].year, randId) + this.render(this.calendars[c].year, this.calendars[c].month, randId);
         }
-
         this.destroySelects();
-        this.calendarEl.innerHTML = html; // Init Materialize Select
+        this.calendarEl.innerHTML = html;
 
+        // Init Materialize Select
         var yearSelect = this.calendarEl.querySelector('.orig-select-year');
         var monthSelect = this.calendarEl.querySelector('.orig-select-month');
         M.FormSelect.init(yearSelect, {
@@ -9848,19 +8960,19 @@ var $jscomp$this = this;
             container: document.body,
             constrainWidth: false
           }
-        }); // Add change handlers for select
+        });
 
+        // Add change handlers for select
         yearSelect.addEventListener('change', this._handleYearChange.bind(this));
         monthSelect.addEventListener('change', this._handleMonthChange.bind(this));
-
         if (typeof this.options.onDraw === 'function') {
           this.options.onDraw(this);
         }
       }
+
       /**
        * Setup Event Handlers
        */
-
     }, {
       key: "_setupEventHandlers",
       value: function _setupEventHandlers() {
@@ -9877,7 +8989,6 @@ var $jscomp$this = this;
         this.calendarEl.addEventListener('click', this._handleCalendarClickBound);
         this.doneBtn.addEventListener('click', this._finishSelectionBound);
         this.cancelBtn.addEventListener('click', this._closeBound);
-
         if (this.options.showClearBtn) {
           this._handleClearClickBound = this._handleClearClick.bind(this);
           this.clearBtn.addEventListener('click', this._handleClearClickBound);
@@ -9887,17 +8998,14 @@ var $jscomp$this = this;
       key: "_setupVariables",
       value: function _setupVariables() {
         var _this56 = this;
-
         this.$modalEl = $(Datepicker._template);
         this.modalEl = this.$modalEl[0];
         this.calendarEl = this.modalEl.querySelector('.datepicker-calendar');
         this.yearTextEl = this.modalEl.querySelector('.year-text');
         this.dateTextEl = this.modalEl.querySelector('.date-text');
-
         if (this.options.showClearBtn) {
           this.clearBtn = this.modalEl.querySelector('.datepicker-clear');
         }
-
         this.doneBtn = this.modalEl.querySelector('.datepicker-done');
         this.cancelBtn = this.modalEl.querySelector('.datepicker-cancel');
         this.formats = {
@@ -9906,7 +9014,6 @@ var $jscomp$this = this;
           },
           dd: function dd() {
             var d = _this56.date.getDate();
-
             return (d < 10 ? '0' : '') + d;
           },
           ddd: function ddd() {
@@ -9936,10 +9043,10 @@ var $jscomp$this = this;
           }
         };
       }
+
       /**
        * Remove Event Handlers
        */
-
     }, {
       key: "_removeEventHandlers",
       value: function _removeEventHandlers() {
@@ -9967,13 +9074,10 @@ var $jscomp$this = this;
         if (!this.isOpen) {
           return;
         }
-
         var $target = $(e.target);
-
         if (!$target.hasClass('is-disabled')) {
           if ($target.hasClass('datepicker-day-button') && !$target.hasClass('is-empty') && !$target.parent().hasClass('is-disabled')) {
             this.setDate(new Date(e.target.getAttribute('data-year'), e.target.getAttribute('data-month'), e.target.getAttribute('data-day')));
-
             if (this.options.autoClose) {
               this._finishSelection();
             }
@@ -10001,10 +9105,10 @@ var $jscomp$this = this;
       value: function _handleYearChange(e) {
         this.gotoYear(e.target.value);
       }
+
       /**
        * change view to a specific month (zero-index, e.g. 0: January)
        */
-
     }, {
       key: "gotoMonth",
       value: function gotoMonth(month) {
@@ -10013,10 +9117,10 @@ var $jscomp$this = this;
           this.adjustCalendars();
         }
       }
+
       /**
        * change view to a specific full year (e.g. "2012")
        */
-
     }, {
       key: "gotoYear",
       value: function gotoYear(year) {
@@ -10028,18 +9132,17 @@ var $jscomp$this = this;
     }, {
       key: "_handleInputChange",
       value: function _handleInputChange(e) {
-        var date = void 0; // Prevent change event from being fired when triggered by the plugin
+        var date = void 0;
 
+        // Prevent change event from being fired when triggered by the plugin
         if (e.firedBy === this) {
           return;
         }
-
         if (this.options.parse) {
           date = this.options.parse(this.el.value, this.options.format);
         } else {
           date = new Date(Date.parse(this.el.value));
         }
-
         if (Datepicker._isDate(date)) {
           this.setDate(date);
         }
@@ -10048,61 +9151,53 @@ var $jscomp$this = this;
       key: "renderDayName",
       value: function renderDayName(opts, day, abbr) {
         day += opts.firstDay;
-
         while (day >= 7) {
           day -= 7;
         }
-
         return abbr ? opts.i18n.weekdaysAbbrev[day] : opts.i18n.weekdays[day];
       }
+
       /**
        * Set input value to the selected date and close Datepicker
        */
-
     }, {
       key: "_finishSelection",
       value: function _finishSelection() {
         this.setInputValue();
         this.close();
       }
+
       /**
        * Open Datepicker
        */
-
     }, {
       key: "open",
       value: function open() {
         if (this.isOpen) {
           return;
         }
-
         this.isOpen = true;
-
         if (typeof this.options.onOpen === 'function') {
           this.options.onOpen.call(this);
         }
-
         this.draw();
         this.modal.open();
         return this;
       }
+
       /**
        * Close Datepicker
        */
-
     }, {
       key: "close",
       value: function close() {
         if (!this.isOpen) {
           return;
         }
-
         this.isOpen = false;
-
         if (typeof this.options.onClose === 'function') {
           this.options.onClose.call(this);
         }
-
         this.modal.close();
         return this;
       }
@@ -10149,10 +9244,10 @@ var $jscomp$this = this;
       value: function _setToStartOfDay(date) {
         if (Datepicker._isDate(date)) date.setHours(0, 0, 0, 0);
       }
+
       /**
        * Get Instance
        */
-
     }, {
       key: "getInstance",
       value: function getInstance(el) {
@@ -10165,20 +9260,15 @@ var $jscomp$this = this;
         return _defaults;
       }
     }]);
-
     return Datepicker;
   }(Component);
-
   Datepicker._template = ['<div class= "modal datepicker-modal">', '<div class="modal-content datepicker-container">', '<div class="datepicker-date-display">', '<span class="year-text"></span>', '<span class="date-text"></span>', '</div>', '<div class="datepicker-calendar-container">', '<div class="datepicker-calendar"></div>', '<div class="datepicker-footer">', '<button class="btn-flat datepicker-clear waves-effect" style="visibility: hidden;" type="button"></button>', '<div class="confirmation-btns">', '<button class="btn-flat datepicker-cancel waves-effect" type="button"></button>', '<button class="btn-flat datepicker-done waves-effect" type="button"></button>', '</div>', '</div>', '</div>', '</div>', '</div>'].join('');
   M.Datepicker = Datepicker;
-
   if (M.jQueryLoaded) {
     M.initializeJqueryWrapper(Datepicker, 'datepicker', 'M_Datepicker');
   }
 })(cash);
-
 ;
-
 (function ($) {
   'use strict';
 
@@ -10206,6 +9296,7 @@ var $jscomp$this = this;
     // change to 12 hour AM/PM clock from 24 hour
     vibrate: true,
     // vibrate the device when dragging clock hand
+
     // Callbacks
     onOpenStart: null,
     onOpenEnd: null,
@@ -10213,6 +9304,7 @@ var $jscomp$this = this;
     onCloseEnd: null,
     onSelect: null
   };
+
   /**
    * @class
    *
@@ -10220,48 +9312,35 @@ var $jscomp$this = this;
 
   var Timepicker = function (_Component16) {
     _inherits(Timepicker, _Component16);
-
     function Timepicker(el, options) {
       _classCallCheck(this, Timepicker);
-
       var _this57 = _possibleConstructorReturn(this, (Timepicker.__proto__ || Object.getPrototypeOf(Timepicker)).call(this, Timepicker, el, options));
-
       _this57.el.M_Timepicker = _this57;
       _this57.options = $.extend({}, Timepicker.defaults, options);
       _this57.id = M.guid();
-
       _this57._insertHTMLIntoDOM();
-
       _this57._setupModal();
-
       _this57._setupVariables();
-
       _this57._setupEventHandlers();
-
       _this57._clockSetup();
-
       _this57._pickerSetup();
-
       return _this57;
     }
-
     _createClass(Timepicker, [{
       key: "destroy",
-
       /**
        * Teardown component
        */
       value: function destroy() {
         this._removeEventHandlers();
-
         this.modal.destroy();
         $(this.modalEl).remove();
         this.el.M_Timepicker = undefined;
       }
+
       /**
        * Setup Event Handlers
        */
-
     }, {
       key: "_setupEventHandlers",
       value: function _setupEventHandlers() {
@@ -10308,17 +9387,18 @@ var $jscomp$this = this;
         this.x0 = offset.x + this.options.dialRadius;
         this.y0 = offset.y + this.options.dialRadius;
         this.moved = false;
-
         var clickPos = Timepicker._Pos(e);
-
         this.dx = clickPos.x - this.x0;
-        this.dy = clickPos.y - this.y0; // Set clock hands
+        this.dy = clickPos.y - this.y0;
 
-        this.setHand(this.dx, this.dy, false); // Mousemove on document
+        // Set clock hands
+        this.setHand(this.dx, this.dy, false);
 
+        // Mousemove on document
         document.addEventListener('mousemove', this._handleDocumentClickMoveBound);
-        document.addEventListener('touchmove', this._handleDocumentClickMoveBound); // Mouseup on document
+        document.addEventListener('touchmove', this._handleDocumentClickMoveBound);
 
+        // Mouseup on document
         document.addEventListener('mouseup', this._handleDocumentClickEndBound);
         document.addEventListener('touchend', this._handleDocumentClickEndBound);
       }
@@ -10326,9 +9406,7 @@ var $jscomp$this = this;
       key: "_handleDocumentClickMove",
       value: function _handleDocumentClickMove(e) {
         e.preventDefault();
-
         var clickPos = Timepicker._Pos(e);
-
         var x = clickPos.x - this.x0;
         var y = clickPos.y - this.y0;
         this.moved = true;
@@ -10338,20 +9416,15 @@ var $jscomp$this = this;
       key: "_handleDocumentClickEnd",
       value: function _handleDocumentClickEnd(e) {
         var _this58 = this;
-
         e.preventDefault();
         document.removeEventListener('mouseup', this._handleDocumentClickEndBound);
         document.removeEventListener('touchend', this._handleDocumentClickEndBound);
-
         var clickPos = Timepicker._Pos(e);
-
         var x = clickPos.x - this.x0;
         var y = clickPos.y - this.y0;
-
         if (this.moved && x === this.dx && y === this.dy) {
           this.setHand(x, y);
         }
-
         if (this.currentView === 'hours') {
           this.showView('minutes', this.options.duration / 2);
         } else if (this.options.autoClose) {
@@ -10360,12 +9433,11 @@ var $jscomp$this = this;
             _this58.done();
           }, this.options.duration / 2);
         }
-
         if (typeof this.options.onSelect === 'function') {
           this.options.onSelect.call(this, this.hours, this.minutes);
-        } // Unbind mousemove event
+        }
 
-
+        // Unbind mousemove event
         document.removeEventListener('mousemove', this._handleDocumentClickMoveBound);
         document.removeEventListener('touchmove', this._handleDocumentClickMoveBound);
       }
@@ -10374,10 +9446,10 @@ var $jscomp$this = this;
       value: function _insertHTMLIntoDOM() {
         this.$modalEl = $(Timepicker._template);
         this.modalEl = this.$modalEl[0];
-        this.modalEl.id = 'modal-' + this.id; // Append popover to input by default
+        this.modalEl.id = 'modal-' + this.id;
 
+        // Append popover to input by default
         var containerEl = document.querySelector(this.options.container);
-
         if (this.options.container && !!containerEl) {
           this.$modalEl.appendTo(containerEl);
         } else {
@@ -10388,7 +9460,6 @@ var $jscomp$this = this;
       key: "_setupModal",
       value: function _setupModal() {
         var _this59 = this;
-
         this.modal = M.Modal.init(this.modalEl, {
           onOpenStart: this.options.onOpenStart,
           onOpenEnd: this.options.onOpenEnd,
@@ -10397,7 +9468,6 @@ var $jscomp$this = this;
             if (typeof _this59.options.onCloseEnd === 'function') {
               _this59.options.onCloseEnd.call(_this59);
             }
-
             _this59.isOpen = false;
           }
         });
@@ -10421,13 +9491,11 @@ var $jscomp$this = this;
       key: "_pickerSetup",
       value: function _pickerSetup() {
         var $clearBtn = $("<button class=\"btn-flat timepicker-clear waves-effect\" style=\"visibility: hidden;\" type=\"button\" tabindex=\"" + (this.options.twelveHour ? '3' : '1') + "\">" + this.options.i18n.clear + "</button>").appendTo(this.footer).on('click', this.clear.bind(this));
-
         if (this.options.showClearBtn) {
           $clearBtn.css({
             visibility: ''
           });
         }
-
         var confirmationBtnsContainer = $('<div class="confirmation-btns"></div>');
         $('<button class="btn-flat timepicker-close waves-effect" type="button" tabindex="' + (this.options.twelveHour ? '3' : '1') + '">' + this.options.i18n.cancel + '</button>').appendTo(confirmationBtnsContainer).on('click', this.close.bind(this));
         $('<button class="btn-flat timepicker-close waves-effect" type="button" tabindex="' + (this.options.twelveHour ? '3' : '1') + '">' + this.options.i18n.done + '</button>').appendTo(confirmationBtnsContainer).on('click', this.done.bind(this));
@@ -10442,11 +9510,8 @@ var $jscomp$this = this;
           this.$amBtn.on('click', this._handleAmPmClick.bind(this)).appendTo(this.spanAmPm);
           this.$pmBtn.on('click', this._handleAmPmClick.bind(this)).appendTo(this.spanAmPm);
         }
-
         this._buildHoursView();
-
         this._buildMinutesView();
-
         this._buildSVGClock();
       }
     }, {
@@ -10456,40 +9521,28 @@ var $jscomp$this = this;
         var dialRadius = this.options.dialRadius;
         var tickRadius = this.options.tickRadius;
         var diameter = dialRadius * 2;
-
         var svg = Timepicker._createSVGEl('svg');
-
         svg.setAttribute('class', 'timepicker-svg');
         svg.setAttribute('width', diameter);
         svg.setAttribute('height', diameter);
-
         var g = Timepicker._createSVGEl('g');
-
         g.setAttribute('transform', 'translate(' + dialRadius + ',' + dialRadius + ')');
-
         var bearing = Timepicker._createSVGEl('circle');
-
         bearing.setAttribute('class', 'timepicker-canvas-bearing');
         bearing.setAttribute('cx', 0);
         bearing.setAttribute('cy', 0);
         bearing.setAttribute('r', 4);
-
         var hand = Timepicker._createSVGEl('line');
-
         hand.setAttribute('x1', 0);
         hand.setAttribute('y1', 0);
-
         var bg = Timepicker._createSVGEl('circle');
-
         bg.setAttribute('class', 'timepicker-canvas-bg');
         bg.setAttribute('r', tickRadius);
         g.appendChild(hand);
         g.appendChild(bg);
         g.appendChild(bearing);
         svg.appendChild(g);
-
         this._canvas.appendChild(svg);
-
         this.hand = hand;
         this.bg = bg;
         this.bearing = bearing;
@@ -10498,8 +9551,8 @@ var $jscomp$this = this;
     }, {
       key: "_buildHoursView",
       value: function _buildHoursView() {
-        var $tick = $('<div class="timepicker-tick"></div>'); // Hours view
-
+        var $tick = $('<div class="timepicker-tick"></div>');
+        // Hours view
         if (this.options.twelveHour) {
           for (var i = 1; i < 13; i += 1) {
             var tick = $tick.clone();
@@ -10510,34 +9563,30 @@ var $jscomp$this = this;
               top: this.options.dialRadius - Math.cos(radian) * radius - this.options.tickRadius + 'px'
             });
             tick.html(i === 0 ? '00' : i);
-            this.hoursView.appendChild(tick[0]); // tick.on(mousedownEvent, mousedown);
+            this.hoursView.appendChild(tick[0]);
+            // tick.on(mousedownEvent, mousedown);
           }
         } else {
           for (var _i2 = 0; _i2 < 24; _i2 += 1) {
             var _tick = $tick.clone();
-
             var _radian = _i2 / 6 * Math.PI;
-
             var inner = _i2 > 0 && _i2 < 13;
-
             var _radius = inner ? this.options.innerRadius : this.options.outerRadius;
-
             _tick.css({
               left: this.options.dialRadius + Math.sin(_radian) * _radius - this.options.tickRadius + 'px',
               top: this.options.dialRadius - Math.cos(_radian) * _radius - this.options.tickRadius + 'px'
             });
-
             _tick.html(_i2 === 0 ? '00' : _i2);
-
-            this.hoursView.appendChild(_tick[0]); // tick.on(mousedownEvent, mousedown);
+            this.hoursView.appendChild(_tick[0]);
+            // tick.on(mousedownEvent, mousedown);
           }
         }
       }
     }, {
       key: "_buildMinutesView",
       value: function _buildMinutesView() {
-        var $tick = $('<div class="timepicker-tick"></div>'); // Minutes view
-
+        var $tick = $('<div class="timepicker-tick"></div>');
+        // Minutes view
         for (var i = 0; i < 60; i += 5) {
           var tick = $tick.clone();
           var radian = i / 30 * Math.PI;
@@ -10554,7 +9603,6 @@ var $jscomp$this = this;
       value: function _handleAmPmClick(e) {
         var $btnClicked = $(e.target);
         this.amOrPm = $btnClicked.hasClass('am-btn') ? 'AM' : 'PM';
-
         this._updateAmPmView();
       }
     }, {
@@ -10570,51 +9618,48 @@ var $jscomp$this = this;
       value: function _updateTimeFromInput() {
         // Get the time
         var value = ((this.el.value || this.options.defaultTime || '') + '').split(':');
-
         if (this.options.twelveHour && !(typeof value[1] === 'undefined')) {
           if (value[1].toUpperCase().indexOf('AM') > 0) {
             this.amOrPm = 'AM';
           } else {
             this.amOrPm = 'PM';
           }
-
           value[1] = value[1].replace('AM', '').replace('PM', '');
         }
-
         if (value[0] === 'now') {
           var now = new Date(+new Date() + this.options.fromNow);
           value = [now.getHours(), now.getMinutes()];
-
           if (this.options.twelveHour) {
             this.amOrPm = value[0] >= 12 && value[0] < 24 ? 'PM' : 'AM';
           }
         }
-
         this.hours = +value[0] || 0;
         this.minutes = +value[1] || 0;
         this.spanHours.innerHTML = this.hours;
         this.spanMinutes.innerHTML = Timepicker._addLeadingZero(this.minutes);
-
         this._updateAmPmView();
       }
     }, {
       key: "showView",
       value: function showView(view, delay) {
-        if (view === 'minutes' && $(this.hoursView).css('visibility') === 'visible') {// raiseCallback(this.options.beforeHourSelect);
+        if (view === 'minutes' && $(this.hoursView).css('visibility') === 'visible') {
+          // raiseCallback(this.options.beforeHourSelect);
         }
-
         var isHours = view === 'hours',
-            nextView = isHours ? this.hoursView : this.minutesView,
-            hideView = isHours ? this.minutesView : this.hoursView;
+          nextView = isHours ? this.hoursView : this.minutesView,
+          hideView = isHours ? this.minutesView : this.hoursView;
         this.currentView = view;
         $(this.spanHours).toggleClass('text-primary', isHours);
-        $(this.spanMinutes).toggleClass('text-primary', !isHours); // Transition view
+        $(this.spanMinutes).toggleClass('text-primary', !isHours);
 
+        // Transition view
         hideView.classList.add('timepicker-dial-out');
-        $(nextView).css('visibility', 'visible').removeClass('timepicker-dial-out'); // Reset clock hand
+        $(nextView).css('visibility', 'visible').removeClass('timepicker-dial-out');
 
-        this.resetClock(delay); // After transitions ended
+        // Reset clock hand
+        this.resetClock(delay);
 
+        // After transitions ended
         clearTimeout(this.toggleViewTimer);
         this.toggleViewTimer = setTimeout(function () {
           $(hideView).css('visibility', 'hidden');
@@ -10624,15 +9669,14 @@ var $jscomp$this = this;
       key: "resetClock",
       value: function resetClock(delay) {
         var view = this.currentView,
-            value = this[view],
-            isHours = view === 'hours',
-            unit = Math.PI / (isHours ? 6 : 30),
-            radian = value * unit,
-            radius = isHours && value > 0 && value < 13 ? this.options.innerRadius : this.options.outerRadius,
-            x = Math.sin(radian) * radius,
-            y = -Math.cos(radian) * radius,
-            self = this;
-
+          value = this[view],
+          isHours = view === 'hours',
+          unit = Math.PI / (isHours ? 6 : 30),
+          radian = value * unit,
+          radius = isHours && value > 0 && value < 13 ? this.options.innerRadius : this.options.outerRadius,
+          x = Math.sin(radian) * radius,
+          y = -Math.cos(radian) * radius,
+          self = this;
         if (delay) {
           $(this.canvas).addClass('timepicker-canvas-out');
           setTimeout(function () {
@@ -10647,28 +9691,28 @@ var $jscomp$this = this;
       key: "setHand",
       value: function setHand(x, y, roundBy5) {
         var _this60 = this;
-
         var radian = Math.atan2(x, -y),
-            isHours = this.currentView === 'hours',
-            unit = Math.PI / (isHours || roundBy5 ? 6 : 30),
-            z = Math.sqrt(x * x + y * y),
-            inner = isHours && z < (this.options.outerRadius + this.options.innerRadius) / 2,
-            radius = inner ? this.options.innerRadius : this.options.outerRadius;
-
+          isHours = this.currentView === 'hours',
+          unit = Math.PI / (isHours || roundBy5 ? 6 : 30),
+          z = Math.sqrt(x * x + y * y),
+          inner = isHours && z < (this.options.outerRadius + this.options.innerRadius) / 2,
+          radius = inner ? this.options.innerRadius : this.options.outerRadius;
         if (this.options.twelveHour) {
           radius = this.options.outerRadius;
-        } // Radian should in range [0, 2PI]
+        }
 
-
+        // Radian should in range [0, 2PI]
         if (radian < 0) {
           radian = Math.PI * 2 + radian;
-        } // Get the round value
+        }
 
+        // Get the round value
+        var value = Math.round(radian / unit);
 
-        var value = Math.round(radian / unit); // Get the round radian
+        // Get the round radian
+        radian = value * unit;
 
-        radian = value * unit; // Correct the hours or minutes
-
+        // Correct the hours or minutes
         if (this.options.twelveHour) {
           if (isHours) {
             if (value === 0) value = 12;
@@ -10681,20 +9725,18 @@ var $jscomp$this = this;
             if (value === 12) {
               value = 0;
             }
-
             value = inner ? value === 0 ? 12 : value : value === 0 ? 0 : value + 12;
           } else {
             if (roundBy5) {
               value *= 5;
             }
-
             if (value === 60) {
               value = 0;
             }
           }
-        } // Once hours or minutes changed, vibrate the device
+        }
 
-
+        // Once hours or minutes changed, vibrate the device
         if (this[this.currentView] !== value) {
           if (this.vibrate && this.options.vibrate) {
             // Do not vibrate too frequently
@@ -10706,20 +9748,18 @@ var $jscomp$this = this;
             }
           }
         }
-
         this[this.currentView] = value;
-
         if (isHours) {
           this['spanHours'].innerHTML = value;
         } else {
           this['spanMinutes'].innerHTML = Timepicker._addLeadingZero(value);
-        } // Set clock hand and others' position
+        }
 
-
+        // Set clock hand and others' position
         var cx1 = Math.sin(radian) * (radius - this.options.tickRadius),
-            cy1 = -Math.cos(radian) * (radius - this.options.tickRadius),
-            cx2 = Math.sin(radian) * radius,
-            cy2 = -Math.cos(radian) * radius;
+          cy1 = -Math.cos(radian) * (radius - this.options.tickRadius),
+          cx2 = Math.sin(radian) * radius,
+          cy2 = -Math.cos(radian) * radius;
         this.hand.setAttribute('x2', cx1);
         this.hand.setAttribute('y2', cy1);
         this.bg.setAttribute('cx', cx2);
@@ -10731,11 +9771,8 @@ var $jscomp$this = this;
         if (this.isOpen) {
           return;
         }
-
         this.isOpen = true;
-
         this._updateTimeFromInput();
-
         this.showView('hours');
         this.modal.open();
       }
@@ -10745,14 +9782,13 @@ var $jscomp$this = this;
         if (!this.isOpen) {
           return;
         }
-
         this.isOpen = false;
         this.modal.close();
       }
+
       /**
        * Finish timepicker selection.
        */
-
     }, {
       key: "done",
       value: function done(e, clearValue) {
@@ -10760,17 +9796,15 @@ var $jscomp$this = this;
         var last = this.el.value;
         var value = clearValue ? '' : Timepicker._addLeadingZero(this.hours) + ':' + Timepicker._addLeadingZero(this.minutes);
         this.time = value;
-
         if (!clearValue && this.options.twelveHour) {
           value = value + " " + this.amOrPm;
         }
+        this.el.value = value;
 
-        this.el.value = value; // Trigger change event
-
+        // Trigger change event
         if (value !== last) {
           this.$el.trigger('change');
         }
-
         this.close();
         this.el.focus();
       }
@@ -10795,6 +9829,7 @@ var $jscomp$this = this;
         var svgNS = 'http://www.w3.org/2000/svg';
         return document.createElementNS(svgNS, name);
       }
+
       /**
        * @typedef {Object} Point
        * @property {number} x The X Coordinate
@@ -10806,7 +9841,6 @@ var $jscomp$this = this;
        * @param {Event} e
        * @return {Point} x and y location
        */
-
     }, {
       key: "_Pos",
       value: function _Pos(e) {
@@ -10815,18 +9849,17 @@ var $jscomp$this = this;
             x: e.targetTouches[0].clientX,
             y: e.targetTouches[0].clientY
           };
-        } // mouse event
-
-
+        }
+        // mouse event
         return {
           x: e.clientX,
           y: e.clientY
         };
       }
+
       /**
        * Get Instance
        */
-
     }, {
       key: "getInstance",
       value: function getInstance(el) {
@@ -10839,24 +9872,20 @@ var $jscomp$this = this;
         return _defaults;
       }
     }]);
-
     return Timepicker;
   }(Component);
-
   Timepicker._template = ['<div class= "modal timepicker-modal">', '<div class="modal-content timepicker-container">', '<div class="timepicker-digital-display">', '<div class="timepicker-text-container">', '<div class="timepicker-display-column">', '<span class="timepicker-span-hours text-primary"></span>', ':', '<span class="timepicker-span-minutes"></span>', '</div>', '<div class="timepicker-display-column timepicker-display-am-pm">', '<div class="timepicker-span-am-pm"></div>', '</div>', '</div>', '</div>', '<div class="timepicker-analog-display">', '<div class="timepicker-plate">', '<div class="timepicker-canvas"></div>', '<div class="timepicker-dial timepicker-hours"></div>', '<div class="timepicker-dial timepicker-minutes timepicker-dial-out"></div>', '</div>', '<div class="timepicker-footer"></div>', '</div>', '</div>', '</div>'].join('');
   M.Timepicker = Timepicker;
-
   if (M.jQueryLoaded) {
     M.initializeJqueryWrapper(Timepicker, 'timepicker', 'M_Timepicker');
   }
 })(cash);
-
 ;
-
 (function ($) {
   'use strict';
 
   var _defaults = {};
+
   /**
    * @class
    *
@@ -10864,52 +9893,42 @@ var $jscomp$this = this;
 
   var CharacterCounter = function (_Component17) {
     _inherits(CharacterCounter, _Component17);
+
     /**
      * Construct CharacterCounter instance
      * @constructor
      * @param {Element} el
      * @param {Object} options
      */
-
-
     function CharacterCounter(el, options) {
       _classCallCheck(this, CharacterCounter);
-
       var _this61 = _possibleConstructorReturn(this, (CharacterCounter.__proto__ || Object.getPrototypeOf(CharacterCounter)).call(this, CharacterCounter, el, options));
-
       _this61.el.M_CharacterCounter = _this61;
+
       /**
        * Options for the character counter
        */
-
       _this61.options = $.extend({}, CharacterCounter.defaults, options);
       _this61.isInvalid = false;
       _this61.isValidLength = false;
-
       _this61._setupCounter();
-
       _this61._setupEventHandlers();
-
       return _this61;
     }
-
     _createClass(CharacterCounter, [{
       key: "destroy",
-
       /**
        * Teardown component
        */
       value: function destroy() {
         this._removeEventHandlers();
-
         this.el.CharacterCounter = undefined;
-
         this._removeCounter();
       }
+
       /**
        * Setup Event Handlers
        */
-
     }, {
       key: "_setupEventHandlers",
       value: function _setupEventHandlers() {
@@ -10917,20 +9936,20 @@ var $jscomp$this = this;
         this.el.addEventListener('focus', this._handleUpdateCounterBound, true);
         this.el.addEventListener('input', this._handleUpdateCounterBound, true);
       }
+
       /**
        * Remove Event Handlers
        */
-
     }, {
       key: "_removeEventHandlers",
       value: function _removeEventHandlers() {
         this.el.removeEventListener('focus', this._handleUpdateCounterBound, true);
         this.el.removeEventListener('input', this._handleUpdateCounterBound, true);
       }
+
       /**
        * Setup counter element
        */
-
     }, {
       key: "_setupCounter",
       value: function _setupCounter() {
@@ -10942,39 +9961,36 @@ var $jscomp$this = this;
         });
         this.$el.parent().append(this.counterEl);
       }
+
       /**
        * Remove counter element
        */
-
     }, {
       key: "_removeCounter",
       value: function _removeCounter() {
         $(this.counterEl).remove();
       }
+
       /**
        * Update counter
        */
-
     }, {
       key: "updateCounter",
       value: function updateCounter() {
         var maxLength = +this.$el.attr('data-length'),
-            actualLength = this.el.value.length;
+          actualLength = this.el.value.length;
         this.isValidLength = actualLength <= maxLength;
         var counterString = actualLength;
-
         if (maxLength) {
           counterString += '/' + maxLength;
-
           this._validateInput();
         }
-
         $(this.counterEl).html(counterString);
       }
+
       /**
        * Add validation classes
        */
-
     }, {
       key: "_validateInput",
       value: function _validateInput() {
@@ -10992,10 +10008,10 @@ var $jscomp$this = this;
       value: function init(els, options) {
         return _get(CharacterCounter.__proto__ || Object.getPrototypeOf(CharacterCounter), "init", this).call(this, this, els, options);
       }
+
       /**
        * Get Instance
        */
-
     }, {
       key: "getInstance",
       value: function getInstance(el) {
@@ -11008,19 +10024,14 @@ var $jscomp$this = this;
         return _defaults;
       }
     }]);
-
     return CharacterCounter;
   }(Component);
-
   M.CharacterCounter = CharacterCounter;
-
   if (M.jQueryLoaded) {
     M.initializeJqueryWrapper(CharacterCounter, 'characterCounter', 'M_CharacterCounter');
   }
 })(cash);
-
 ;
-
 (function ($) {
   'use strict';
 
@@ -11042,8 +10053,8 @@ var $jscomp$this = this;
     noWrap: false,
     // Don't wrap around and cycle through items.
     onCycleTo: null // Callback for when a new slide is cycled to.
-
   };
+
   /**
    * @class
    *
@@ -11051,20 +10062,18 @@ var $jscomp$this = this;
 
   var Carousel = function (_Component18) {
     _inherits(Carousel, _Component18);
+
     /**
      * Construct Carousel instance
      * @constructor
      * @param {Element} el
      * @param {Object} options
      */
-
-
     function Carousel(el, options) {
       _classCallCheck(this, Carousel);
-
       var _this62 = _possibleConstructorReturn(this, (Carousel.__proto__ || Object.getPrototypeOf(Carousel)).call(this, Carousel, el, options));
-
       _this62.el.M_Carousel = _this62;
+
       /**
        * Options for the carousel
        * @member Carousel#options
@@ -11078,9 +10087,9 @@ var $jscomp$this = this;
        * @prop {Boolean} noWrap
        * @prop {Function} onCycleTo
        */
+      _this62.options = $.extend({}, Carousel.defaults, options);
 
-      _this62.options = $.extend({}, Carousel.defaults, options); // Setup
-
+      // Setup
       _this62.hasMultipleSlides = _this62.$el.find('.carousel-item').length > 1;
       _this62.showIndicators = _this62.options.indicators && _this62.hasMultipleSlides;
       _this62.noWrap = _this62.options.noWrap || !_this62.hasMultipleSlides;
@@ -11091,148 +10100,129 @@ var $jscomp$this = this;
       _this62.itemWidth = _this62.$el.find('.carousel-item').first().innerWidth();
       _this62.itemHeight = _this62.$el.find('.carousel-item').first().innerHeight();
       _this62.dim = _this62.itemWidth * 2 + _this62.options.padding || 1; // Make sure dim is non zero for divisions.
-
       _this62._autoScrollBound = _this62._autoScroll.bind(_this62);
-      _this62._trackBound = _this62._track.bind(_this62); // Full Width carousel setup
+      _this62._trackBound = _this62._track.bind(_this62);
 
+      // Full Width carousel setup
       if (_this62.options.fullWidth) {
         _this62.options.dist = 0;
+        _this62._setCarouselHeight();
 
-        _this62._setCarouselHeight(); // Offset fixed items when indicators.
-
-
+        // Offset fixed items when indicators.
         if (_this62.showIndicators) {
           _this62.$el.find('.carousel-fixed-item').addClass('with-indicators');
         }
-      } // Iterate through slides
+      }
 
-
+      // Iterate through slides
       _this62.$indicators = $('<ul class="indicators"></ul>');
-
       _this62.$el.find('.carousel-item').each(function (el, i) {
         _this62.images.push(el);
-
         if (_this62.showIndicators) {
-          var $indicator = $('<li class="indicator-item"></li>'); // Add active to first by default.
+          var $indicator = $('<li class="indicator-item"></li>');
 
+          // Add active to first by default.
           if (i === 0) {
             $indicator[0].classList.add('active');
           }
-
           _this62.$indicators.append($indicator);
         }
       });
-
       if (_this62.showIndicators) {
         _this62.$el.append(_this62.$indicators);
       }
+      _this62.count = _this62.images.length;
 
-      _this62.count = _this62.images.length; // Cap numVisible at count
+      // Cap numVisible at count
+      _this62.options.numVisible = Math.min(_this62.count, _this62.options.numVisible);
 
-      _this62.options.numVisible = Math.min(_this62.count, _this62.options.numVisible); // Setup cross browser string
-
+      // Setup cross browser string
       _this62.xform = 'transform';
       ['webkit', 'Moz', 'O', 'ms'].every(function (prefix) {
         var e = prefix + 'Transform';
-
         if (typeof document.body.style[e] !== 'undefined') {
           _this62.xform = e;
           return false;
         }
-
         return true;
       });
-
       _this62._setupEventHandlers();
-
       _this62._scroll(_this62.offset);
-
       return _this62;
     }
-
     _createClass(Carousel, [{
       key: "destroy",
-
       /**
        * Teardown component
        */
       value: function destroy() {
         this._removeEventHandlers();
-
         this.el.M_Carousel = undefined;
       }
+
       /**
        * Setup Event Handlers
        */
-
     }, {
       key: "_setupEventHandlers",
       value: function _setupEventHandlers() {
         var _this63 = this;
-
         this._handleCarouselTapBound = this._handleCarouselTap.bind(this);
         this._handleCarouselDragBound = this._handleCarouselDrag.bind(this);
         this._handleCarouselReleaseBound = this._handleCarouselRelease.bind(this);
         this._handleCarouselClickBound = this._handleCarouselClick.bind(this);
-
         if (typeof window.ontouchstart !== 'undefined') {
           this.el.addEventListener('touchstart', this._handleCarouselTapBound);
           this.el.addEventListener('touchmove', this._handleCarouselDragBound);
           this.el.addEventListener('touchend', this._handleCarouselReleaseBound);
         }
-
         this.el.addEventListener('mousedown', this._handleCarouselTapBound);
         this.el.addEventListener('mousemove', this._handleCarouselDragBound);
         this.el.addEventListener('mouseup', this._handleCarouselReleaseBound);
         this.el.addEventListener('mouseleave', this._handleCarouselReleaseBound);
         this.el.addEventListener('click', this._handleCarouselClickBound);
-
         if (this.showIndicators && this.$indicators) {
           this._handleIndicatorClickBound = this._handleIndicatorClick.bind(this);
           this.$indicators.find('.indicator-item').each(function (el, i) {
             el.addEventListener('click', _this63._handleIndicatorClickBound);
           });
-        } // Resize
+        }
 
-
+        // Resize
         var throttledResize = M.throttle(this._handleResize, 200);
         this._handleThrottledResizeBound = throttledResize.bind(this);
         window.addEventListener('resize', this._handleThrottledResizeBound);
       }
+
       /**
        * Remove Event Handlers
        */
-
     }, {
       key: "_removeEventHandlers",
       value: function _removeEventHandlers() {
         var _this64 = this;
-
         if (typeof window.ontouchstart !== 'undefined') {
           this.el.removeEventListener('touchstart', this._handleCarouselTapBound);
           this.el.removeEventListener('touchmove', this._handleCarouselDragBound);
           this.el.removeEventListener('touchend', this._handleCarouselReleaseBound);
         }
-
         this.el.removeEventListener('mousedown', this._handleCarouselTapBound);
         this.el.removeEventListener('mousemove', this._handleCarouselDragBound);
         this.el.removeEventListener('mouseup', this._handleCarouselReleaseBound);
         this.el.removeEventListener('mouseleave', this._handleCarouselReleaseBound);
         this.el.removeEventListener('click', this._handleCarouselClickBound);
-
         if (this.showIndicators && this.$indicators) {
           this.$indicators.find('.indicator-item').each(function (el, i) {
             el.removeEventListener('click', _this64._handleIndicatorClickBound);
           });
         }
-
         window.removeEventListener('resize', this._handleThrottledResizeBound);
       }
+
       /**
        * Handle Carousel Tap
        * @param {Event} e
        */
-
     }, {
       key: "_handleCarouselTap",
       value: function _handleCarouselTap(e) {
@@ -11240,7 +10230,6 @@ var $jscomp$this = this;
         if (e.type === 'mousedown' && $(e.target).is('img')) {
           e.preventDefault();
         }
-
         this.pressed = true;
         this.dragged = false;
         this.verticalDragged = false;
@@ -11252,31 +10241,28 @@ var $jscomp$this = this;
         clearInterval(this.ticker);
         this.ticker = setInterval(this._trackBound, 100);
       }
+
       /**
        * Handle Carousel Drag
        * @param {Event} e
        */
-
     }, {
       key: "_handleCarouselDrag",
       value: function _handleCarouselDrag(e) {
         var x = void 0,
-            y = void 0,
-            delta = void 0,
-            deltaY = void 0;
-
+          y = void 0,
+          delta = void 0,
+          deltaY = void 0;
         if (this.pressed) {
           x = this._xpos(e);
           y = this._ypos(e);
           delta = this.reference - x;
           deltaY = Math.abs(this.referenceY - y);
-
           if (deltaY < 30 && !this.verticalDragged) {
             // If vertical scrolling don't allow dragging.
             if (delta > 2 || delta < -2) {
               this.dragged = true;
               this.reference = x;
-
               this._scroll(this.offset + delta);
             }
           } else if (this.dragged) {
@@ -11289,7 +10275,6 @@ var $jscomp$this = this;
             this.verticalDragged = true;
           }
         }
-
         if (this.dragged) {
           // If dragging don't allow vertical scroll.
           e.preventDefault();
@@ -11297,11 +10282,11 @@ var $jscomp$this = this;
           return false;
         }
       }
+
       /**
        * Handle Carousel Release
        * @param {Event} e
        */
-
     }, {
       key: "_handleCarouselRelease",
       value: function _handleCarouselRelease(e) {
@@ -11310,17 +10295,15 @@ var $jscomp$this = this;
         } else {
           return;
         }
-
         clearInterval(this.ticker);
         this.target = this.offset;
-
         if (this.velocity > 10 || this.velocity < -10) {
           this.amplitude = 0.9 * this.velocity;
           this.target = this.offset + this.amplitude;
         }
+        this.target = Math.round(this.target / this.dim) * this.dim;
 
-        this.target = Math.round(this.target / this.dim) * this.dim; // No wrap of items.
-
+        // No wrap of items.
         if (this.noWrap) {
           if (this.target >= this.dim * (this.count - 1)) {
             this.target = this.dim * (this.count - 1);
@@ -11328,23 +10311,20 @@ var $jscomp$this = this;
             this.target = 0;
           }
         }
-
         this.amplitude = this.target - this.offset;
         this.timestamp = Date.now();
         requestAnimationFrame(this._autoScrollBound);
-
         if (this.dragged) {
           e.preventDefault();
           e.stopPropagation();
         }
-
         return false;
       }
+
       /**
        * Handle Carousel CLick
        * @param {Event} e
        */
-
     }, {
       key: "_handleCarouselClick",
       value: function _handleCarouselClick(e) {
@@ -11355,36 +10335,35 @@ var $jscomp$this = this;
           return false;
         } else if (!this.options.fullWidth) {
           var clickedIndex = $(e.target).closest('.carousel-item').index();
-          var diff = this._wrap(this.center) - clickedIndex; // Disable clicks if carousel was shifted by click
+          var diff = this._wrap(this.center) - clickedIndex;
 
+          // Disable clicks if carousel was shifted by click
           if (diff !== 0) {
             e.preventDefault();
             e.stopPropagation();
           }
-
           this._cycleTo(clickedIndex);
         }
       }
+
       /**
        * Handle Indicator CLick
        * @param {Event} e
        */
-
     }, {
       key: "_handleIndicatorClick",
       value: function _handleIndicatorClick(e) {
         e.stopPropagation();
         var indicator = $(e.target).closest('.indicator-item');
-
         if (indicator.length) {
           this._cycleTo(indicator.index());
         }
       }
+
       /**
        * Handle Throttle Resize
        * @param {Event} e
        */
-
     }, {
       key: "_handleResize",
       value: function _handleResize(e) {
@@ -11394,30 +10373,26 @@ var $jscomp$this = this;
           this.dim = this.itemWidth * 2 + this.options.padding;
           this.offset = this.center * 2 * this.itemWidth;
           this.target = this.offset;
-
           this._setCarouselHeight(true);
         } else {
           this._scroll();
         }
       }
+
       /**
        * Set carousel height based on first slide
        * @param {Booleam} imageOnly - true for image slides
        */
-
     }, {
       key: "_setCarouselHeight",
       value: function _setCarouselHeight(imageOnly) {
         var _this65 = this;
-
         var firstSlide = this.$el.find('.carousel-item.active').length ? this.$el.find('.carousel-item.active').first() : this.$el.find('.carousel-item').first();
         var firstImage = firstSlide.find('img').first();
-
         if (firstImage.length) {
           if (firstImage[0].complete) {
             // If image won't trigger the load event
             var imageHeight = firstImage.height();
-
             if (imageHeight > 0) {
               this.$el.css('height', imageHeight + 'px');
             } else {
@@ -11438,59 +10413,59 @@ var $jscomp$this = this;
           this.$el.css('height', slideHeight + 'px');
         }
       }
+
       /**
        * Get x position from event
        * @param {Event} e
        */
-
     }, {
       key: "_xpos",
       value: function _xpos(e) {
         // touch event
         if (e.targetTouches && e.targetTouches.length >= 1) {
           return e.targetTouches[0].clientX;
-        } // mouse event
+        }
 
-
+        // mouse event
         return e.clientX;
       }
+
       /**
        * Get y position from event
        * @param {Event} e
        */
-
     }, {
       key: "_ypos",
       value: function _ypos(e) {
         // touch event
         if (e.targetTouches && e.targetTouches.length >= 1) {
           return e.targetTouches[0].clientY;
-        } // mouse event
+        }
 
-
+        // mouse event
         return e.clientY;
       }
+
       /**
        * Wrap index
        * @param {Number} x
        */
-
     }, {
       key: "_wrap",
       value: function _wrap(x) {
         return x >= this.count ? x % this.count : x < 0 ? this._wrap(this.count + x % this.count) : x;
       }
+
       /**
        * Tracks scrolling information
        */
-
     }, {
       key: "_track",
       value: function _track() {
         var now = void 0,
-            elapsed = void 0,
-            delta = void 0,
-            v = void 0;
+          elapsed = void 0,
+          delta = void 0,
+          v = void 0;
         now = Date.now();
         elapsed = now - this.timestamp;
         this.timestamp = now;
@@ -11499,62 +10474,58 @@ var $jscomp$this = this;
         v = 1000 * delta / (1 + elapsed);
         this.velocity = 0.8 * v + 0.2 * this.velocity;
       }
+
       /**
        * Auto scrolls to nearest carousel item.
        */
-
     }, {
       key: "_autoScroll",
       value: function _autoScroll() {
         var elapsed = void 0,
-            delta = void 0;
-
+          delta = void 0;
         if (this.amplitude) {
           elapsed = Date.now() - this.timestamp;
           delta = this.amplitude * Math.exp(-elapsed / this.options.duration);
-
           if (delta > 2 || delta < -2) {
             this._scroll(this.target - delta);
-
             requestAnimationFrame(this._autoScrollBound);
           } else {
             this._scroll(this.target);
           }
         }
       }
+
       /**
        * Scroll to target
        * @param {Number} x
        */
-
     }, {
       key: "_scroll",
       value: function _scroll(x) {
-        var _this66 = this; // Track scrolling state
+        var _this66 = this;
 
-
+        // Track scrolling state
         if (!this.$el.hasClass('scrolling')) {
           this.el.classList.add('scrolling');
         }
-
         if (this.scrollingTimeout != null) {
           window.clearTimeout(this.scrollingTimeout);
         }
-
         this.scrollingTimeout = window.setTimeout(function () {
           _this66.$el.removeClass('scrolling');
-        }, this.options.duration); // Start actual scroll
+        }, this.options.duration);
 
+        // Start actual scroll
         var i = void 0,
-            half = void 0,
-            delta = void 0,
-            dir = void 0,
-            tween = void 0,
-            el = void 0,
-            alignment = void 0,
-            zTranslation = void 0,
-            tweenedOpacity = void 0,
-            centerTweenedOpacity = void 0;
+          half = void 0,
+          delta = void 0,
+          dir = void 0,
+          tween = void 0,
+          el = void 0,
+          alignment = void 0,
+          zTranslation = void 0,
+          tweenedOpacity = void 0,
+          centerTweenedOpacity = void 0;
         var lastCenter = this.center;
         var numVisibleOffset = 1 / this.options.numVisible;
         this.offset = typeof x === 'number' ? x : this.offset;
@@ -11563,7 +10534,6 @@ var $jscomp$this = this;
         dir = delta < 0 ? 1 : -1;
         tween = -dir * delta * 2 / this.dim;
         half = this.count >> 1;
-
         if (this.options.fullWidth) {
           alignment = 'translateX(0)';
           centerTweenedOpacity = 1;
@@ -11571,34 +10541,31 @@ var $jscomp$this = this;
           alignment = 'translateX(' + (this.el.clientWidth - this.itemWidth) / 2 + 'px) ';
           alignment += 'translateY(' + (this.el.clientHeight - this.itemHeight) / 2 + 'px)';
           centerTweenedOpacity = 1 - numVisibleOffset * tween;
-        } // Set indicator active
+        }
 
-
+        // Set indicator active
         if (this.showIndicators) {
           var diff = this.center % this.count;
           var activeIndicator = this.$indicators.find('.indicator-item.active');
-
           if (activeIndicator.index() !== diff) {
             activeIndicator.removeClass('active');
             this.$indicators.find('.indicator-item').eq(diff)[0].classList.add('active');
           }
-        } // center
+        }
+
+        // center
         // Don't show wrapped items.
-
-
         if (!this.noWrap || this.center >= 0 && this.center < this.count) {
-          el = this.images[this._wrap(this.center)]; // Add active class to center item.
+          el = this.images[this._wrap(this.center)];
 
+          // Add active class to center item.
           if (!$(el).hasClass('active')) {
             this.$el.find('.carousel-item').removeClass('active');
             el.classList.add('active');
           }
-
           var transformString = alignment + " translateX(" + -delta / 2 + "px) translateX(" + dir * this.options.shift * tween * i + "px) translateZ(" + this.options.dist * tween + "px)";
-
           this._updateItemStyle(el, centerTweenedOpacity, 0, transformString);
         }
-
         for (i = 1; i <= half; ++i) {
           // right side
           if (this.options.fullWidth) {
@@ -11607,59 +10574,51 @@ var $jscomp$this = this;
           } else {
             zTranslation = this.options.dist * (i * 2 + tween * dir);
             tweenedOpacity = 1 - numVisibleOffset * (i * 2 + tween * dir);
-          } // Don't show wrapped items.
-
-
+          }
+          // Don't show wrapped items.
           if (!this.noWrap || this.center + i < this.count) {
             el = this.images[this._wrap(this.center + i)];
-
             var _transformString = alignment + " translateX(" + (this.options.shift + (this.dim * i - delta) / 2) + "px) translateZ(" + zTranslation + "px)";
-
             this._updateItemStyle(el, tweenedOpacity, -i, _transformString);
-          } // left side
+          }
 
-
+          // left side
           if (this.options.fullWidth) {
             zTranslation = this.options.dist;
             tweenedOpacity = i === half && delta > 0 ? 1 - tween : 1;
           } else {
             zTranslation = this.options.dist * (i * 2 - tween * dir);
             tweenedOpacity = 1 - numVisibleOffset * (i * 2 - tween * dir);
-          } // Don't show wrapped items.
-
-
+          }
+          // Don't show wrapped items.
           if (!this.noWrap || this.center - i >= 0) {
             el = this.images[this._wrap(this.center - i)];
-
             var _transformString2 = alignment + " translateX(" + (-this.options.shift + (-this.dim * i - delta) / 2) + "px) translateZ(" + zTranslation + "px)";
-
             this._updateItemStyle(el, tweenedOpacity, -i, _transformString2);
           }
-        } // center
+        }
+
+        // center
         // Don't show wrapped items.
-
-
         if (!this.noWrap || this.center >= 0 && this.center < this.count) {
           el = this.images[this._wrap(this.center)];
-
           var _transformString3 = alignment + " translateX(" + -delta / 2 + "px) translateX(" + dir * this.options.shift * tween + "px) translateZ(" + this.options.dist * tween + "px)";
-
           this._updateItemStyle(el, centerTweenedOpacity, 0, _transformString3);
-        } // onCycleTo callback
+        }
 
-
+        // onCycleTo callback
         var $currItem = this.$el.find('.carousel-item').eq(this._wrap(this.center));
-
         if (lastCenter !== this.center && typeof this.options.onCycleTo === 'function') {
           this.options.onCycleTo.call(this, $currItem[0], this.dragged);
-        } // One time callback
+        }
 
-
+        // One time callback
         if (typeof this.oneTimeCallback === 'function') {
           this.oneTimeCallback.call(this, $currItem[0], this.dragged);
           this.oneTimeCallback = null;
         }
       }
+
       /**
        * Cycle to target
        * @param {Element} el
@@ -11667,7 +10626,6 @@ var $jscomp$this = this;
        * @param {Number} zIndex
        * @param {String} transform
        */
-
     }, {
       key: "_updateItemStyle",
       value: function _updateItemStyle(el, opacity, zIndex, transform) {
@@ -11676,17 +10634,18 @@ var $jscomp$this = this;
         el.style.opacity = opacity;
         el.style.visibility = 'visible';
       }
+
       /**
        * Cycle to target
        * @param {Number} n
        * @param {Function} callback
        */
-
     }, {
       key: "_cycleTo",
       value: function _cycleTo(n, callback) {
-        var diff = this.center % this.count - n; // Account for wraparound.
+        var diff = this.center % this.count - n;
 
+        // Account for wraparound.
         if (!this.noWrap) {
           if (diff < 0) {
             if (Math.abs(diff + this.count) < Math.abs(diff)) {
@@ -11698,96 +10657,86 @@ var $jscomp$this = this;
             }
           }
         }
-
-        this.target = this.dim * Math.round(this.offset / this.dim); // Next
-
+        this.target = this.dim * Math.round(this.offset / this.dim);
+        // Next
         if (diff < 0) {
-          this.target += this.dim * Math.abs(diff); // Prev
+          this.target += this.dim * Math.abs(diff);
+
+          // Prev
         } else if (diff > 0) {
           this.target -= this.dim * diff;
-        } // Set one time callback
+        }
 
-
+        // Set one time callback
         if (typeof callback === 'function') {
           this.oneTimeCallback = callback;
-        } // Scroll
+        }
 
-
+        // Scroll
         if (this.offset !== this.target) {
           this.amplitude = this.target - this.offset;
           this.timestamp = Date.now();
           requestAnimationFrame(this._autoScrollBound);
         }
       }
+
       /**
        * Cycle to next item
        * @param {Number} [n]
        */
-
     }, {
       key: "next",
       value: function next(n) {
         if (n === undefined || isNaN(n)) {
           n = 1;
         }
-
         var index = this.center + n;
-
         if (index >= this.count || index < 0) {
           if (this.noWrap) {
             return;
           }
-
           index = this._wrap(index);
         }
-
         this._cycleTo(index);
       }
+
       /**
        * Cycle to previous item
        * @param {Number} [n]
        */
-
     }, {
       key: "prev",
       value: function prev(n) {
         if (n === undefined || isNaN(n)) {
           n = 1;
         }
-
         var index = this.center - n;
-
         if (index >= this.count || index < 0) {
           if (this.noWrap) {
             return;
           }
-
           index = this._wrap(index);
         }
-
         this._cycleTo(index);
       }
+
       /**
        * Cycle to nth item
        * @param {Number} [n]
        * @param {Function} callback
        */
-
     }, {
       key: "set",
       value: function set(n, callback) {
         if (n === undefined || isNaN(n)) {
           n = 0;
         }
-
         if (n > this.count || n < 0) {
           if (this.noWrap) {
             return;
           }
-
           n = this._wrap(n);
         }
-
         this._cycleTo(n, callback);
       }
     }], [{
@@ -11795,10 +10744,10 @@ var $jscomp$this = this;
       value: function init(els, options) {
         return _get(Carousel.__proto__ || Object.getPrototypeOf(Carousel), "init", this).call(this, this, els, options);
       }
+
       /**
        * Get Instance
        */
-
     }, {
       key: "getInstance",
       value: function getInstance(el) {
@@ -11811,19 +10760,14 @@ var $jscomp$this = this;
         return _defaults;
       }
     }]);
-
     return Carousel;
   }(Component);
-
   M.Carousel = Carousel;
-
   if (M.jQueryLoaded) {
     M.initializeJqueryWrapper(Carousel, 'carousel', 'M_Carousel');
   }
 })(cash);
-
 ;
-
 (function ($) {
   'use strict';
 
@@ -11831,6 +10775,7 @@ var $jscomp$this = this;
     onOpen: undefined,
     onClose: undefined
   };
+
   /**
    * @class
    *
@@ -11838,56 +10783,47 @@ var $jscomp$this = this;
 
   var TapTarget = function (_Component19) {
     _inherits(TapTarget, _Component19);
+
     /**
      * Construct TapTarget instance
      * @constructor
      * @param {Element} el
      * @param {Object} options
      */
-
-
     function TapTarget(el, options) {
       _classCallCheck(this, TapTarget);
-
       var _this67 = _possibleConstructorReturn(this, (TapTarget.__proto__ || Object.getPrototypeOf(TapTarget)).call(this, TapTarget, el, options));
-
       _this67.el.M_TapTarget = _this67;
+
       /**
        * Options for the select
        * @member TapTarget#options
        * @prop {Function} onOpen - Callback function called when feature discovery is opened
        * @prop {Function} onClose - Callback function called when feature discovery is closed
        */
-
       _this67.options = $.extend({}, TapTarget.defaults, options);
-      _this67.isOpen = false; // setup
+      _this67.isOpen = false;
 
+      // setup
       _this67.$origin = $('#' + _this67.$el.attr('data-target'));
-
       _this67._setup();
-
       _this67._calculatePositioning();
-
       _this67._setupEventHandlers();
-
       return _this67;
     }
-
     _createClass(TapTarget, [{
       key: "destroy",
-
       /**
        * Teardown component
        */
       value: function destroy() {
         this._removeEventHandlers();
-
         this.el.TapTarget = undefined;
       }
+
       /**
        * Setup Event Handlers
        */
-
     }, {
       key: "_setupEventHandlers",
       value: function _setupEventHandlers() {
@@ -11895,16 +10831,17 @@ var $jscomp$this = this;
         this._handleTargetClickBound = this._handleTargetClick.bind(this);
         this._handleOriginClickBound = this._handleOriginClick.bind(this);
         this.el.addEventListener('click', this._handleTargetClickBound);
-        this.originEl.addEventListener('click', this._handleOriginClickBound); // Resize
+        this.originEl.addEventListener('click', this._handleOriginClickBound);
 
+        // Resize
         var throttledResize = M.throttle(this._handleResize, 200);
         this._handleThrottledResizeBound = throttledResize.bind(this);
         window.addEventListener('resize', this._handleThrottledResizeBound);
       }
+
       /**
        * Remove Event Handlers
        */
-
     }, {
       key: "_removeEventHandlers",
       value: function _removeEventHandlers() {
@@ -11912,41 +10849,41 @@ var $jscomp$this = this;
         this.originEl.removeEventListener('click', this._handleOriginClickBound);
         window.removeEventListener('resize', this._handleThrottledResizeBound);
       }
+
       /**
        * Handle Target Click
        * @param {Event} e
        */
-
     }, {
       key: "_handleTargetClick",
       value: function _handleTargetClick(e) {
         this.open();
       }
+
       /**
        * Handle Origin Click
        * @param {Event} e
        */
-
     }, {
       key: "_handleOriginClick",
       value: function _handleOriginClick(e) {
         this.close();
       }
+
       /**
        * Handle Resize
        * @param {Event} e
        */
-
     }, {
       key: "_handleResize",
       value: function _handleResize(e) {
         this._calculatePositioning();
       }
+
       /**
        * Handle Resize
        * @param {Event} e
        */
-
     }, {
       key: "_handleDocumentClick",
       value: function _handleDocumentClick(e) {
@@ -11956,10 +10893,10 @@ var $jscomp$this = this;
           e.stopPropagation();
         }
       }
+
       /**
        * Setup Tap Target
        */
-
     }, {
       key: "_setup",
       value: function _setup() {
@@ -11967,27 +10904,29 @@ var $jscomp$this = this;
         this.wrapper = this.$el.parent()[0];
         this.waveEl = $(this.wrapper).find('.tap-target-wave')[0];
         this.originEl = $(this.wrapper).find('.tap-target-origin')[0];
-        this.contentEl = this.$el.find('.tap-target-content')[0]; // Creating wrapper
+        this.contentEl = this.$el.find('.tap-target-content')[0];
 
+        // Creating wrapper
         if (!$(this.wrapper).hasClass('.tap-target-wrapper')) {
           this.wrapper = document.createElement('div');
           this.wrapper.classList.add('tap-target-wrapper');
           this.$el.before($(this.wrapper));
           this.wrapper.append(this.el);
-        } // Creating content
+        }
 
-
+        // Creating content
         if (!this.contentEl) {
           this.contentEl = document.createElement('div');
           this.contentEl.classList.add('tap-target-content');
           this.$el.append(this.contentEl);
-        } // Creating foreground wave
+        }
 
-
+        // Creating foreground wave
         if (!this.waveEl) {
           this.waveEl = document.createElement('div');
-          this.waveEl.classList.add('tap-target-wave'); // Creating origin
+          this.waveEl.classList.add('tap-target-wave');
 
+          // Creating origin
           if (!this.originEl) {
             this.originEl = this.$origin.clone(true, true);
             this.originEl.addClass('tap-target-origin');
@@ -11996,38 +10935,35 @@ var $jscomp$this = this;
             this.originEl = this.originEl[0];
             this.waveEl.append(this.originEl);
           }
-
           this.wrapper.append(this.waveEl);
         }
       }
+
       /**
        * Calculate positioning
        */
-
     }, {
       key: "_calculatePositioning",
       value: function _calculatePositioning() {
         // Element or parent is fixed position?
         var isFixed = this.$origin.css('position') === 'fixed';
-
         if (!isFixed) {
           var parents = this.$origin.parents();
-
           for (var i = 0; i < parents.length; i++) {
             isFixed = $(parents[i]).css('position') == 'fixed';
-
             if (isFixed) {
               break;
             }
           }
-        } // Calculating origin
+        }
 
-
+        // Calculating origin
         var originWidth = this.$origin.outerWidth();
         var originHeight = this.$origin.outerHeight();
         var originTop = isFixed ? this.$origin.offset().top - M.getDocumentScrollTop() : this.$origin.offset().top;
-        var originLeft = isFixed ? this.$origin.offset().left - M.getDocumentScrollLeft() : this.$origin.offset().left; // Calculating screen
+        var originLeft = isFixed ? this.$origin.offset().left - M.getDocumentScrollLeft() : this.$origin.offset().left;
 
+        // Calculating screen
         var windowWidth = window.innerWidth;
         var windowHeight = window.innerHeight;
         var centerX = windowWidth / 2;
@@ -12036,14 +10972,16 @@ var $jscomp$this = this;
         var isRight = originLeft > centerX;
         var isTop = originTop <= centerY;
         var isBottom = originTop > centerY;
-        var isCenterX = originLeft >= windowWidth * 0.25 && originLeft <= windowWidth * 0.75; // Calculating tap target
+        var isCenterX = originLeft >= windowWidth * 0.25 && originLeft <= windowWidth * 0.75;
 
+        // Calculating tap target
         var tapTargetWidth = this.$el.outerWidth();
         var tapTargetHeight = this.$el.outerHeight();
         var tapTargetTop = originTop + originHeight / 2 - tapTargetHeight / 2;
         var tapTargetLeft = originLeft + originWidth / 2 - tapTargetWidth / 2;
-        var tapTargetPosition = isFixed ? 'fixed' : 'absolute'; // Calculating content
+        var tapTargetPosition = isFixed ? 'fixed' : 'absolute';
 
+        // Calculating content
         var tapTargetTextWidth = isCenterX ? tapTargetWidth : tapTargetWidth / 2 + originWidth;
         var tapTargetTextHeight = tapTargetHeight / 2;
         var tapTargetTextTop = isTop ? tapTargetHeight / 2 : 0;
@@ -12051,21 +10989,24 @@ var $jscomp$this = this;
         var tapTargetTextLeft = isLeft && !isCenterX ? tapTargetWidth / 2 - originWidth : 0;
         var tapTargetTextRight = 0;
         var tapTargetTextPadding = originWidth;
-        var tapTargetTextAlign = isBottom ? 'bottom' : 'top'; // Calculating wave
+        var tapTargetTextAlign = isBottom ? 'bottom' : 'top';
 
+        // Calculating wave
         var tapTargetWaveWidth = originWidth > originHeight ? originWidth * 2 : originWidth * 2;
         var tapTargetWaveHeight = tapTargetWaveWidth;
         var tapTargetWaveTop = tapTargetHeight / 2 - tapTargetWaveHeight / 2;
-        var tapTargetWaveLeft = tapTargetWidth / 2 - tapTargetWaveWidth / 2; // Setting tap target
+        var tapTargetWaveLeft = tapTargetWidth / 2 - tapTargetWaveWidth / 2;
 
+        // Setting tap target
         var tapTargetWrapperCssObj = {};
         tapTargetWrapperCssObj.top = isTop ? tapTargetTop + 'px' : '';
         tapTargetWrapperCssObj.right = isRight ? windowWidth - tapTargetLeft - tapTargetWidth + 'px' : '';
         tapTargetWrapperCssObj.bottom = isBottom ? windowHeight - tapTargetTop - tapTargetHeight + 'px' : '';
         tapTargetWrapperCssObj.left = isLeft ? tapTargetLeft + 'px' : '';
         tapTargetWrapperCssObj.position = tapTargetPosition;
-        $(this.wrapper).css(tapTargetWrapperCssObj); // Setting content
+        $(this.wrapper).css(tapTargetWrapperCssObj);
 
+        // Setting content
         $(this.contentEl).css({
           width: tapTargetTextWidth + 'px',
           height: tapTargetTextHeight + 'px',
@@ -12075,8 +11016,9 @@ var $jscomp$this = this;
           left: tapTargetTextLeft + 'px',
           padding: tapTargetTextPadding + 'px',
           verticalAlign: tapTargetTextAlign
-        }); // Setting wave
+        });
 
+        // Setting wave
         $(this.waveEl).css({
           top: tapTargetWaveTop + 'px',
           left: tapTargetWaveLeft + 'px',
@@ -12084,43 +11026,41 @@ var $jscomp$this = this;
           height: tapTargetWaveHeight + 'px'
         });
       }
+
       /**
        * Open TapTarget
        */
-
     }, {
       key: "open",
       value: function open() {
         if (this.isOpen) {
           return;
-        } // onOpen callback
+        }
 
-
+        // onOpen callback
         if (typeof this.options.onOpen === 'function') {
           this.options.onOpen.call(this, this.$origin[0]);
         }
-
         this.isOpen = true;
         this.wrapper.classList.add('open');
         document.body.addEventListener('click', this._handleDocumentClickBound, true);
         document.body.addEventListener('touchend', this._handleDocumentClickBound);
       }
+
       /**
        * Close Tap Target
        */
-
     }, {
       key: "close",
       value: function close() {
         if (!this.isOpen) {
           return;
-        } // onClose callback
+        }
 
-
+        // onClose callback
         if (typeof this.options.onClose === 'function') {
           this.options.onClose.call(this, this.$origin[0]);
         }
-
         this.isOpen = false;
         this.wrapper.classList.remove('open');
         document.body.removeEventListener('click', this._handleDocumentClickBound, true);
@@ -12131,10 +11071,10 @@ var $jscomp$this = this;
       value: function init(els, options) {
         return _get(TapTarget.__proto__ || Object.getPrototypeOf(TapTarget), "init", this).call(this, this, els, options);
       }
+
       /**
        * Get Instance
        */
-
     }, {
       key: "getInstance",
       value: function getInstance(el) {
@@ -12147,19 +11087,14 @@ var $jscomp$this = this;
         return _defaults;
       }
     }]);
-
     return TapTarget;
   }(Component);
-
   M.TapTarget = TapTarget;
-
   if (M.jQueryLoaded) {
     M.initializeJqueryWrapper(TapTarget, 'tapTarget', 'M_TapTarget');
   }
 })(cash);
-
 ;
-
 (function ($) {
   'use strict';
 
@@ -12167,6 +11102,7 @@ var $jscomp$this = this;
     classes: '',
     dropdownOptions: {}
   };
+
   /**
    * @class
    *
@@ -12174,66 +11110,56 @@ var $jscomp$this = this;
 
   var FormSelect = function (_Component20) {
     _inherits(FormSelect, _Component20);
+
     /**
      * Construct FormSelect instance
      * @constructor
      * @param {Element} el
      * @param {Object} options
      */
-
-
     function FormSelect(el, options) {
-      _classCallCheck(this, FormSelect); // Don't init if browser default version
+      _classCallCheck(this, FormSelect);
 
-
+      // Don't init if browser default version
       var _this68 = _possibleConstructorReturn(this, (FormSelect.__proto__ || Object.getPrototypeOf(FormSelect)).call(this, FormSelect, el, options));
-
       if (_this68.$el.hasClass('browser-default')) {
         return _possibleConstructorReturn(_this68);
       }
-
       _this68.el.M_FormSelect = _this68;
+
       /**
        * Options for the select
        * @member FormSelect#options
        */
-
       _this68.options = $.extend({}, FormSelect.defaults, options);
-      _this68.isMultiple = _this68.$el.prop('multiple'); // Setup
+      _this68.isMultiple = _this68.$el.prop('multiple');
 
+      // Setup
       _this68.el.tabIndex = -1;
       _this68._keysSelected = {};
       _this68._valueDict = {}; // Maps key to original and generated option element.
-
       _this68._setupDropdown();
-
       _this68._setupEventHandlers();
-
       return _this68;
     }
-
     _createClass(FormSelect, [{
       key: "destroy",
-
       /**
        * Teardown component
        */
       value: function destroy() {
         this._removeEventHandlers();
-
         this._removeDropdown();
-
         this.el.M_FormSelect = undefined;
       }
+
       /**
        * Setup Event Handlers
        */
-
     }, {
       key: "_setupEventHandlers",
       value: function _setupEventHandlers() {
         var _this69 = this;
-
         this._handleSelectChangeBound = this._handleSelectChange.bind(this);
         this._handleOptionClickBound = this._handleOptionClick.bind(this);
         this._handleInputClickBound = this._handleInputClick.bind(this);
@@ -12243,124 +11169,112 @@ var $jscomp$this = this;
         this.el.addEventListener('change', this._handleSelectChangeBound);
         this.input.addEventListener('click', this._handleInputClickBound);
       }
+
       /**
        * Remove Event Handlers
        */
-
     }, {
       key: "_removeEventHandlers",
       value: function _removeEventHandlers() {
         var _this70 = this;
-
         $(this.dropdownOptions).find('li:not(.optgroup)').each(function (el) {
           el.removeEventListener('click', _this70._handleOptionClickBound);
         });
         this.el.removeEventListener('change', this._handleSelectChangeBound);
         this.input.removeEventListener('click', this._handleInputClickBound);
       }
+
       /**
        * Handle Select Change
        * @param {Event} e
        */
-
     }, {
       key: "_handleSelectChange",
       value: function _handleSelectChange(e) {
         this._setValueToInput();
       }
+
       /**
        * Handle Option Click
        * @param {Event} e
        */
-
     }, {
       key: "_handleOptionClick",
       value: function _handleOptionClick(e) {
         e.preventDefault();
         var option = $(e.target).closest('li')[0];
         var key = option.id;
-
         if (!$(option).hasClass('disabled') && !$(option).hasClass('optgroup') && key.length) {
           var selected = true;
-
           if (this.isMultiple) {
             // Deselect placeholder option if still selected.
             var placeholderOption = $(this.dropdownOptions).find('li.disabled.selected');
-
             if (placeholderOption.length) {
               placeholderOption.removeClass('selected');
               placeholderOption.find('input[type="checkbox"]').prop('checked', false);
-
               this._toggleEntryFromArray(placeholderOption[0].id);
             }
-
             selected = this._toggleEntryFromArray(key);
           } else {
             $(this.dropdownOptions).find('li').removeClass('selected');
             $(option).toggleClass('selected', selected);
-          } // Set selected on original select option
+          }
+
+          // Set selected on original select option
           // Only trigger if selected state changed
-
-
           var prevSelected = $(this._valueDict[key].el).prop('selected');
-
           if (prevSelected !== selected) {
             $(this._valueDict[key].el).prop('selected', selected);
             this.$el.trigger('change');
           }
         }
-
         e.stopPropagation();
       }
+
       /**
        * Handle Input Click
        */
-
     }, {
       key: "_handleInputClick",
       value: function _handleInputClick() {
         if (this.dropdown && this.dropdown.isOpen) {
           this._setValueToInput();
-
           this._setSelectedStates();
         }
       }
+
       /**
        * Setup dropdown
        */
-
     }, {
       key: "_setupDropdown",
       value: function _setupDropdown() {
         var _this71 = this;
-
         this.wrapper = document.createElement('div');
         $(this.wrapper).addClass('select-wrapper ' + this.options.classes);
         this.$el.before($(this.wrapper));
         this.wrapper.appendChild(this.el);
-
         if (this.el.disabled) {
           this.wrapper.classList.add('disabled');
-        } // Create dropdown
+        }
 
-
+        // Create dropdown
         this.$selectOptions = this.$el.children('option, optgroup');
         this.dropdownOptions = document.createElement('ul');
         this.dropdownOptions.id = "select-options-" + M.guid();
-        $(this.dropdownOptions).addClass('dropdown-content select-dropdown ' + (this.isMultiple ? 'multiple-select-dropdown' : '')); // Create dropdown structure.
+        $(this.dropdownOptions).addClass('dropdown-content select-dropdown ' + (this.isMultiple ? 'multiple-select-dropdown' : ''));
 
+        // Create dropdown structure.
         if (this.$selectOptions.length) {
           this.$selectOptions.each(function (el) {
             if ($(el).is('option')) {
               // Direct descendant option.
               var optionEl = void 0;
-
               if (_this71.isMultiple) {
                 optionEl = _this71._appendOptionWithIcon(_this71.$el, el, 'multiple');
               } else {
                 optionEl = _this71._appendOptionWithIcon(_this71.$el, el);
               }
-
               _this71._addOptionToValueDict(el, optionEl);
             } else if ($(el).is('optgroup')) {
               // Optgroup.
@@ -12368,75 +11282,66 @@ var $jscomp$this = this;
               $(_this71.dropdownOptions).append($('<li class="optgroup"><span>' + el.getAttribute('label') + '</span></li>')[0]);
               selectOptions.each(function (el) {
                 var optionEl = _this71._appendOptionWithIcon(_this71.$el, el, 'optgroup-option');
-
                 _this71._addOptionToValueDict(el, optionEl);
               });
             }
           });
         }
+        this.$el.after(this.dropdownOptions);
 
-        this.$el.after(this.dropdownOptions); // Add input dropdown
-
+        // Add input dropdown
         this.input = document.createElement('input');
         $(this.input).addClass('select-dropdown dropdown-trigger');
         this.input.setAttribute('type', 'text');
         this.input.setAttribute('readonly', 'true');
         this.input.setAttribute('data-target', this.dropdownOptions.id);
-
         if (this.el.disabled) {
           $(this.input).prop('disabled', 'true');
         }
-
         this.$el.before(this.input);
+        this._setValueToInput();
 
-        this._setValueToInput(); // Add caret
-
-
+        // Add caret
         var dropdownIcon = $('<svg class="caret" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M7 10l5 5 5-5z"/><path d="M0 0h24v24H0z" fill="none"/></svg>');
-        this.$el.before(dropdownIcon[0]); // Initialize dropdown
+        this.$el.before(dropdownIcon[0]);
 
+        // Initialize dropdown
         if (!this.el.disabled) {
-          var dropdownOptions = $.extend({}, this.options.dropdownOptions); // Add callback for centering selected option when dropdown content is scrollable
+          var dropdownOptions = $.extend({}, this.options.dropdownOptions);
 
+          // Add callback for centering selected option when dropdown content is scrollable
           dropdownOptions.onOpenEnd = function (el) {
             var selectedOption = $(_this71.dropdownOptions).find('.selected').first();
-
             if (selectedOption.length) {
               // Focus selected option in dropdown
               M.keyDown = true;
               _this71.dropdown.focusedIndex = selectedOption.index();
-
               _this71.dropdown._focusFocusedItem();
+              M.keyDown = false;
 
-              M.keyDown = false; // Handle scrolling to selected option
-
+              // Handle scrolling to selected option
               if (_this71.dropdown.isScrollable) {
                 var scrollOffset = selectedOption[0].getBoundingClientRect().top - _this71.dropdownOptions.getBoundingClientRect().top; // scroll to selected option
-
-
                 scrollOffset -= _this71.dropdownOptions.clientHeight / 2; // center in dropdown
-
                 _this71.dropdownOptions.scrollTop = scrollOffset;
               }
             }
           };
-
           if (this.isMultiple) {
             dropdownOptions.closeOnClick = false;
           }
-
           this.dropdown = M.Dropdown.init(this.input, dropdownOptions);
-        } // Add initial selections
+        }
 
-
+        // Add initial selections
         this._setSelectedStates();
       }
+
       /**
        * Add option to value dict
        * @param {Element} el  original option element
        * @param {Element} optionEl  generated option element
        */
-
     }, {
       key: "_addOptionToValueDict",
       value: function _addOptionToValueDict(el, optionEl) {
@@ -12448,10 +11353,10 @@ var $jscomp$this = this;
         obj.optionEl = optionEl;
         this._valueDict[key] = obj;
       }
+
       /**
        * Remove dropdown
        */
-
     }, {
       key: "_removeDropdown",
       value: function _removeDropdown() {
@@ -12461,6 +11366,7 @@ var $jscomp$this = this;
         $(this.wrapper).before(this.$el);
         $(this.wrapper).remove();
       }
+
       /**
        * Setup dropdown
        * @param {Element} select  select element
@@ -12468,7 +11374,6 @@ var $jscomp$this = this;
        * @param {String} type
        * @return {Element}  option element added
        */
-
     }, {
       key: "_appendOptionWithIcon",
       value: function _appendOptionWithIcon(select, option, type) {
@@ -12480,48 +11385,48 @@ var $jscomp$this = this;
         var spanEl = $('<span></span>');
         spanEl.html(multipleCheckbox);
         liEl.addClass(disabledClass + " " + optgroupClass);
-        liEl.append(spanEl); // add icons
+        liEl.append(spanEl);
 
+        // add icons
         var iconUrl = option.getAttribute('data-icon');
-
         if (!!iconUrl) {
           var imgEl = $("<img alt=\"\" src=\"" + iconUrl + "\">");
           liEl.prepend(imgEl);
-        } // Check for multiple type.
+        }
 
-
+        // Check for multiple type.
         $(this.dropdownOptions).append(liEl[0]);
         return liEl[0];
       }
+
       /**
        * Toggle entry from option
        * @param {String} key  Option key
        * @return {Boolean}  if entry was added or removed
        */
-
     }, {
       key: "_toggleEntryFromArray",
       value: function _toggleEntryFromArray(key) {
         var notAdded = !this._keysSelected.hasOwnProperty(key);
         var $optionLi = $(this._valueDict[key].optionEl);
-
         if (notAdded) {
           this._keysSelected[key] = true;
         } else {
           delete this._keysSelected[key];
         }
+        $optionLi.toggleClass('selected', notAdded);
 
-        $optionLi.toggleClass('selected', notAdded); // Set checkbox checked value
+        // Set checkbox checked value
+        $optionLi.find('input[type="checkbox"]').prop('checked', notAdded);
 
-        $optionLi.find('input[type="checkbox"]').prop('checked', notAdded); // use notAdded instead of true (to detect if the option is selected or not)
-
+        // use notAdded instead of true (to detect if the option is selected or not)
         $optionLi.prop('selected', notAdded);
         return notAdded;
       }
+
       /**
        * Set text value to input
        */
-
     }, {
       key: "_setValueToInput",
       value: function _setValueToInput() {
@@ -12533,46 +11438,40 @@ var $jscomp$this = this;
             values.push(text);
           }
         });
-
         if (!values.length) {
           var firstDisabled = this.$el.find('option:disabled').eq(0);
-
           if (firstDisabled.length && firstDisabled[0].value === '') {
             values.push(firstDisabled.text());
           }
         }
-
         this.input.value = values.join(', ');
       }
+
       /**
        * Set selected state of dropdown to match actual select element
        */
-
     }, {
       key: "_setSelectedStates",
       value: function _setSelectedStates() {
         this._keysSelected = {};
-
         for (var key in this._valueDict) {
           var option = this._valueDict[key];
           var optionIsSelected = $(option.el).prop('selected');
           $(option.optionEl).find('input[type="checkbox"]').prop('checked', optionIsSelected);
-
           if (optionIsSelected) {
             this._activateOption($(this.dropdownOptions), $(option.optionEl));
-
             this._keysSelected[key] = true;
           } else {
             $(option.optionEl).removeClass('selected');
           }
         }
       }
+
       /**
        * Make option as selected and scroll to selected position
        * @param {jQuery} collection  Select options jQuery element
        * @param {Element} newOption  element of the new option
        */
-
     }, {
       key: "_activateOption",
       value: function _activateOption(collection, newOption) {
@@ -12580,25 +11479,22 @@ var $jscomp$this = this;
           if (!this.isMultiple) {
             collection.find('li.selected').removeClass('selected');
           }
-
           var option = $(newOption);
           option.addClass('selected');
         }
       }
+
       /**
        * Get Selected Values
        * @return {Array}  Array of selected values
        */
-
     }, {
       key: "getSelectedValues",
       value: function getSelectedValues() {
         var selectedValues = [];
-
         for (var key in this._keysSelected) {
           selectedValues.push(this._valueDict[key].el.value);
         }
-
         return selectedValues;
       }
     }], [{
@@ -12606,10 +11502,10 @@ var $jscomp$this = this;
       value: function init(els, options) {
         return _get(FormSelect.__proto__ || Object.getPrototypeOf(FormSelect), "init", this).call(this, this, els, options);
       }
+
       /**
        * Get Instance
        */
-
     }, {
       key: "getInstance",
       value: function getInstance(el) {
@@ -12622,23 +11518,19 @@ var $jscomp$this = this;
         return _defaults;
       }
     }]);
-
     return FormSelect;
   }(Component);
-
   M.FormSelect = FormSelect;
-
   if (M.jQueryLoaded) {
     M.initializeJqueryWrapper(FormSelect, 'formSelect', 'M_FormSelect');
   }
 })(cash);
-
 ;
-
 (function ($, anim) {
   'use strict';
 
   var _defaults = {};
+
   /**
    * @class
    *
@@ -12646,52 +11538,44 @@ var $jscomp$this = this;
 
   var Range = function (_Component21) {
     _inherits(Range, _Component21);
+
     /**
      * Construct Range instance
      * @constructor
      * @param {Element} el
      * @param {Object} options
      */
-
-
     function Range(el, options) {
       _classCallCheck(this, Range);
-
       var _this72 = _possibleConstructorReturn(this, (Range.__proto__ || Object.getPrototypeOf(Range)).call(this, Range, el, options));
-
       _this72.el.M_Range = _this72;
+
       /**
        * Options for the range
        * @member Range#options
        */
-
       _this72.options = $.extend({}, Range.defaults, options);
-      _this72._mousedown = false; // Setup
+      _this72._mousedown = false;
 
+      // Setup
       _this72._setupThumb();
-
       _this72._setupEventHandlers();
-
       return _this72;
     }
-
     _createClass(Range, [{
       key: "destroy",
-
       /**
        * Teardown component
        */
       value: function destroy() {
         this._removeEventHandlers();
-
         this._removeThumb();
-
         this.el.M_Range = undefined;
       }
+
       /**
        * Setup Event Handlers
        */
-
     }, {
       key: "_setupEventHandlers",
       value: function _setupEventHandlers() {
@@ -12712,10 +11596,10 @@ var $jscomp$this = this;
         this.el.addEventListener('mouseout', this._handleRangeBlurMouseoutTouchleaveBound);
         this.el.addEventListener('touchleave', this._handleRangeBlurMouseoutTouchleaveBound);
       }
+
       /**
        * Remove Event Handlers
        */
-
     }, {
       key: "_removeEventHandlers",
       value: function _removeEventHandlers() {
@@ -12731,29 +11615,26 @@ var $jscomp$this = this;
         this.el.removeEventListener('mouseout', this._handleRangeBlurMouseoutTouchleaveBound);
         this.el.removeEventListener('touchleave', this._handleRangeBlurMouseoutTouchleaveBound);
       }
+
       /**
        * Handle Range Change
        * @param {Event} e
        */
-
     }, {
       key: "_handleRangeChange",
       value: function _handleRangeChange() {
         $(this.value).html(this.$el.val());
-
         if (!$(this.thumb).hasClass('active')) {
           this._showRangeBubble();
         }
-
         var offsetLeft = this._calcRangeOffset();
-
         $(this.thumb).addClass('active').css('left', offsetLeft + 'px');
       }
+
       /**
        * Handle Range Mousedown and Touchstart
        * @param {Event} e
        */
-
     }, {
       key: "_handleRangeMousedownTouchstart",
       value: function _handleRangeMousedownTouchstart(e) {
@@ -12761,21 +11642,18 @@ var $jscomp$this = this;
         $(this.value).html(this.$el.val());
         this._mousedown = true;
         this.$el.addClass('active');
-
         if (!$(this.thumb).hasClass('active')) {
           this._showRangeBubble();
         }
-
         if (e.type !== 'input') {
           var offsetLeft = this._calcRangeOffset();
-
           $(this.thumb).addClass('active').css('left', offsetLeft + 'px');
         }
       }
+
       /**
        * Handle Range Input, Mousemove and Touchmove
        */
-
     }, {
       key: "_handleRangeInputMousemoveTouchmove",
       value: function _handleRangeInputMousemoveTouchmove() {
@@ -12783,34 +11661,31 @@ var $jscomp$this = this;
           if (!$(this.thumb).hasClass('active')) {
             this._showRangeBubble();
           }
-
           var offsetLeft = this._calcRangeOffset();
-
           $(this.thumb).addClass('active').css('left', offsetLeft + 'px');
           $(this.value).html(this.$el.val());
         }
       }
+
       /**
        * Handle Range Mouseup and Touchend
        */
-
     }, {
       key: "_handleRangeMouseupTouchend",
       value: function _handleRangeMouseupTouchend() {
         this._mousedown = false;
         this.$el.removeClass('active');
       }
+
       /**
        * Handle Range Blur, Mouseout and Touchleave
        */
-
     }, {
       key: "_handleRangeBlurMouseoutTouchleave",
       value: function _handleRangeBlurMouseoutTouchleave() {
         if (!this._mousedown) {
           var paddingLeft = parseInt(this.$el.css('padding-left'));
           var marginLeft = 7 + paddingLeft + 'px';
-
           if ($(this.thumb).hasClass('active')) {
             anim.remove(this.thumb);
             anim({
@@ -12823,14 +11698,13 @@ var $jscomp$this = this;
               duration: 100
             });
           }
-
           $(this.thumb).removeClass('active');
         }
       }
+
       /**
        * Setup dropdown
        */
-
     }, {
       key: "_setupThumb",
       value: function _setupThumb() {
@@ -12841,25 +11715,24 @@ var $jscomp$this = this;
         $(this.thumb).append(this.value);
         this.$el.after(this.thumb);
       }
+
       /**
        * Remove dropdown
        */
-
     }, {
       key: "_removeThumb",
       value: function _removeThumb() {
         $(this.thumb).remove();
       }
+
       /**
        * morph thumb into bubble
        */
-
     }, {
       key: "_showRangeBubble",
       value: function _showRangeBubble() {
         var paddingLeft = parseInt($(this.thumb).parent().css('padding-left'));
         var marginLeft = -7 + paddingLeft + 'px'; // TODO: fix magic number?
-
         anim.remove(this.thumb);
         anim({
           targets: this.thumb,
@@ -12871,19 +11744,17 @@ var $jscomp$this = this;
           easing: 'easeOutQuint'
         });
       }
+
       /**
        * Calculate the offset of the thumb
        * @return {Number}  offset in pixels
        */
-
     }, {
       key: "_calcRangeOffset",
       value: function _calcRangeOffset() {
         var width = this.$el.width() - 15;
         var max = parseFloat(this.$el.attr('max')) || 100; // Range default max
-
         var min = parseFloat(this.$el.attr('min')) || 0; // Range default min
-
         var percent = (parseFloat(this.$el.val()) - min) / (max - min);
         return percent * width;
       }
@@ -12892,10 +11763,10 @@ var $jscomp$this = this;
       value: function init(els, options) {
         return _get(Range.__proto__ || Object.getPrototypeOf(Range), "init", this).call(this, this, els, options);
       }
+
       /**
        * Get Instance
        */
-
     }, {
       key: "getInstance",
       value: function getInstance(el) {
@@ -12908,32 +11779,26 @@ var $jscomp$this = this;
         return _defaults;
       }
     }]);
-
     return Range;
   }(Component);
-
   M.Range = Range;
-
   if (M.jQueryLoaded) {
     M.initializeJqueryWrapper(Range, 'range', 'M_Range');
   }
-
   Range.init($('input[type=range]'));
 })(cash, M.anime);
-function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
-
-/*! DataTables 1.10.25
- * ©2008-2021 SpryMedia Ltd - datatables.net/license
+function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (obj) { return typeof obj; } : function (obj) { return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }, _typeof(obj); }
+/*! DataTables 1.13.4
+ * ©2008-2023 SpryMedia Ltd - datatables.net/license
  */
 
 /**
  * @summary     DataTables
  * @description Paginate, search and order HTML tables
- * @version     1.10.25
- * @file        jquery.dataTables.js
+ * @version     1.13.4
  * @author      SpryMedia Ltd
  * @contact     www.datatables.net
- * @copyright   Copyright 2008-2021 SpryMedia Ltd.
+ * @copyright   SpryMedia Ltd.
  *
  * This source file is free software, available under the following license:
  *   MIT license - http://datatables.net/license
@@ -12946,8 +11811,8 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
  */
 
 /*jslint evil: true, undef: true, browser: true */
-
 /*globals $,require,jQuery,define,_selector_run,_selector_opts,_selector_first,_selector_row_indexes,_ext,_Api,_api_register,_api_registerPlural,_re_new_lines,_re_html,_re_formatted_numeric,_re_escape_regex,_empty,_intVal,_numToDecimal,_isNumber,_isHtml,_htmlNumeric,_pluck,_pluck_order,_range,_stripHtml,_unique,_fnBuildAjax,_fnAjaxUpdate,_fnAjaxParameters,_fnAjaxUpdateDraw,_fnAjaxDataSrc,_fnAddColumn,_fnColumnOptions,_fnAdjustColumnSizing,_fnVisibleToColumnIndex,_fnColumnIndexToVisible,_fnVisbleColumns,_fnGetColumns,_fnColumnTypes,_fnApplyColumnDefs,_fnHungarianMap,_fnCamelToHungarian,_fnLanguageCompat,_fnBrowserDetect,_fnAddData,_fnAddTr,_fnNodeToDataIndex,_fnNodeToColumnIndex,_fnGetCellData,_fnSetCellData,_fnSplitObjNotation,_fnGetObjectDataFn,_fnSetObjectDataFn,_fnGetDataMaster,_fnClearTable,_fnDeleteIndex,_fnInvalidate,_fnGetRowElements,_fnCreateTr,_fnBuildHead,_fnDrawHead,_fnDraw,_fnReDraw,_fnAddOptionsHtml,_fnDetectHeader,_fnGetUniqueThs,_fnFeatureHtmlFilter,_fnFilterComplete,_fnFilterCustom,_fnFilterColumn,_fnFilter,_fnFilterCreateSearch,_fnEscapeRegex,_fnFilterData,_fnFeatureHtmlInfo,_fnUpdateInfo,_fnInfoMacros,_fnInitialise,_fnInitComplete,_fnLengthChange,_fnFeatureHtmlLength,_fnFeatureHtmlPaginate,_fnPageChange,_fnFeatureHtmlProcessing,_fnProcessingDisplay,_fnFeatureHtmlTable,_fnScrollDraw,_fnApplyToChildren,_fnCalculateColumnWidths,_fnThrottle,_fnConvertToWidth,_fnGetWidestNode,_fnGetMaxLenString,_fnStringToCss,_fnSortFlatten,_fnSort,_fnSortAria,_fnSortListener,_fnSortAttachListener,_fnSortingClasses,_fnSortData,_fnSaveState,_fnLoadState,_fnSettingsFromNode,_fnLog,_fnMap,_fnBindAction,_fnCallbackReg,_fnCallbackFire,_fnLengthOverflow,_fnRenderer,_fnDataSource,_fnRowAttributes*/
+
 (function (factory) {
   "use strict";
 
@@ -12958,60 +11823,46 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
     });
   } else if ((typeof exports === "undefined" ? "undefined" : _typeof(exports)) === 'object') {
     // CommonJS
-    module.exports = function (root, $) {
-      if (!root) {
-        // CommonJS environments without a window global must pass a
-        // root. This will give an error otherwise
-        root = window;
-      }
-
-      if (!$) {
-        $ = typeof window !== 'undefined' ? // jQuery's factory checks for a global window
-        require('jquery') : require('jquery')(root);
-      }
-
-      return factory($, root, root.document);
-    };
+    // jQuery's factory checks for a global window - if it isn't present then it
+    // returns a factory function that expects the window object
+    var jq = require('jquery');
+    if (typeof window !== 'undefined') {
+      module.exports = function (root, $) {
+        if (!root) {
+          // CommonJS environments without a window global must pass a
+          // root. This will give an error otherwise
+          root = window;
+        }
+        if (!$) {
+          $ = jq(root);
+        }
+        return factory($, root, root.document);
+      };
+    } else {
+      return factory(jq, window, window.document);
+    }
   } else {
     // Browser
-    factory(jQuery, window, document);
+    window.DataTable = factory(jQuery, window, document);
   }
 })(function ($, window, document, undefined) {
   "use strict";
-  /**
-   * DataTables is a plug-in for the jQuery Javascript library. It is a highly
-   * flexible tool, based upon the foundations of progressive enhancement,
-   * which will add advanced interaction controls to any HTML table. For a
-   * full list of features please refer to
-   * [DataTables.net](href="http://datatables.net).
-   *
-   * Note that the `DataTable` object is not a global variable but is aliased
-   * to `jQuery.fn.DataTable` and `jQuery.fn.dataTable` through which it may
-   * be  accessed.
-   *
-   *  @class
-   *  @param {object} [init={}] Configuration object for DataTables. Options
-   *    are defined by {@link DataTable.defaults}
-   *  @requires jQuery 1.7+
-   *
-   *  @example
-   *    // Basic initialisation
-   *    $(document).ready( function {
-   *      $('#example').dataTable();
-   *    } );
-   *
-   *  @example
-   *    // Initialisation with configuration options - in this case, disable
-   *    // pagination and sorting.
-   *    $(document).ready( function {
-   *      $('#example').dataTable( {
-   *        "paginate": false,
-   *        "sort": false
-   *      } );
-   *    } );
-   */
 
-  var DataTable = function DataTable(options) {
+  var DataTable = function DataTable(selector, options) {
+    // Check if called with a window or jQuery object for DOM less applications
+    // This is for backwards compatibility
+    if (DataTable.factory(selector, options)) {
+      return DataTable;
+    }
+
+    // When creating with `new`, create a new DataTable, returning the API instance
+    if (this instanceof DataTable) {
+      return $(selector).DataTable(options);
+    } else {
+      // Argument switching
+      options = selector;
+    }
+
     /**
      * Perform a jQuery selector action on the table's TR elements (from the tbody) and
      * return the resulting jQuery object.
@@ -13051,6 +11902,7 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
     this.$ = function (sSelector, oOpts) {
       return this.api(true).$(sSelector, oOpts);
     };
+
     /**
      * Almost identical to $ in operation, but in this case returns the data for the matched
      * rows - as such, the jQuery selector used should match TR row nodes or TD/TH cell nodes
@@ -13099,11 +11951,10 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
      *      alert( data.length+" rows matched the search" );
      *    } );
      */
-
-
     this._ = function (sSelector, oOpts) {
       return this.api(true).rows(sSelector, oOpts).data();
     };
+
     /**
      * Create a DataTables Api instance, with the currently selected tables for
      * the Api's context.
@@ -13113,11 +11964,10 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
      *   or if all tables captured in the jQuery object should be used.
      * @return {DataTables.Api}
      */
-
-
     this.api = function (traditional) {
       return traditional ? new _Api2(_fnSettingsFromNode(this[_ext.iApiIndex])) : new _Api2(this);
     };
+
     /**
      * Add a single new row or multiple rows of data to the table. Please note
      * that this is suitable for client-side processing only - if you are using
@@ -13156,20 +12006,17 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
      *      giCount++;
      *    }
      */
-
-
     this.fnAddData = function (data, redraw) {
       var api = this.api(true);
+
       /* Check if we want to add multiple rows or not */
-
       var rows = Array.isArray(data) && (Array.isArray(data[0]) || $.isPlainObject(data[0])) ? api.rows.add(data) : api.row.add(data);
-
       if (redraw === undefined || redraw) {
         api.draw();
       }
-
       return rows.flatten().toArray();
     };
+
     /**
      * This function will make DataTables recalculate the column sizes, based on the data
      * contained in the table and the sizes applied to the columns (in the DOM, CSS or
@@ -13191,13 +12038,10 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
      *      } );
      *    } );
      */
-
-
     this.fnAdjustColumnSizing = function (bRedraw) {
       var api = this.api(true).columns.adjust();
       var settings = api.settings()[0];
       var scroll = settings.oScroll;
-
       if (bRedraw === undefined || bRedraw) {
         api.draw(false);
       } else if (scroll.sX !== "" || scroll.sY !== "") {
@@ -13205,6 +12049,7 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
         _fnScrollDraw(settings);
       }
     };
+
     /**
      * Quickly and simply clear a table
      *  @param {bool} [bRedraw=true] redraw the table or not
@@ -13219,15 +12064,13 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
      *      oTable.fnClearTable();
      *    } );
      */
-
-
     this.fnClearTable = function (bRedraw) {
       var api = this.api(true).clear();
-
       if (bRedraw === undefined || bRedraw) {
         api.draw();
       }
     };
+
     /**
      * The exact opposite of 'opening' a row, this function will close any rows which
      * are currently 'open'.
@@ -13252,11 +12095,10 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
      *      oTable = $('#example').dataTable();
      *    } );
      */
-
-
     this.fnClose = function (nTr) {
       this.api(true).row(nTr).child.hide();
     };
+
     /**
      * Remove a row for the table
      *  @param {mixed} target The index of the row from aoData to be deleted, or
@@ -13275,25 +12117,21 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
      *      oTable.fnDeleteRow( 0 );
      *    } );
      */
-
-
     this.fnDeleteRow = function (target, callback, redraw) {
       var api = this.api(true);
       var rows = api.rows(target);
       var settings = rows.settings()[0];
       var data = settings.aoData[rows[0][0]];
       rows.remove();
-
       if (callback) {
         callback.call(this, settings, data);
       }
-
       if (redraw === undefined || redraw) {
         api.draw();
       }
-
       return data;
     };
+
     /**
      * Restore the table to it's original state in the DOM by removing all of DataTables
      * enhancements, alterations to the DOM structure of the table and event listeners.
@@ -13308,11 +12146,10 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
      *      oTable.fnDestroy();
      *    } );
      */
-
-
     this.fnDestroy = function (remove) {
       this.api(true).destroy(remove);
     };
+
     /**
      * Redraw the table
      *  @param {bool} [complete=true] Re-filter and resort (if enabled) the table before the draw.
@@ -13327,13 +12164,12 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
      *      oTable.fnDraw();
      *    } );
      */
-
-
     this.fnDraw = function (complete) {
       // Note that this isn't an exact match to the old call to _fnDraw - it takes
       // into account the new data, but can hold position.
       this.api(true).draw(complete);
     };
+
     /**
      * Filter the input based on data
      *  @param {string} sInput String to filter the table on
@@ -13353,19 +12189,16 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
      *      oTable.fnFilter( 'test string' );
      *    } );
      */
-
-
     this.fnFilter = function (sInput, iColumn, bRegex, bSmart, bShowGlobal, bCaseInsensitive) {
       var api = this.api(true);
-
       if (iColumn === null || iColumn === undefined) {
         api.search(sInput, bRegex, bSmart, bCaseInsensitive);
       } else {
         api.column(iColumn).search(sInput, bRegex, bSmart, bCaseInsensitive);
       }
-
       api.draw();
     };
+
     /**
      * Get the data for the whole table, an individual row or an individual cell based on the
      * provided parameters.
@@ -13403,18 +12236,15 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
      *      } );
      *    } );
      */
-
-
     this.fnGetData = function (src, col) {
       var api = this.api(true);
-
       if (src !== undefined) {
         var type = src.nodeName ? src.nodeName.toLowerCase() : '';
         return col !== undefined || type == 'td' || type == 'th' ? api.cell(src, col).data() : api.row(src).data() || null;
       }
-
       return api.data().toArray();
     };
+
     /**
      * Get an array of the TR nodes that are used in the table's body. Note that you will
      * typically want to use the '$' API method in preference to this as it is more
@@ -13433,12 +12263,11 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
      *      var nNodes = oTable.fnGetNodes( );
      *    } );
      */
-
-
     this.fnGetNodes = function (iRow) {
       var api = this.api(true);
       return iRow !== undefined ? api.row(iRow).node() : api.rows().nodes().flatten().toArray();
     };
+
     /**
      * Get the array indexes of a particular cell from it's DOM element
      * and column index including hidden columns
@@ -13467,21 +12296,18 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
      *      oTable = $('#example').dataTable();
      *    } );
      */
-
-
     this.fnGetPosition = function (node) {
       var api = this.api(true);
       var nodeName = node.nodeName.toUpperCase();
-
       if (nodeName == 'TR') {
         return api.row(node).index();
       } else if (nodeName == 'TD' || nodeName == 'TH') {
         var cell = api.cell(node).index();
         return [cell.row, cell.columnVisible, cell.column];
       }
-
       return null;
     };
+
     /**
      * Check to see if a row is 'open' or not.
      *  @param {node} nTr the table row to check
@@ -13505,11 +12331,10 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
      *      oTable = $('#example').dataTable();
      *    } );
      */
-
-
     this.fnIsOpen = function (nTr) {
       return this.api(true).row(nTr).child.isShown();
     };
+
     /**
      * This function will place a new row directly after a row which is currently
      * on display on the page, with the HTML contents that is passed into the
@@ -13540,11 +12365,10 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
      *      oTable = $('#example').dataTable();
      *    } );
      */
-
-
     this.fnOpen = function (nTr, mHtml, sClass) {
       return this.api(true).row(nTr).child(mHtml, sClass).show().child()[0];
     };
+
     /**
      * Change the pagination - provides the internal logic for pagination in a simple API
      * function. With this function you can have a DataTables table go to the next,
@@ -13561,15 +12385,13 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
      *      oTable.fnPageChange( 'next' );
      *    } );
      */
-
-
     this.fnPageChange = function (mAction, bRedraw) {
       var api = this.api(true).page(mAction);
-
       if (bRedraw === undefined || bRedraw) {
         api.draw(false);
       }
     };
+
     /**
      * Show a particular column
      *  @param {int} iCol The column whose display should be changed
@@ -13586,15 +12408,13 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
      *      oTable.fnSetColumnVis( 1, false );
      *    } );
      */
-
-
     this.fnSetColumnVis = function (iCol, bShow, bRedraw) {
       var api = this.api(true).column(iCol).visible(bShow);
-
       if (bRedraw === undefined || bRedraw) {
         api.columns.adjust().draw();
       }
     };
+
     /**
      * Get the settings for a particular table for external manipulation
      *  @returns {object} DataTables settings object. See
@@ -13611,11 +12431,10 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
      *      alert( oSettings._iDisplayStart );
      *    } );
      */
-
-
     this.fnSettings = function () {
       return _fnSettingsFromNode(this[_ext.iApiIndex]);
     };
+
     /**
      * Sort the table by a particular column
      *  @param {int} iCol the data index to sort on. Note that this will not match the
@@ -13631,11 +12450,10 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
      *      oTable.fnSort( [ [0,'asc'], [1,'asc'] ] );
      *    } );
      */
-
-
     this.fnSort = function (aaSort) {
       this.api(true).order(aaSort).draw();
     };
+
     /**
      * Attach a sort listener to an element for a given column
      *  @param {node} nNode the element to attach the sort listener to
@@ -13652,11 +12470,10 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
      *      oTable.fnSortListener( document.getElementById('sorter'), 1 );
      *    } );
      */
-
-
     this.fnSortListener = function (nNode, iColumn, fnCallback) {
       this.api(true).order.listener(nNode, iColumn, fnCallback);
     };
+
     /**
      * Update a table cell or row - this method will accept either a single value to
      * update the cell with, an array of values with one element for each column or
@@ -13679,27 +12496,22 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
      *      oTable.fnUpdate( ['a', 'b', 'c', 'd', 'e'], $('tbody tr')[0] ); // Row
      *    } );
      */
-
-
     this.fnUpdate = function (mData, mRow, iColumn, bRedraw, bAction) {
       var api = this.api(true);
-
       if (iColumn === undefined || iColumn === null) {
         api.row(mRow).data(mData);
       } else {
         api.cell(mRow, iColumn).data(mData);
       }
-
       if (bAction === undefined || bAction) {
         api.columns.adjust();
       }
-
       if (bRedraw === undefined || bRedraw) {
         api.draw();
       }
-
       return 0;
     };
+
     /**
      * Provide a common method for plug-ins to check the version of DataTables being used, in order
      * to ensure compatibility.
@@ -13717,81 +12529,67 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
      *      alert( oTable.fnVersionCheck( '1.9.0' ) );
      *    } );
      */
-
-
     this.fnVersionCheck = _ext.fnVersionCheck;
-
     var _that = this;
-
     var emptyInit = options === undefined;
     var len = this.length;
-
     if (emptyInit) {
       options = {};
     }
+    this.oApi = this.internal = _ext.internal;
 
-    this.oApi = this.internal = _ext.internal; // Extend with old style plug-in API methods
-
+    // Extend with old style plug-in API methods
     for (var fn in DataTable.ext.internal) {
       if (fn) {
         this[fn] = _fnExternApiFunc(fn);
       }
     }
-
     this.each(function () {
       // For each initialisation we want to give it a clean initialisation
       // object that can be bashed around
       var o = {};
-      var oInit = len > 1 ? // optimisation for single table case
+      var oInit = len > 1 ?
+      // optimisation for single table case
       _fnExtend(o, options, true) : options;
-      /*global oInit,_that,emptyInit*/
 
+      /*global oInit,_that,emptyInit*/
       var i = 0,
-          iLen,
-          j,
-          jLen,
-          k,
-          kLen;
+        iLen,
+        j,
+        jLen,
+        k,
+        kLen;
       var sId = this.getAttribute('id');
       var bInitHandedOff = false;
       var defaults = DataTable.defaults;
       var $this = $(this);
-      /* Sanity check */
 
+      /* Sanity check */
       if (this.nodeName.toLowerCase() != 'table') {
         _fnLog(null, 0, 'Non-table node initialisation (' + this.nodeName + ')', 2);
-
         return;
       }
+
       /* Backwards compatibility for the defaults */
-
-
       _fnCompatOpts(defaults);
-
       _fnCompatCols(defaults.column);
+
       /* Convert the camel-case defaults to Hungarian */
-
-
       _fnCamelToHungarian(defaults, defaults, true);
-
       _fnCamelToHungarian(defaults.column, defaults.column, true);
+
       /* Setting up the initialisation object */
-
-
       _fnCamelToHungarian(defaults, $.extend(oInit, $this.data()), true);
+
       /* Check to see if we are re-initialising a table */
-
-
       var allSettings = DataTable.settings;
-
       for (i = 0, iLen = allSettings.length; i < iLen; i++) {
         var s = allSettings[i];
-        /* Base check on table node */
 
+        /* Base check on table node */
         if (s.nTable == this || s.nTHead && s.nTHead.parentNode == this || s.nTFoot && s.nTFoot.parentNode == this) {
           var bRetrieve = oInit.bRetrieve !== undefined ? oInit.bRetrieve : defaults.bRetrieve;
           var bDestroy = oInit.bDestroy !== undefined ? oInit.bDestroy : defaults.bDestroy;
-
           if (emptyInit || bRetrieve) {
             return s.oInstance;
           } else if (bDestroy) {
@@ -13799,32 +12597,28 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
             break;
           } else {
             _fnLog(s, 0, 'Cannot reinitialise DataTable', 3);
-
             return;
           }
         }
+
         /* If the element we are initialising has the same ID as a table which was previously
          * initialised, but the table nodes don't match (from before) then we destroy the old
          * instance by simply deleting it. This is under the assumption that the table has been
          * destroyed by other methods. Anyone using non-id selectors will need to do this manually
          */
-
-
         if (s.sTableId == this.id) {
           allSettings.splice(i, 1);
           break;
         }
       }
+
       /* Ensure the table has an ID - required for accessibility */
-
-
       if (sId === null || sId === "") {
         sId = "DataTables_Table_" + DataTable.ext._unique++;
         this.id = sId;
       }
+
       /* Create the settings object for this table and set some of the default parameters */
-
-
       var oSettings = $.extend(true, {}, DataTable.models.oSettings, {
         "sDestroyWidth": $this[0].style.width,
         "sInstance": sId,
@@ -13833,84 +12627,67 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
       oSettings.nTable = this;
       oSettings.oApi = _that.internal;
       oSettings.oInit = oInit;
-      allSettings.push(oSettings); // Need to add the instance after the instance after the settings object has been added
+      allSettings.push(oSettings);
+
+      // Need to add the instance after the instance after the settings object has been added
       // to the settings array, so we can self reference the table instance if more than one
+      oSettings.oInstance = _that.length === 1 ? _that : $this.dataTable();
 
-      oSettings.oInstance = _that.length === 1 ? _that : $this.dataTable(); // Backwards compatibility, before we apply all the defaults
-
+      // Backwards compatibility, before we apply all the defaults
       _fnCompatOpts(oInit);
+      _fnLanguageCompat(oInit.oLanguage);
 
-      _fnLanguageCompat(oInit.oLanguage); // If the length menu is given, but the init display length is not, use the length menu
-
-
+      // If the length menu is given, but the init display length is not, use the length menu
       if (oInit.aLengthMenu && !oInit.iDisplayLength) {
         oInit.iDisplayLength = Array.isArray(oInit.aLengthMenu[0]) ? oInit.aLengthMenu[0][0] : oInit.aLengthMenu[0];
-      } // Apply the defaults and init options to make a single init object will all
+      }
+
+      // Apply the defaults and init options to make a single init object will all
       // options defined from defaults and instance options.
+      oInit = _fnExtend($.extend(true, {}, defaults), oInit);
 
-
-      oInit = _fnExtend($.extend(true, {}, defaults), oInit); // Map the initialisation options onto the settings object
-
+      // Map the initialisation options onto the settings object
       _fnMap(oSettings.oFeatures, oInit, ["bPaginate", "bLengthChange", "bFilter", "bSort", "bSortMulti", "bInfo", "bProcessing", "bAutoWidth", "bSortClasses", "bServerSide", "bDeferRender"]);
-
-      _fnMap(oSettings, oInit, ["asStripeClasses", "ajax", "fnServerData", "fnFormatNumber", "sServerMethod", "aaSorting", "aaSortingFixed", "aLengthMenu", "sPaginationType", "sAjaxSource", "sAjaxDataProp", "iStateDuration", "sDom", "bSortCellsTop", "iTabIndex", "fnStateLoadCallback", "fnStateSaveCallback", "renderer", "searchDelay", "rowId", ["iCookieDuration", "iStateDuration"], // backwards compat
+      _fnMap(oSettings, oInit, ["asStripeClasses", "ajax", "fnServerData", "fnFormatNumber", "sServerMethod", "aaSorting", "aaSortingFixed", "aLengthMenu", "sPaginationType", "sAjaxSource", "sAjaxDataProp", "iStateDuration", "sDom", "bSortCellsTop", "iTabIndex", "fnStateLoadCallback", "fnStateSaveCallback", "renderer", "searchDelay", "rowId", ["iCookieDuration", "iStateDuration"],
+      // backwards compat
       ["oSearch", "oPreviousSearch"], ["aoSearchCols", "aoPreSearchCols"], ["iDisplayLength", "_iDisplayLength"]]);
-
       _fnMap(oSettings.oScroll, oInit, [["sScrollX", "sX"], ["sScrollXInner", "sXInner"], ["sScrollY", "sY"], ["bScrollCollapse", "bCollapse"]]);
-
       _fnMap(oSettings.oLanguage, oInit, "fnInfoCallback");
+
       /* Callback functions which are array driven */
-
-
       _fnCallbackReg(oSettings, 'aoDrawCallback', oInit.fnDrawCallback, 'user');
-
       _fnCallbackReg(oSettings, 'aoServerParams', oInit.fnServerParams, 'user');
-
       _fnCallbackReg(oSettings, 'aoStateSaveParams', oInit.fnStateSaveParams, 'user');
-
       _fnCallbackReg(oSettings, 'aoStateLoadParams', oInit.fnStateLoadParams, 'user');
-
       _fnCallbackReg(oSettings, 'aoStateLoaded', oInit.fnStateLoaded, 'user');
-
       _fnCallbackReg(oSettings, 'aoRowCallback', oInit.fnRowCallback, 'user');
-
       _fnCallbackReg(oSettings, 'aoRowCreatedCallback', oInit.fnCreatedRow, 'user');
-
       _fnCallbackReg(oSettings, 'aoHeaderCallback', oInit.fnHeaderCallback, 'user');
-
       _fnCallbackReg(oSettings, 'aoFooterCallback', oInit.fnFooterCallback, 'user');
-
       _fnCallbackReg(oSettings, 'aoInitComplete', oInit.fnInitComplete, 'user');
-
       _fnCallbackReg(oSettings, 'aoPreDrawCallback', oInit.fnPreDrawCallback, 'user');
-
       oSettings.rowIdFn = _fnGetObjectDataFn(oInit.rowId);
+
       /* Browser support detection */
-
       _fnBrowserDetect(oSettings);
-
       var oClasses = oSettings.oClasses;
       $.extend(oClasses, DataTable.ext.classes, oInit.oClasses);
       $this.addClass(oClasses.sTable);
-
       if (oSettings.iInitDisplayStart === undefined) {
         /* Display start point, taking into account the save saving */
         oSettings.iInitDisplayStart = oInit.iDisplayStart;
         oSettings._iDisplayStart = oInit.iDisplayStart;
       }
-
       if (oInit.iDeferLoading !== null) {
         oSettings.bDeferLoading = true;
         var tmp = Array.isArray(oInit.iDeferLoading);
         oSettings._iRecordsDisplay = tmp ? oInit.iDeferLoading[0] : oInit.iDeferLoading;
         oSettings._iRecordsTotal = tmp ? oInit.iDeferLoading[1] : oInit.iDeferLoading;
       }
+
       /* Language definitions */
-
-
       var oLanguage = oSettings.oLanguage;
       $.extend(true, oLanguage, oInit.oLanguage);
-
       if (oLanguage.sUrl) {
         /* Get the language definitions from a file - because this Ajax call makes the language
          * get async to the remainder of this function we use bInitHandedOff to indicate that
@@ -13920,14 +12697,10 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
           dataType: 'json',
           url: oLanguage.sUrl,
           success: function success(json) {
-            _fnLanguageCompat(json);
-
             _fnCamelToHungarian(defaults.oLanguage, json);
-
-            $.extend(true, oLanguage, json);
-
+            _fnLanguageCompat(json);
+            $.extend(true, oLanguage, json, oSettings.oInit.oLanguage);
             _fnCallbackFire(oSettings, null, 'i18n', [oSettings]);
-
             _fnInitialise(oSettings);
           },
           error: function error() {
@@ -13939,82 +12712,71 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
       } else {
         _fnCallbackFire(oSettings, null, 'i18n', [oSettings]);
       }
+
       /*
        * Stripes
        */
-
-
       if (oInit.asStripeClasses === null) {
         oSettings.asStripeClasses = [oClasses.sStripeOdd, oClasses.sStripeEven];
       }
+
       /* Remove row stripe classes if they are already on the table row */
-
-
       var stripeClasses = oSettings.asStripeClasses;
       var rowOne = $this.children('tbody').find('tr').eq(0);
-
       if ($.inArray(true, $.map(stripeClasses, function (el, i) {
         return rowOne.hasClass(el);
       })) !== -1) {
         $('tbody tr', this).removeClass(stripeClasses.join(' '));
         oSettings.asDestroyStripes = stripeClasses.slice();
       }
+
       /*
        * Columns
        * See if we should load columns automatically or use defined ones
        */
-
-
       var anThs = [];
       var aoColumnsInit;
       var nThead = this.getElementsByTagName('thead');
-
       if (nThead.length !== 0) {
         _fnDetectHeader(oSettings.aoHeader, nThead[0]);
-
         anThs = _fnGetUniqueThs(oSettings);
       }
+
       /* If not given a column array, generate one with nulls */
-
-
       if (oInit.aoColumns === null) {
         aoColumnsInit = [];
-
         for (i = 0, iLen = anThs.length; i < iLen; i++) {
           aoColumnsInit.push(null);
         }
       } else {
         aoColumnsInit = oInit.aoColumns;
       }
+
       /* Add the columns */
-
-
       for (i = 0, iLen = aoColumnsInit.length; i < iLen; i++) {
         _fnAddColumn(oSettings, anThs ? anThs[i] : null);
       }
+
       /* Apply the column definitions */
-
-
       _fnApplyColumnDefs(oSettings, oInit.aoColumnDefs, aoColumnsInit, function (iCol, oDef) {
         _fnColumnOptions(oSettings, iCol, oDef);
       });
+
       /* HTML5 attribute detection - build an mData object automatically if the
        * attributes are found
        */
-
-
       if (rowOne.length) {
         var a = function a(cell, name) {
           return cell.getAttribute('data-' + name) !== null ? name : null;
         };
-
         $(rowOne[0]).children('th, td').each(function (i, cell) {
           var col = oSettings.aoColumns[i];
-
+          if (!col) {
+            _fnLog(oSettings, 0, 'Incorrect column count', 18);
+          }
           if (col.mData === i) {
             var sort = a(cell, 'sort') || a(cell, 'order');
             var filter = a(cell, 'filter') || a(cell, 'search');
-
             if (sort !== null || filter !== null) {
               col.mData = {
                 _: i + '.display',
@@ -14022,100 +12784,84 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
                 type: sort !== null ? i + '.@data-' + sort : undefined,
                 filter: filter !== null ? i + '.@data-' + filter : undefined
               };
-
+              col._isArrayHost = true;
               _fnColumnOptions(oSettings, i);
             }
           }
         });
       }
-
       var features = oSettings.oFeatures;
-
       var loadedInit = function loadedInit() {
         /*
          * Sorting
          * @todo For modularisation (1.11) this needs to do into a sort start up handler
          */
+
         // If aaSorting is not defined, then we use the first indicator in asSorting
         // in case that has been altered, so the default sort reflects that option
         if (oInit.aaSorting === undefined) {
           var sorting = oSettings.aaSorting;
-
           for (i = 0, iLen = sorting.length; i < iLen; i++) {
             sorting[i][1] = oSettings.aoColumns[i].asSorting[0];
           }
         }
+
         /* Do a first pass on the sorting classes (allows any size changes to be taken into
          * account, and also will apply sorting disabled classes if disabled
          */
-
-
         _fnSortingClasses(oSettings);
-
         if (features.bSort) {
           _fnCallbackReg(oSettings, 'aoDrawCallback', function () {
             if (oSettings.bSorted) {
               var aSort = _fnSortFlatten(oSettings);
-
               var sortedColumns = {};
               $.each(aSort, function (i, val) {
                 sortedColumns[val.src] = val.dir;
               });
-
               _fnCallbackFire(oSettings, null, 'order', [oSettings, aSort, sortedColumns]);
-
               _fnSortAria(oSettings);
             }
           });
         }
-
         _fnCallbackReg(oSettings, 'aoDrawCallback', function () {
           if (oSettings.bSorted || _fnDataSource(oSettings) === 'ssp' || features.bDeferRender) {
             _fnSortingClasses(oSettings);
           }
         }, 'sc');
+
         /*
          * Final init
          * Cache the header, body and footer as required, creating them if needed
          */
+
         // Work around for Webkit bug 83867 - store the caption-side before removing from doc
-
-
         var captions = $this.children('caption').each(function () {
           this._captionSide = $(this).css('caption-side');
         });
         var thead = $this.children('thead');
-
         if (thead.length === 0) {
           thead = $('<thead/>').appendTo($this);
         }
-
         oSettings.nTHead = thead[0];
         var tbody = $this.children('tbody');
-
         if (tbody.length === 0) {
           tbody = $('<tbody/>').insertAfter(thead);
         }
-
         oSettings.nTBody = tbody[0];
         var tfoot = $this.children('tfoot');
-
         if (tfoot.length === 0 && captions.length > 0 && (oSettings.oScroll.sX !== "" || oSettings.oScroll.sY !== "")) {
           // If we are a scrolling table, and no footer has been given, then we need to create
           // a tfoot element for the caption element to be appended to
           tfoot = $('<tfoot/>').appendTo($this);
         }
-
         if (tfoot.length === 0 || tfoot.children().length === 0) {
           $this.addClass(oClasses.sNoFooter);
         } else if (tfoot.length > 0) {
           oSettings.nTFoot = tfoot[0];
-
           _fnDetectHeader(oSettings.aoFooter, oSettings.nTFoot);
         }
+
         /* Check if there is data passing into the constructor */
-
-
         if (oInit.aaData) {
           for (i = 0; i < oInit.aaData.length; i++) {
             _fnAddData(oSettings, oInit.aaData[i]);
@@ -14127,29 +12873,25 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
            */
           _fnAddTr(oSettings, $(oSettings.nTBody).children('tr'));
         }
+
         /* Copy the data index array */
-
-
         oSettings.aiDisplay = oSettings.aiDisplayMaster.slice();
-        /* Initialisation complete - table can be drawn */
 
+        /* Initialisation complete - table can be drawn */
         oSettings.bInitialised = true;
+
         /* Check if we need to initialise the table (it might not have been handed off to the
          * language processor)
          */
-
         if (bInitHandedOff === false) {
           _fnInitialise(oSettings);
         }
       };
+
       /* Must be done after everything which can be overridden by the state saving! */
-
-
+      _fnCallbackReg(oSettings, 'aoDrawCallback', _fnSaveState, 'state_save');
       if (oInit.bStateSave) {
         features.bStateSave = true;
-
-        _fnCallbackReg(oSettings, 'aoDrawCallback', _fnSaveState, 'state_save');
-
         _fnLoadState(oSettings, oInit, loadedInit);
       } else {
         loadedInit();
@@ -14158,6 +12900,7 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
     _that = null;
     return this;
   };
+
   /*
    * It is useful to have variables which are scoped locally so only the
    * DataTables functions can access them and they don't leak into global space.
@@ -14166,33 +12909,30 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
    * by DataTables as private variables here. This also ensures that there is no
    * clashing of variable names and that they can easily referenced for reuse.
    */
+
   // Defined else where
   //  _selector_run
   //  _selector_opts
   //  _selector_first
   //  _selector_row_indexes
 
-
   var _ext; // DataTable.ext
-
-
   var _Api2; // DataTable.Api
-
-
   var _api_register; // DataTable.Api.register
-
-
   var _api_registerPlural; // DataTable.Api.registerPlural
-
 
   var _re_dic = {};
   var _re_new_lines = /[\r\n\u2028]/g;
-  var _re_html = /<.*?>/g; // This is not strict ISO8601 - Date.parse() is quite lax, although
+  var _re_html = /<.*?>/g;
+
+  // This is not strict ISO8601 - Date.parse() is quite lax, although
   // implementations differ between browsers.
+  var _re_date = /^\d{2,4}[\.\/\-]\d{1,2}[\.\/\-]\d{1,2}([T ]{1}\d{1,2}[:\.]\d{2}([\.:]\d{2})?)?$/;
 
-  var _re_date = /^\d{2,4}[\.\/\-]\d{1,2}[\.\/\-]\d{1,2}([T ]{1}\d{1,2}[:\.]\d{2}([\.:]\d{2})?)?$/; // Escape regular expression special characters
+  // Escape regular expression special characters
+  var _re_escape_regex = new RegExp('(\\' + ['/', '.', '*', '+', '?', '|', '(', ')', '[', ']', '{', '}', '\\', '$', '^', '-'].join('|\\') + ')', 'g');
 
-  var _re_escape_regex = new RegExp('(\\' + ['/', '.', '*', '+', '?', '|', '(', ')', '[', ']', '{', '}', '\\', '$', '^', '-'].join('|\\') + ')', 'g'); // http://en.wikipedia.org/wiki/Foreign_exchange_market
+  // http://en.wikipedia.org/wiki/Foreign_exchange_market
   // - \u20BD - Russian ruble.
   // - \u20a9 - South Korean Won
   // - \u20BA - Turkish Lira
@@ -14204,71 +12944,64 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
   // - Ƀ - Bitcoin
   // - Ξ - Ethereum
   //   standards as thousands separators.
-
-
   var _re_formatted_numeric = /['\u00A0,$£€¥%\u2009\u202F\u20BD\u20a9\u20BArfkɃΞ]/gi;
-
   var _empty = function _empty(d) {
     return !d || d === true || d === '-' ? true : false;
   };
-
   var _intVal = function _intVal(s) {
     var integer = parseInt(s, 10);
     return !isNaN(integer) && isFinite(s) ? integer : null;
-  }; // Convert from a formatted number with characters other than `.` as the
+  };
+
+  // Convert from a formatted number with characters other than `.` as the
   // decimal place, to a Javascript number
-
-
   var _numToDecimal = function _numToDecimal(num, decimalPoint) {
     // Cache created regular expressions for speed as this function is called often
     if (!_re_dic[decimalPoint]) {
       _re_dic[decimalPoint] = new RegExp(_fnEscapeRegex(decimalPoint), 'g');
     }
-
     return typeof num === 'string' && decimalPoint !== '.' ? num.replace(/\./g, '').replace(_re_dic[decimalPoint], '.') : num;
   };
-
   var _isNumber = function _isNumber(d, decimalPoint, formatted) {
-    var strType = typeof d === 'string'; // If empty return immediately so there must be a number if it is a
-    // formatted string (this stops the string "k", or "kr", etc being detected
-    // as a formatted number for currency
-
-    if (_empty(d)) {
+    var type = _typeof(d);
+    var strType = type === 'string';
+    if (type === 'number' || type === 'bigint') {
       return true;
     }
 
+    // If empty return immediately so there must be a number if it is a
+    // formatted string (this stops the string "k", or "kr", etc being detected
+    // as a formatted number for currency
+    if (_empty(d)) {
+      return true;
+    }
     if (decimalPoint && strType) {
       d = _numToDecimal(d, decimalPoint);
     }
-
     if (formatted && strType) {
       d = d.replace(_re_formatted_numeric, '');
     }
-
     return !isNaN(parseFloat(d)) && isFinite(d);
-  }; // A string without HTML in it can be considered to be HTML still
+  };
 
-
+  // A string without HTML in it can be considered to be HTML still
   var _isHtml = function _isHtml(d) {
     return _empty(d) || typeof d === 'string';
   };
-
   var _htmlNumeric = function _htmlNumeric(d, decimalPoint, formatted) {
     if (_empty(d)) {
       return true;
     }
-
     var html = _isHtml(d);
-
     return !html ? null : _isNumber(_stripHtml(d), decimalPoint, formatted) ? true : null;
   };
-
   var _pluck = function _pluck(a, prop, prop2) {
     var out = [];
     var i = 0,
-        ien = a.length; // Could have the test in the loop for slightly smaller code, but speed
-    // is essential here
+      ien = a.length;
 
+    // Could have the test in the loop for slightly smaller code, but speed
+    // is essential here
     if (prop2 !== undefined) {
       for (; i < ien; i++) {
         if (a[i] && a[i][prop]) {
@@ -14282,18 +13015,18 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
         }
       }
     }
-
     return out;
-  }; // Basically the same as _pluck, but rather than looping over `a` we use `order`
+  };
+
+  // Basically the same as _pluck, but rather than looping over `a` we use `order`
   // as the indexes to pick from `a`
-
-
   var _pluck_order = function _pluck_order(a, order, prop, prop2) {
     var out = [];
     var i = 0,
-        ien = order.length; // Could have the test in the loop for slightly smaller code, but speed
-    // is essential here
+      ien = order.length;
 
+    // Could have the test in the loop for slightly smaller code, but speed
+    // is essential here
     if (prop2 !== undefined) {
       for (; i < ien; i++) {
         if (a[order[i]][prop]) {
@@ -14305,14 +13038,11 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
         out.push(a[order[i]][prop]);
       }
     }
-
     return out;
   };
-
   var _range = function _range(len, start) {
     var out = [];
     var end;
-
     if (start === undefined) {
       start = 0;
       end = len;
@@ -14320,30 +13050,25 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
       end = start;
       start = len;
     }
-
     for (var i = start; i < end; i++) {
       out.push(i);
     }
-
     return out;
   };
-
   var _removeEmpty = function _removeEmpty(a) {
     var out = [];
-
     for (var i = 0, ien = a.length; i < ien; i++) {
       if (a[i]) {
         // careful - will remove all falsy values!
         out.push(a[i]);
       }
     }
-
     return out;
   };
-
   var _stripHtml = function _stripHtml(d) {
     return d.replace(_re_html, '');
   };
+
   /**
    * Determine if all values in the array are unique. This means we can short
    * cut the _unique method at the cost of a single loop. A sorted array is used
@@ -14353,26 +13078,21 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
    * @return {boolean} true if all unique, false otherwise
    * @ignore
    */
-
-
   var _areAllUnique = function _areAllUnique(src) {
     if (src.length < 2) {
       return true;
     }
-
     var sorted = src.slice().sort();
     var last = sorted[0];
-
     for (var i = 1, ien = sorted.length; i < ien; i++) {
       if (sorted[i] === last) {
         return false;
       }
-
       last = sorted[i];
     }
-
     return true;
   };
+
   /**
    * Find the unique elements in a source array.
    *
@@ -14380,42 +13100,36 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
    * @return {array} Array of unique items
    * @ignore
    */
-
-
   var _unique = function _unique(src) {
     if (_areAllUnique(src)) {
       return src.slice();
-    } // A faster unique method is to use object keys to identify used values,
+    }
+
+    // A faster unique method is to use object keys to identify used values,
     // but this doesn't work with arrays or objects, which we must also
     // consider. See jsperf.com/compare-array-unique-versions/4 for more
     // information.
-
-
     var out = [],
-        val,
-        i,
-        ien = src.length,
-        j,
-        k = 0;
-
+      val,
+      i,
+      ien = src.length,
+      j,
+      k = 0;
     again: for (i = 0; i < ien; i++) {
       val = src[i];
-
       for (j = 0; j < k; j++) {
         if (out[j] === val) {
           continue again;
         }
       }
-
       out.push(val);
       k++;
     }
-
     return out;
-  }; // Surprisingly this is faster than [].concat.apply
+  };
+
+  // Surprisingly this is faster than [].concat.apply
   // https://jsperf.com/flatten-an-array-loop-vs-reduce/2
-
-
   var _flatten = function _flatten(out, val) {
     if (Array.isArray(val)) {
       for (var i = 0; i < val.length; i++) {
@@ -14424,25 +13138,37 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
     } else {
       out.push(val);
     }
-
     return out;
-  }; // Array.isArray polyfill.
+  };
+  var _includes = function _includes(search, start) {
+    if (start === undefined) {
+      start = 0;
+    }
+    return this.indexOf(search, start) !== -1;
+  };
+
+  // Array.isArray polyfill.
   // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/isArray
-
-
   if (!Array.isArray) {
     Array.isArray = function (arg) {
       return Object.prototype.toString.call(arg) === '[object Array]';
     };
-  } // .trim() polyfill
+  }
+  if (!Array.prototype.includes) {
+    Array.prototype.includes = _includes;
+  }
+
+  // .trim() polyfill
   // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/trim
-
-
   if (!String.prototype.trim) {
     String.prototype.trim = function () {
       return this.replace(/^[\s\uFEFF\xA0]+|[\s\uFEFF\xA0]+$/g, '');
     };
   }
+  if (!String.prototype.includes) {
+    String.prototype.includes = _includes;
+  }
+
   /**
    * DataTables utility methods
    * 
@@ -14453,8 +13179,6 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
    *
    *  @namespace
    */
-
-
   DataTable.util = {
     /**
      * Throttle the calls to a function. Arguments and context are maintained
@@ -14466,13 +13190,12 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
      */
     throttle: function throttle(fn, freq) {
       var frequency = freq !== undefined ? freq : 200,
-          last,
-          timer;
+        last,
+        timer;
       return function () {
         var that = this,
-            now = +new Date(),
-            args = arguments;
-
+          now = +new Date(),
+          args = arguments;
         if (last && now < last + frequency) {
           clearTimeout(timer);
           timer = setTimeout(function () {
@@ -14485,7 +13208,6 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
         }
       };
     },
-
     /**
      * Escape a string such that it can be used in a regular expression
      *
@@ -14494,8 +13216,205 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
      */
     escapeRegex: function escapeRegex(val) {
       return val.replace(_re_escape_regex, '\\$1');
+    },
+    /**
+     * Create a function that will write to a nested object or array
+     * @param {*} source JSON notation string
+     * @returns Write function
+     */
+    set: function set(source) {
+      if ($.isPlainObject(source)) {
+        /* Unlike get, only the underscore (global) option is used for for
+         * setting data since we don't know the type here. This is why an object
+         * option is not documented for `mData` (which is read/write), but it is
+         * for `mRender` which is read only.
+         */
+        return DataTable.util.set(source._);
+      } else if (source === null) {
+        // Nothing to do when the data source is null
+        return function () {};
+      } else if (typeof source === 'function') {
+        return function (data, val, meta) {
+          source(data, 'set', val, meta);
+        };
+      } else if (typeof source === 'string' && (source.indexOf('.') !== -1 || source.indexOf('[') !== -1 || source.indexOf('(') !== -1)) {
+        // Like the get, we need to get data from a nested object
+        var setData = function setData(data, val, src) {
+          var a = _fnSplitObjNotation(src),
+            b;
+          var aLast = a[a.length - 1];
+          var arrayNotation, funcNotation, o, innerSrc;
+          for (var i = 0, iLen = a.length - 1; i < iLen; i++) {
+            // Protect against prototype pollution
+            if (a[i] === '__proto__' || a[i] === 'constructor') {
+              throw new Error('Cannot set prototype values');
+            }
+
+            // Check if we are dealing with an array notation request
+            arrayNotation = a[i].match(__reArray);
+            funcNotation = a[i].match(__reFn);
+            if (arrayNotation) {
+              a[i] = a[i].replace(__reArray, '');
+              data[a[i]] = [];
+
+              // Get the remainder of the nested object to set so we can recurse
+              b = a.slice();
+              b.splice(0, i + 1);
+              innerSrc = b.join('.');
+
+              // Traverse each entry in the array setting the properties requested
+              if (Array.isArray(val)) {
+                for (var j = 0, jLen = val.length; j < jLen; j++) {
+                  o = {};
+                  setData(o, val[j], innerSrc);
+                  data[a[i]].push(o);
+                }
+              } else {
+                // We've been asked to save data to an array, but it
+                // isn't array data to be saved. Best that can be done
+                // is to just save the value.
+                data[a[i]] = val;
+              }
+
+              // The inner call to setData has already traversed through the remainder
+              // of the source and has set the data, thus we can exit here
+              return;
+            } else if (funcNotation) {
+              // Function call
+              a[i] = a[i].replace(__reFn, '');
+              data = data[a[i]](val);
+            }
+
+            // If the nested object doesn't currently exist - since we are
+            // trying to set the value - create it
+            if (data[a[i]] === null || data[a[i]] === undefined) {
+              data[a[i]] = {};
+            }
+            data = data[a[i]];
+          }
+
+          // Last item in the input - i.e, the actual set
+          if (aLast.match(__reFn)) {
+            // Function call
+            data = data[aLast.replace(__reFn, '')](val);
+          } else {
+            // If array notation is used, we just want to strip it and use the property name
+            // and assign the value. If it isn't used, then we get the result we want anyway
+            data[aLast.replace(__reArray, '')] = val;
+          }
+        };
+        return function (data, val) {
+          // meta is also passed in, but not used
+          return setData(data, val, source);
+        };
+      } else {
+        // Array or flat object mapping
+        return function (data, val) {
+          // meta is also passed in, but not used
+          data[source] = val;
+        };
+      }
+    },
+    /**
+     * Create a function that will read nested objects from arrays, based on JSON notation
+     * @param {*} source JSON notation string
+     * @returns Value read
+     */
+    get: function get(source) {
+      if ($.isPlainObject(source)) {
+        // Build an object of get functions, and wrap them in a single call
+        var o = {};
+        $.each(source, function (key, val) {
+          if (val) {
+            o[key] = DataTable.util.get(val);
+          }
+        });
+        return function (data, type, row, meta) {
+          var t = o[type] || o._;
+          return t !== undefined ? t(data, type, row, meta) : data;
+        };
+      } else if (source === null) {
+        // Give an empty string for rendering / sorting etc
+        return function (data) {
+          // type, row and meta also passed, but not used
+          return data;
+        };
+      } else if (typeof source === 'function') {
+        return function (data, type, row, meta) {
+          return source(data, type, row, meta);
+        };
+      } else if (typeof source === 'string' && (source.indexOf('.') !== -1 || source.indexOf('[') !== -1 || source.indexOf('(') !== -1)) {
+        /* If there is a . in the source string then the data source is in a
+         * nested object so we loop over the data for each level to get the next
+         * level down. On each loop we test for undefined, and if found immediately
+         * return. This allows entire objects to be missing and sDefaultContent to
+         * be used if defined, rather than throwing an error
+         */
+        var fetchData = function fetchData(data, type, src) {
+          var arrayNotation, funcNotation, out, innerSrc;
+          if (src !== "") {
+            var a = _fnSplitObjNotation(src);
+            for (var i = 0, iLen = a.length; i < iLen; i++) {
+              // Check if we are dealing with special notation
+              arrayNotation = a[i].match(__reArray);
+              funcNotation = a[i].match(__reFn);
+              if (arrayNotation) {
+                // Array notation
+                a[i] = a[i].replace(__reArray, '');
+
+                // Condition allows simply [] to be passed in
+                if (a[i] !== "") {
+                  data = data[a[i]];
+                }
+                out = [];
+
+                // Get the remainder of the nested object to get
+                a.splice(0, i + 1);
+                innerSrc = a.join('.');
+
+                // Traverse each entry in the array getting the properties requested
+                if (Array.isArray(data)) {
+                  for (var j = 0, jLen = data.length; j < jLen; j++) {
+                    out.push(fetchData(data[j], type, innerSrc));
+                  }
+                }
+
+                // If a string is given in between the array notation indicators, that
+                // is used to join the strings together, otherwise an array is returned
+                var join = arrayNotation[0].substring(1, arrayNotation[0].length - 1);
+                data = join === "" ? out : out.join(join);
+
+                // The inner call to fetchData has already traversed through the remainder
+                // of the source requested, so we exit from the loop
+                break;
+              } else if (funcNotation) {
+                // Function call
+                a[i] = a[i].replace(__reFn, '');
+                data = data[a[i]]();
+                continue;
+              }
+              if (data === null || data[a[i]] === undefined) {
+                return undefined;
+              }
+              data = data[a[i]];
+            }
+          }
+          return data;
+        };
+        return function (data, type) {
+          // row and meta also passed, but not used
+          return fetchData(data, type, source);
+        };
+      } else {
+        // Array or flat object mapping
+        return function (data, type) {
+          // row and meta also passed, but not used
+          return data[source];
+        };
+      }
     }
   };
+
   /**
    * Create a mapping object that allows camel case parameters to be looked up
    * for their Hungarian counterparts. The mapping is stored in a private
@@ -14503,19 +13422,16 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
    *  @param {object} o
    *  @memberof DataTable#oApi
    */
-
   function _fnHungarianMap(o) {
     var hungarian = 'a aa ai ao as b fn i m o s ',
-        match,
-        newKey,
-        map = {};
+      match,
+      newKey,
+      map = {};
     $.each(o, function (key, val) {
       match = key.match(/^([^A-Z]+?)([A-Z])/);
-
       if (match && hungarian.indexOf(match[1] + ' ') !== -1) {
         newKey = key.replace(match[0], match[2].toLowerCase());
         map[newKey] = key;
-
         if (match[1] === 'o') {
           _fnHungarianMap(o[key]);
         }
@@ -14523,6 +13439,7 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
     });
     o._hungarianMap = map;
   }
+
   /**
    * Convert from camel case parameters to Hungarian, based on a Hungarian map
    * created by _fnHungarianMap.
@@ -14534,17 +13451,13 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
    *    won't be.
    *  @memberof DataTable#oApi
    */
-
-
   function _fnCamelToHungarian(src, user, force) {
     if (!src._hungarianMap) {
       _fnHungarianMap(src);
     }
-
     var hungarianKey;
     $.each(user, function (key, val) {
       hungarianKey = src._hungarianMap[key];
-
       if (hungarianKey !== undefined && (force || user[hungarianKey] === undefined)) {
         // For objects, we need to buzz down into the object to copy parameters
         if (hungarianKey.charAt(0) === 'o') {
@@ -14552,9 +13465,7 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
           if (!user[hungarianKey]) {
             user[hungarianKey] = {};
           }
-
           $.extend(true, user[hungarianKey], user[key]);
-
           _fnCamelToHungarian(src[hungarianKey], user[hungarianKey], force);
         } else {
           user[hungarianKey] = user[key];
@@ -14562,6 +13473,7 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
       }
     });
   }
+
   /**
    * Language compatibility - when certain options are given, and others aren't, we
    * need to duplicate the values over, in order to provide backwards compatibility
@@ -14569,99 +13481,82 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
    *  @param {object} oSettings dataTables settings object
    *  @memberof DataTable#oApi
    */
-
-
   function _fnLanguageCompat(lang) {
     // Note the use of the Hungarian notation for the parameters in this method as
     // this is called after the mapping of camelCase to Hungarian
-    var defaults = DataTable.defaults.oLanguage; // Default mapping
+    var defaults = DataTable.defaults.oLanguage;
 
+    // Default mapping
     var defaultDecimal = defaults.sDecimal;
-
     if (defaultDecimal) {
       _addNumericSort(defaultDecimal);
     }
-
     if (lang) {
-      var zeroRecords = lang.sZeroRecords; // Backwards compatibility - if there is no sEmptyTable given, then use the same as
-      // sZeroRecords - assuming that is given.
+      var zeroRecords = lang.sZeroRecords;
 
+      // Backwards compatibility - if there is no sEmptyTable given, then use the same as
+      // sZeroRecords - assuming that is given.
       if (!lang.sEmptyTable && zeroRecords && defaults.sEmptyTable === "No data available in table") {
         _fnMap(lang, lang, 'sZeroRecords', 'sEmptyTable');
-      } // Likewise with loading records
+      }
 
-
+      // Likewise with loading records
       if (!lang.sLoadingRecords && zeroRecords && defaults.sLoadingRecords === "Loading...") {
         _fnMap(lang, lang, 'sZeroRecords', 'sLoadingRecords');
-      } // Old parameter name of the thousands separator mapped onto the new
+      }
 
-
+      // Old parameter name of the thousands separator mapped onto the new
       if (lang.sInfoThousands) {
         lang.sThousands = lang.sInfoThousands;
       }
-
       var decimal = lang.sDecimal;
-
       if (decimal && defaultDecimal !== decimal) {
         _addNumericSort(decimal);
       }
     }
   }
+
   /**
    * Map one parameter onto another
    *  @param {object} o Object to map
    *  @param {*} knew The new parameter name
    *  @param {*} old The old parameter name
    */
-
-
   var _fnCompatMap = function _fnCompatMap(o, knew, old) {
     if (o[knew] !== undefined) {
       o[old] = o[knew];
     }
   };
+
   /**
    * Provide backwards compatibility for the main DT options. Note that the new
    * options are mapped onto the old parameters, so this is an external interface
    * change only.
    *  @param {object} init Object to map
    */
-
-
   function _fnCompatOpts(init) {
     _fnCompatMap(init, 'ordering', 'bSort');
-
     _fnCompatMap(init, 'orderMulti', 'bSortMulti');
-
     _fnCompatMap(init, 'orderClasses', 'bSortClasses');
-
     _fnCompatMap(init, 'orderCellsTop', 'bSortCellsTop');
-
     _fnCompatMap(init, 'order', 'aaSorting');
-
     _fnCompatMap(init, 'orderFixed', 'aaSortingFixed');
-
     _fnCompatMap(init, 'paging', 'bPaginate');
-
     _fnCompatMap(init, 'pagingType', 'sPaginationType');
-
     _fnCompatMap(init, 'pageLength', 'iDisplayLength');
+    _fnCompatMap(init, 'searching', 'bFilter');
 
-    _fnCompatMap(init, 'searching', 'bFilter'); // Boolean initialisation of x-scrolling
-
-
+    // Boolean initialisation of x-scrolling
     if (typeof init.sScrollX === 'boolean') {
       init.sScrollX = init.sScrollX ? '100%' : '';
     }
-
     if (typeof init.scrollX === 'boolean') {
       init.scrollX = init.scrollX ? '100%' : '';
-    } // Column search objects are in an array, so it needs to be converted
+    }
+
+    // Column search objects are in an array, so it needs to be converted
     // element by element
-
-
     var searchCols = init.aoSearchCols;
-
     if (searchCols) {
       for (var i = 0, ien = searchCols.length; i < ien; i++) {
         if (searchCols[i]) {
@@ -14670,45 +13565,40 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
       }
     }
   }
+
   /**
    * Provide backwards compatibility for column options. Note that the new options
    * are mapped onto the old parameters, so this is an external interface change
    * only.
    *  @param {object} init Object to map
    */
-
-
   function _fnCompatCols(init) {
     _fnCompatMap(init, 'orderable', 'bSortable');
-
     _fnCompatMap(init, 'orderData', 'aDataSort');
-
     _fnCompatMap(init, 'orderSequence', 'asSorting');
+    _fnCompatMap(init, 'orderDataType', 'sortDataType');
 
-    _fnCompatMap(init, 'orderDataType', 'sortDataType'); // orderData can be given as an integer
-
-
+    // orderData can be given as an integer
     var dataSort = init.aDataSort;
-
     if (typeof dataSort === 'number' && !Array.isArray(dataSort)) {
       init.aDataSort = [dataSort];
     }
   }
+
   /**
    * Browser feature detection for capabilities, quirks
    *  @param {object} settings dataTables settings object
    *  @memberof DataTable#oApi
    */
-
-
   function _fnBrowserDetect(settings) {
     // We don't need to do this every time DataTables is constructed, the values
     // calculated are specific to the browser and OS configuration which we
     // don't expect to change between initialisations
     if (!DataTable.__browser) {
       var browser = {};
-      DataTable.__browser = browser; // Scrolling feature / quirks detection
+      DataTable.__browser = browser;
 
+      // Scrolling feature / quirks detection
       var n = $('<div/>').css({
         position: 'fixed',
         top: 0,
@@ -14728,7 +13618,9 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
         height: 10
       }))).appendTo('body');
       var outer = n.children();
-      var inner = outer.children(); // Numbers below, in order, are:
+      var inner = outer.children();
+
+      // Numbers below, in order, are:
       // inner.offsetWidth, inner.clientWidth, outer.offsetWidth, outer.clientWidth
       //
       // IE6 XP:                           100 100 100  83
@@ -14737,62 +13629,58 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
       // Evergreen Windows:                 83  83 100  83
       // Evergreen Mac with scrollbars:     85  85 100  85
       // Evergreen Mac without scrollbars: 100 100 100 100
-      // Get scrollbar width
 
-      browser.barWidth = outer[0].offsetWidth - outer[0].clientWidth; // IE6/7 will oversize a width 100% element inside a scrolling element, to
+      // Get scrollbar width
+      browser.barWidth = outer[0].offsetWidth - outer[0].clientWidth;
+
+      // IE6/7 will oversize a width 100% element inside a scrolling element, to
       // include the width of the scrollbar, while other browsers ensure the inner
       // element is contained without forcing scrolling
+      browser.bScrollOversize = inner[0].offsetWidth === 100 && outer[0].clientWidth !== 100;
 
-      browser.bScrollOversize = inner[0].offsetWidth === 100 && outer[0].clientWidth !== 100; // In rtl text layout, some browsers (most, but not all) will place the
+      // In rtl text layout, some browsers (most, but not all) will place the
       // scrollbar on the left, rather than the right.
+      browser.bScrollbarLeft = Math.round(inner.offset().left) !== 1;
 
-      browser.bScrollbarLeft = Math.round(inner.offset().left) !== 1; // IE8- don't provide height and width for getBoundingClientRect
-
+      // IE8- don't provide height and width for getBoundingClientRect
       browser.bBounding = n[0].getBoundingClientRect().width ? true : false;
       n.remove();
     }
-
     $.extend(settings.oBrowser, DataTable.__browser);
     settings.oScroll.iBarWidth = DataTable.__browser.barWidth;
   }
+
   /**
    * Array.prototype reduce[Right] method, used for browsers which don't support
    * JS 1.6. Done this way to reduce code size, since we iterate either way
    *  @param {object} settings dataTables settings object
    *  @memberof DataTable#oApi
    */
-
-
   function _fnReduce(that, fn, init, start, end, inc) {
     var i = start,
-        value,
-        isSet = false;
-
+      value,
+      isSet = false;
     if (init !== undefined) {
       value = init;
       isSet = true;
     }
-
     while (i !== end) {
       if (!that.hasOwnProperty(i)) {
         continue;
       }
-
       value = isSet ? fn(value, that[i], i, that) : that[i];
       isSet = true;
       i += inc;
     }
-
     return value;
   }
+
   /**
    * Add a column to the list used for the table with default values
    *  @param {object} oSettings dataTables settings object
    *  @param {node} nTh The th element for this column
    *  @memberof DataTable#oApi
    */
-
-
   function _fnAddColumn(oSettings, nTh) {
     // Add column to aoColumns array
     var oDefaults = DataTable.defaults.column;
@@ -14804,15 +13692,18 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
       "mData": oDefaults.mData ? oDefaults.mData : iCol,
       idx: iCol
     });
-    oSettings.aoColumns.push(oCol); // Add search object for column specific search. Note that the `searchCols[ iCol ]`
+    oSettings.aoColumns.push(oCol);
+
+    // Add search object for column specific search. Note that the `searchCols[ iCol ]`
     // passed into extend can be undefined. This allows the user to give a default
     // with only some of the parameters defined, and also not give a default
-
     var searchCols = oSettings.aoPreSearchCols;
-    searchCols[iCol] = $.extend({}, DataTable.models.oSearch, searchCols[iCol]); // Use the default column options function to initialise classes etc
+    searchCols[iCol] = $.extend({}, DataTable.models.oSearch, searchCols[iCol]);
 
+    // Use the default column options function to initialise classes etc
     _fnColumnOptions(oSettings, iCol, $(nTh).data());
   }
+
   /**
    * Apply options for a column
    *  @param {object} oSettings dataTables settings object
@@ -14820,111 +13711,99 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
    *  @param {object} oOptions object with sType, bVisible and bSearchable etc
    *  @memberof DataTable#oApi
    */
-
-
   function _fnColumnOptions(oSettings, iCol, oOptions) {
     var oCol = oSettings.aoColumns[iCol];
     var oClasses = oSettings.oClasses;
-    var th = $(oCol.nTh); // Try to get width information from the DOM. We can't get it from CSS
-    // as we'd need to parse the CSS stylesheet. `width` option can override
+    var th = $(oCol.nTh);
 
+    // Try to get width information from the DOM. We can't get it from CSS
+    // as we'd need to parse the CSS stylesheet. `width` option can override
     if (!oCol.sWidthOrig) {
       // Width attribute
-      oCol.sWidthOrig = th.attr('width') || null; // Style attribute
+      oCol.sWidthOrig = th.attr('width') || null;
 
+      // Style attribute
       var t = (th.attr('style') || '').match(/width:\s*(\d+[pxem%]+)/);
-
       if (t) {
         oCol.sWidthOrig = t[1];
       }
     }
+
     /* User specified column options */
-
-
     if (oOptions !== undefined && oOptions !== null) {
       // Backwards compatibility
-      _fnCompatCols(oOptions); // Map camel case parameters to their Hungarian counterparts
+      _fnCompatCols(oOptions);
 
-
+      // Map camel case parameters to their Hungarian counterparts
       _fnCamelToHungarian(DataTable.defaults.column, oOptions, true);
+
       /* Backwards compatibility for mDataProp */
-
-
       if (oOptions.mDataProp !== undefined && !oOptions.mData) {
         oOptions.mData = oOptions.mDataProp;
       }
-
       if (oOptions.sType) {
         oCol._sManualType = oOptions.sType;
-      } // `class` is a reserved word in Javascript, so we need to provide
+      }
+
+      // `class` is a reserved word in Javascript, so we need to provide
       // the ability to use a valid name for the camel case input
-
-
       if (oOptions.className && !oOptions.sClass) {
         oOptions.sClass = oOptions.className;
       }
-
       if (oOptions.sClass) {
         th.addClass(oOptions.sClass);
       }
-
+      var origClass = oCol.sClass;
       $.extend(oCol, oOptions);
-
       _fnMap(oCol, oOptions, "sWidth", "sWidthOrig");
+
+      // Merge class from previously defined classes with this one, rather than just
+      // overwriting it in the extend above
+      if (origClass !== oCol.sClass) {
+        oCol.sClass = origClass + ' ' + oCol.sClass;
+      }
+
       /* iDataSort to be applied (backwards compatibility), but aDataSort will take
        * priority if defined
        */
-
-
       if (oOptions.iDataSort !== undefined) {
         oCol.aDataSort = [oOptions.iDataSort];
       }
-
       _fnMap(oCol, oOptions, "aDataSort");
     }
+
     /* Cache the data get and set functions for speed */
-
-
     var mDataSrc = oCol.mData;
-
     var mData = _fnGetObjectDataFn(mDataSrc);
-
     var mRender = oCol.mRender ? _fnGetObjectDataFn(oCol.mRender) : null;
-
     var attrTest = function attrTest(src) {
       return typeof src === 'string' && src.indexOf('@') !== -1;
     };
-
     oCol._bAttrSrc = $.isPlainObject(mDataSrc) && (attrTest(mDataSrc.sort) || attrTest(mDataSrc.type) || attrTest(mDataSrc.filter));
     oCol._setter = null;
-
     oCol.fnGetData = function (rowData, type, meta) {
       var innerData = mData(rowData, type, undefined, meta);
       return mRender && type ? mRender(innerData, type, rowData, meta) : innerData;
     };
-
     oCol.fnSetData = function (rowData, val, meta) {
       return _fnSetObjectDataFn(mDataSrc)(rowData, val, meta);
-    }; // Indicate if DataTables should read DOM data as an object or array
+    };
+
+    // Indicate if DataTables should read DOM data as an object or array
     // Used in _fnGetRowElements
-
-
-    if (typeof mDataSrc !== 'number') {
+    if (typeof mDataSrc !== 'number' && !oCol._isArrayHost) {
       oSettings._rowReadObject = true;
     }
+
     /* Feature sorting overrides column specific when off */
-
-
     if (!oSettings.oFeatures.bSort) {
       oCol.bSortable = false;
       th.addClass(oClasses.sSortableNone); // Have to add class here as order event isn't called
     }
+
     /* Check that the class assignment is correct for sorting */
-
-
     var bAsc = $.inArray('asc', oCol.asSorting) !== -1;
     var bDesc = $.inArray('desc', oCol.asSorting) !== -1;
-
     if (!oCol.bSortable || !bAsc && !bDesc) {
       oCol.sSortingClass = oClasses.sSortableNone;
       oCol.sSortingClassJUI = "";
@@ -14939,76 +13818,66 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
       oCol.sSortingClassJUI = oClasses.sSortJUI;
     }
   }
+
   /**
    * Adjust the table column widths for new data. Note: you would probably want to
    * do a redraw after calling this function!
    *  @param {object} settings dataTables settings object
    *  @memberof DataTable#oApi
    */
-
-
   function _fnAdjustColumnSizing(settings) {
     /* Not interested in doing column width calculation if auto-width is disabled */
     if (settings.oFeatures.bAutoWidth !== false) {
       var columns = settings.aoColumns;
-
       _fnCalculateColumnWidths(settings);
-
       for (var i = 0, iLen = columns.length; i < iLen; i++) {
         columns[i].nTh.style.width = columns[i].sWidth;
       }
     }
-
     var scroll = settings.oScroll;
-
     if (scroll.sY !== '' || scroll.sX !== '') {
       _fnScrollDraw(settings);
     }
-
     _fnCallbackFire(settings, null, 'column-sizing', [settings]);
   }
+
   /**
-   * Covert the index of a visible column to the index in the data array (take account
+   * Convert the index of a visible column to the index in the data array (take account
    * of hidden columns)
    *  @param {object} oSettings dataTables settings object
    *  @param {int} iMatch Visible column index to lookup
    *  @returns {int} i the data index
    *  @memberof DataTable#oApi
    */
-
-
   function _fnVisibleToColumnIndex(oSettings, iMatch) {
     var aiVis = _fnGetColumns(oSettings, 'bVisible');
-
     return typeof aiVis[iMatch] === 'number' ? aiVis[iMatch] : null;
   }
+
   /**
-   * Covert the index of an index in the data array and convert it to the visible
+   * Convert the index of an index in the data array and convert it to the visible
    *   column index (take account of hidden columns)
    *  @param {int} iMatch Column index to lookup
    *  @param {object} oSettings dataTables settings object
    *  @returns {int} i the data index
    *  @memberof DataTable#oApi
    */
-
-
   function _fnColumnIndexToVisible(oSettings, iMatch) {
     var aiVis = _fnGetColumns(oSettings, 'bVisible');
-
     var iPos = $.inArray(iMatch, aiVis);
     return iPos !== -1 ? iPos : null;
   }
+
   /**
    * Get the number of visible columns
    *  @param {object} oSettings dataTables settings object
    *  @returns {int} i the number of visible columns
    *  @memberof DataTable#oApi
    */
-
-
   function _fnVisbleColumns(oSettings) {
-    var vis = 0; // No reduce in IE8, use a loop for now
+    var vis = 0;
 
+    // No reduce in IE8, use a loop for now
     $.each(oSettings.aoColumns, function (i, col) {
       if (col.bVisible && $(col.nTh).css('display') !== 'none') {
         vis++;
@@ -15016,6 +13885,7 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
     });
     return vis;
   }
+
   /**
    * Get an array of column indexes that match a given property
    *  @param {object} oSettings dataTables settings object
@@ -15024,8 +13894,6 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
    *  @returns {array} Array of indexes with matched properties
    *  @memberof DataTable#oApi
    */
-
-
   function _fnGetColumns(oSettings, sParam) {
     var a = [];
     $.map(oSettings.aoColumns, function (val, i) {
@@ -15035,24 +13903,23 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
     });
     return a;
   }
+
   /**
    * Calculate the 'type' of a column
    *  @param {object} settings dataTables settings object
    *  @memberof DataTable#oApi
    */
-
-
   function _fnColumnTypes(settings) {
     var columns = settings.aoColumns;
     var data = settings.aoData;
     var types = DataTable.ext.type.detect;
     var i, ien, j, jen, k, ken;
-    var col, cell, detectedType, cache; // For each column, spin over the 
+    var col, cell, detectedType, cache;
 
+    // For each column, spin over the 
     for (i = 0, ien = columns.length; i < ien; i++) {
       col = columns[i];
       cache = [];
-
       if (!col.sType && col._sManualType) {
         col.sType = col._sManualType;
       } else if (!col.sType) {
@@ -15063,40 +13930,41 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
             if (cache[k] === undefined) {
               cache[k] = _fnGetCellData(settings, k, i, 'type');
             }
+            detectedType = types[j](cache[k], settings);
 
-            detectedType = types[j](cache[k], settings); // If null, then this type can't apply to this column, so
+            // If null, then this type can't apply to this column, so
             // rather than testing all cells, break out. There is an
             // exception for the last type which is `html`. We need to
             // scan all rows since it is possible to mix string and HTML
             // types
-
             if (!detectedType && j !== types.length - 1) {
               break;
-            } // Only a single match is needed for html type since it is
+            }
+
+            // Only a single match is needed for html type since it is
             // bottom of the pile and very similar to string - but it
             // must not be empty
-
-
             if (detectedType === 'html' && !_empty(cache[k])) {
               break;
             }
-          } // Type is valid for all data points in the column - use this
+          }
+
+          // Type is valid for all data points in the column - use this
           // type
-
-
           if (detectedType) {
             col.sType = detectedType;
             break;
           }
-        } // Fall back - if no type was detected, always use string
+        }
 
-
+        // Fall back - if no type was detected, always use string
         if (!col.sType) {
           col.sType = 'string';
         }
       }
     }
   }
+
   /**
    * Take the column definitions and static columns arrays and calculate how
    * they relate to column indexes. The callback function will then apply the
@@ -15108,33 +13976,29 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
    *    column index and the definition for that column.
    *  @memberof DataTable#oApi
    */
-
-
   function _fnApplyColumnDefs(oSettings, aoColDefs, aoCols, fn) {
     var i, iLen, j, jLen, k, kLen, def;
-    var columns = oSettings.aoColumns; // Column definitions with aTargets
+    var columns = oSettings.aoColumns;
 
+    // Column definitions with aTargets
     if (aoColDefs) {
       /* Loop over the definitions array - loop in reverse so first instance has priority */
       for (i = aoColDefs.length - 1; i >= 0; i--) {
         def = aoColDefs[i];
+
         /* Each definition can target multiple columns, as it is an array */
-
-        var aTargets = def.targets !== undefined ? def.targets : def.aTargets;
-
+        var aTargets = def.target !== undefined ? def.target : def.targets !== undefined ? def.targets : def.aTargets;
         if (!Array.isArray(aTargets)) {
           aTargets = [aTargets];
         }
-
         for (j = 0, jLen = aTargets.length; j < jLen; j++) {
           if (typeof aTargets[j] === 'number' && aTargets[j] >= 0) {
             /* Add columns that we don't yet know about */
             while (columns.length <= aTargets[j]) {
               _fnAddColumn(oSettings);
             }
+
             /* Integer, basic index */
-
-
             fn(aTargets[j], def);
           } else if (typeof aTargets[j] === 'number' && aTargets[j] < 0) {
             /* Negative integer, right to left column counting */
@@ -15149,15 +14013,16 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
           }
         }
       }
-    } // Statically defined columns array
+    }
 
-
+    // Statically defined columns array
     if (aoCols) {
       for (i = 0, iLen = aoCols.length; i < iLen; i++) {
         fn(i, aoCols[i]);
       }
     }
   }
+
   /**
    * Add a data array to the table, creating DOM node etc. This is the parallel to
    * _fnGatherData, but for adding rows from a Javascript source, rather than a
@@ -15171,8 +14036,6 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
    *  @returns {int} >=0 if successful (index of new aoData entry), -1 if failed
    *  @memberof DataTable#oApi
    */
-
-
   function _fnAddData(oSettings, aDataIn, nTr, anTds) {
     /* Create the object for storing information about this new row */
     var iRow = oSettings.aoData.length;
@@ -15182,32 +14045,30 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
     });
     oData._aData = aDataIn;
     oSettings.aoData.push(oData);
+
     /* Create the cells */
-
     var nTd, sThisType;
-    var columns = oSettings.aoColumns; // Invalidate the column types as the new data needs to be revalidated
+    var columns = oSettings.aoColumns;
 
+    // Invalidate the column types as the new data needs to be revalidated
     for (var i = 0, iLen = columns.length; i < iLen; i++) {
       columns[i].sType = null;
     }
+
     /* Add to the display array */
-
-
     oSettings.aiDisplayMaster.push(iRow);
     var id = oSettings.rowIdFn(aDataIn);
-
     if (id !== undefined) {
       oSettings.aIds[id] = oData;
     }
+
     /* Create the DOM information, or register it if already present */
-
-
     if (nTr || !oSettings.oFeatures.bDeferRender) {
       _fnCreateTr(oSettings, iRow, nTr, anTds);
     }
-
     return iRow;
   }
+
   /**
    * Add one or more TR elements to the table. Generally we'd expect to
    * use this for reading data from a DOM sourced table, but it could be
@@ -15218,20 +14079,19 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
    *  @returns {array} Array of indexes for the added rows
    *  @memberof DataTable#oApi
    */
-
-
   function _fnAddTr(settings, trs) {
-    var row; // Allow an individual node to be passed in
+    var row;
 
+    // Allow an individual node to be passed in
     if (!(trs instanceof $)) {
       trs = $(trs);
     }
-
     return trs.map(function (i, el) {
       row = _fnGetRowElements(settings, el);
       return _fnAddData(settings, row.data, el, row.cells);
     });
   }
+
   /**
    * Take a TR element and convert it to an index in aoData
    *  @param {object} oSettings dataTables settings object
@@ -15239,11 +14099,10 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
    *  @returns {int} index if the node is found, null if not
    *  @memberof DataTable#oApi
    */
-
-
   function _fnNodeToDataIndex(oSettings, n) {
     return n._DT_RowIndex !== undefined ? n._DT_RowIndex : null;
   }
+
   /**
    * Take a TD element and convert it into a column data index (not the visible index)
    *  @param {object} oSettings dataTables settings object
@@ -15252,23 +14111,25 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
    *  @returns {int} index if the node is found, -1 if not
    *  @memberof DataTable#oApi
    */
-
-
   function _fnNodeToColumnIndex(oSettings, iRow, n) {
     return $.inArray(n, oSettings.aoData[iRow].anCells);
   }
+
   /**
    * Get the data for a given cell from the internal cache, taking into account data mapping
    *  @param {object} settings dataTables settings object
    *  @param {int} rowIdx aoData row id
    *  @param {int} colIdx Column index
-   *  @param {string} type data get type ('display', 'type' 'filter' 'sort')
+   *  @param {string} type data get type ('display', 'type' 'filter|search' 'sort|order')
    *  @returns {*} Cell data
    *  @memberof DataTable#oApi
    */
-
-
   function _fnGetCellData(settings, rowIdx, colIdx, type) {
+    if (type === 'search') {
+      type = 'filter';
+    } else if (type === 'order') {
+      type = 'sort';
+    }
     var draw = settings.iDraw;
     var col = settings.aoColumns[colIdx];
     var rowData = settings.aoData[rowIdx]._aData;
@@ -15278,19 +14139,16 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
       row: rowIdx,
       col: colIdx
     });
-
     if (cellData === undefined) {
       if (settings.iDrawError != draw && defaultContent === null) {
         _fnLog(settings, 0, "Requested unknown parameter " + (typeof col.mData == 'function' ? '{function}' : "'" + col.mData + "'") + " for row " + rowIdx + ", column " + colIdx, 4);
-
         settings.iDrawError = draw;
       }
-
       return defaultContent;
-    } // When the data source is null and a specific data type is requested (i.e.
+    }
+
+    // When the data source is null and a specific data type is requested (i.e.
     // not the original data), we can use default column data
-
-
     if ((cellData === rowData || cellData === null) && defaultContent !== null && type !== undefined) {
       cellData = defaultContent;
     } else if (typeof cellData === 'function') {
@@ -15298,13 +14156,18 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
       // executing in the scope of the data object (for instances)
       return cellData.call(rowData);
     }
-
-    if (cellData === null && type == 'display') {
+    if (cellData === null && type === 'display') {
       return '';
     }
-
+    if (type === 'filter') {
+      var fomatters = DataTable.ext.type.search;
+      if (fomatters[col.sType]) {
+        cellData = fomatters[col.sType](cellData);
+      }
+    }
     return cellData;
   }
+
   /**
    * Set the value for a specific cell, into the internal data cache
    *  @param {object} settings dataTables settings object
@@ -15313,8 +14176,6 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
    *  @param {*} val Value to set
    *  @memberof DataTable#oApi
    */
-
-
   function _fnSetCellData(settings, rowIdx, colIdx, val) {
     var col = settings.aoColumns[colIdx];
     var rowData = settings.aoData[rowIdx]._aData;
@@ -15323,22 +14184,23 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
       row: rowIdx,
       col: colIdx
     });
-  } // Private variable that is used to match action syntax in the data property object
+  }
 
-
+  // Private variable that is used to match action syntax in the data property object
   var __reArray = /\[.*?\]$/;
   var __reFn = /\(\)$/;
+
   /**
    * Split string on periods, taking into account escaped periods
    * @param  {string} str String to split
    * @return {array} Split string
    */
-
   function _fnSplitObjNotation(str) {
     return $.map(str.match(/(\\.|[^\.])+/g) || [''], function (s) {
       return s.replace(/\\\./g, '.');
     });
   }
+
   /**
    * Return a function that can be used to get data from a source object, taking
    * into account the ability to use nested objects as a source
@@ -15346,105 +14208,8 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
    *  @returns {function} Data get function
    *  @memberof DataTable#oApi
    */
+  var _fnGetObjectDataFn = DataTable.util.get;
 
-
-  function _fnGetObjectDataFn(mSource) {
-    if ($.isPlainObject(mSource)) {
-      /* Build an object of get functions, and wrap them in a single call */
-      var o = {};
-      $.each(mSource, function (key, val) {
-        if (val) {
-          o[key] = _fnGetObjectDataFn(val);
-        }
-      });
-      return function (data, type, row, meta) {
-        var t = o[type] || o._;
-        return t !== undefined ? t(data, type, row, meta) : data;
-      };
-    } else if (mSource === null) {
-      /* Give an empty string for rendering / sorting etc */
-      return function (data) {
-        // type, row and meta also passed, but not used
-        return data;
-      };
-    } else if (typeof mSource === 'function') {
-      return function (data, type, row, meta) {
-        return mSource(data, type, row, meta);
-      };
-    } else if (typeof mSource === 'string' && (mSource.indexOf('.') !== -1 || mSource.indexOf('[') !== -1 || mSource.indexOf('(') !== -1)) {
-      /* If there is a . in the source string then the data source is in a
-       * nested object so we loop over the data for each level to get the next
-       * level down. On each loop we test for undefined, and if found immediately
-       * return. This allows entire objects to be missing and sDefaultContent to
-       * be used if defined, rather than throwing an error
-       */
-      var fetchData = function fetchData(data, type, src) {
-        var arrayNotation, funcNotation, out, innerSrc;
-
-        if (src !== "") {
-          var a = _fnSplitObjNotation(src);
-
-          for (var i = 0, iLen = a.length; i < iLen; i++) {
-            // Check if we are dealing with special notation
-            arrayNotation = a[i].match(__reArray);
-            funcNotation = a[i].match(__reFn);
-
-            if (arrayNotation) {
-              // Array notation
-              a[i] = a[i].replace(__reArray, ''); // Condition allows simply [] to be passed in
-
-              if (a[i] !== "") {
-                data = data[a[i]];
-              }
-
-              out = []; // Get the remainder of the nested object to get
-
-              a.splice(0, i + 1);
-              innerSrc = a.join('.'); // Traverse each entry in the array getting the properties requested
-
-              if (Array.isArray(data)) {
-                for (var j = 0, jLen = data.length; j < jLen; j++) {
-                  out.push(fetchData(data[j], type, innerSrc));
-                }
-              } // If a string is given in between the array notation indicators, that
-              // is used to join the strings together, otherwise an array is returned
-
-
-              var join = arrayNotation[0].substring(1, arrayNotation[0].length - 1);
-              data = join === "" ? out : out.join(join); // The inner call to fetchData has already traversed through the remainder
-              // of the source requested, so we exit from the loop
-
-              break;
-            } else if (funcNotation) {
-              // Function call
-              a[i] = a[i].replace(__reFn, '');
-              data = data[a[i]]();
-              continue;
-            }
-
-            if (data === null || data[a[i]] === undefined) {
-              return undefined;
-            }
-
-            data = data[a[i]];
-          }
-        }
-
-        return data;
-      };
-
-      return function (data, type) {
-        // row and meta also passed, but not used
-        return fetchData(data, type, mSource);
-      };
-    } else {
-      /* Array or flat object mapping */
-      return function (data, type) {
-        // row and meta also passed, but not used
-        return data[mSource];
-      };
-    }
-  }
   /**
    * Return a function that can be used to set data from a source object, taking
    * into account the ability to use nested objects as a source
@@ -15452,128 +14217,30 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
    *  @returns {function} Data set function
    *  @memberof DataTable#oApi
    */
+  var _fnSetObjectDataFn = DataTable.util.set;
 
-
-  function _fnSetObjectDataFn(mSource) {
-    if ($.isPlainObject(mSource)) {
-      /* Unlike get, only the underscore (global) option is used for for
-       * setting data since we don't know the type here. This is why an object
-       * option is not documented for `mData` (which is read/write), but it is
-       * for `mRender` which is read only.
-       */
-      return _fnSetObjectDataFn(mSource._);
-    } else if (mSource === null) {
-      /* Nothing to do when the data source is null */
-      return function () {};
-    } else if (typeof mSource === 'function') {
-      return function (data, val, meta) {
-        mSource(data, 'set', val, meta);
-      };
-    } else if (typeof mSource === 'string' && (mSource.indexOf('.') !== -1 || mSource.indexOf('[') !== -1 || mSource.indexOf('(') !== -1)) {
-      /* Like the get, we need to get data from a nested object */
-      var setData = function setData(data, val, src) {
-        var a = _fnSplitObjNotation(src),
-            b;
-
-        var aLast = a[a.length - 1];
-        var arrayNotation, funcNotation, o, innerSrc;
-
-        for (var i = 0, iLen = a.length - 1; i < iLen; i++) {
-          // Protect against prototype pollution
-          if (a[i] === '__proto__' || a[i] === 'constructor') {
-            throw new Error('Cannot set prototype values');
-          } // Check if we are dealing with an array notation request
-
-
-          arrayNotation = a[i].match(__reArray);
-          funcNotation = a[i].match(__reFn);
-
-          if (arrayNotation) {
-            a[i] = a[i].replace(__reArray, '');
-            data[a[i]] = []; // Get the remainder of the nested object to set so we can recurse
-
-            b = a.slice();
-            b.splice(0, i + 1);
-            innerSrc = b.join('.'); // Traverse each entry in the array setting the properties requested
-
-            if (Array.isArray(val)) {
-              for (var j = 0, jLen = val.length; j < jLen; j++) {
-                o = {};
-                setData(o, val[j], innerSrc);
-                data[a[i]].push(o);
-              }
-            } else {
-              // We've been asked to save data to an array, but it
-              // isn't array data to be saved. Best that can be done
-              // is to just save the value.
-              data[a[i]] = val;
-            } // The inner call to setData has already traversed through the remainder
-            // of the source and has set the data, thus we can exit here
-
-
-            return;
-          } else if (funcNotation) {
-            // Function call
-            a[i] = a[i].replace(__reFn, '');
-            data = data[a[i]](val);
-          } // If the nested object doesn't currently exist - since we are
-          // trying to set the value - create it
-
-
-          if (data[a[i]] === null || data[a[i]] === undefined) {
-            data[a[i]] = {};
-          }
-
-          data = data[a[i]];
-        } // Last item in the input - i.e, the actual set
-
-
-        if (aLast.match(__reFn)) {
-          // Function call
-          data = data[aLast.replace(__reFn, '')](val);
-        } else {
-          // If array notation is used, we just want to strip it and use the property name
-          // and assign the value. If it isn't used, then we get the result we want anyway
-          data[aLast.replace(__reArray, '')] = val;
-        }
-      };
-
-      return function (data, val) {
-        // meta is also passed in, but not used
-        return setData(data, val, mSource);
-      };
-    } else {
-      /* Array or flat object mapping */
-      return function (data, val) {
-        // meta is also passed in, but not used
-        data[mSource] = val;
-      };
-    }
-  }
   /**
    * Return an array with the full table data
    *  @param {object} oSettings dataTables settings object
    *  @returns array {array} aData Master data array
    *  @memberof DataTable#oApi
    */
-
-
   function _fnGetDataMaster(settings) {
     return _pluck(settings.aoData, '_aData');
   }
+
   /**
    * Nuke the table
    *  @param {object} oSettings dataTables settings object
    *  @memberof DataTable#oApi
    */
-
-
   function _fnClearTable(settings) {
     settings.aoData.length = 0;
     settings.aiDisplayMaster.length = 0;
     settings.aiDisplay.length = 0;
     settings.aIds = {};
   }
+
   /**
   * Take an array of integers (index array) and remove a target integer (value - not
   * the key!)
@@ -15581,11 +14248,8 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
   *  @param {int} iTarget value to find
   *  @memberof DataTable#oApi
   */
-
-
   function _fnDeleteIndex(a, iTarget, splice) {
     var iTargetIndex = -1;
-
     for (var i = 0, iLen = a.length; i < iLen; i++) {
       if (a[i] == iTarget) {
         iTargetIndex = i;
@@ -15593,11 +14257,11 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
         a[i]--;
       }
     }
-
     if (iTargetIndex != -1 && splice === undefined) {
       a.splice(iTargetIndex, 1);
     }
   }
+
   /**
    * Mark cached data as invalid such that a re-read of the data will occur when
    * the cached data is next requested. Also update from the data source object.
@@ -15614,12 +14278,9 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
    *   the sort and filter methods can subscribe to it. That will required
    *   initialisation options for sorting, which is why it is not already baked in
    */
-
-
   function _fnInvalidate(settings, rowIdx, src, colIdx) {
     var row = settings.aoData[rowIdx];
     var i, ien;
-
     var cellWrite = function cellWrite(cell, col) {
       // This is very frustrating, but in IE if you just write directly
       // to innerHTML, and elements that are overwritten are GC'ed,
@@ -15627,18 +14288,16 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
       while (cell.childNodes.length) {
         cell.removeChild(cell.firstChild);
       }
-
       cell.innerHTML = _fnGetCellData(settings, rowIdx, col, 'display');
-    }; // Are we reading last data from DOM or the data object?
+    };
 
-
+    // Are we reading last data from DOM or the data object?
     if (src === 'dom' || (!src || src === 'auto') && row.src === 'dom') {
       // Read the data from the DOM
       row._aData = _fnGetRowElements(settings, row, colIdx, colIdx === undefined ? undefined : row._aData).data;
     } else {
       // Reading from data object, update the DOM
       var cells = row.anCells;
-
       if (cells) {
         if (colIdx !== undefined) {
           cellWrite(cells[colIdx], colIdx);
@@ -15648,27 +14307,28 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
           }
         }
       }
-    } // For both row and cell invalidation, the cached data for sorting and
+    }
+
+    // For both row and cell invalidation, the cached data for sorting and
     // filtering is nulled out
-
-
     row._aSortData = null;
-    row._aFilterData = null; // Invalidate the type for a specific column (if given) or all columns since
+    row._aFilterData = null;
+
+    // Invalidate the type for a specific column (if given) or all columns since
     // the data might have changed
-
     var cols = settings.aoColumns;
-
     if (colIdx !== undefined) {
       cols[colIdx].sType = null;
     } else {
       for (i = 0, ien = cols.length; i < ien; i++) {
         cols[i].sType = null;
-      } // Update DataTables special `DT_*` attributes for the row
+      }
 
-
+      // Update DataTables special `DT_*` attributes for the row
       _fnRowAttributes(settings, row);
     }
   }
+
   /**
    * Build a data source object from an HTML row, reading the contents of the
    * cells that are in the row.
@@ -15686,44 +14346,37 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
    *   them from here).
    * @memberof DataTable#oApi
    */
-
-
   function _fnGetRowElements(settings, row, colIdx, d) {
     var tds = [],
-        td = row.firstChild,
-        name,
-        col,
-        o,
-        i = 0,
-        contents,
-        columns = settings.aoColumns,
-        objectRead = settings._rowReadObject; // Allow the data object to be passed in, or construct
+      td = row.firstChild,
+      name,
+      col,
+      o,
+      i = 0,
+      contents,
+      columns = settings.aoColumns,
+      objectRead = settings._rowReadObject;
 
+    // Allow the data object to be passed in, or construct
     d = d !== undefined ? d : objectRead ? {} : [];
-
     var attr = function attr(str, td) {
       if (typeof str === 'string') {
         var idx = str.indexOf('@');
-
         if (idx !== -1) {
           var attr = str.substring(idx + 1);
-
           var setter = _fnSetObjectDataFn(str);
-
           setter(d, td.getAttribute(attr));
         }
       }
-    }; // Read data from a cell and store into the data object
+    };
 
-
+    // Read data from a cell and store into the data object
     var cellProcess = function cellProcess(cell) {
       if (colIdx === undefined || colIdx === i) {
         col = columns[i];
         contents = cell.innerHTML.trim();
-
         if (col && col._bAttrSrc) {
           var setter = _fnSetObjectDataFn(col.mData._);
-
           setter(d, contents);
           attr(col.mData.sort, cell);
           attr(col.mData.type, cell);
@@ -15736,49 +14389,40 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
               // Cache the setter function
               col._setter = _fnSetObjectDataFn(col.mData);
             }
-
             col._setter(d, contents);
           } else {
             d[i] = contents;
           }
         }
       }
-
       i++;
     };
-
     if (td) {
       // `tr` element was passed in
       while (td) {
         name = td.nodeName.toUpperCase();
-
         if (name == "TD" || name == "TH") {
           cellProcess(td);
           tds.push(td);
         }
-
         td = td.nextSibling;
       }
     } else {
       // Existing row object passed in
       tds = row.anCells;
-
       for (var j = 0, jen = tds.length; j < jen; j++) {
         cellProcess(tds[j]);
       }
-    } // Read the ID from the DOM if present
+    }
 
-
+    // Read the ID from the DOM if present
     var rowNode = row.firstChild ? row : row.nTr;
-
     if (rowNode) {
       var id = rowNode.getAttribute('id');
-
       if (id) {
         _fnSetObjectDataFn(settings.rowId)(d, id);
       }
     }
-
     return {
       data: d,
       cells: tds
@@ -15794,69 +14438,67 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
    *    if nTr is.
    *  @memberof DataTable#oApi
    */
-
-
   function _fnCreateTr(oSettings, iRow, nTrIn, anTds) {
     var row = oSettings.aoData[iRow],
-        rowData = row._aData,
-        cells = [],
-        nTr,
-        nTd,
-        oCol,
-        i,
-        iLen,
-        create;
-
+      rowData = row._aData,
+      cells = [],
+      nTr,
+      nTd,
+      oCol,
+      i,
+      iLen,
+      create;
     if (row.nTr === null) {
       nTr = nTrIn || document.createElement('tr');
       row.nTr = nTr;
       row.anCells = cells;
+
       /* Use a private property on the node to allow reserve mapping from the node
        * to the aoData array for fast look up
        */
-
       nTr._DT_RowIndex = iRow;
+
       /* Special parameters can be given by the data source to be used on the row */
-
       _fnRowAttributes(oSettings, row);
+
       /* Process each column */
-
-
       for (i = 0, iLen = oSettings.aoColumns.length; i < iLen; i++) {
         oCol = oSettings.aoColumns[i];
         create = nTrIn ? false : true;
         nTd = create ? document.createElement(oCol.sCellType) : anTds[i];
+        if (!nTd) {
+          _fnLog(oSettings, 0, 'Incorrect column count', 18);
+        }
         nTd._DT_CellIndex = {
           row: iRow,
           column: i
         };
-        cells.push(nTd); // Need to create the HTML if new, or if a rendering function is defined
+        cells.push(nTd);
 
+        // Need to create the HTML if new, or if a rendering function is defined
         if (create || (oCol.mRender || oCol.mData !== i) && (!$.isPlainObject(oCol.mData) || oCol.mData._ !== i + '.display')) {
           nTd.innerHTML = _fnGetCellData(oSettings, iRow, i, 'display');
         }
+
         /* Add user defined class */
-
-
         if (oCol.sClass) {
           nTd.className += ' ' + oCol.sClass;
-        } // Visibility - add or remove as required
+        }
 
-
+        // Visibility - add or remove as required
         if (oCol.bVisible && !nTrIn) {
           nTr.appendChild(nTd);
         } else if (!oCol.bVisible && nTrIn) {
           nTd.parentNode.removeChild(nTd);
         }
-
         if (oCol.fnCreatedCell) {
           oCol.fnCreatedCell.call(oSettings.oInstance, nTd, _fnGetCellData(oSettings, iRow, i), rowData, iRow, i);
         }
       }
-
       _fnCallbackFire(oSettings, 'aoRowCreatedCallback', null, [nTr, rowData, iRow, cells]);
     }
   }
+
   /**
    * Add attributes to a row based on the special `DT_*` parameters in a data
    * source object.
@@ -15864,42 +14506,34 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
    *  @param {object} DataTables row object for the row to be modified
    *  @memberof DataTable#oApi
    */
-
-
   function _fnRowAttributes(settings, row) {
     var tr = row.nTr;
     var data = row._aData;
-
     if (tr) {
       var id = settings.rowIdFn(data);
-
       if (id) {
         tr.id = id;
       }
-
       if (data.DT_RowClass) {
         // Remove any classes added by DT_RowClass before
         var a = data.DT_RowClass.split(' ');
         row.__rowc = row.__rowc ? _unique(row.__rowc.concat(a)) : a;
         $(tr).removeClass(row.__rowc.join(' ')).addClass(data.DT_RowClass);
       }
-
       if (data.DT_RowAttr) {
         $(tr).attr(data.DT_RowAttr);
       }
-
       if (data.DT_RowData) {
         $(tr).data(data.DT_RowData);
       }
     }
   }
+
   /**
    * Create the HTML header for the table
    *  @param {object} oSettings dataTables settings object
    *  @memberof DataTable#oApi
    */
-
-
   function _fnBuildHead(oSettings) {
     var i, ien, cell, row, column;
     var thead = oSettings.nTHead;
@@ -15907,65 +14541,57 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
     var createHeader = $('th, td', thead).length === 0;
     var classes = oSettings.oClasses;
     var columns = oSettings.aoColumns;
-
     if (createHeader) {
       row = $('<tr/>').appendTo(thead);
     }
-
     for (i = 0, ien = columns.length; i < ien; i++) {
       column = columns[i];
       cell = $(column.nTh).addClass(column.sClass);
-
       if (createHeader) {
         cell.appendTo(row);
-      } // 1.11 move into sorting
+      }
 
-
+      // 1.11 move into sorting
       if (oSettings.oFeatures.bSort) {
         cell.addClass(column.sSortingClass);
-
         if (column.bSortable !== false) {
           cell.attr('tabindex', oSettings.iTabIndex).attr('aria-controls', oSettings.sTableId);
-
           _fnSortAttachListener(oSettings, column.nTh, i);
         }
       }
-
       if (column.sTitle != cell[0].innerHTML) {
         cell.html(column.sTitle);
       }
-
       _fnRenderer(oSettings, 'header')(oSettings, cell, column, classes);
     }
-
     if (createHeader) {
       _fnDetectHeader(oSettings.aoHeader, thead);
     }
-    /* ARIA role for the rows */
 
-
-    $(thead).children('tr').attr('role', 'row');
     /* Deal with the footer - add classes if required */
-
     $(thead).children('tr').children('th, td').addClass(classes.sHeaderTH);
-    $(tfoot).children('tr').children('th, td').addClass(classes.sFooterTH); // Cache the footer cells. Note that we only take the cells from the first
+    $(tfoot).children('tr').children('th, td').addClass(classes.sFooterTH);
+
+    // Cache the footer cells. Note that we only take the cells from the first
     // row in the footer. If there is more than one row the user wants to
     // interact with, they need to use the table().foot() method. Note also this
     // allows cells to be used for multiple columns using colspan
-
     if (tfoot !== null) {
       var cells = oSettings.aoFooter[0];
-
       for (i = 0, ien = cells.length; i < ien; i++) {
         column = columns[i];
-        column.nTf = cells[i].cell;
-
-        if (column.sClass) {
-          $(column.nTf).addClass(column.sClass);
+        if (column) {
+          column.nTf = cells[i].cell;
+          if (column.sClass) {
+            $(column.nTf).addClass(column.sClass);
+          }
+        } else {
+          _fnLog(oSettings, 0, 'Incorrect column count', 18);
         }
       }
     }
   }
+
   /**
    * Draw the header (or footer) element based on the column visibility states. The
    * methodology here is to use the layout array from _fnDetectHeader, modified for
@@ -15979,181 +14605,149 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
    *  @param {boolean} [bIncludeHidden=false] If true then include the hidden columns in the calc,
    *  @memberof DataTable#oApi
    */
-
-
   function _fnDrawHead(oSettings, aoSource, bIncludeHidden) {
     var i, iLen, j, jLen, k, kLen, n, nLocalTr;
     var aoLocal = [];
     var aApplied = [];
     var iColumns = oSettings.aoColumns.length;
     var iRowspan, iColspan;
-
     if (!aoSource) {
       return;
     }
-
     if (bIncludeHidden === undefined) {
       bIncludeHidden = false;
     }
+
     /* Make a copy of the master layout array, but without the visible columns in it */
-
-
     for (i = 0, iLen = aoSource.length; i < iLen; i++) {
       aoLocal[i] = aoSource[i].slice();
       aoLocal[i].nTr = aoSource[i].nTr;
-      /* Remove any columns which are currently hidden */
 
+      /* Remove any columns which are currently hidden */
       for (j = iColumns - 1; j >= 0; j--) {
         if (!oSettings.aoColumns[j].bVisible && !bIncludeHidden) {
           aoLocal[i].splice(j, 1);
         }
       }
+
       /* Prep the applied array - it needs an element for each row */
-
-
       aApplied.push([]);
     }
-
     for (i = 0, iLen = aoLocal.length; i < iLen; i++) {
       nLocalTr = aoLocal[i].nTr;
-      /* All cells are going to be replaced, so empty out the row */
 
+      /* All cells are going to be replaced, so empty out the row */
       if (nLocalTr) {
         while (n = nLocalTr.firstChild) {
           nLocalTr.removeChild(n);
         }
       }
-
       for (j = 0, jLen = aoLocal[i].length; j < jLen; j++) {
         iRowspan = 1;
         iColspan = 1;
+
         /* Check to see if there is already a cell (row/colspan) covering our target
          * insert point. If there is, then there is nothing to do.
          */
-
         if (aApplied[i][j] === undefined) {
           nLocalTr.appendChild(aoLocal[i][j].cell);
           aApplied[i][j] = 1;
-          /* Expand the cell to cover as many rows as needed */
 
+          /* Expand the cell to cover as many rows as needed */
           while (aoLocal[i + iRowspan] !== undefined && aoLocal[i][j].cell == aoLocal[i + iRowspan][j].cell) {
             aApplied[i + iRowspan][j] = 1;
             iRowspan++;
           }
+
           /* Expand the cell to cover as many columns as needed */
-
-
           while (aoLocal[i][j + iColspan] !== undefined && aoLocal[i][j].cell == aoLocal[i][j + iColspan].cell) {
             /* Must update the applied array over the rows for the columns */
             for (k = 0; k < iRowspan; k++) {
               aApplied[i + k][j + iColspan] = 1;
             }
-
             iColspan++;
           }
+
           /* Do the actual expansion in the DOM */
-
-
           $(aoLocal[i][j].cell).attr('rowspan', iRowspan).attr('colspan', iColspan);
         }
       }
     }
   }
+
   /**
    * Insert the required TR nodes into the table for display
    *  @param {object} oSettings dataTables settings object
    *  @param ajaxComplete true after ajax call to complete rendering
    *  @memberof DataTable#oApi
    */
-
-
   function _fnDraw(oSettings, ajaxComplete) {
+    // Allow for state saving and a custom start position
+    _fnStart(oSettings);
+
     /* Provide a pre-callback function which can be used to cancel the draw is false is returned */
     var aPreDraw = _fnCallbackFire(oSettings, 'aoPreDrawCallback', 'preDraw', [oSettings]);
-
     if ($.inArray(false, aPreDraw) !== -1) {
       _fnProcessingDisplay(oSettings, false);
-
       return;
     }
-
-    var i, iLen, n;
     var anRows = [];
     var iRowCount = 0;
     var asStripeClasses = oSettings.asStripeClasses;
     var iStripes = asStripeClasses.length;
-    var iOpenRows = oSettings.aoOpenRows.length;
     var oLang = oSettings.oLanguage;
-    var iInitDisplayStart = oSettings.iInitDisplayStart;
     var bServerSide = _fnDataSource(oSettings) == 'ssp';
     var aiDisplay = oSettings.aiDisplay;
-    oSettings.bDrawing = true;
-    /* Check and see if we have an initial draw position from state saving */
-
-    if (iInitDisplayStart !== undefined && iInitDisplayStart !== -1) {
-      oSettings._iDisplayStart = bServerSide ? iInitDisplayStart : iInitDisplayStart >= oSettings.fnRecordsDisplay() ? 0 : iInitDisplayStart;
-      oSettings.iInitDisplayStart = -1;
-    }
-
     var iDisplayStart = oSettings._iDisplayStart;
     var iDisplayEnd = oSettings.fnDisplayEnd();
-    /* Server-side processing draw intercept */
+    oSettings.bDrawing = true;
 
+    /* Server-side processing draw intercept */
     if (oSettings.bDeferLoading) {
       oSettings.bDeferLoading = false;
       oSettings.iDraw++;
-
       _fnProcessingDisplay(oSettings, false);
     } else if (!bServerSide) {
       oSettings.iDraw++;
     } else if (!oSettings.bDestroying && !ajaxComplete) {
       _fnAjaxUpdate(oSettings);
-
       return;
     }
-
     if (aiDisplay.length !== 0) {
       var iStart = bServerSide ? 0 : iDisplayStart;
       var iEnd = bServerSide ? oSettings.aoData.length : iDisplayEnd;
-
       for (var j = iStart; j < iEnd; j++) {
         var iDataIndex = aiDisplay[j];
         var aoData = oSettings.aoData[iDataIndex];
-
         if (aoData.nTr === null) {
           _fnCreateTr(oSettings, iDataIndex);
         }
-
         var nRow = aoData.nTr;
-        /* Remove the old striping classes and then add the new one */
 
+        /* Remove the old striping classes and then add the new one */
         if (iStripes !== 0) {
           var sStripe = asStripeClasses[iRowCount % iStripes];
-
           if (aoData._sRowStripe != sStripe) {
             $(nRow).removeClass(aoData._sRowStripe).addClass(sStripe);
             aoData._sRowStripe = sStripe;
           }
-        } // Row callback functions - might want to manipulate the row
+        }
+
+        // Row callback functions - might want to manipulate the row
         // iRowCount and j are not currently documented. Are they at all
         // useful?
-
-
         _fnCallbackFire(oSettings, 'aoRowCallback', null, [nRow, aoData._aData, iRowCount, j, iDataIndex]);
-
         anRows.push(nRow);
         iRowCount++;
       }
     } else {
       /* Table is empty - create a row with an empty message in it */
       var sZero = oLang.sZeroRecords;
-
       if (oSettings.iDraw == 1 && _fnDataSource(oSettings) == 'ajax') {
         sZero = oLang.sLoadingRecords;
       } else if (oLang.sEmptyTable && oSettings.fnRecordsTotal() === 0) {
         sZero = oLang.sEmptyTable;
       }
-
       anRows[0] = $('<tr/>', {
         'class': iStripes ? asStripeClasses[0] : ''
       }).append($('<td />', {
@@ -16162,26 +14756,23 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
         'class': oSettings.oClasses.sRowEmpty
       }).html(sZero))[0];
     }
+
     /* Header and footer callbacks */
-
-
     _fnCallbackFire(oSettings, 'aoHeaderCallback', 'header', [$(oSettings.nTHead).children('tr')[0], _fnGetDataMaster(oSettings), iDisplayStart, iDisplayEnd, aiDisplay]);
-
     _fnCallbackFire(oSettings, 'aoFooterCallback', 'footer', [$(oSettings.nTFoot).children('tr')[0], _fnGetDataMaster(oSettings), iDisplayStart, iDisplayEnd, aiDisplay]);
-
     var body = $(oSettings.nTBody);
     body.children().detach();
     body.append($(anRows));
+
     /* Call all required callback functions for the end of a draw */
-
     _fnCallbackFire(oSettings, 'aoDrawCallback', 'draw', [oSettings]);
+
     /* Draw is complete, sorting and filtering must be as well */
-
-
     oSettings.bSorted = false;
     oSettings.bFiltered = false;
     oSettings.bDrawing = false;
   }
+
   /**
    * Redraw the table - taking account of the various features which are enabled
    *  @param {object} oSettings dataTables settings object
@@ -16189,50 +14780,42 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
    *    the paging is reset to the first page
    *  @memberof DataTable#oApi
    */
-
-
   function _fnReDraw(settings, holdPosition) {
     var features = settings.oFeatures,
-        sort = features.bSort,
-        filter = features.bFilter;
-
+      sort = features.bSort,
+      filter = features.bFilter;
     if (sort) {
       _fnSort(settings);
     }
-
     if (filter) {
       _fnFilterComplete(settings, settings.oPreviousSearch);
     } else {
       // No filtering, so we want to just use the display master
       settings.aiDisplay = settings.aiDisplayMaster.slice();
     }
-
     if (holdPosition !== true) {
       settings._iDisplayStart = 0;
-    } // Let any modules know about the draw hold position state (used by
+    }
+
+    // Let any modules know about the draw hold position state (used by
     // scrolling internally)
-
-
     settings._drawHold = holdPosition;
-
     _fnDraw(settings);
-
     settings._drawHold = false;
   }
+
   /**
    * Add the options to the page HTML for the table
    *  @param {object} oSettings dataTables settings object
    *  @memberof DataTable#oApi
    */
-
-
   function _fnAddOptionsHtml(oSettings) {
     var classes = oSettings.oClasses;
     var table = $(oSettings.nTable);
     var holding = $('<div/>').insertBefore(table); // Holding element for speed
+    var features = oSettings.oFeatures;
 
-    var features = oSettings.oFeatures; // All DataTables are wrapped in a div
-
+    // All DataTables are wrapped in a div
     var insert = $('<div/>', {
       id: oSettings.sTableId + '_wrapper',
       'class': classes.sWrapper + (oSettings.nTFoot ? '' : ' ' + classes.sNoFooter)
@@ -16240,43 +14823,37 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
     oSettings.nHolding = holding[0];
     oSettings.nTableWrapper = insert[0];
     oSettings.nTableReinsertBefore = oSettings.nTable.nextSibling;
-    /* Loop over the user set positioning and place the elements as needed */
 
+    /* Loop over the user set positioning and place the elements as needed */
     var aDom = oSettings.sDom.split('');
     var featureNode, cOption, nNewNode, cNext, sAttr, j;
-
     for (var i = 0; i < aDom.length; i++) {
       featureNode = null;
       cOption = aDom[i];
-
       if (cOption == '<') {
         /* New container div */
         nNewNode = $('<div/>')[0];
+
         /* Check to see if we should append an id and/or a class name to the container */
-
         cNext = aDom[i + 1];
-
         if (cNext == "'" || cNext == '"') {
           sAttr = "";
           j = 2;
-
           while (aDom[i + j] != cNext) {
             sAttr += aDom[i + j];
             j++;
           }
+
           /* Replace jQuery UI constants @todo depreciated */
-
-
           if (sAttr == "H") {
             sAttr = classes.sJUIHeader;
           } else if (sAttr == "F") {
             sAttr = classes.sJUIFooter;
           }
+
           /* The attribute can be in the format of "#id.class", "#id" or "class" This logic
            * breaks the string into parts and applies them as needed
            */
-
-
           if (sAttr.indexOf('.') != -1) {
             var aSplit = sAttr.split('.');
             nNewNode.id = aSplit[0].substr(1, aSplit[0].length - 1);
@@ -16286,9 +14863,7 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
           } else {
             nNewNode.className = sAttr;
           }
-
-          i += j;
-          /* Move along the position array */
+          i += j; /* Move along the position array */
         }
 
         insert.append(nNewNode);
@@ -16296,56 +14871,53 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
       } else if (cOption == '>') {
         /* End container div */
         insert = insert.parent();
-      } // @todo Move options into their own plugins?
+      }
+      // @todo Move options into their own plugins?
       else if (cOption == 'l' && features.bPaginate && features.bLengthChange) {
-          /* Length */
-          featureNode = _fnFeatureHtmlLength(oSettings);
-        } else if (cOption == 'f' && features.bFilter) {
-          /* Filter */
-          featureNode = _fnFeatureHtmlFilter(oSettings);
-        } else if (cOption == 'r' && features.bProcessing) {
-          /* pRocessing */
-          featureNode = _fnFeatureHtmlProcessing(oSettings);
-        } else if (cOption == 't') {
-          /* Table */
-          featureNode = _fnFeatureHtmlTable(oSettings);
-        } else if (cOption == 'i' && features.bInfo) {
-          /* Info */
-          featureNode = _fnFeatureHtmlInfo(oSettings);
-        } else if (cOption == 'p' && features.bPaginate) {
-          /* Pagination */
-          featureNode = _fnFeatureHtmlPaginate(oSettings);
-        } else if (DataTable.ext.feature.length !== 0) {
-          /* Plug-in features */
-          var aoFeatures = DataTable.ext.feature;
-
-          for (var k = 0, kLen = aoFeatures.length; k < kLen; k++) {
-            if (cOption == aoFeatures[k].cFeature) {
-              featureNode = aoFeatures[k].fnInit(oSettings);
-              break;
-            }
+        /* Length */
+        featureNode = _fnFeatureHtmlLength(oSettings);
+      } else if (cOption == 'f' && features.bFilter) {
+        /* Filter */
+        featureNode = _fnFeatureHtmlFilter(oSettings);
+      } else if (cOption == 'r' && features.bProcessing) {
+        /* pRocessing */
+        featureNode = _fnFeatureHtmlProcessing(oSettings);
+      } else if (cOption == 't') {
+        /* Table */
+        featureNode = _fnFeatureHtmlTable(oSettings);
+      } else if (cOption == 'i' && features.bInfo) {
+        /* Info */
+        featureNode = _fnFeatureHtmlInfo(oSettings);
+      } else if (cOption == 'p' && features.bPaginate) {
+        /* Pagination */
+        featureNode = _fnFeatureHtmlPaginate(oSettings);
+      } else if (DataTable.ext.feature.length !== 0) {
+        /* Plug-in features */
+        var aoFeatures = DataTable.ext.feature;
+        for (var k = 0, kLen = aoFeatures.length; k < kLen; k++) {
+          if (cOption == aoFeatures[k].cFeature) {
+            featureNode = aoFeatures[k].fnInit(oSettings);
+            break;
           }
         }
+      }
+
       /* Add to the 2D features array */
-
-
       if (featureNode) {
         var aanFeatures = oSettings.aanFeatures;
-
         if (!aanFeatures[cOption]) {
           aanFeatures[cOption] = [];
         }
-
         aanFeatures[cOption].push(featureNode);
         insert.append(featureNode);
       }
     }
+
     /* Built our DOM structure - replace the holding div with what we want */
-
-
     holding.replaceWith(insert);
     oSettings.nHolding = null;
   }
+
   /**
    * Use the DOM source to create up an array of header cells. The idea here is to
    * create a layout grid (array) of rows x columns, which contains a reference
@@ -16355,40 +14927,32 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
    *  @param {node} nThead The header/footer element for the table
    *  @memberof DataTable#oApi
    */
-
-
   function _fnDetectHeader(aLayout, nThead) {
     var nTrs = $(nThead).children('tr');
     var nTr, nCell;
     var i, k, l, iLen, jLen, iColShifted, iColumn, iColspan, iRowspan;
     var bUnique;
-
     var fnShiftCol = function fnShiftCol(a, i, j) {
       var k = a[i];
-
       while (k[j]) {
         j++;
       }
-
       return j;
     };
-
     aLayout.splice(0, aLayout.length);
-    /* We know how many rows there are in the layout - so prep it */
 
+    /* We know how many rows there are in the layout - so prep it */
     for (i = 0, iLen = nTrs.length; i < iLen; i++) {
       aLayout.push([]);
     }
+
     /* Calculate a layout array */
-
-
     for (i = 0, iLen = nTrs.length; i < iLen; i++) {
       nTr = nTrs[i];
       iColumn = 0;
+
       /* For every cell in the row... */
-
       nCell = nTr.firstChild;
-
       while (nCell) {
         if (nCell.nodeName.toUpperCase() == "TD" || nCell.nodeName.toUpperCase() == "TH") {
           /* Get the col and rowspan attributes from the DOM and sanitise them */
@@ -16396,16 +14960,16 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
           iRowspan = nCell.getAttribute('rowspan') * 1;
           iColspan = !iColspan || iColspan === 0 || iColspan === 1 ? 1 : iColspan;
           iRowspan = !iRowspan || iRowspan === 0 || iRowspan === 1 ? 1 : iRowspan;
+
           /* There might be colspan cells already in this row, so shift our target
            * accordingly
            */
-
           iColShifted = fnShiftCol(aLayout, i, iColumn);
+
           /* Cache calculation for unique columns */
-
           bUnique = iColspan === 1 ? true : false;
-          /* If there is col / rowspan, copy the information into the layout grid */
 
+          /* If there is col / rowspan, copy the information into the layout grid */
           for (l = 0; l < iColspan; l++) {
             for (k = 0; k < iRowspan; k++) {
               aLayout[i + k][iColShifted + l] = {
@@ -16416,11 +14980,11 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
             }
           }
         }
-
         nCell = nCell.nextSibling;
       }
     }
   }
+
   /**
    * Get an array of unique th elements, one for each column
    *  @param {object} oSettings dataTables settings object
@@ -16429,21 +14993,15 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
    *  @returns array {node} aReturn list of unique th's
    *  @memberof DataTable#oApi
    */
-
-
   function _fnGetUniqueThs(oSettings, nHeader, aLayout) {
     var aReturn = [];
-
     if (!aLayout) {
       aLayout = oSettings.aoHeader;
-
       if (nHeader) {
         aLayout = [];
-
         _fnDetectHeader(aLayout, nHeader);
       }
     }
-
     for (var i = 0, iLen = aLayout.length; i < iLen; i++) {
       for (var j = 0, jLen = aLayout[i].length; j < jLen; j++) {
         if (aLayout[i][j].unique && (!aReturn[j] || !oSettings.bSortCellsTop)) {
@@ -16451,9 +15009,24 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
         }
       }
     }
-
     return aReturn;
   }
+
+  /**
+   * Set the start position for draw
+   *  @param {object} oSettings dataTables settings object
+   */
+  function _fnStart(oSettings) {
+    var bServerSide = _fnDataSource(oSettings) == 'ssp';
+    var iInitDisplayStart = oSettings.iInitDisplayStart;
+
+    // Check and see if we have an initial draw position from state saving
+    if (iInitDisplayStart !== undefined && iInitDisplayStart !== -1) {
+      oSettings._iDisplayStart = bServerSide ? iInitDisplayStart : iInitDisplayStart >= oSettings.fnRecordsDisplay() ? 0 : iInitDisplayStart;
+      oSettings.iInitDisplayStart = -1;
+    }
+  }
+
   /**
    * Create an Ajax call based on the table's settings, taking into account that
    * parameters can have multiple forms, and backwards compatibility.
@@ -16463,28 +15036,23 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
    *     DataTables - may be augmented by developer callbacks
    * @param {function} fn Callback function to run when data is obtained
    */
-
-
   function _fnBuildAjax(oSettings, data, fn) {
     // Compatibility with 1.9-, allow fnServerData and event to manipulate
-    _fnCallbackFire(oSettings, 'aoServerParams', 'serverParams', [data]); // Convert to object based for 1.10+ if using the old array scheme which can
+    _fnCallbackFire(oSettings, 'aoServerParams', 'serverParams', [data]);
+
+    // Convert to object based for 1.10+ if using the old array scheme which can
     // come from server-side processing or serverParams
-
-
     if (data && Array.isArray(data)) {
       var tmp = {};
       var rbracket = /(.*?)\[\]$/;
       $.each(data, function (key, val) {
         var match = val.name.match(rbracket);
-
         if (match) {
           // Support for arrays
           var name = match[0];
-
           if (!tmp[name]) {
             tmp[name] = [];
           }
-
           tmp[name].push(val.value);
         } else {
           tmp[val.name] = val.value;
@@ -16492,47 +15060,44 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
       });
       data = tmp;
     }
-
     var ajaxData;
     var ajax = oSettings.ajax;
     var instance = oSettings.oInstance;
-
     var callback = function callback(json) {
+      var status = oSettings.jqXHR ? oSettings.jqXHR.status : null;
+      if (json === null || typeof status === 'number' && status == 204) {
+        json = {};
+        _fnAjaxDataSrc(oSettings, json, []);
+      }
+      var error = json.error || json.sError;
+      if (error) {
+        _fnLog(oSettings, 0, error);
+      }
+      oSettings.json = json;
       _fnCallbackFire(oSettings, null, 'xhr', [oSettings, json, oSettings.jqXHR]);
-
       fn(json);
     };
-
     if ($.isPlainObject(ajax) && ajax.data) {
       ajaxData = ajax.data;
-      var newData = typeof ajaxData === 'function' ? ajaxData(data, oSettings) : // fn can manipulate data or return
+      var newData = typeof ajaxData === 'function' ? ajaxData(data, oSettings) :
+      // fn can manipulate data or return
       ajaxData; // an object object or array to merge
+
       // If the function returned something, use that alone
+      data = typeof ajaxData === 'function' && newData ? newData : $.extend(true, data, newData);
 
-      data = typeof ajaxData === 'function' && newData ? newData : $.extend(true, data, newData); // Remove the data property as we've resolved it already and don't want
+      // Remove the data property as we've resolved it already and don't want
       // jQuery to do it again (it is restored at the end of the function)
-
       delete ajax.data;
     }
-
     var baseAjax = {
       "data": data,
-      "success": function success(json) {
-        var error = json.error || json.sError;
-
-        if (error) {
-          _fnLog(oSettings, 0, error);
-        }
-
-        oSettings.json = json;
-        callback(json);
-      },
+      "success": callback,
       "dataType": "json",
       "cache": false,
       "type": oSettings.sServerMethod,
       "error": function error(xhr, _error, thrown) {
         var ret = _fnCallbackFire(oSettings, null, 'xhr', [oSettings, null, oSettings.jqXHR]);
-
         if ($.inArray(true, ret) === -1) {
           if (_error == "parsererror") {
             _fnLog(oSettings, 0, 'Invalid JSON response', 1);
@@ -16540,15 +15105,15 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
             _fnLog(oSettings, 0, 'Ajax error', 7);
           }
         }
-
         _fnProcessingDisplay(oSettings, false);
       }
-    }; // Store the data submitted for the API
+    };
 
-    oSettings.oAjaxData = data; // Allow plug-ins and external processes to modify the data
+    // Store the data submitted for the API
+    oSettings.oAjaxData = data;
 
+    // Allow plug-ins and external processes to modify the data
     _fnCallbackFire(oSettings, null, 'preXhr', [oSettings, data]);
-
     if (oSettings.fnServerData) {
       // DataTables 1.9- compatibility
       oSettings.fnServerData.call(instance, oSettings.sAjaxSource, $.map(data, function (val, key) {
@@ -16568,28 +15133,27 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
       oSettings.jqXHR = ajax.call(instance, data, callback, oSettings);
     } else {
       // Object to extend the base settings
-      oSettings.jqXHR = $.ajax($.extend(baseAjax, ajax)); // Restore for next time around
+      oSettings.jqXHR = $.ajax($.extend(baseAjax, ajax));
 
+      // Restore for next time around
       ajax.data = ajaxData;
     }
   }
+
   /**
    * Update the table using an Ajax call
    *  @param {object} settings dataTables settings object
    *  @returns {boolean} Block the table drawing or not
    *  @memberof DataTable#oApi
    */
-
-
   function _fnAjaxUpdate(settings) {
     settings.iDraw++;
-
     _fnProcessingDisplay(settings, true);
-
     _fnBuildAjax(settings, _fnAjaxParameters(settings), function (json) {
       _fnAjaxUpdateDraw(settings, json);
     });
   }
+
   /**
    * Build up the parameters in an object needed for a server-side processing
    * request. Note that this is basically done twice, is different ways - a modern
@@ -16601,37 +15165,35 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
    *  @returns {bool} block the table drawing or not
    *  @memberof DataTable#oApi
    */
-
-
   function _fnAjaxParameters(settings) {
     var columns = settings.aoColumns,
-        columnCount = columns.length,
-        features = settings.oFeatures,
-        preSearch = settings.oPreviousSearch,
-        preColSearch = settings.aoPreSearchCols,
-        i,
-        data = [],
-        dataProp,
-        column,
-        columnSearch,
-        sort = _fnSortFlatten(settings),
-        displayStart = settings._iDisplayStart,
-        displayLength = features.bPaginate !== false ? settings._iDisplayLength : -1;
-
+      columnCount = columns.length,
+      features = settings.oFeatures,
+      preSearch = settings.oPreviousSearch,
+      preColSearch = settings.aoPreSearchCols,
+      i,
+      data = [],
+      dataProp,
+      column,
+      columnSearch,
+      sort = _fnSortFlatten(settings),
+      displayStart = settings._iDisplayStart,
+      displayLength = features.bPaginate !== false ? settings._iDisplayLength : -1;
     var param = function param(name, value) {
       data.push({
         'name': name,
         'value': value
       });
-    }; // DataTables 1.9- compatible method
+    };
 
-
+    // DataTables 1.9- compatible method
     param('sEcho', settings.iDraw);
     param('iColumns', columnCount);
     param('sColumns', _pluck(columns, 'sName').join(','));
     param('iDisplayStart', displayStart);
-    param('iDisplayLength', displayLength); // DataTables 1.10+ method
+    param('iDisplayLength', displayLength);
 
+    // DataTables 1.10+ method
     var d = {
       draw: settings.iDraw,
       columns: [],
@@ -16643,7 +15205,6 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
         regex: preSearch.bRegex
       }
     };
-
     for (i = 0; i < columnCount; i++) {
       column = columns[i];
       columnSearch = preColSearch[i];
@@ -16659,23 +15220,19 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
         }
       });
       param("mDataProp_" + i, dataProp);
-
       if (features.bFilter) {
         param('sSearch_' + i, columnSearch.sSearch);
         param('bRegex_' + i, columnSearch.bRegex);
         param('bSearchable_' + i, column.bSearchable);
       }
-
       if (features.bSort) {
         param('bSortable_' + i, column.bSortable);
       }
     }
-
     if (features.bFilter) {
       param('sSearch', preSearch.sSearch);
       param('bRegex', preSearch.bRegex);
     }
-
     if (features.bSort) {
       $.each(sort, function (i, val) {
         d.order.push({
@@ -16686,20 +15243,20 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
         param('sSortDir_' + i, val.dir);
       });
       param('iSortingCols', sort.length);
-    } // If the legacy.ajax parameter is null, then we automatically decide which
+    }
+
+    // If the legacy.ajax parameter is null, then we automatically decide which
     // form to use, based on sAjaxSource
-
-
     var legacy = DataTable.ext.legacy.ajax;
-
     if (legacy === null) {
       return settings.sAjaxSource ? data : d;
-    } // Otherwise, if legacy has been specified then we use that to decide on the
+    }
+
+    // Otherwise, if legacy has been specified then we use that to decide on the
     // form
-
-
     return legacy ? data : d;
   }
+
   /**
    * Data the data from the server (nuking the old) and redraw the table
    *  @param {object} oSettings dataTables settings object
@@ -16711,49 +15268,42 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
    *  @param {string} [json.sColumns] Column ordering (sName, comma separated)
    *  @memberof DataTable#oApi
    */
-
-
   function _fnAjaxUpdateDraw(settings, json) {
     // v1.10 uses camelCase variables, while 1.9 uses Hungarian notation.
     // Support both
     var compat = function compat(old, modern) {
       return json[old] !== undefined ? json[old] : json[modern];
     };
-
     var data = _fnAjaxDataSrc(settings, json);
-
     var draw = compat('sEcho', 'draw');
     var recordsTotal = compat('iTotalRecords', 'recordsTotal');
     var recordsFiltered = compat('iTotalDisplayRecords', 'recordsFiltered');
-
     if (draw !== undefined) {
       // Protect against out of sequence returns
       if (draw * 1 < settings.iDraw) {
         return;
       }
-
       settings.iDraw = draw * 1;
     }
 
+    // No data in returned object, so rather than an array, we show an empty table
+    if (!data) {
+      data = [];
+    }
     _fnClearTable(settings);
-
     settings._iRecordsTotal = parseInt(recordsTotal, 10);
     settings._iRecordsDisplay = parseInt(recordsFiltered, 10);
-
     for (var i = 0, ien = data.length; i < ien; i++) {
       _fnAddData(settings, data[i]);
     }
-
     settings.aiDisplay = settings.aiDisplayMaster.slice();
-
     _fnDraw(settings, true);
-
     if (!settings._bInitComplete) {
       _fnInitComplete(settings, json);
     }
-
     _fnProcessingDisplay(settings, false);
   }
+
   /**
    * Get the data from the JSON data source to use for drawing a table. Using
    * `_fnGetObjectDataFn` allows the data to be sourced from a property of the
@@ -16762,27 +15312,28 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
    *  @param  {object} json Data source object / array from the server
    *  @return {array} Array of data to use
    */
-
-
-  function _fnAjaxDataSrc(oSettings, json) {
+  function _fnAjaxDataSrc(oSettings, json, write) {
     var dataSrc = $.isPlainObject(oSettings.ajax) && oSettings.ajax.dataSrc !== undefined ? oSettings.ajax.dataSrc : oSettings.sAjaxDataProp; // Compatibility with 1.9-.
-    // Compatibility with 1.9-. In order to read from aaData, check if the
-    // default has been changed, if not, check for aaData
 
-    if (dataSrc === 'data') {
-      return json.aaData || json[dataSrc];
+    if (!write) {
+      if (dataSrc === 'data') {
+        // If the default, then we still want to support the old style, and safely ignore
+        // it if possible
+        return json.aaData || json[dataSrc];
+      }
+      return dataSrc !== "" ? _fnGetObjectDataFn(dataSrc)(json) : json;
     }
 
-    return dataSrc !== "" ? _fnGetObjectDataFn(dataSrc)(json) : json;
+    // set
+    _fnSetObjectDataFn(dataSrc)(json, write);
   }
+
   /**
    * Generate the node required for filtering text
    *  @returns {node} Filter control element
    *  @param {object} oSettings dataTables settings object
    *  @memberof DataTable#oApi
    */
-
-
   function _fnFeatureHtmlFilter(settings) {
     var classes = settings.oClasses;
     var tableId = settings.sTableId;
@@ -16796,44 +15347,44 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
       'id': !features.f ? tableId + '_filter' : null,
       'class': classes.sFilter
     }).append($('<label/>').append(str));
-
-    var searchFn = function searchFn() {
+    var searchFn = function searchFn(event) {
       /* Update all other filter input elements for the new display */
       var n = features.f;
       var val = !this.value ? "" : this.value; // mental IE8 fix :-(
-
+      if (previousSearch.return && event.key !== "Enter") {
+        return;
+      }
       /* Now do the filter */
-
       if (val != previousSearch.sSearch) {
         _fnFilterComplete(settings, {
           "sSearch": val,
           "bRegex": previousSearch.bRegex,
           "bSmart": previousSearch.bSmart,
-          "bCaseInsensitive": previousSearch.bCaseInsensitive
-        }); // Need to redraw, without resorting
+          "bCaseInsensitive": previousSearch.bCaseInsensitive,
+          "return": previousSearch.return
+        });
 
-
+        // Need to redraw, without resorting
         settings._iDisplayStart = 0;
-
         _fnDraw(settings);
       }
     };
-
     var searchDelay = settings.searchDelay !== null ? settings.searchDelay : _fnDataSource(settings) === 'ssp' ? 400 : 0;
     var jqFilter = $('input', filter).val(previousSearch.sSearch).attr('placeholder', language.sSearchPlaceholder).on('keyup.DT search.DT input.DT paste.DT cut.DT', searchDelay ? _fnThrottle(searchFn, searchDelay) : searchFn).on('mouseup', function (e) {
       // Edge fix! Edge 17 does not trigger anything other than mouse events when clicking
       // on the clear icon (Edge bug 17584515). This is safe in other browsers as `searchFn`
       // checks the value to see if it has changed. In other browsers it won't have.
       setTimeout(function () {
-        searchFn.call(jqFilter[0]);
+        searchFn.call(jqFilter[0], e);
       }, 10);
     }).on('keypress.DT', function (e) {
       /* Prevent form submission */
       if (e.keyCode == 13) {
         return false;
       }
-    }).attr('aria-controls', tableId); // Update the input elements whenever the table is filtered
+    }).attr('aria-controls', tableId);
 
+    // Update the input elements whenever the table is filtered
     $(settings.nTable).on('search.dt.DT', function (ev, s) {
       if (settings === s) {
         // IE9 throws an 'unknown error' if document.activeElement is used
@@ -16847,6 +15398,7 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
     });
     return filter[0];
   }
+
   /**
    * Filter the table using both the global filter and column based filtering
    *  @param {object} oSettings dataTables settings object
@@ -16854,85 +15406,76 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
    *  @param {int} [iForce] force a research of the master array (1) or not (undefined or 0)
    *  @memberof DataTable#oApi
    */
-
-
   function _fnFilterComplete(oSettings, oInput, iForce) {
     var oPrevSearch = oSettings.oPreviousSearch;
     var aoPrevSearch = oSettings.aoPreSearchCols;
-
     var fnSaveFilter = function fnSaveFilter(oFilter) {
       /* Save the filtering values */
       oPrevSearch.sSearch = oFilter.sSearch;
       oPrevSearch.bRegex = oFilter.bRegex;
       oPrevSearch.bSmart = oFilter.bSmart;
       oPrevSearch.bCaseInsensitive = oFilter.bCaseInsensitive;
+      oPrevSearch.return = oFilter.return;
     };
-
     var fnRegex = function fnRegex(o) {
       // Backwards compatibility with the bEscapeRegex option
       return o.bEscapeRegex !== undefined ? !o.bEscapeRegex : o.bRegex;
-    }; // Resolve any column types that are unknown due to addition or invalidation
+    };
+
+    // Resolve any column types that are unknown due to addition or invalidation
     // @todo As per sort - can this be moved into an event handler?
-
-
     _fnColumnTypes(oSettings);
+
     /* In server-side processing all filtering is done by the server, so no point hanging around here */
-
-
     if (_fnDataSource(oSettings) != 'ssp') {
       /* Global filter */
-      _fnFilter(oSettings, oInput.sSearch, iForce, fnRegex(oInput), oInput.bSmart, oInput.bCaseInsensitive);
-
+      _fnFilter(oSettings, oInput.sSearch, iForce, fnRegex(oInput), oInput.bSmart, oInput.bCaseInsensitive, oInput.return);
       fnSaveFilter(oInput);
-      /* Now do the individual column filter */
 
+      /* Now do the individual column filter */
       for (var i = 0; i < aoPrevSearch.length; i++) {
         _fnFilterColumn(oSettings, aoPrevSearch[i].sSearch, i, fnRegex(aoPrevSearch[i]), aoPrevSearch[i].bSmart, aoPrevSearch[i].bCaseInsensitive);
       }
+
       /* Custom filtering */
-
-
       _fnFilterCustom(oSettings);
     } else {
       fnSaveFilter(oInput);
     }
+
     /* Tell the draw function we have been filtering */
-
-
     oSettings.bFiltered = true;
-
     _fnCallbackFire(oSettings, null, 'search', [oSettings]);
   }
+
   /**
    * Apply custom filtering functions
    *  @param {object} oSettings dataTables settings object
    *  @memberof DataTable#oApi
    */
-
-
   function _fnFilterCustom(settings) {
     var filters = DataTable.ext.search;
     var displayRows = settings.aiDisplay;
     var row, rowIdx;
-
     for (var i = 0, ien = filters.length; i < ien; i++) {
-      var rows = []; // Loop over each row and see if it should be included
+      var rows = [];
 
+      // Loop over each row and see if it should be included
       for (var j = 0, jen = displayRows.length; j < jen; j++) {
         rowIdx = displayRows[j];
         row = settings.aoData[rowIdx];
-
         if (filters[i](settings, row._aFilterData, rowIdx, row._aData, j)) {
           rows.push(rowIdx);
         }
-      } // So the array reference doesn't break set the results into the
+      }
+
+      // So the array reference doesn't break set the results into the
       // existing array
-
-
       displayRows.length = 0;
       $.merge(displayRows, rows);
     }
   }
+
   /**
    * Filter the table on a per-column basis
    *  @param {object} oSettings dataTables settings object
@@ -16940,32 +15483,26 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
    *  @param {int} iColumn column to filter
    *  @param {bool} bRegex treat search string as a regular expression or not
    *  @param {bool} bSmart use smart filtering or not
-   *  @param {bool} bCaseInsensitive Do case insenstive matching or not
+   *  @param {bool} bCaseInsensitive Do case insensitive matching or not
    *  @memberof DataTable#oApi
    */
-
-
   function _fnFilterColumn(settings, searchStr, colIdx, regex, smart, caseInsensitive) {
     if (searchStr === '') {
       return;
     }
-
     var data;
     var out = [];
     var display = settings.aiDisplay;
-
     var rpSearch = _fnFilterCreateSearch(searchStr, regex, smart, caseInsensitive);
-
     for (var i = 0; i < display.length; i++) {
       data = settings.aoData[display[i]]._aFilterData[colIdx];
-
       if (rpSearch.test(data)) {
         out.push(display[i]);
       }
     }
-
     settings.aiDisplay = out;
   }
+
   /**
    * Filter the data table based on user input and draw the table
    *  @param {object} settings dataTables settings object
@@ -16973,26 +15510,25 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
    *  @param {int} force optional - force a research of the master array (1) or not (undefined or 0)
    *  @param {bool} regex treat as a regular expression or not
    *  @param {bool} smart perform smart filtering or not
-   *  @param {bool} caseInsensitive Do case insenstive matching or not
+   *  @param {bool} caseInsensitive Do case insensitive matching or not
    *  @memberof DataTable#oApi
    */
-
-
   function _fnFilter(settings, input, force, regex, smart, caseInsensitive) {
     var rpSearch = _fnFilterCreateSearch(input, regex, smart, caseInsensitive);
-
     var prevSearch = settings.oPreviousSearch.sSearch;
     var displayMaster = settings.aiDisplayMaster;
     var display, invalidated, i;
-    var filtered = []; // Need to take account of custom filtering functions - always filter
+    var filtered = [];
 
+    // Need to take account of custom filtering functions - always filter
     if (DataTable.ext.search.length !== 0) {
       force = true;
-    } // Check if any of the rows were invalidated
+    }
 
+    // Check if any of the rows were invalidated
+    invalidated = _fnFilterData(settings);
 
-    invalidated = _fnFilterData(settings); // If the input is blank - we just want the full data set
-
+    // If the input is blank - we just want the full data set
     if (input.length <= 0) {
       settings.aiDisplay = displayMaster.slice();
     } else {
@@ -17000,21 +15536,20 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
       if (invalidated || force || regex || prevSearch.length > input.length || input.indexOf(prevSearch) !== 0 || settings.bSorted // On resort, the display master needs to be
       // re-filtered since indexes will have changed
       ) {
-          settings.aiDisplay = displayMaster.slice();
-        } // Search the display array
+        settings.aiDisplay = displayMaster.slice();
+      }
 
-
+      // Search the display array
       display = settings.aiDisplay;
-
       for (i = 0; i < display.length; i++) {
         if (rpSearch.test(settings.aoData[display[i]]._sFilterRow)) {
           filtered.push(display[i]);
         }
       }
-
       settings.aiDisplay = filtered;
     }
   }
+
   /**
    * Build a regular expression object suitable for searching a table
    *  @param {string} sSearch string to search for
@@ -17024,11 +15559,8 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
    *  @returns {RegExp} constructed object
    *  @memberof DataTable#oApi
    */
-
-
   function _fnFilterCreateSearch(search, regex, smart, caseInsensitive) {
     search = regex ? search : _fnEscapeRegex(search);
-
     if (smart) {
       /* For smart filtering we want to allow the search to work regardless of
        * word order. We also want double quoted text to be preserved, so word
@@ -17042,88 +15574,71 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
           var m = word.match(/^"(.*)"$/);
           word = m ? m[1] : word;
         }
-
         return word.replace('"', '');
       });
       search = '^(?=.*?' + a.join(')(?=.*?') + ').*$';
     }
-
     return new RegExp(search, caseInsensitive ? 'i' : '');
   }
+
   /**
    * Escape a string such that it can be used in a regular expression
    *  @param {string} sVal string to escape
    *  @returns {string} escaped string
    *  @memberof DataTable#oApi
    */
-
-
   var _fnEscapeRegex = DataTable.util.escapeRegex;
   var __filter_div = $('<div>')[0];
+  var __filter_div_textContent = __filter_div.textContent !== undefined;
 
-  var __filter_div_textContent = __filter_div.textContent !== undefined; // Update the filtering data for each row if needed (by invalidation or first run)
-
-
+  // Update the filtering data for each row if needed (by invalidation or first run)
   function _fnFilterData(settings) {
     var columns = settings.aoColumns;
     var column;
     var i, j, ien, jen, filterData, cellData, row;
-    var fomatters = DataTable.ext.type.search;
     var wasInvalidated = false;
-
     for (i = 0, ien = settings.aoData.length; i < ien; i++) {
       row = settings.aoData[i];
-
       if (!row._aFilterData) {
         filterData = [];
-
         for (j = 0, jen = columns.length; j < jen; j++) {
           column = columns[j];
-
           if (column.bSearchable) {
             cellData = _fnGetCellData(settings, i, j, 'filter');
 
-            if (fomatters[column.sType]) {
-              cellData = fomatters[column.sType](cellData);
-            } // Search in DataTables 1.10 is string based. In 1.11 this
+            // Search in DataTables 1.10 is string based. In 1.11 this
             // should be altered to also allow strict type checking.
-
-
             if (cellData === null) {
               cellData = '';
             }
-
             if (typeof cellData !== 'string' && cellData.toString) {
               cellData = cellData.toString();
             }
           } else {
             cellData = '';
-          } // If it looks like there is an HTML entity in the string,
+          }
+
+          // If it looks like there is an HTML entity in the string,
           // attempt to decode it so sorting works as expected. Note that
           // we could use a single line of jQuery to do this, but the DOM
           // method used here is much faster http://jsperf.com/html-decode
-
-
           if (cellData.indexOf && cellData.indexOf('&') !== -1) {
             __filter_div.innerHTML = cellData;
             cellData = __filter_div_textContent ? __filter_div.textContent : __filter_div.innerText;
           }
-
           if (cellData.replace) {
             cellData = cellData.replace(/[\r\n\u2028]/g, '');
           }
-
           filterData.push(cellData);
         }
-
         row._aFilterData = filterData;
         row._sFilterRow = filterData.join('  ');
         wasInvalidated = true;
       }
     }
-
     return wasInvalidated;
   }
+
   /**
    * Convert from the internal Hungarian notation to camelCase for external
    * interaction
@@ -17131,8 +15646,6 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
    *  @returns {object} Inverted object
    *  @memberof DataTable#oApi
    */
-
-
   function _fnSearchToCamel(obj) {
     return {
       search: obj.sSearch,
@@ -17141,6 +15654,7 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
       caseInsensitive: obj.bCaseInsensitive
     };
   }
+
   /**
    * Convert from camelCase notation to the internal Hungarian. We could use the
    * Hungarian convert function here, but this is cleaner
@@ -17148,8 +15662,6 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
    *  @returns {object} Inverted object
    *  @memberof DataTable#oApi
    */
-
-
   function _fnSearchToHung(obj) {
     return {
       sSearch: obj.search,
@@ -17158,179 +15670,155 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
       bCaseInsensitive: obj.caseInsensitive
     };
   }
+
   /**
    * Generate the node required for the info display
    *  @param {object} oSettings dataTables settings object
    *  @returns {node} Information element
    *  @memberof DataTable#oApi
    */
-
-
   function _fnFeatureHtmlInfo(settings) {
     var tid = settings.sTableId,
-        nodes = settings.aanFeatures.i,
-        n = $('<div/>', {
-      'class': settings.oClasses.sInfo,
-      'id': !nodes ? tid + '_info' : null
-    });
-
+      nodes = settings.aanFeatures.i,
+      n = $('<div/>', {
+        'class': settings.oClasses.sInfo,
+        'id': !nodes ? tid + '_info' : null
+      });
     if (!nodes) {
       // Update display on each draw
       settings.aoDrawCallback.push({
         "fn": _fnUpdateInfo,
         "sName": "information"
       });
-      n.attr('role', 'status').attr('aria-live', 'polite'); // Table is described by our info div
+      n.attr('role', 'status').attr('aria-live', 'polite');
 
+      // Table is described by our info div
       $(settings.nTable).attr('aria-describedby', tid + '_info');
     }
-
     return n[0];
   }
+
   /**
    * Update the information elements in the display
    *  @param {object} settings dataTables settings object
    *  @memberof DataTable#oApi
    */
-
-
   function _fnUpdateInfo(settings) {
     /* Show information about the table */
     var nodes = settings.aanFeatures.i;
-
     if (nodes.length === 0) {
       return;
     }
-
     var lang = settings.oLanguage,
-        start = settings._iDisplayStart + 1,
-        end = settings.fnDisplayEnd(),
-        max = settings.fnRecordsTotal(),
-        total = settings.fnRecordsDisplay(),
-        out = total ? lang.sInfo : lang.sInfoEmpty;
-
+      start = settings._iDisplayStart + 1,
+      end = settings.fnDisplayEnd(),
+      max = settings.fnRecordsTotal(),
+      total = settings.fnRecordsDisplay(),
+      out = total ? lang.sInfo : lang.sInfoEmpty;
     if (total !== max) {
       /* Record set after filtering */
       out += ' ' + lang.sInfoFiltered;
-    } // Convert the macros
+    }
 
-
+    // Convert the macros
     out += lang.sInfoPostFix;
     out = _fnInfoMacros(settings, out);
     var callback = lang.fnInfoCallback;
-
     if (callback !== null) {
       out = callback.call(settings.oInstance, settings, start, end, max, total, out);
     }
-
     $(nodes).html(out);
   }
-
   function _fnInfoMacros(settings, str) {
     // When infinite scrolling, we are always starting at 1. _iDisplayStart is used only
     // internally
     var formatter = settings.fnFormatNumber,
-        start = settings._iDisplayStart + 1,
-        len = settings._iDisplayLength,
-        vis = settings.fnRecordsDisplay(),
-        all = len === -1;
+      start = settings._iDisplayStart + 1,
+      len = settings._iDisplayLength,
+      vis = settings.fnRecordsDisplay(),
+      all = len === -1;
     return str.replace(/_START_/g, formatter.call(settings, start)).replace(/_END_/g, formatter.call(settings, settings.fnDisplayEnd())).replace(/_MAX_/g, formatter.call(settings, settings.fnRecordsTotal())).replace(/_TOTAL_/g, formatter.call(settings, vis)).replace(/_PAGE_/g, formatter.call(settings, all ? 1 : Math.ceil(start / len))).replace(/_PAGES_/g, formatter.call(settings, all ? 1 : Math.ceil(vis / len)));
   }
+
   /**
    * Draw the table for the first time, adding all required features
    *  @param {object} settings dataTables settings object
    *  @memberof DataTable#oApi
    */
-
-
   function _fnInitialise(settings) {
     var i,
-        iLen,
-        iAjaxStart = settings.iInitDisplayStart;
+      iLen,
+      iAjaxStart = settings.iInitDisplayStart;
     var columns = settings.aoColumns,
-        column;
+      column;
     var features = settings.oFeatures;
     var deferLoading = settings.bDeferLoading; // value modified by the draw
 
     /* Ensure that the table data is fully initialised */
-
     if (!settings.bInitialised) {
       setTimeout(function () {
         _fnInitialise(settings);
       }, 200);
       return;
     }
+
     /* Show the display HTML options */
-
-
     _fnAddOptionsHtml(settings);
+
     /* Build and draw the header / footer for the table */
-
-
     _fnBuildHead(settings);
-
     _fnDrawHead(settings, settings.aoHeader);
-
     _fnDrawHead(settings, settings.aoFooter);
+
     /* Okay to show that something is going on now */
-
-
     _fnProcessingDisplay(settings, true);
+
     /* Calculate sizes for columns */
-
-
     if (features.bAutoWidth) {
       _fnCalculateColumnWidths(settings);
     }
-
     for (i = 0, iLen = columns.length; i < iLen; i++) {
       column = columns[i];
-
       if (column.sWidth) {
         column.nTh.style.width = _fnStringToCss(column.sWidth);
       }
     }
+    _fnCallbackFire(settings, null, 'preInit', [settings]);
 
-    _fnCallbackFire(settings, null, 'preInit', [settings]); // If there is default sorting required - let's do it. The sort function
+    // If there is default sorting required - let's do it. The sort function
     // will do the drawing for us. Otherwise we draw the table regardless of the
     // Ajax source - this allows the table to look initialised for Ajax sourcing
     // data (show 'loading' message possibly)
+    _fnReDraw(settings);
 
-
-    _fnReDraw(settings); // Server-side processing init complete is done by _fnAjaxUpdateDraw
-
-
+    // Server-side processing init complete is done by _fnAjaxUpdateDraw
     var dataSrc = _fnDataSource(settings);
-
     if (dataSrc != 'ssp' || deferLoading) {
       // if there is an ajax source load the data
       if (dataSrc == 'ajax') {
         _fnBuildAjax(settings, [], function (json) {
-          var aData = _fnAjaxDataSrc(settings, json); // Got the data - add it to the table
+          var aData = _fnAjaxDataSrc(settings, json);
 
-
+          // Got the data - add it to the table
           for (i = 0; i < aData.length; i++) {
             _fnAddData(settings, aData[i]);
-          } // Reset the init display for cookie saving. We've already done
+          }
+
+          // Reset the init display for cookie saving. We've already done
           // a filter, and therefore cleared it before. So we need to make
           // it appear 'fresh'
-
-
           settings.iInitDisplayStart = iAjaxStart;
-
           _fnReDraw(settings);
-
           _fnProcessingDisplay(settings, false);
-
           _fnInitComplete(settings, json);
         }, settings);
       } else {
         _fnProcessingDisplay(settings, false);
-
         _fnInitComplete(settings);
       }
     }
   }
+
   /**
    * Draw the table for the first time, adding all required features
    *  @param {object} oSettings dataTables settings object
@@ -17338,70 +15826,61 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
    *    with client-side processing (optional)
    *  @memberof DataTable#oApi
    */
-
-
   function _fnInitComplete(settings, json) {
-    settings._bInitComplete = true; // When data was added after the initialisation (data or Ajax) we need to
-    // calculate the column sizing
+    settings._bInitComplete = true;
 
+    // When data was added after the initialisation (data or Ajax) we need to
+    // calculate the column sizing
     if (json || settings.oInit.aaData) {
       _fnAdjustColumnSizing(settings);
     }
-
     _fnCallbackFire(settings, null, 'plugin-init', [settings, json]);
-
     _fnCallbackFire(settings, 'aoInitComplete', 'init', [settings, json]);
   }
-
   function _fnLengthChange(settings, val) {
     var len = parseInt(val, 10);
     settings._iDisplayLength = len;
+    _fnLengthOverflow(settings);
 
-    _fnLengthOverflow(settings); // Fire length change event
-
-
+    // Fire length change event
     _fnCallbackFire(settings, null, 'length', [settings, len]);
   }
+
   /**
    * Generate the node required for user display length changing
    *  @param {object} settings dataTables settings object
    *  @returns {node} Display length feature node
    *  @memberof DataTable#oApi
    */
-
-
   function _fnFeatureHtmlLength(settings) {
     var classes = settings.oClasses,
-        tableId = settings.sTableId,
-        menu = settings.aLengthMenu,
-        d2 = Array.isArray(menu[0]),
-        lengths = d2 ? menu[0] : menu,
-        language = d2 ? menu[1] : menu;
+      tableId = settings.sTableId,
+      menu = settings.aLengthMenu,
+      d2 = Array.isArray(menu[0]),
+      lengths = d2 ? menu[0] : menu,
+      language = d2 ? menu[1] : menu;
     var select = $('<select/>', {
       'name': tableId + '_length',
       'aria-controls': tableId,
       'class': classes.sLengthSelect
     });
-
     for (var i = 0, ien = lengths.length; i < ien; i++) {
       select[0][i] = new Option(typeof language[i] === 'number' ? settings.fnFormatNumber(language[i]) : language[i], lengths[i]);
     }
-
     var div = $('<div><label/></div>').addClass(classes.sLength);
-
     if (!settings.aanFeatures.l) {
       div[0].id = tableId + '_length';
     }
+    div.children().append(settings.oLanguage.sLengthMenu.replace('_MENU_', select[0].outerHTML));
 
-    div.children().append(settings.oLanguage.sLengthMenu.replace('_MENU_', select[0].outerHTML)); // Can't use `select` variable as user might provide their own and the
+    // Can't use `select` variable as user might provide their own and the
     // reference is broken by the use of outerHTML
-
     $('select', div).val(settings._iDisplayLength).on('change.DT', function (e) {
       _fnLengthChange(settings, $(this).val());
-
       _fnDraw(settings);
-    }); // Update node value whenever anything changes the table's length
+    });
 
+    // Update node value whenever anything changes the table's length
     $(settings.nTable).on('length.dt.DT', function (e, s, len) {
       if (settings === s) {
         $('select', div).val(len);
@@ -17409,6 +15888,7 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
     });
     return div[0];
   }
+
   /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
    * Note that most of the paging logic is done in
    * DataTable.ext.pager
@@ -17420,39 +15900,34 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
    *  @returns {node} Pagination feature node
    *  @memberof DataTable#oApi
    */
-
-
   function _fnFeatureHtmlPaginate(settings) {
     var type = settings.sPaginationType,
-        plugin = DataTable.ext.pager[type],
-        modern = typeof plugin === 'function',
-        redraw = function redraw(settings) {
-      _fnDraw(settings);
-    },
-        node = $('<div/>').addClass(settings.oClasses.sPaging + type)[0],
-        features = settings.aanFeatures;
-
+      plugin = DataTable.ext.pager[type],
+      modern = typeof plugin === 'function',
+      redraw = function redraw(settings) {
+        _fnDraw(settings);
+      },
+      node = $('<div/>').addClass(settings.oClasses.sPaging + type)[0],
+      features = settings.aanFeatures;
     if (!modern) {
       plugin.fnInit(settings, node, redraw);
     }
+
     /* Add a draw callback for the pagination on first instance, to update the paging display */
-
-
     if (!features.p) {
       node.id = settings.sTableId + '_paginate';
       settings.aoDrawCallback.push({
         "fn": function fn(settings) {
           if (modern) {
             var start = settings._iDisplayStart,
-                len = settings._iDisplayLength,
-                visRecords = settings.fnRecordsDisplay(),
-                all = len === -1,
-                page = all ? 0 : Math.ceil(start / len),
-                pages = all ? 1 : Math.ceil(visRecords / len),
-                buttons = plugin(page, pages),
-                i,
-                ien;
-
+              len = settings._iDisplayLength,
+              visRecords = settings.fnRecordsDisplay(),
+              all = len === -1,
+              page = all ? 0 : Math.ceil(start / len),
+              pages = all ? 1 : Math.ceil(visRecords / len),
+              buttons = plugin(page, pages),
+              i,
+              ien;
             for (i = 0, ien = features.p.length; i < ien; i++) {
               _fnRenderer(settings, 'pageButton')(settings, features.p[i], i, buttons, page, pages);
             }
@@ -17463,9 +15938,9 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
         "sName": "pagination"
       });
     }
-
     return node;
   }
+
   /**
    * Alter the display settings to change the page
    *  @param {object} settings DataTables settings object
@@ -17475,18 +15950,14 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
    *  @returns {bool} true page has changed, false - no change
    *  @memberof DataTable#oApi
    */
-
-
   function _fnPageChange(settings, action, redraw) {
     var start = settings._iDisplayStart,
-        len = settings._iDisplayLength,
-        records = settings.fnRecordsDisplay();
-
+      len = settings._iDisplayLength,
+      records = settings.fnRecordsDisplay();
     if (records === 0 || len === -1) {
       start = 0;
     } else if (typeof action === "number") {
       start = action * len;
-
       if (start > records) {
         start = 0;
       }
@@ -17494,7 +15965,6 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
       start = 0;
     } else if (action == "previous") {
       start = len >= 0 ? start - len : 0;
-
       if (start < 0) {
         start = 0;
       }
@@ -17507,68 +15977,61 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
     } else {
       _fnLog(settings, 0, "Unknown paging action: " + action, 5);
     }
-
     var changed = settings._iDisplayStart !== start;
     settings._iDisplayStart = start;
-
     if (changed) {
       _fnCallbackFire(settings, null, 'page', [settings]);
-
       if (redraw) {
         _fnDraw(settings);
       }
+    } else {
+      // No change event - paging was called, but no change
+      _fnCallbackFire(settings, null, 'page-nc', [settings]);
     }
-
     return changed;
   }
+
   /**
    * Generate the node required for the processing node
    *  @param {object} settings dataTables settings object
    *  @returns {node} Processing element
    *  @memberof DataTable#oApi
    */
-
-
   function _fnFeatureHtmlProcessing(settings) {
     return $('<div/>', {
       'id': !settings.aanFeatures.r ? settings.sTableId + '_processing' : null,
-      'class': settings.oClasses.sProcessing
-    }).html(settings.oLanguage.sProcessing).insertBefore(settings.nTable)[0];
+      'class': settings.oClasses.sProcessing,
+      'role': 'status'
+    }).html(settings.oLanguage.sProcessing).append('<div><div></div><div></div><div></div><div></div></div>').insertBefore(settings.nTable)[0];
   }
+
   /**
    * Display or hide the processing indicator
    *  @param {object} settings dataTables settings object
    *  @param {bool} show Show the processing indicator (true) or not (false)
    *  @memberof DataTable#oApi
    */
-
-
   function _fnProcessingDisplay(settings, show) {
     if (settings.oFeatures.bProcessing) {
       $(settings.aanFeatures.r).css('display', show ? 'block' : 'none');
     }
-
     _fnCallbackFire(settings, null, 'processing', [settings, show]);
   }
+
   /**
    * Add any control elements for the table - specifically scrolling
    *  @param {object} settings dataTables settings object
    *  @returns {node} Node to add to the DOM
    *  @memberof DataTable#oApi
    */
-
-
   function _fnFeatureHtmlTable(settings) {
-    var table = $(settings.nTable); // Add the ARIA grid role to the table
+    var table = $(settings.nTable);
 
-    table.attr('role', 'grid'); // Scrolling from here on in
-
+    // Scrolling from here on in
     var scroll = settings.oScroll;
-
     if (scroll.sX === '' && scroll.sY === '') {
       return settings.nTable;
     }
-
     var scrollX = scroll.sX;
     var scrollY = scroll.sY;
     var classes = settings.oClasses;
@@ -17578,14 +16041,13 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
     var footerClone = $(table[0].cloneNode(false));
     var footer = table.children('tfoot');
     var _div = '<div/>';
-
     var size = function size(s) {
       return !s ? null : _fnStringToCss(s);
     };
-
     if (!footer.length) {
       footer = null;
     }
+
     /*
      * The HTML structure that we want to generate in this function is:
      *  div - scroller
@@ -17602,8 +16064,6 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
      *        table - scroll foot table
      *          tfoot - tfoot
      */
-
-
     var scroller = $(_div, {
       'class': classes.sScrollWrapper
     }).append($(_div, {
@@ -17625,7 +16085,6 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
       overflow: 'auto',
       width: size(scrollX)
     }).append(table));
-
     if (footer) {
       scroller.append($(_div, {
         'class': classes.sScrollFoot
@@ -17637,39 +16096,37 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
         'class': classes.sScrollFootInner
       }).append(footerClone.removeAttr('id').css('margin-left', 0).append(captionSide === 'bottom' ? caption : null).append(table.children('tfoot')))));
     }
-
     var children = scroller.children();
     var scrollHead = children[0];
     var scrollBody = children[1];
-    var scrollFoot = footer ? children[2] : null; // When the body is scrolled, then we also want to scroll the headers
+    var scrollFoot = footer ? children[2] : null;
 
+    // When the body is scrolled, then we also want to scroll the headers
     if (scrollX) {
       $(scrollBody).on('scroll.DT', function (e) {
         var scrollLeft = this.scrollLeft;
         scrollHead.scrollLeft = scrollLeft;
-
         if (footer) {
           scrollFoot.scrollLeft = scrollLeft;
         }
       });
     }
-
     $(scrollBody).css('max-height', scrollY);
-
     if (!scroll.bCollapse) {
       $(scrollBody).css('height', scrollY);
     }
-
     settings.nScrollHead = scrollHead;
     settings.nScrollBody = scrollBody;
-    settings.nScrollFoot = scrollFoot; // On redraw - align columns
+    settings.nScrollFoot = scrollFoot;
 
+    // On redraw - align columns
     settings.aoDrawCallback.push({
       "fn": _fnScrollDraw,
       "sName": "scrolling"
     });
     return scroller[0];
   }
+
   /**
    * Update the header, footer and body tables for resizing - i.e. column
    * alignment.
@@ -17684,190 +16141,177 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
    *  @param {object} settings dataTables settings object
    *  @memberof DataTable#oApi
    */
-
-
   function _fnScrollDraw(settings) {
     // Given that this is such a monster function, a lot of variables are use
     // to try and keep the minimised size as small as possible
     var scroll = settings.oScroll,
-        scrollX = scroll.sX,
-        scrollXInner = scroll.sXInner,
-        scrollY = scroll.sY,
-        barWidth = scroll.iBarWidth,
-        divHeader = $(settings.nScrollHead),
-        divHeaderStyle = divHeader[0].style,
-        divHeaderInner = divHeader.children('div'),
-        divHeaderInnerStyle = divHeaderInner[0].style,
-        divHeaderTable = divHeaderInner.children('table'),
-        divBodyEl = settings.nScrollBody,
-        divBody = $(divBodyEl),
-        divBodyStyle = divBodyEl.style,
-        divFooter = $(settings.nScrollFoot),
-        divFooterInner = divFooter.children('div'),
-        divFooterTable = divFooterInner.children('table'),
-        header = $(settings.nTHead),
-        table = $(settings.nTable),
-        tableEl = table[0],
-        tableStyle = tableEl.style,
-        footer = settings.nTFoot ? $(settings.nTFoot) : null,
-        browser = settings.oBrowser,
-        ie67 = browser.bScrollOversize,
-        dtHeaderCells = _pluck(settings.aoColumns, 'nTh'),
-        headerTrgEls,
-        footerTrgEls,
-        headerSrcEls,
-        footerSrcEls,
-        headerCopy,
-        footerCopy,
-        headerWidths = [],
-        footerWidths = [],
-        headerContent = [],
-        footerContent = [],
-        idx,
-        correction,
-        sanityWidth,
-        zeroOut = function zeroOut(nSizer) {
-      var style = nSizer.style;
-      style.paddingTop = "0";
-      style.paddingBottom = "0";
-      style.borderTopWidth = "0";
-      style.borderBottomWidth = "0";
-      style.height = 0;
-    }; // If the scrollbar visibility has changed from the last draw, we need to
+      scrollX = scroll.sX,
+      scrollXInner = scroll.sXInner,
+      scrollY = scroll.sY,
+      barWidth = scroll.iBarWidth,
+      divHeader = $(settings.nScrollHead),
+      divHeaderStyle = divHeader[0].style,
+      divHeaderInner = divHeader.children('div'),
+      divHeaderInnerStyle = divHeaderInner[0].style,
+      divHeaderTable = divHeaderInner.children('table'),
+      divBodyEl = settings.nScrollBody,
+      divBody = $(divBodyEl),
+      divBodyStyle = divBodyEl.style,
+      divFooter = $(settings.nScrollFoot),
+      divFooterInner = divFooter.children('div'),
+      divFooterTable = divFooterInner.children('table'),
+      header = $(settings.nTHead),
+      table = $(settings.nTable),
+      tableEl = table[0],
+      tableStyle = tableEl.style,
+      footer = settings.nTFoot ? $(settings.nTFoot) : null,
+      browser = settings.oBrowser,
+      ie67 = browser.bScrollOversize,
+      dtHeaderCells = _pluck(settings.aoColumns, 'nTh'),
+      headerTrgEls,
+      footerTrgEls,
+      headerSrcEls,
+      footerSrcEls,
+      headerCopy,
+      footerCopy,
+      headerWidths = [],
+      footerWidths = [],
+      headerContent = [],
+      footerContent = [],
+      idx,
+      correction,
+      sanityWidth,
+      zeroOut = function zeroOut(nSizer) {
+        var style = nSizer.style;
+        style.paddingTop = "0";
+        style.paddingBottom = "0";
+        style.borderTopWidth = "0";
+        style.borderBottomWidth = "0";
+        style.height = 0;
+      };
+
+    // If the scrollbar visibility has changed from the last draw, we need to
     // adjust the column sizes as the table width will have changed to account
     // for the scrollbar
-
-
     var scrollBarVis = divBodyEl.scrollHeight > divBodyEl.clientHeight;
-
     if (settings.scrollBarVis !== scrollBarVis && settings.scrollBarVis !== undefined) {
       settings.scrollBarVis = scrollBarVis;
-
       _fnAdjustColumnSizing(settings);
-
       return; // adjust column sizing will call this function again
     } else {
       settings.scrollBarVis = scrollBarVis;
     }
+
     /*
      * 1. Re-create the table inside the scrolling div
      */
+
     // Remove the old minimised thead and tfoot elements in the inner table
-
-
     table.children('thead, tfoot').remove();
-
     if (footer) {
       footerCopy = footer.clone().prependTo(table);
       footerTrgEls = footer.find('tr'); // the original tfoot is in its own table and must be sized
-
       footerSrcEls = footerCopy.find('tr');
-    } // Clone the current header and footer elements and then place it into the inner table
+      footerCopy.find('[id]').removeAttr('id');
+    }
 
-
+    // Clone the current header and footer elements and then place it into the inner table
     headerCopy = header.clone().prependTo(table);
     headerTrgEls = header.find('tr'); // original header is in its own table
-
     headerSrcEls = headerCopy.find('tr');
     headerCopy.find('th, td').removeAttr('tabindex');
+    headerCopy.find('[id]').removeAttr('id');
+
     /*
      * 2. Take live measurements from the DOM - do not alter the DOM itself!
      */
+
     // Remove old sizing and apply the calculated column widths
     // Get the unique column headers in the newly created (cloned) header. We want to apply the
     // calculated sizes to this header
-
     if (!scrollX) {
       divBodyStyle.width = '100%';
       divHeader[0].style.width = '100%';
     }
-
     $.each(_fnGetUniqueThs(settings, headerCopy), function (i, el) {
       idx = _fnVisibleToColumnIndex(settings, i);
       el.style.width = settings.aoColumns[idx].sWidth;
     });
-
     if (footer) {
       _fnApplyToChildren(function (n) {
         n.style.width = "";
       }, footerSrcEls);
-    } // Size the table as a whole
+    }
 
-
+    // Size the table as a whole
     sanityWidth = table.outerWidth();
-
     if (scrollX === "") {
       // No x scrolling
-      tableStyle.width = "100%"; // IE7 will make the width of the table when 100% include the scrollbar
+      tableStyle.width = "100%";
+
+      // IE7 will make the width of the table when 100% include the scrollbar
       // - which is shouldn't. When there is a scrollbar we need to take this
       // into account.
-
       if (ie67 && (table.find('tbody').height() > divBodyEl.offsetHeight || divBody.css('overflow-y') == "scroll")) {
         tableStyle.width = _fnStringToCss(table.outerWidth() - barWidth);
-      } // Recalculate the sanity width
+      }
 
-
+      // Recalculate the sanity width
       sanityWidth = table.outerWidth();
     } else if (scrollXInner !== "") {
       // legacy x scroll inner has been given - use it
-      tableStyle.width = _fnStringToCss(scrollXInner); // Recalculate the sanity width
+      tableStyle.width = _fnStringToCss(scrollXInner);
 
+      // Recalculate the sanity width
       sanityWidth = table.outerWidth();
-    } // Hidden header should have zero height, so remove padding and borders. Then
+    }
+
+    // Hidden header should have zero height, so remove padding and borders. Then
     // set the width based on the real headers
+
     // Apply all styles in one pass
+    _fnApplyToChildren(zeroOut, headerSrcEls);
 
-
-    _fnApplyToChildren(zeroOut, headerSrcEls); // Read all widths in next pass
-
-
+    // Read all widths in next pass
     _fnApplyToChildren(function (nSizer) {
+      var style = window.getComputedStyle ? window.getComputedStyle(nSizer).width : _fnStringToCss($(nSizer).width());
       headerContent.push(nSizer.innerHTML);
-      headerWidths.push(_fnStringToCss($(nSizer).css('width')));
-    }, headerSrcEls); // Apply all widths in final pass
+      headerWidths.push(style);
+    }, headerSrcEls);
 
-
+    // Apply all widths in final pass
     _fnApplyToChildren(function (nToSize, i) {
-      // Only apply widths to the DataTables detected header cells - this
-      // prevents complex headers from having contradictory sizes applied
-      if ($.inArray(nToSize, dtHeaderCells) !== -1) {
-        nToSize.style.width = headerWidths[i];
-      }
+      nToSize.style.width = headerWidths[i];
     }, headerTrgEls);
+    $(headerSrcEls).css('height', 0);
 
-    $(headerSrcEls).height(0);
     /* Same again with the footer if we have one */
-
     if (footer) {
       _fnApplyToChildren(zeroOut, footerSrcEls);
-
       _fnApplyToChildren(function (nSizer) {
         footerContent.push(nSizer.innerHTML);
         footerWidths.push(_fnStringToCss($(nSizer).css('width')));
       }, footerSrcEls);
-
       _fnApplyToChildren(function (nToSize, i) {
         nToSize.style.width = footerWidths[i];
       }, footerTrgEls);
-
       $(footerSrcEls).height(0);
     }
+
     /*
      * 3. Apply the measurements
      */
+
     // "Hide" the header and footer that we used for the sizing. We need to keep
     // the content of the cell so that the width applied to the header and body
     // both match, but we want to hide it completely. We want to also fix their
     // width to what they currently are
-
-
     _fnApplyToChildren(function (nSizer, i) {
       nSizer.innerHTML = '<div class="dataTables_sizing">' + headerContent[i] + '</div>';
       nSizer.childNodes[0].style.height = "0";
       nSizer.childNodes[0].style.overflow = "hidden";
       nSizer.style.width = headerWidths[i];
     }, headerSrcEls);
-
     if (footer) {
       _fnApplyToChildren(function (nSizer, i) {
         nSizer.innerHTML = '<div class="dataTables_sizing">' + footerContent[i] + '</div>';
@@ -17875,38 +16319,37 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
         nSizer.childNodes[0].style.overflow = "hidden";
         nSizer.style.width = footerWidths[i];
       }, footerSrcEls);
-    } // Sanity check that the table is of a sensible width. If not then we are going to get
+    }
+
+    // Sanity check that the table is of a sensible width. If not then we are going to get
     // misalignment - try to prevent this by not allowing the table to shrink below its min width
-
-
-    if (table.outerWidth() < sanityWidth) {
+    if (Math.round(table.outerWidth()) < Math.round(sanityWidth)) {
       // The min width depends upon if we have a vertical scrollbar visible or not */
-      correction = divBodyEl.scrollHeight > divBodyEl.offsetHeight || divBody.css('overflow-y') == "scroll" ? sanityWidth + barWidth : sanityWidth; // IE6/7 are a law unto themselves...
+      correction = divBodyEl.scrollHeight > divBodyEl.offsetHeight || divBody.css('overflow-y') == "scroll" ? sanityWidth + barWidth : sanityWidth;
 
+      // IE6/7 are a law unto themselves...
       if (ie67 && (divBodyEl.scrollHeight > divBodyEl.offsetHeight || divBody.css('overflow-y') == "scroll")) {
         tableStyle.width = _fnStringToCss(correction - barWidth);
-      } // And give the user a warning that we've stopped the table getting too small
+      }
 
-
+      // And give the user a warning that we've stopped the table getting too small
       if (scrollX === "" || scrollXInner !== "") {
         _fnLog(settings, 1, 'Possible column misalignment', 6);
       }
     } else {
       correction = '100%';
-    } // Apply to the container elements
+    }
 
-
+    // Apply to the container elements
     divBodyStyle.width = _fnStringToCss(correction);
     divHeaderStyle.width = _fnStringToCss(correction);
-
     if (footer) {
       settings.nScrollFoot.style.width = _fnStringToCss(correction);
     }
+
     /*
      * 4. Clean up
      */
-
-
     if (!scrollY) {
       /* IE7< puts a vertical scrollbar in place (when it shouldn't be) due to subtracting
        * the scrollbar height from the visible display, rather than adding it on. We need to
@@ -17916,35 +16359,36 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
         divBodyStyle.height = _fnStringToCss(tableEl.offsetHeight + barWidth);
       }
     }
+
     /* Finally set the width's of the header and footer tables */
-
-
     var iOuterWidth = table.outerWidth();
     divHeaderTable[0].style.width = _fnStringToCss(iOuterWidth);
-    divHeaderInnerStyle.width = _fnStringToCss(iOuterWidth); // Figure out if there are scrollbar present - if so then we need a the header and footer to
-    // provide a bit more space to allow "overflow" scrolling (i.e. past the scrollbar)
+    divHeaderInnerStyle.width = _fnStringToCss(iOuterWidth);
 
+    // Figure out if there are scrollbar present - if so then we need a the header and footer to
+    // provide a bit more space to allow "overflow" scrolling (i.e. past the scrollbar)
     var bScrolling = table.height() > divBodyEl.clientHeight || divBody.css('overflow-y') == "scroll";
     var padding = 'padding' + (browser.bScrollbarLeft ? 'Left' : 'Right');
     divHeaderInnerStyle[padding] = bScrolling ? barWidth + "px" : "0px";
-
     if (footer) {
       divFooterTable[0].style.width = _fnStringToCss(iOuterWidth);
       divFooterInner[0].style.width = _fnStringToCss(iOuterWidth);
       divFooterInner[0].style[padding] = bScrolling ? barWidth + "px" : "0px";
-    } // Correct DOM ordering for colgroup - comes before the thead
+    }
 
-
+    // Correct DOM ordering for colgroup - comes before the thead
     table.children('colgroup').insertBefore(table.children('thead'));
+
     /* Adjust the position of the header in case we loose the y-scrollbar */
+    divBody.trigger('scroll');
 
-    divBody.trigger('scroll'); // If sorting or filtering has occurred, jump the scrolling back to the top
+    // If sorting or filtering has occurred, jump the scrolling back to the top
     // only if we aren't holding the position
-
     if ((settings.bSorted || settings.bFiltered) && !settings._drawHold) {
       divBodyEl.scrollTop = 0;
     }
   }
+
   /**
    * Apply a given function to the display child nodes of an element array (typically
    * TD children of TR rows
@@ -17953,18 +16397,14 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
    *  @param array {nodes} an2 Another list (identical structure to the first) - optional
    *  @memberof DataTable#oApi
    */
-
-
   function _fnApplyToChildren(fn, an1, an2) {
     var index = 0,
-        i = 0,
-        iLen = an1.length;
+      i = 0,
+      iLen = an1.length;
     var nNode1, nNode2;
-
     while (i < iLen) {
       nNode1 = an1[i].firstChild;
       nNode2 = an2 ? an2[i].firstChild : null;
-
       while (nNode1) {
         if (nNode1.nodeType === 1) {
           if (an2) {
@@ -17972,74 +16412,64 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
           } else {
             fn(nNode1, index);
           }
-
           index++;
         }
-
         nNode1 = nNode1.nextSibling;
         nNode2 = an2 ? nNode2.nextSibling : null;
       }
-
       i++;
     }
   }
-
   var __re_html_remove = /<.*?>/g;
+
   /**
    * Calculate the width of columns for the table
    *  @param {object} oSettings dataTables settings object
    *  @memberof DataTable#oApi
    */
-
   function _fnCalculateColumnWidths(oSettings) {
     var table = oSettings.nTable,
-        columns = oSettings.aoColumns,
-        scroll = oSettings.oScroll,
-        scrollY = scroll.sY,
-        scrollX = scroll.sX,
-        scrollXInner = scroll.sXInner,
-        columnCount = columns.length,
-        visibleColumns = _fnGetColumns(oSettings, 'bVisible'),
-        headerCells = $('th', oSettings.nTHead),
-        tableWidthAttr = table.getAttribute('width'),
-        // from DOM element
-    tableContainer = table.parentNode,
-        userInputs = false,
-        i,
-        column,
-        columnIdx,
-        width,
-        outerWidth,
-        browser = oSettings.oBrowser,
-        ie67 = browser.bScrollOversize;
-
+      columns = oSettings.aoColumns,
+      scroll = oSettings.oScroll,
+      scrollY = scroll.sY,
+      scrollX = scroll.sX,
+      scrollXInner = scroll.sXInner,
+      columnCount = columns.length,
+      visibleColumns = _fnGetColumns(oSettings, 'bVisible'),
+      headerCells = $('th', oSettings.nTHead),
+      tableWidthAttr = table.getAttribute('width'),
+      // from DOM element
+      tableContainer = table.parentNode,
+      userInputs = false,
+      i,
+      column,
+      columnIdx,
+      width,
+      outerWidth,
+      browser = oSettings.oBrowser,
+      ie67 = browser.bScrollOversize;
     var styleWidth = table.style.width;
-
     if (styleWidth && styleWidth.indexOf('%') !== -1) {
       tableWidthAttr = styleWidth;
     }
+
     /* Convert any user input sizes into pixel sizes */
-
-
     for (i = 0; i < visibleColumns.length; i++) {
       column = columns[visibleColumns[i]];
-
       if (column.sWidth !== null) {
         column.sWidth = _fnConvertToWidth(column.sWidthOrig, tableContainer);
         userInputs = true;
       }
     }
+
     /* If the number of columns in the DOM equals the number that we have to
      * process in DataTables, then we can use the offsets that are created by
      * the web- browser. No custom sizes can be set in order for this to happen,
      * nor scrolling used
      */
-
-
     if (ie67 || !userInputs && !scrollX && !scrollY && columnCount == _fnVisbleColumns(oSettings) && columnCount == headerCells.length) {
       for (i = 0; i < columnCount; i++) {
         var colIdx = _fnVisibleToColumnIndex(oSettings, i);
-
         if (colIdx !== null) {
           columns[colIdx].sWidth = _fnStringToCss(headerCells.eq(i).width());
         }
@@ -18050,26 +16480,30 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
       // the DOM and allow the browser to do all the hard work of calculating
       // table widths
       var tmpTable = $(table).clone() // don't use cloneNode - IE8 will remove events on the main table
-      .css('visibility', 'hidden').removeAttr('id'); // Clean up the table body
+      .css('visibility', 'hidden').removeAttr('id');
 
+      // Clean up the table body
       tmpTable.find('tbody tr').remove();
-      var tr = $('<tr/>').appendTo(tmpTable.find('tbody')); // Clone the table header and footer - we can't use the header / footer
+      var tr = $('<tr/>').appendTo(tmpTable.find('tbody'));
+
+      // Clone the table header and footer - we can't use the header / footer
       // from the cloned table, since if scrolling is active, the table's
       // real header and footer are contained in different table tags
-
       tmpTable.find('thead, tfoot').remove();
-      tmpTable.append($(oSettings.nTHead).clone()).append($(oSettings.nTFoot).clone()); // Remove any assigned widths from the footer (from scrolling)
+      tmpTable.append($(oSettings.nTHead).clone()).append($(oSettings.nTFoot).clone());
 
-      tmpTable.find('tfoot th, tfoot td').css('width', ''); // Apply custom sizing to the cloned header
+      // Remove any assigned widths from the footer (from scrolling)
+      tmpTable.find('tfoot th, tfoot td').css('width', '');
 
+      // Apply custom sizing to the cloned header
       headerCells = _fnGetUniqueThs(oSettings, tmpTable.find('thead')[0]);
-
       for (i = 0; i < visibleColumns.length; i++) {
         column = columns[visibleColumns[i]];
-        headerCells[i].style.width = column.sWidthOrig !== null && column.sWidthOrig !== '' ? _fnStringToCss(column.sWidthOrig) : ''; // For scrollX we need to force the column width otherwise the
+        headerCells[i].style.width = column.sWidthOrig !== null && column.sWidthOrig !== '' ? _fnStringToCss(column.sWidthOrig) : '';
+
+        // For scrollX we need to force the column width otherwise the
         // browser will collapse it. If this width is smaller than the
         // width the column requires, then it will have no effect
-
         if (column.sWidthOrig && scrollX) {
           $(headerCells[i]).append($('<div/>').css({
             width: column.sWidthOrig,
@@ -18079,25 +16513,26 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
             height: 1
           }));
         }
-      } // Find the widest cell for each column and put it into the table
+      }
 
-
+      // Find the widest cell for each column and put it into the table
       if (oSettings.aoData.length) {
         for (i = 0; i < visibleColumns.length; i++) {
           columnIdx = visibleColumns[i];
           column = columns[columnIdx];
           $(_fnGetWidestNode(oSettings, columnIdx)).clone(false).append(column.sContentPadding).appendTo(tr);
         }
-      } // Tidy the temporary table - remove name attributes so there aren't
+      }
+
+      // Tidy the temporary table - remove name attributes so there aren't
       // duplicated in the dom (radio elements for example)
+      $('[name]', tmpTable).removeAttr('name');
 
-
-      $('[name]', tmpTable).removeAttr('name'); // Table has been built, attach to the document so we can work with it.
+      // Table has been built, attach to the document so we can work with it.
       // A holding element is used, positioned at the top of the container
       // with minimal height, so it has no effect on if the container scrolls
       // or not. Otherwise it might trigger scrolling when it actually isn't
       // needed
-
       var holder = $('<div/>').css(scrollX || scrollY ? {
         position: 'absolute',
         top: 0,
@@ -18105,17 +16540,19 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
         height: 1,
         right: 0,
         overflow: 'hidden'
-      } : {}).append(tmpTable).appendTo(tableContainer); // When scrolling (X or Y) we want to set the width of the table as 
+      } : {}).append(tmpTable).appendTo(tableContainer);
+
+      // When scrolling (X or Y) we want to set the width of the table as 
       // appropriate. However, when not scrolling leave the table width as it
       // is. This results in slightly different, but I think correct behaviour
-
       if (scrollX && scrollXInner) {
         tmpTable.width(scrollXInner);
       } else if (scrollX) {
         tmpTable.css('width', 'auto');
-        tmpTable.removeAttr('width'); // If there is no width attribute or style, then allow the table to
-        // collapse
+        tmpTable.removeAttr('width');
 
+        // If there is no width attribute or style, then allow the table to
+        // collapse
         if (tmpTable.width() < tableContainer.clientWidth && tableWidthAttr) {
           tmpTable.width(tableContainer.clientWidth);
         }
@@ -18123,60 +16560,61 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
         tmpTable.width(tableContainer.clientWidth);
       } else if (tableWidthAttr) {
         tmpTable.width(tableWidthAttr);
-      } // Get the width of each column in the constructed table - we need to
+      }
+
+      // Get the width of each column in the constructed table - we need to
       // know the inner width (so it can be assigned to the other table's
       // cells) and the outer width so we can calculate the full width of the
       // table. This is safe since DataTables requires a unique cell for each
       // column, but if ever a header can span multiple columns, this will
       // need to be modified.
-
-
       var total = 0;
-
       for (i = 0; i < visibleColumns.length; i++) {
         var cell = $(headerCells[i]);
-        var border = cell.outerWidth() - cell.width(); // Use getBounding... where possible (not IE8-) because it can give
+        var border = cell.outerWidth() - cell.width();
+
+        // Use getBounding... where possible (not IE8-) because it can give
         // sub-pixel accuracy, which we then want to round up!
+        var bounding = browser.bBounding ? Math.ceil(headerCells[i].getBoundingClientRect().width) : cell.outerWidth();
 
-        var bounding = browser.bBounding ? Math.ceil(headerCells[i].getBoundingClientRect().width) : cell.outerWidth(); // Total is tracked to remove any sub-pixel errors as the outerWidth
+        // Total is tracked to remove any sub-pixel errors as the outerWidth
         // of the table might not equal the total given here (IE!).
+        total += bounding;
 
-        total += bounding; // Width for each column to use
-
+        // Width for each column to use
         columns[visibleColumns[i]].sWidth = _fnStringToCss(bounding - border);
       }
+      table.style.width = _fnStringToCss(total);
 
-      table.style.width = _fnStringToCss(total); // Finished with the table - ditch it
-
+      // Finished with the table - ditch it
       holder.remove();
-    } // If there is a width attr, we want to attach an event listener which
+    }
+
+    // If there is a width attr, we want to attach an event listener which
     // allows the table sizing to automatically adjust when the window is
     // resized. Use the width attr rather than CSS, since we can't know if the
     // CSS is a relative value or absolute - DOM read is always px.
-
-
     if (tableWidthAttr) {
       table.style.width = _fnStringToCss(tableWidthAttr);
     }
-
     if ((tableWidthAttr || scrollX) && !oSettings._reszEvt) {
       var bindResize = function bindResize() {
         $(window).on('resize.DT-' + oSettings.sInstance, _fnThrottle(function () {
           _fnAdjustColumnSizing(oSettings);
         }));
-      }; // IE6/7 will crash if we bind a resize event handler on page load.
+      };
+
+      // IE6/7 will crash if we bind a resize event handler on page load.
       // To be removed in 1.11 which drops IE6/7 support
-
-
       if (ie67) {
         setTimeout(bindResize, 1000);
       } else {
         bindResize();
       }
-
       oSettings._reszEvt = true;
     }
   }
+
   /**
    * Throttle the calls to a function. Arguments and context are maintained for
    * the throttled function
@@ -18185,9 +16623,8 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
    *  @returns {function} wrapped function
    *  @memberof DataTable#oApi
    */
-
-
   var _fnThrottle = DataTable.util.throttle;
+
   /**
    * Convert a CSS unit width to pixels (e.g. 2em)
    *  @param {string} width width to be converted
@@ -18195,17 +16632,16 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
    *  @returns {int} width in pixels
    *  @memberof DataTable#oApi
    */
-
   function _fnConvertToWidth(width, parent) {
     if (!width) {
       return 0;
     }
-
     var n = $('<div/>').css('width', _fnStringToCss(width)).appendTo(parent || document.body);
     var val = n[0].offsetWidth;
     n.remove();
     return val;
   }
+
   /**
    * Get the widest node
    *  @param {object} settings dataTables settings object
@@ -18213,19 +16649,17 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
    *  @returns {node} widest table node
    *  @memberof DataTable#oApi
    */
-
-
   function _fnGetWidestNode(settings, colIdx) {
     var idx = _fnGetMaxLenString(settings, colIdx);
-
     if (idx < 0) {
       return null;
     }
-
     var data = settings.aoData[idx];
-    return !data.nTr ? // Might not have been created when deferred rendering
+    return !data.nTr ?
+    // Might not have been created when deferred rendering
     $('<td/>').html(_fnGetCellData(settings, idx, colIdx, 'display'))[0] : data.anCells[colIdx];
   }
+
   /**
    * Get the maximum strlen for each data column
    *  @param {object} settings dataTables settings object
@@ -18233,100 +16667,85 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
    *  @returns {string} max string length for each column
    *  @memberof DataTable#oApi
    */
-
-
   function _fnGetMaxLenString(settings, colIdx) {
     var s,
-        max = -1,
-        maxIdx = -1;
-
+      max = -1,
+      maxIdx = -1;
     for (var i = 0, ien = settings.aoData.length; i < ien; i++) {
       s = _fnGetCellData(settings, i, colIdx, 'display') + '';
       s = s.replace(__re_html_remove, '');
       s = s.replace(/&nbsp;/g, ' ');
-
       if (s.length > max) {
         max = s.length;
         maxIdx = i;
       }
     }
-
     return maxIdx;
   }
+
   /**
    * Append a CSS unit (only if required) to a string
    *  @param {string} value to css-ify
    *  @returns {string} value with css unit
    *  @memberof DataTable#oApi
    */
-
-
   function _fnStringToCss(s) {
     if (s === null) {
       return '0px';
     }
-
     if (typeof s == 'number') {
       return s < 0 ? '0px' : s + 'px';
-    } // Check it has a unit character already
+    }
 
-
+    // Check it has a unit character already
     return s.match(/\d$/) ? s + 'px' : s;
   }
-
   function _fnSortFlatten(settings) {
     var i,
-        iLen,
-        k,
-        kLen,
-        aSort = [],
-        aiOrig = [],
-        aoColumns = settings.aoColumns,
-        aDataSort,
-        iCol,
-        sType,
-        srcCol,
-        fixed = settings.aaSortingFixed,
-        fixedObj = $.isPlainObject(fixed),
-        nestedSort = [],
-        add = function add(a) {
-      if (a.length && !Array.isArray(a[0])) {
-        // 1D array
-        nestedSort.push(a);
-      } else {
-        // 2D array
-        $.merge(nestedSort, a);
-      }
-    }; // Build the sort array, with pre-fix and post-fix options if they have been
+      iLen,
+      k,
+      kLen,
+      aSort = [],
+      aiOrig = [],
+      aoColumns = settings.aoColumns,
+      aDataSort,
+      iCol,
+      sType,
+      srcCol,
+      fixed = settings.aaSortingFixed,
+      fixedObj = $.isPlainObject(fixed),
+      nestedSort = [],
+      add = function add(a) {
+        if (a.length && !Array.isArray(a[0])) {
+          // 1D array
+          nestedSort.push(a);
+        } else {
+          // 2D array
+          $.merge(nestedSort, a);
+        }
+      };
+
+    // Build the sort array, with pre-fix and post-fix options if they have been
     // specified
-
-
     if (Array.isArray(fixed)) {
       add(fixed);
     }
-
     if (fixedObj && fixed.pre) {
       add(fixed.pre);
     }
-
     add(settings.aaSorting);
-
     if (fixedObj && fixed.post) {
       add(fixed.post);
     }
-
     for (i = 0; i < nestedSort.length; i++) {
       srcCol = nestedSort[i][0];
       aDataSort = aoColumns[srcCol].aDataSort;
-
       for (k = 0, kLen = aDataSort.length; k < kLen; k++) {
         iCol = aDataSort[k];
         sType = aoColumns[iCol].sType || 'string';
-
         if (nestedSort[i]._idx === undefined) {
           nestedSort[i]._idx = $.inArray(nestedSort[i][1], aoColumns[iCol].asSorting);
         }
-
         aSort.push({
           src: srcCol,
           col: iCol,
@@ -18337,66 +16756,64 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
         });
       }
     }
-
     return aSort;
   }
+
   /**
    * Change the order of the table
    *  @param {object} oSettings dataTables settings object
    *  @memberof DataTable#oApi
    *  @todo This really needs split up!
    */
-
-
   function _fnSort(oSettings) {
     var i,
-        ien,
-        iLen,
-        j,
-        jLen,
-        k,
-        kLen,
-        sDataType,
-        nTh,
-        aiOrig = [],
-        oExtSort = DataTable.ext.type.order,
-        aoData = oSettings.aoData,
-        aoColumns = oSettings.aoColumns,
-        aDataSort,
-        data,
-        iCol,
-        sType,
-        oSort,
-        formatters = 0,
-        sortCol,
-        displayMaster = oSettings.aiDisplayMaster,
-        aSort; // Resolve any column types that are unknown due to addition or invalidation
+      ien,
+      iLen,
+      j,
+      jLen,
+      k,
+      kLen,
+      sDataType,
+      nTh,
+      aiOrig = [],
+      oExtSort = DataTable.ext.type.order,
+      aoData = oSettings.aoData,
+      aoColumns = oSettings.aoColumns,
+      aDataSort,
+      data,
+      iCol,
+      sType,
+      oSort,
+      formatters = 0,
+      sortCol,
+      displayMaster = oSettings.aiDisplayMaster,
+      aSort;
+
+    // Resolve any column types that are unknown due to addition or invalidation
     // @todo Can this be moved into a 'data-ready' handler which is called when
     //   data is going to be used in the table?
-
     _fnColumnTypes(oSettings);
-
     aSort = _fnSortFlatten(oSettings);
-
     for (i = 0, ien = aSort.length; i < ien; i++) {
-      sortCol = aSort[i]; // Track if we can use the fast sort algorithm
+      sortCol = aSort[i];
 
+      // Track if we can use the fast sort algorithm
       if (sortCol.formatter) {
         formatters++;
-      } // Load the data needed for the sort, for each cell
+      }
 
-
+      // Load the data needed for the sort, for each cell
       _fnSortData(oSettings, sortCol.col);
     }
+
     /* No sorting required if server-side or no sorting array */
-
-
     if (_fnDataSource(oSettings) != 'ssp' && aSort.length !== 0) {
       // Create a value - key array of the current row positions such that we can use their
       // current position during the sort, if values match, in order to perform stable sorting
       for (i = 0, iLen = displayMaster.length; i < iLen; i++) {
         aiOrig[displayMaster[i]] = i;
       }
+
       /* Do the sort - here we want multi-column sorting based on a given data source (column)
        * and sorting function (from oSort) in a certain direction. It's reasonably complex to
        * follow on it's own, but this is what we want (example two column sorting):
@@ -18418,31 +16835,26 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
        * 15% faster, so the second is only maintained for backwards compatibility with sorting
        * methods which do not have a pre-sort formatting function.
        */
-
-
       if (formatters === aSort.length) {
         // All sort types have formatting functions
         displayMaster.sort(function (a, b) {
           var x,
-              y,
-              k,
-              test,
-              sort,
-              len = aSort.length,
-              dataA = aoData[a]._aSortData,
-              dataB = aoData[b]._aSortData;
-
+            y,
+            k,
+            test,
+            sort,
+            len = aSort.length,
+            dataA = aoData[a]._aSortData,
+            dataB = aoData[b]._aSortData;
           for (k = 0; k < len; k++) {
             sort = aSort[k];
             x = dataA[sort.col];
             y = dataB[sort.col];
             test = x < y ? -1 : x > y ? 1 : 0;
-
             if (test !== 0) {
               return sort.dir === 'asc' ? test : -test;
             }
           }
-
           x = aiOrig[a];
           y = aiOrig[b];
           return x < y ? -1 : x > y ? 1 : 0;
@@ -18453,60 +16865,55 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
         // methods.
         displayMaster.sort(function (a, b) {
           var x,
-              y,
-              k,
-              l,
-              test,
-              sort,
-              fn,
-              len = aSort.length,
-              dataA = aoData[a]._aSortData,
-              dataB = aoData[b]._aSortData;
-
+            y,
+            k,
+            l,
+            test,
+            sort,
+            fn,
+            len = aSort.length,
+            dataA = aoData[a]._aSortData,
+            dataB = aoData[b]._aSortData;
           for (k = 0; k < len; k++) {
             sort = aSort[k];
             x = dataA[sort.col];
             y = dataB[sort.col];
             fn = oExtSort[sort.type + "-" + sort.dir] || oExtSort["string-" + sort.dir];
             test = fn(x, y);
-
             if (test !== 0) {
               return test;
             }
           }
-
           x = aiOrig[a];
           y = aiOrig[b];
           return x < y ? -1 : x > y ? 1 : 0;
         });
       }
     }
+
     /* Tell the draw function that we have sorted the data */
-
-
     oSettings.bSorted = true;
   }
-
   function _fnSortAria(settings) {
     var label;
     var nextSort;
     var columns = settings.aoColumns;
-
     var aSort = _fnSortFlatten(settings);
+    var oAria = settings.oLanguage.oAria;
 
-    var oAria = settings.oLanguage.oAria; // ARIA attributes - need to loop all columns, to update all (removing old
+    // ARIA attributes - need to loop all columns, to update all (removing old
     // attributes as needed)
-
     for (var i = 0, iLen = columns.length; i < iLen; i++) {
       var col = columns[i];
       var asSorting = col.asSorting;
       var sTitle = col.ariaTitle || col.sTitle.replace(/<.*?>/g, "");
-      var th = col.nTh; // IE7 is throwing an error when setting these properties with jQuery's
+      var th = col.nTh;
+
+      // IE7 is throwing an error when setting these properties with jQuery's
       // attr() and removeAttr() methods...
-
       th.removeAttribute('aria-sort');
-      /* In ARIA only the first sorting column can be marked as sorting - no multi-sort option */
 
+      /* In ARIA only the first sorting column can be marked as sorting - no multi-sort option */
       if (col.bSortable) {
         if (aSort.length > 0 && aSort[0].col == i) {
           th.setAttribute('aria-sort', aSort[0].dir == "asc" ? "ascending" : "descending");
@@ -18514,15 +16921,14 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
         } else {
           nextSort = asSorting[0];
         }
-
         label = sTitle + (nextSort === "asc" ? oAria.sSortAscending : oAria.sSortDescending);
       } else {
         label = sTitle;
       }
-
       th.setAttribute('aria-label', label);
     }
   }
+
   /**
    * Function to run on user sort request
    *  @param {object} settings dataTables settings object
@@ -18533,38 +16939,31 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
    *  @param {function} [callback] callback function
    *  @memberof DataTable#oApi
    */
-
-
   function _fnSortListener(settings, colIdx, append, callback) {
     var col = settings.aoColumns[colIdx];
     var sorting = settings.aaSorting;
     var asSorting = col.asSorting;
     var nextSortIdx;
-
     var next = function next(a, overflow) {
       var idx = a._idx;
-
       if (idx === undefined) {
         idx = $.inArray(a[1], asSorting);
       }
-
       return idx + 1 < asSorting.length ? idx + 1 : overflow ? null : 0;
-    }; // Convert to 2D array if needed
+    };
 
-
+    // Convert to 2D array if needed
     if (typeof sorting[0] === 'number') {
       sorting = settings.aaSorting = [sorting];
-    } // If appending the sort then we are multi-column sorting
+    }
 
-
+    // If appending the sort then we are multi-column sorting
     if (append && settings.oFeatures.bSortMulti) {
       // Are we already doing some kind of sort on this column?
       var sortIdx = $.inArray(colIdx, _pluck(sorting, '0'));
-
       if (sortIdx !== -1) {
         // Yes, modify the sort
         nextSortIdx = next(sorting[sortIdx], true);
-
         if (nextSortIdx === null && sorting.length === 1) {
           nextSortIdx = 0; // can't remove sorting completely
         }
@@ -18591,16 +16990,17 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
       sorting.length = 0;
       sorting.push([colIdx, asSorting[0]]);
       sorting[0]._idx = 0;
-    } // Run the sort by calling a full redraw
+    }
 
+    // Run the sort by calling a full redraw
+    _fnReDraw(settings);
 
-    _fnReDraw(settings); // callback used for async user interaction
-
-
+    // callback used for async user interaction
     if (typeof callback == 'function') {
       callback(settings);
     }
   }
+
   /**
    * Attach a sort handler (click) to a node
    *  @param {object} settings dataTables settings object
@@ -18609,27 +17009,23 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
    *  @param {function} [callback] callback function
    *  @memberof DataTable#oApi
    */
-
-
   function _fnSortAttachListener(settings, attachTo, colIdx, callback) {
     var col = settings.aoColumns[colIdx];
-
     _fnBindAction(attachTo, {}, function (e) {
       /* If the column is not sortable - don't to anything */
       if (col.bSortable === false) {
         return;
-      } // If processing is enabled use a timeout to allow the processing
+      }
+
+      // If processing is enabled use a timeout to allow the processing
       // display to be shown - otherwise to it synchronously
-
-
       if (settings.oFeatures.bProcessing) {
         _fnProcessingDisplay(settings, true);
-
         setTimeout(function () {
-          _fnSortListener(settings, colIdx, e.shiftKey, callback); // In server-side processing, the draw callback will remove the
+          _fnSortListener(settings, colIdx, e.shiftKey, callback);
+
+          // In server-side processing, the draw callback will remove the
           // processing display
-
-
           if (_fnDataSource(settings) !== 'ssp') {
             _fnProcessingDisplay(settings, false);
           }
@@ -18639,85 +17035,76 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
       }
     });
   }
+
   /**
    * Set the sorting classes on table's body, Note: it is safe to call this function
    * when bSort and bSortClasses are false
    *  @param {object} oSettings dataTables settings object
    *  @memberof DataTable#oApi
    */
-
-
   function _fnSortingClasses(settings) {
     var oldSort = settings.aLastSort;
     var sortClass = settings.oClasses.sSortColumn;
-
     var sort = _fnSortFlatten(settings);
-
     var features = settings.oFeatures;
     var i, ien, colIdx;
-
     if (features.bSort && features.bSortClasses) {
       // Remove old sorting classes
       for (i = 0, ien = oldSort.length; i < ien; i++) {
-        colIdx = oldSort[i].src; // Remove column sorting
+        colIdx = oldSort[i].src;
 
+        // Remove column sorting
         $(_pluck(settings.aoData, 'anCells', colIdx)).removeClass(sortClass + (i < 2 ? i + 1 : 3));
-      } // Add new column sorting
+      }
 
-
+      // Add new column sorting
       for (i = 0, ien = sort.length; i < ien; i++) {
         colIdx = sort[i].src;
         $(_pluck(settings.aoData, 'anCells', colIdx)).addClass(sortClass + (i < 2 ? i + 1 : 3));
       }
     }
-
     settings.aLastSort = sort;
-  } // Get the data to sort a column, be it from cache, fresh (populating the
+  }
+
+  // Get the data to sort a column, be it from cache, fresh (populating the
   // cache), or from a sort formatter
-
-
   function _fnSortData(settings, idx) {
     // Custom sorting function - provided by the sort data type
     var column = settings.aoColumns[idx];
     var customSort = DataTable.ext.order[column.sSortDataType];
     var customData;
-
     if (customSort) {
       customData = customSort.call(settings.oInstance, settings, idx, _fnColumnIndexToVisible(settings, idx));
-    } // Use / populate cache
+    }
 
-
+    // Use / populate cache
     var row, cellData;
     var formatter = DataTable.ext.type.order[column.sType + "-pre"];
-
     for (var i = 0, ien = settings.aoData.length; i < ien; i++) {
       row = settings.aoData[i];
-
       if (!row._aSortData) {
         row._aSortData = [];
       }
-
       if (!row._aSortData[idx] || customSort) {
-        cellData = customSort ? customData[i] : // If there was a custom sort function, use data from there
+        cellData = customSort ? customData[i] :
+        // If there was a custom sort function, use data from there
         _fnGetCellData(settings, i, idx, 'sort');
         row._aSortData[idx] = formatter ? formatter(cellData) : cellData;
       }
     }
   }
+
   /**
    * Save the state of a table
    *  @param {object} oSettings dataTables settings object
    *  @memberof DataTable#oApi
    */
-
-
   function _fnSaveState(settings) {
-    if (!settings.oFeatures.bStateSave || settings.bDestroying) {
+    if (settings._bLoadingState) {
       return;
     }
+
     /* Store the interesting variables */
-
-
     var state = {
       time: +new Date(),
       start: settings._iDisplayStart,
@@ -18731,12 +17118,13 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
         };
       })
     };
-
-    _fnCallbackFire(settings, "aoStateSaveParams", 'stateSaveParams', [settings, state]);
-
     settings.oSavedState = state;
-    settings.fnStateSaveCallback.call(settings.oInstance, settings, state);
+    _fnCallbackFire(settings, "aoStateSaveParams", 'stateSaveParams', [settings, state]);
+    if (settings.oFeatures.bStateSave && !settings.bDestroying) {
+      settings.fnStateSaveCallback.call(settings.oInstance, settings, state);
+    }
   }
+
   /**
    * Attempt to load a saved table state
    *  @param {object} oSettings dataTables settings object
@@ -18744,114 +17132,142 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
    *  @param {function} callback Callback to execute when the state has been loaded
    *  @memberof DataTable#oApi
    */
-
-
   function _fnLoadState(settings, oInit, callback) {
-    var i, ien;
-    var columns = settings.aoColumns;
-
-    var loaded = function loaded(s) {
-      if (!s || !s.time) {
-        callback();
-        return;
-      } // Allow custom and plug-in manipulation functions to alter the saved data set and
-      // cancelling of loading by returning false
-
-
-      var abStateLoad = _fnCallbackFire(settings, 'aoStateLoadParams', 'stateLoadParams', [settings, s]);
-
-      if ($.inArray(false, abStateLoad) !== -1) {
-        callback();
-        return;
-      } // Reject old data
-
-
-      var duration = settings.iStateDuration;
-
-      if (duration > 0 && s.time < +new Date() - duration * 1000) {
-        callback();
-        return;
-      } // Number of columns have changed - all bets are off, no restore of settings
-
-
-      if (s.columns && columns.length !== s.columns.length) {
-        callback();
-        return;
-      } // Store the saved state so it might be accessed at any time
-
-
-      settings.oLoadedState = $.extend(true, {}, s); // Restore key features - todo - for 1.11 this needs to be done by
-      // subscribed events
-
-      if (s.start !== undefined) {
-        settings._iDisplayStart = s.start;
-        settings.iInitDisplayStart = s.start;
-      }
-
-      if (s.length !== undefined) {
-        settings._iDisplayLength = s.length;
-      } // Order
-
-
-      if (s.order !== undefined) {
-        settings.aaSorting = [];
-        $.each(s.order, function (i, col) {
-          settings.aaSorting.push(col[0] >= columns.length ? [0, col[1]] : col);
-        });
-      } // Search
-
-
-      if (s.search !== undefined) {
-        $.extend(settings.oPreviousSearch, _fnSearchToHung(s.search));
-      } // Columns
-      //
-
-
-      if (s.columns) {
-        for (i = 0, ien = s.columns.length; i < ien; i++) {
-          var col = s.columns[i]; // Visibility
-
-          if (col.visible !== undefined) {
-            columns[i].bVisible = col.visible;
-          } // Search
-
-
-          if (col.search !== undefined) {
-            $.extend(settings.aoPreSearchCols[i], _fnSearchToHung(col.search));
-          }
-        }
-      }
-
-      _fnCallbackFire(settings, 'aoStateLoaded', 'stateLoaded', [settings, s]);
-
-      callback();
-    };
-
     if (!settings.oFeatures.bStateSave) {
       callback();
       return;
     }
-
+    var loaded = function loaded(state) {
+      _fnImplementState(settings, state, callback);
+    };
     var state = settings.fnStateLoadCallback.call(settings.oInstance, settings, loaded);
-
     if (state !== undefined) {
-      loaded(state);
-    } // otherwise, wait for the loaded callback to be executed
+      _fnImplementState(settings, state, callback);
+    }
+    // otherwise, wait for the loaded callback to be executed
 
+    return true;
   }
+  function _fnImplementState(settings, s, callback) {
+    var i, ien;
+    var columns = settings.aoColumns;
+    settings._bLoadingState = true;
+
+    // When StateRestore was introduced the state could now be implemented at any time
+    // Not just initialisation. To do this an api instance is required in some places
+    var api = settings._bInitComplete ? new DataTable.Api(settings) : null;
+    if (!s || !s.time) {
+      settings._bLoadingState = false;
+      callback();
+      return;
+    }
+
+    // Allow custom and plug-in manipulation functions to alter the saved data set and
+    // cancelling of loading by returning false
+    var abStateLoad = _fnCallbackFire(settings, 'aoStateLoadParams', 'stateLoadParams', [settings, s]);
+    if ($.inArray(false, abStateLoad) !== -1) {
+      settings._bLoadingState = false;
+      callback();
+      return;
+    }
+
+    // Reject old data
+    var duration = settings.iStateDuration;
+    if (duration > 0 && s.time < +new Date() - duration * 1000) {
+      settings._bLoadingState = false;
+      callback();
+      return;
+    }
+
+    // Number of columns have changed - all bets are off, no restore of settings
+    if (s.columns && columns.length !== s.columns.length) {
+      settings._bLoadingState = false;
+      callback();
+      return;
+    }
+
+    // Store the saved state so it might be accessed at any time
+    settings.oLoadedState = $.extend(true, {}, s);
+
+    // Page Length
+    if (s.length !== undefined) {
+      // If already initialised just set the value directly so that the select element is also updated
+      if (api) {
+        api.page.len(s.length);
+      } else {
+        settings._iDisplayLength = s.length;
+      }
+    }
+
+    // Restore key features - todo - for 1.11 this needs to be done by
+    // subscribed events
+    if (s.start !== undefined) {
+      if (api === null) {
+        settings._iDisplayStart = s.start;
+        settings.iInitDisplayStart = s.start;
+      } else {
+        _fnPageChange(settings, s.start / settings._iDisplayLength);
+      }
+    }
+
+    // Order
+    if (s.order !== undefined) {
+      settings.aaSorting = [];
+      $.each(s.order, function (i, col) {
+        settings.aaSorting.push(col[0] >= columns.length ? [0, col[1]] : col);
+      });
+    }
+
+    // Search
+    if (s.search !== undefined) {
+      $.extend(settings.oPreviousSearch, _fnSearchToHung(s.search));
+    }
+
+    // Columns
+    if (s.columns) {
+      for (i = 0, ien = s.columns.length; i < ien; i++) {
+        var col = s.columns[i];
+
+        // Visibility
+        if (col.visible !== undefined) {
+          // If the api is defined, the table has been initialised so we need to use it rather than internal settings
+          if (api) {
+            // Don't redraw the columns on every iteration of this loop, we will do this at the end instead
+            api.column(i).visible(col.visible, false);
+          } else {
+            columns[i].bVisible = col.visible;
+          }
+        }
+
+        // Search
+        if (col.search !== undefined) {
+          $.extend(settings.aoPreSearchCols[i], _fnSearchToHung(col.search));
+        }
+      }
+
+      // If the api is defined then we need to adjust the columns once the visibility has been changed
+      if (api) {
+        api.columns.adjust();
+      }
+    }
+    settings._bLoadingState = false;
+    _fnCallbackFire(settings, 'aoStateLoaded', 'stateLoaded', [settings, s]);
+    callback();
+  }
+  ;
+
   /**
    * Return the settings object for a particular table
    *  @param {node} table table we are using as a dataTable
    *  @returns {object} Settings object - or null if not found
    *  @memberof DataTable#oApi
    */
-
-
   function _fnSettingsFromNode(table) {
     var settings = DataTable.settings;
     var idx = $.inArray(table, _pluck(settings, 'nTable'));
     return idx !== -1 ? settings[idx] : null;
   }
+
   /**
    * Log an error message
    *  @param {object} settings dataTables settings object
@@ -18860,24 +17276,18 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
    *  @param {int} tn Technical note id to get more information about the error.
    *  @memberof DataTable#oApi
    */
-
-
   function _fnLog(settings, level, msg, tn) {
     msg = 'DataTables warning: ' + (settings ? 'table id=' + settings.sTableId + ' - ' : '') + msg;
-
     if (tn) {
       msg += '. For more information about this error, please see ' + 'http://datatables.net/tn/' + tn;
     }
-
     if (!level) {
       // Backwards compatibility pre 1.10
       var ext = DataTable.ext;
       var type = ext.sErrMode || ext.errMode;
-
       if (settings) {
         _fnCallbackFire(settings, null, 'error', [settings, tn, msg]);
       }
-
       if (type == 'alert') {
         alert(msg);
       } else if (type == 'throw') {
@@ -18889,6 +17299,7 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
       console.log(msg);
     }
   }
+
   /**
    * See if a property is defined on one object, if so assign it to the other object
    *  @param {object} ret target object
@@ -18897,8 +17308,6 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
    *  @param {string} [mappedName] name to map too - optional, name used if not given
    *  @memberof DataTable#oApi
    */
-
-
   function _fnMap(ret, src, name, mappedName) {
     if (Array.isArray(name)) {
       $.each(name, function (i, val) {
@@ -18910,15 +17319,14 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
       });
       return;
     }
-
     if (mappedName === undefined) {
       mappedName = name;
     }
-
     if (src[name] !== undefined) {
       ret[mappedName] = src[name];
     }
   }
+
   /**
    * Extend objects - very similar to jQuery.extend, but deep copy objects, and
    * shallow copy arrays. The reason we need to do this, is that we don't want to
@@ -18936,20 +17344,15 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
    *  @memberof DataTable#oApi
    *  @todo This doesn't take account of arrays inside the deep copied objects.
    */
-
-
   function _fnExtend(out, extender, breakRefs) {
     var val;
-
     for (var prop in extender) {
       if (extender.hasOwnProperty(prop)) {
         val = extender[prop];
-
         if ($.isPlainObject(val)) {
           if (!$.isPlainObject(out[prop])) {
             out[prop] = {};
           }
-
           $.extend(true, out[prop], val);
         } else if (breakRefs && prop !== 'data' && prop !== 'aaData' && Array.isArray(val)) {
           out[prop] = val.slice();
@@ -18958,9 +17361,9 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
         }
       }
     }
-
     return out;
   }
+
   /**
    * Bind an event handers to allow a click or return key to activate the callback.
    * This is good for accessibility since a return on the keyboard will have the
@@ -18970,12 +17373,9 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
    *  @param {function} fn Callback function for when the event is triggered
    *  @memberof DataTable#oApi
    */
-
-
   function _fnBindAction(n, oData, fn) {
     $(n).on('click.DT', oData, function (e) {
       $(n).trigger('blur'); // Remove focus outline for mouse users
-
       fn(e);
     }).on('keypress.DT', oData, function (e) {
       if (e.which === 13) {
@@ -18987,6 +17387,7 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
       return false;
     });
   }
+
   /**
    * Register a callback function. Easily allows a callback function to be added to
    * an array store of callback functions that can then all be called together.
@@ -18996,8 +17397,6 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
    *  @param {string} sName Identifying name for the callback (i.e. a label)
    *  @memberof DataTable#oApi
    */
-
-
   function _fnCallbackReg(oSettings, sStore, fn, sName) {
     if (fn) {
       oSettings[sStore].push({
@@ -19006,6 +17405,7 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
       });
     }
   }
+
   /**
    * Fire callback functions and trigger events. Note that the loop over the
    * callback array store is done backwards! Further note that you do not want to
@@ -19020,50 +17420,47 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
    *      trigger
    *  @memberof DataTable#oApi
    */
-
-
   function _fnCallbackFire(settings, callbackArr, eventName, args) {
     var ret = [];
-
     if (callbackArr) {
       ret = $.map(settings[callbackArr].slice().reverse(), function (val, i) {
         return val.fn.apply(settings.oInstance, args);
       });
     }
-
     if (eventName !== null) {
       var e = $.Event(eventName + '.dt');
-      $(settings.nTable).trigger(e, args);
+      var table = $(settings.nTable);
+      table.trigger(e, args);
+
+      // If not yet attached to the document, trigger the event
+      // on the body directly to sort of simulate the bubble
+      if (table.parents('body').length === 0) {
+        $('body').trigger(e, args);
+      }
       ret.push(e.result);
     }
-
     return ret;
   }
-
   function _fnLengthOverflow(settings) {
     var start = settings._iDisplayStart,
-        end = settings.fnDisplayEnd(),
-        len = settings._iDisplayLength;
-    /* If we have space to show extra rows (backing up from the end point - then do so */
+      end = settings.fnDisplayEnd(),
+      len = settings._iDisplayLength;
 
+    /* If we have space to show extra rows (backing up from the end point - then do so */
     if (start >= end) {
       start = end - len;
-    } // Keep the start record on the current page
+    }
 
-
+    // Keep the start record on the current page
     start -= start % len;
-
     if (len === -1 || start < 0) {
       start = 0;
     }
-
     settings._iDisplayStart = start;
   }
-
   function _fnRenderer(settings, type) {
     var renderer = settings.renderer;
     var host = DataTable.ext.renderer[type];
-
     if ($.isPlainObject(renderer) && renderer[type]) {
       // Specific renderer for this type. If available use it, otherwise use
       // the default.
@@ -19072,11 +17469,12 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
       // Common renderer - if there is one available for this type use it,
       // otherwise use the default
       return host[renderer] || host._;
-    } // Use the default
+    }
 
-
+    // Use the default
     return host._;
   }
+
   /**
    * Detect the data source being used for the table. Used to simplify the code
    * a little (ajax) and to make it compress a little smaller.
@@ -19085,17 +17483,15 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
    *  @returns {string} Data source
    *  @memberof DataTable#oApi
    */
-
-
   function _fnDataSource(settings) {
     if (settings.oFeatures.bServerSide) {
       return 'ssp';
     } else if (settings.ajax || settings.sAjaxSource) {
       return 'ajax';
     }
-
     return 'dom';
   }
+
   /**
    * Computed structure of the DataTables API, defined by the options passed to
    * `DataTable.Api.register()` when building the API.
@@ -19132,17 +17528,16 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
    * @type {Array}
    * @ignore
    */
-
-
   var __apiStruct = [];
+
   /**
    * `Array.prototype` reference.
    *
    * @type object
    * @ignore
    */
-
   var __arrayProto = Array.prototype;
+
   /**
    * Abstraction for `context` parameter of the `Api` constructor to allow it to
    * take several different forms for ease of use.
@@ -19163,14 +17558,12 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
    *   `undefined` is returned if no matching DataTable is found.
    * @ignore
    */
-
   var _toSettings = function _toSettings(mixed) {
     var idx, jq;
     var settings = DataTable.settings;
     var tables = $.map(settings, function (el, i) {
       return el.nTable;
     });
-
     if (!mixed) {
       return [];
     } else if (mixed.nTable && mixed.oApi) {
@@ -19189,7 +17582,6 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
       // jQuery object (also DataTables instance)
       jq = mixed;
     }
-
     if (jq) {
       return jq.map(function (i) {
         idx = $.inArray(this, tables);
@@ -19197,6 +17589,7 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
       }).toArray();
     }
   };
+
   /**
    * DataTables API class - used to control and interface with  one or more
    * DataTables enhanced tables.
@@ -19251,51 +17644,45 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
    *   // Initialisation as a constructor
    *   var api = new $.fn.DataTable.Api( 'table.dataTable' );
    */
-
-
   _Api2 = function _Api(context, data) {
     if (!(this instanceof _Api2)) {
       return new _Api2(context, data);
     }
-
     var settings = [];
-
     var ctxSettings = function ctxSettings(o) {
       var a = _toSettings(o);
-
       if (a) {
         settings.push.apply(settings, a);
       }
     };
-
     if (Array.isArray(context)) {
       for (var i = 0, ien = context.length; i < ien; i++) {
         ctxSettings(context[i]);
       }
     } else {
       ctxSettings(context);
-    } // Remove duplicates
+    }
 
+    // Remove duplicates
+    this.context = _unique(settings);
 
-    this.context = _unique(settings); // Initial data
-
+    // Initial data
     if (data) {
       $.merge(this, data);
-    } // selector
+    }
 
-
+    // selector
     this.selector = {
       rows: null,
       cols: null,
       opts: null
     };
-
     _Api2.extend(this, this, __apiStruct);
   };
+  DataTable.Api = _Api2;
 
-  DataTable.Api = _Api2; // Don't destroy the existing prototype, just extend it. Required for jQuery 2's
+  // Don't destroy the existing prototype, just extend it. Required for jQuery 2's
   // isPlainObject.
-
   $.extend(_Api2.prototype, {
     any: function any() {
       return this.count() !== 0;
@@ -19303,6 +17690,7 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
     concat: __arrayProto.concat,
     context: [],
     // array of table settings objects
+
     count: function count() {
       return this.flatten().length;
     },
@@ -19310,7 +17698,6 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
       for (var i = 0, ien = this.length; i < ien; i++) {
         fn.call(this, this[i], i, this);
       }
-
       return this;
     },
     eq: function eq(idx) {
@@ -19319,7 +17706,6 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
     },
     filter: function filter(fn) {
       var a = [];
-
       if (__arrayProto.filter) {
         a = __arrayProto.filter.call(this, fn, this);
       } else {
@@ -19330,7 +17716,6 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
           }
         }
       }
-
       return new _Api2(this.context, a);
     },
     flatten: function flatten() {
@@ -19344,42 +17729,38 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
           return i;
         }
       }
-
       return -1;
     },
     iterator: function iterator(flatten, type, fn, alwaysNew) {
       var a = [],
-          ret,
-          i,
-          ien,
-          j,
-          jen,
-          context = this.context,
-          rows,
-          items,
-          item,
-          selector = this.selector; // Argument shifting
+        ret,
+        i,
+        ien,
+        j,
+        jen,
+        context = this.context,
+        rows,
+        items,
+        item,
+        selector = this.selector;
 
+      // Argument shifting
       if (typeof flatten === 'string') {
         alwaysNew = fn;
         fn = type;
         type = flatten;
         flatten = false;
       }
-
       for (i = 0, ien = context.length; i < ien; i++) {
         var apiInst = new _Api2(context[i]);
-
         if (type === 'table') {
           ret = fn.call(apiInst, context[i], i);
-
           if (ret !== undefined) {
             a.push(ret);
           }
         } else if (type === 'columns' || type === 'rows') {
           // this has same length as context - one entry for each table
           ret = fn.call(apiInst, context[i], this[i], i);
-
           if (ret !== undefined) {
             a.push(ret);
           }
@@ -19387,27 +17768,22 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
           // columns and rows share the same structure.
           // 'this' is an array of column indexes for each context
           items = this[i];
-
           if (type === 'column-rows') {
             rows = _selector_row_indexes(context[i], selector.opts);
           }
-
           for (j = 0, jen = items.length; j < jen; j++) {
             item = items[j];
-
             if (type === 'cell') {
               ret = fn.call(apiInst, context[i], item.row, item.column, i, j);
             } else {
               ret = fn.call(apiInst, context[i], item, i, j, rows);
             }
-
             if (ret !== undefined) {
               a.push(ret);
             }
           }
         }
       }
-
       if (a.length || alwaysNew) {
         var api = new _Api2(context, flatten ? a.concat.apply([], a) : a);
         var apiSelector = api.selector;
@@ -19416,7 +17792,6 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
         apiSelector.opts = selector.opts;
         return api;
       }
-
       return this;
     },
     lastIndexOf: __arrayProto.lastIndexOf || function (obj, start) {
@@ -19426,7 +17801,6 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
     length: 0,
     map: function map(fn) {
       var a = [];
-
       if (__arrayProto.map) {
         a = __arrayProto.map.call(this, fn, this);
       } else {
@@ -19435,12 +17809,12 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
           a.push(fn.call(this, this[i], i));
         }
       }
-
       return new _Api2(this.context, a);
     },
     pluck: function pluck(prop) {
+      var fn = DataTable.util.get(prop);
       return this.map(function (el) {
-        return el[prop];
+        return fn(el);
       });
     },
     pop: __arrayProto.pop,
@@ -19461,6 +17835,7 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
     },
     sort: __arrayProto.sort,
     // ? name - order?
+
     splice: __arrayProto.splice,
     toArray: function toArray() {
       return __arrayProto.slice.call(this);
@@ -19476,41 +17851,44 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
     },
     unshift: __arrayProto.unshift
   });
-
   _Api2.extend = function (scope, obj, ext) {
     // Only extend API instances and static properties of the API
     if (!ext.length || !obj || !(obj instanceof _Api2) && !obj.__dt_wrapper) {
       return;
     }
-
     var i,
-        ien,
-        struct,
-        methodScoping = function methodScoping(scope, fn, struc) {
-      return function () {
-        var ret = fn.apply(scope, arguments); // Method extension
+      ien,
+      struct,
+      methodScoping = function methodScoping(scope, fn, struc) {
+        return function () {
+          var ret = fn.apply(scope, arguments);
 
-        _Api2.extend(ret, ret, struc.methodExt);
-
-        return ret;
+          // Method extension
+          _Api2.extend(ret, ret, struc.methodExt);
+          return ret;
+        };
       };
-    };
-
     for (i = 0, ien = ext.length; i < ien; i++) {
-      struct = ext[i]; // Value
+      struct = ext[i];
 
+      // Value
       obj[struct.name] = struct.type === 'function' ? methodScoping(scope, struct.val, struct) : struct.type === 'object' ? {} : struct.val;
-      obj[struct.name].__dt_wrapper = true; // Property extension
+      obj[struct.name].__dt_wrapper = true;
 
+      // Property extension
       _Api2.extend(scope, obj[struct.name], struct.propExt);
     }
-  }; // @todo - Is there need for an augment function?
+  };
+
+  // @todo - Is there need for an augment function?
   // _Api.augment = function ( inst, name )
   // {
   // 	// Find src object in the structure from the name
   // 	var parts = name.split('.');
+
   // 	_Api.extend( inst, obj );
   // };
+
   //     [
   //       {
   //         name:      'data'                -- string   - Property name
@@ -19534,38 +17912,31 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
   //       }
   //     ]
 
-
   _Api2.register = _api_register = function _api_register(name, val) {
     if (Array.isArray(name)) {
       for (var j = 0, jen = name.length; j < jen; j++) {
         _Api2.register(name[j], val);
       }
-
       return;
     }
-
     var i,
-        ien,
-        heir = name.split('.'),
-        struct = __apiStruct,
-        key,
-        method;
-
+      ien,
+      heir = name.split('.'),
+      struct = __apiStruct,
+      key,
+      method;
     var find = function find(src, name) {
       for (var i = 0, ien = src.length; i < ien; i++) {
         if (src[i].name === name) {
           return src[i];
         }
       }
-
       return null;
     };
-
     for (i = 0, ien = heir.length; i < ien; i++) {
       method = heir[i].indexOf('()') !== -1;
       key = method ? heir[i].replace('()', '') : heir[i];
       var src = find(struct, key);
-
       if (!src) {
         src = {
           name: key,
@@ -19576,7 +17947,6 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
         };
         struct.push(src);
       }
-
       if (i === ien - 1) {
         src.val = val;
         src.type = typeof val === 'function' ? 'function' : $.isPlainObject(val) ? 'object' : 'other';
@@ -19585,27 +17955,26 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
       }
     }
   };
-
   _Api2.registerPlural = _api_registerPlural = function _api_registerPlural(pluralName, singularName, val) {
     _Api2.register(pluralName, val);
-
     _Api2.register(singularName, function () {
       var ret = val.apply(this, arguments);
-
       if (ret === this) {
         // Returned item is the API instance that was passed in, return it
         return this;
       } else if (ret instanceof _Api2) {
         // New API instance returned, want the value from the first item
         // in the returned array for the singular result.
-        return ret.length ? Array.isArray(ret[0]) ? new _Api2(ret.context, ret[0]) : // Array results are 'enhanced'
+        return ret.length ? Array.isArray(ret[0]) ? new _Api2(ret.context, ret[0]) :
+        // Array results are 'enhanced'
         ret[0] : undefined;
-      } // Non-API return - just fire it back
+      }
 
-
+      // Non-API return - just fire it back
       return ret;
     });
   };
+
   /**
    * Selector for HTML tables. Apply the given selector to the give array of
    * DataTables settings objects.
@@ -19615,21 +17984,19 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
    * @return {array}
    * @ignore
    */
-
-
   var __table_selector = function __table_selector(selector, a) {
     if (Array.isArray(selector)) {
       return $.map(selector, function (item) {
         return __table_selector(item, a);
       });
-    } // Integer is used to pick out a table by index
+    }
 
-
+    // Integer is used to pick out a table by index
     if (typeof selector === 'number') {
       return [a[selector]];
-    } // Perform a jQuery selector on the table nodes
+    }
 
-
+    // Perform a jQuery selector on the table nodes
     var nodes = $.map(a, function (el, i) {
       return el.nTable;
     });
@@ -19639,6 +18006,7 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
       return a[idx];
     }).toArray();
   };
+
   /**
    * Context selector for the API's context (i.e. the tables the API instance
    * refers to.
@@ -19650,54 +18018,46 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
    *   select multiple tables or as an integer to select a single table.
    * @returns {DataTable.Api} Returns a new API instance if a selector is given.
    */
-
-
   _api_register('tables()', function (selector) {
     // A new instance is created if there was a selector specified
     return selector !== undefined && selector !== null ? new _Api2(__table_selector(selector, this.context)) : this;
   });
-
   _api_register('table()', function (selector) {
     var tables = this.tables(selector);
-    var ctx = tables.context; // Truncate to the first matched table
+    var ctx = tables.context;
 
+    // Truncate to the first matched table
     return ctx.length ? new _Api2(ctx[0]) : tables;
   });
-
   _api_registerPlural('tables().nodes()', 'table().node()', function () {
     return this.iterator('table', function (ctx) {
       return ctx.nTable;
     }, 1);
   });
-
   _api_registerPlural('tables().body()', 'table().body()', function () {
     return this.iterator('table', function (ctx) {
       return ctx.nTBody;
     }, 1);
   });
-
   _api_registerPlural('tables().header()', 'table().header()', function () {
     return this.iterator('table', function (ctx) {
       return ctx.nTHead;
     }, 1);
   });
-
   _api_registerPlural('tables().footer()', 'table().footer()', function () {
     return this.iterator('table', function (ctx) {
       return ctx.nTFoot;
     }, 1);
   });
-
   _api_registerPlural('tables().containers()', 'table().container()', function () {
     return this.iterator('table', function (ctx) {
       return ctx.nTableWrapper;
     }, 1);
   });
+
   /**
    * Redraw the tables in the current context.
    */
-
-
   _api_register('draw()', function (paging) {
     return this.iterator('table', function (settings) {
       if (paging === 'page') {
@@ -19706,44 +18066,41 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
         if (typeof paging === 'string') {
           paging = paging === 'full-hold' ? false : true;
         }
-
         _fnReDraw(settings, paging === false);
       }
     });
   });
+
   /**
    * Get the current page index.
    *
    * @return {integer} Current page index (zero based)
-   */
-
-  /**
-  * Set the current page.
-  *
-  * Note that if you attempt to show a page which does not exist, DataTables will
-  * not throw an error, but rather reset the paging.
-  *
-  * @param {integer|string} action The paging action to take. This can be one of:
-  *  * `integer` - The page index to jump to
-  *  * `string` - An action to take:
-  *    * `first` - Jump to first page.
-  *    * `next` - Jump to the next page
-  *    * `previous` - Jump to previous page
-  *    * `last` - Jump to the last page.
-  * @returns {DataTables.Api} this
-  */
-
-
+   */ /**
+      * Set the current page.
+      *
+      * Note that if you attempt to show a page which does not exist, DataTables will
+      * not throw an error, but rather reset the paging.
+      *
+      * @param {integer|string} action The paging action to take. This can be one of:
+      *  * `integer` - The page index to jump to
+      *  * `string` - An action to take:
+      *    * `first` - Jump to first page.
+      *    * `next` - Jump to the next page
+      *    * `previous` - Jump to previous page
+      *    * `last` - Jump to the last page.
+      * @returns {DataTables.Api} this
+      */
   _api_register('page()', function (action) {
     if (action === undefined) {
       return this.page.info().page; // not an expensive call
-    } // else, have an action to take on all tables
+    }
 
-
+    // else, have an action to take on all tables
     return this.iterator('table', function (settings) {
       _fnPageChange(settings, action);
     });
   });
+
   /**
    * Paging information for the first table in the current context.
    *
@@ -19762,18 +18119,15 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
    *  * `recordsDisplay` - Data set length once the current filtering criterion
    *    are applied.
    */
-
-
   _api_register('page.info()', function (action) {
     if (this.context.length === 0) {
       return undefined;
     }
-
     var settings = this.context[0],
-        start = settings._iDisplayStart,
-        len = settings.oFeatures.bPaginate ? settings._iDisplayLength : -1,
-        visRecords = settings.fnRecordsDisplay(),
-        all = len === -1;
+      start = settings._iDisplayStart,
+      len = settings.oFeatures.bPaginate ? settings._iDisplayLength : -1,
+      visRecords = settings.fnRecordsDisplay(),
+      all = len === -1;
     return {
       "page": all ? 0 : Math.floor(start / len),
       "pages": all ? 1 : Math.ceil(visRecords / len),
@@ -19785,35 +18139,31 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
       "serverSide": _fnDataSource(settings) === 'ssp'
     };
   });
+
   /**
    * Get the current page length.
    *
    * @return {integer} Current page length. Note `-1` indicates that all records
    *   are to be shown.
-   */
-
-  /**
-  * Set the current page length.
-  *
-  * @param {integer} Page length to set. Use `-1` to show all records.
-  * @returns {DataTables.Api} this
-  */
-
-
+   */ /**
+      * Set the current page length.
+      *
+      * @param {integer} Page length to set. Use `-1` to show all records.
+      * @returns {DataTables.Api} this
+      */
   _api_register('page.len()', function (len) {
     // Note that we can't call this function 'length()' because `length`
     // is a Javascript property of functions which defines how many arguments
     // the function expects.
     if (len === undefined) {
       return this.context.length !== 0 ? this.context[0]._iDisplayLength : undefined;
-    } // else, set the page length
+    }
 
-
+    // else, set the page length
     return this.iterator('table', function (settings) {
       _fnLengthChange(settings, len);
     });
   });
-
   var __reload = function __reload(settings, holdPosition, callback) {
     // Use the draw event to trigger a callback
     if (callback) {
@@ -19822,35 +18172,30 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
         callback(api.ajax.json());
       });
     }
-
     if (_fnDataSource(settings) == 'ssp') {
       _fnReDraw(settings, holdPosition);
     } else {
-      _fnProcessingDisplay(settings, true); // Cancel an existing request
+      _fnProcessingDisplay(settings, true);
 
-
+      // Cancel an existing request
       var xhr = settings.jqXHR;
-
       if (xhr && xhr.readyState !== 4) {
         xhr.abort();
-      } // Trigger xhr
+      }
 
-
+      // Trigger xhr
       _fnBuildAjax(settings, [], function (json) {
         _fnClearTable(settings);
-
         var data = _fnAjaxDataSrc(settings, json);
-
         for (var i = 0, ien = data.length; i < ien; i++) {
           _fnAddData(settings, data[i]);
         }
-
         _fnReDraw(settings, holdPosition);
-
         _fnProcessingDisplay(settings, false);
       });
     }
   };
+
   /**
    * Get the JSON response from the last Ajax request that DataTables made to the
    * server. Note that this returns the JSON from the first table in the current
@@ -19858,29 +18203,27 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
    *
    * @return {object} JSON received from the server.
    */
-
-
   _api_register('ajax.json()', function () {
     var ctx = this.context;
-
     if (ctx.length > 0) {
       return ctx[0].json;
-    } // else return undefined;
+    }
 
+    // else return undefined;
   });
+
   /**
    * Get the data submitted in the last Ajax request
    */
-
-
   _api_register('ajax.params()', function () {
     var ctx = this.context;
-
     if (ctx.length > 0) {
       return ctx[0].oAjaxData;
-    } // else return undefined;
+    }
 
+    // else return undefined;
   });
+
   /**
    * Reload tables from the Ajax data source. Note that this function will
    * automatically re-draw the table when the remote data has been loaded.
@@ -19890,54 +18233,48 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
    *   called, which is why the pagination reset is the default action.
    * @returns {DataTables.Api} this
    */
-
-
   _api_register('ajax.reload()', function (callback, resetPaging) {
     return this.iterator('table', function (settings) {
       __reload(settings, resetPaging === false, callback);
     });
   });
+
   /**
    * Get the current Ajax URL. Note that this returns the URL from the first
    * table in the current context.
    *
    * @return {string} Current Ajax source URL
-   */
-
-  /**
-  * Set the Ajax URL. Note that this will set the URL for all tables in the
-  * current context.
-  *
-  * @param {string} url URL to set.
-  * @returns {DataTables.Api} this
-  */
-
-
+   */ /**
+      * Set the Ajax URL. Note that this will set the URL for all tables in the
+      * current context.
+      *
+      * @param {string} url URL to set.
+      * @returns {DataTables.Api} this
+      */
   _api_register('ajax.url()', function (url) {
     var ctx = this.context;
-
     if (url === undefined) {
       // get
       if (ctx.length === 0) {
         return undefined;
       }
-
       ctx = ctx[0];
       return ctx.ajax ? $.isPlainObject(ctx.ajax) ? ctx.ajax.url : ctx.ajax : ctx.sAjaxSource;
-    } // set
+    }
 
-
+    // set
     return this.iterator('table', function (settings) {
       if ($.isPlainObject(settings.ajax)) {
         settings.ajax.url = url;
       } else {
         settings.ajax = url;
-      } // No need to consider sAjaxSource here since DataTables gives priority
+      }
+      // No need to consider sAjaxSource here since DataTables gives priority
       // to `ajax` over `sAjaxSource`. So setting `ajax` here, renders any
       // value of `sAjaxSource` redundant.
-
     });
   });
+
   /**
    * Load data from the newly set Ajax URL. Note that this method is only
    * available when `ajax.url()` is used to set a URL. Additionally, this method
@@ -19947,8 +18284,6 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
    *
    * @returns {DataTables.Api} this
    */
-
-
   _api_register('ajax.url().load()', function (callback, resetPaging) {
     // Same as a reload, but makes sense to present it for easy access after a
     // url change
@@ -19956,66 +18291,57 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
       __reload(ctx, resetPaging === false, callback);
     });
   });
-
   var _selector_run = function _selector_run(type, selector, selectFn, settings, opts) {
     var out = [],
-        res,
-        a,
-        i,
-        ien,
-        j,
-        jen,
-        selectorType = _typeof(selector); // Can't just check for isArray here, as an API or jQuery instance might be
+      res,
+      a,
+      i,
+      ien,
+      j,
+      jen,
+      selectorType = _typeof(selector);
+
+    // Can't just check for isArray here, as an API or jQuery instance might be
     // given with their array like look
-
-
     if (!selector || selectorType === 'string' || selectorType === 'function' || selector.length === undefined) {
       selector = [selector];
     }
-
     for (i = 0, ien = selector.length; i < ien; i++) {
       // Only split on simple strings - complex expressions will be jQuery selectors
       a = selector[i] && selector[i].split && !selector[i].match(/[\[\(:]/) ? selector[i].split(',') : [selector[i]];
-
       for (j = 0, jen = a.length; j < jen; j++) {
         res = selectFn(typeof a[j] === 'string' ? a[j].trim() : a[j]);
-
         if (res && res.length) {
           out = out.concat(res);
         }
       }
-    } // selector extensions
+    }
 
-
+    // selector extensions
     var ext = _ext.selector[type];
-
     if (ext.length) {
       for (i = 0, ien = ext.length; i < ien; i++) {
         out = ext[i](settings, opts, out);
       }
     }
-
     return _unique(out);
   };
-
   var _selector_opts = function _selector_opts(opts) {
     if (!opts) {
       opts = {};
-    } // Backwards compatibility for 1.9- which used the terminology filter rather
+    }
+
+    // Backwards compatibility for 1.9- which used the terminology filter rather
     // than search
-
-
     if (opts.filter && opts.search === undefined) {
       opts.search = opts.filter;
     }
-
     return $.extend({
       search: 'none',
       order: 'current',
       page: 'all'
     }, opts);
   };
-
   var _selector_first = function _selector_first(inst) {
     // Reduce the API instance to the first item found
     for (var i = 0, ien = inst.length; i < ien; i++) {
@@ -20028,25 +18354,24 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
         inst.context = [inst.context[i]];
         return inst;
       }
-    } // Not found - return an empty instance
+    }
 
-
+    // Not found - return an empty instance
     inst.length = 0;
     return inst;
   };
-
   var _selector_row_indexes = function _selector_row_indexes(settings, opts) {
     var i,
-        ien,
-        tmp,
-        a = [],
-        displayFiltered = settings.aiDisplay,
-        displayMaster = settings.aiDisplayMaster;
+      ien,
+      tmp,
+      a = [],
+      displayFiltered = settings.aiDisplay,
+      displayMaster = settings.aiDisplayMaster;
     var search = opts.search,
-        // none, applied, removed
-    order = opts.order,
-        // applied, current, index (original - compatibility with 1.9)
-    page = opts.page; // all, current
+      // none, applied, removed
+      order = opts.order,
+      // applied, current, index (original - compatibility with 1.9)
+      page = opts.page; // all, current
 
     if (_fnDataSource(settings) == 'ssp') {
       // In server-side processing mode, most options are irrelevant since
@@ -20055,7 +18380,7 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
       // array
       return search === 'removed' ? [] : _range(0, displayMaster.length);
     } else if (page == 'current') {
-      // Current page implies that order=current and fitler=applied, since it is
+      // Current page implies that order=current and filter=applied, since it is
       // fairly senseless otherwise, regardless of what order and search actually
       // are
       for (i = settings._iDisplayStart, ien = settings.fnDisplayEnd(); i < ien; i++) {
@@ -20069,11 +18394,9 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
       } else if (search == 'removed') {
         // O(n+m) solution by creating a hash map
         var displayFilteredMap = {};
-
         for (var i = 0, ien = displayFiltered.length; i < ien; i++) {
           displayFilteredMap[displayFiltered[i]] = null;
         }
-
         a = $.map(displayMaster, function (el) {
           return !displayFilteredMap.hasOwnProperty(el) ? el : null;
         });
@@ -20085,16 +18408,15 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
         } else {
           // applied | removed
           tmp = $.inArray(i, displayFiltered);
-
           if (tmp === -1 && search == 'removed' || tmp >= 0 && search == 'applied') {
             a.push(i);
           }
         }
       }
     }
-
     return a;
   };
+
   /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
    * Rows
    *
@@ -20105,49 +18427,42 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
    * {array}     - jQuery array of nodes, or simply an array of TR nodes
    *
    */
-
-
   var __row_selector = function __row_selector(settings, selector, opts) {
     var rows;
-
     var run = function run(sel) {
       var selInt = _intVal(sel);
-
       var i, ien;
-      var aoData = settings.aoData; // Short cut - selector is a number and no options provided (default is
+      var aoData = settings.aoData;
+
+      // Short cut - selector is a number and no options provided (default is
       // all records, so no need to check if the index is in there, since it
       // must be - dev error if the index doesn't exist).
-
       if (selInt !== null && !opts) {
         return [selInt];
       }
-
       if (!rows) {
         rows = _selector_row_indexes(settings, opts);
       }
-
       if (selInt !== null && $.inArray(selInt, rows) !== -1) {
         // Selector - integer
         return [selInt];
       } else if (sel === null || sel === undefined || sel === '') {
         // Selector - none
         return rows;
-      } // Selector - function
+      }
 
-
+      // Selector - function
       if (typeof sel === 'function') {
         return $.map(rows, function (idx) {
           var row = aoData[idx];
           return sel(idx, row._aData, row.nTr) ? idx : null;
         });
-      } // Selector - node
+      }
 
-
+      // Selector - node
       if (sel.nodeName) {
         var rowIdx = sel._DT_RowIndex; // Property added by DT for fast lookup
-
         var cellIdx = sel._DT_CellIndex;
-
         if (rowIdx !== undefined) {
           // Make sure that the row is actually still present in the table
           return aoData[rowIdx] && aoData[rowIdx].nTr === sel ? [rowIdx] : [];
@@ -20157,7 +18472,9 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
           var host = $(sel).closest('*[data-dt-row]');
           return host.length ? [host.data('dt-row')] : [];
         }
-      } // ID selector. Want to always be able to select rows by id, regardless
+      }
+
+      // ID selector. Want to always be able to select rows by id, regardless
       // of if the tr element has been created or not, so can't rely upon
       // jQuery here - hence a custom implementation. This does not match
       // Sizzle's fast selector or HTML4 - in HTML5 the ID can be anything,
@@ -20166,33 +18483,29 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
       // DataTables simplifies this for row selectors since you can select
       // only a row. A # indicates an id any anything that follows is the id -
       // unescaped.
-
-
       if (typeof sel === 'string' && sel.charAt(0) === '#') {
         // get row index from id
         var rowObj = settings.aIds[sel.replace(/^#/, '')];
-
         if (rowObj !== undefined) {
           return [rowObj.idx];
-        } // need to fall through to jQuery in case there is DOM id that
+        }
+
+        // need to fall through to jQuery in case there is DOM id that
         // matches
+      }
 
-      } // Get nodes in the order from the `rows` array with null values removed
+      // Get nodes in the order from the `rows` array with null values removed
+      var nodes = _removeEmpty(_pluck_order(settings.aoData, rows, 'nTr'));
 
-
-      var nodes = _removeEmpty(_pluck_order(settings.aoData, rows, 'nTr')); // Selector - jQuery selector string, array of nodes or jQuery object/
+      // Selector - jQuery selector string, array of nodes or jQuery object/
       // As jQuery's .filter() allows jQuery objects to be passed in filter,
       // it also allows arrays, so this will cope with all three options
-
-
       return $(nodes).filter(sel).map(function () {
         return this._DT_RowIndex;
       }).toArray();
     };
-
     return _selector_run('row', selector, run, settings, opts);
   };
-
   _api_register('rows()', function (selector, opts) {
     // argument shifting
     if (selector === undefined) {
@@ -20201,62 +18514,55 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
       opts = selector;
       selector = '';
     }
-
     opts = _selector_opts(opts);
     var inst = this.iterator('table', function (settings) {
       return __row_selector(settings, selector, opts);
-    }, 1); // Want argument shifting here and in __row_selector?
+    }, 1);
 
+    // Want argument shifting here and in __row_selector?
     inst.selector.rows = selector;
     inst.selector.opts = opts;
     return inst;
   });
-
   _api_register('rows().nodes()', function () {
     return this.iterator('row', function (settings, row) {
       return settings.aoData[row].nTr || undefined;
     }, 1);
   });
-
   _api_register('rows().data()', function () {
     return this.iterator(true, 'rows', function (settings, rows) {
       return _pluck_order(settings.aoData, rows, '_aData');
     }, 1);
   });
-
   _api_registerPlural('rows().cache()', 'row().cache()', function (type) {
     return this.iterator('row', function (settings, row) {
       var r = settings.aoData[row];
       return type === 'search' ? r._aFilterData : r._aSortData;
     }, 1);
   });
-
   _api_registerPlural('rows().invalidate()', 'row().invalidate()', function (src) {
     return this.iterator('row', function (settings, row) {
       _fnInvalidate(settings, row, src);
     });
   });
-
   _api_registerPlural('rows().indexes()', 'row().index()', function () {
     return this.iterator('row', function (settings, row) {
       return row;
     }, 1);
   });
-
   _api_registerPlural('rows().ids()', 'row().id()', function (hash) {
     var a = [];
-    var context = this.context; // `iterator` will drop undefined values, but in this case we want them
+    var context = this.context;
 
+    // `iterator` will drop undefined values, but in this case we want them
     for (var i = 0, ien = context.length; i < ien; i++) {
       for (var j = 0, jen = this[i].length; j < jen; j++) {
         var id = context[i].rowIdFn(context[i].aoData[this[i][j]]._aData);
         a.push((hash === true ? '#' : '') + id);
       }
     }
-
     return new _Api2(context, a);
   });
-
   _api_registerPlural('rows().remove()', 'row().remove()', function () {
     var that = this;
     this.iterator('row', function (settings, row, thatIdx) {
@@ -20264,43 +18570,41 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
       var rowData = data[row];
       var i, ien, j, jen;
       var loopRow, loopCells;
-      data.splice(row, 1); // Update the cached indexes
+      data.splice(row, 1);
 
+      // Update the cached indexes
       for (i = 0, ien = data.length; i < ien; i++) {
         loopRow = data[i];
-        loopCells = loopRow.anCells; // Rows
+        loopCells = loopRow.anCells;
 
+        // Rows
         if (loopRow.nTr !== null) {
           loopRow.nTr._DT_RowIndex = i;
-        } // Cells
+        }
 
-
+        // Cells
         if (loopCells !== null) {
           for (j = 0, jen = loopCells.length; j < jen; j++) {
             loopCells[j]._DT_CellIndex.row = i;
           }
         }
-      } // Delete from the display arrays
+      }
 
-
+      // Delete from the display arrays
       _fnDeleteIndex(settings.aiDisplayMaster, row);
-
       _fnDeleteIndex(settings.aiDisplay, row);
-
       _fnDeleteIndex(that[thatIdx], row, false); // maintain local indexes
+
       // For server-side processing tables - subtract the deleted row from the count
-
-
       if (settings._iRecordsDisplay > 0) {
         settings._iRecordsDisplay--;
-      } // Check for an 'overflow' they case for displaying the table
+      }
 
+      // Check for an 'overflow' they case for displaying the table
+      _fnLengthOverflow(settings);
 
-      _fnLengthOverflow(settings); // Remove the row's ID reference if there is one
-
-
+      // Remove the row's ID reference if there is one
       var id = settings.rowIdFn(rowData._aData);
-
       if (id !== undefined) {
         delete settings.aIds[id];
       }
@@ -20312,100 +18616,118 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
     });
     return this;
   });
-
   _api_register('rows.add()', function (rows) {
     var newRows = this.iterator('table', function (settings) {
       var row, i, ien;
       var out = [];
-
       for (i = 0, ien = rows.length; i < ien; i++) {
         row = rows[i];
-
         if (row.nodeName && row.nodeName.toUpperCase() === 'TR') {
           out.push(_fnAddTr(settings, row)[0]);
         } else {
           out.push(_fnAddData(settings, row));
         }
       }
-
       return out;
-    }, 1); // Return an Api.rows() extended instance, so rows().nodes() etc can be used
+    }, 1);
 
+    // Return an Api.rows() extended instance, so rows().nodes() etc can be used
     var modRows = this.rows(-1);
     modRows.pop();
     $.merge(modRows, newRows);
     return modRows;
   });
+
   /**
    *
    */
-
-
   _api_register('row()', function (selector, opts) {
     return _selector_first(this.rows(selector, opts));
   });
-
   _api_register('row().data()', function (data) {
     var ctx = this.context;
-
     if (data === undefined) {
       // Get
       return ctx.length && this.length ? ctx[0].aoData[this[0]]._aData : undefined;
-    } // Set
+    }
 
-
+    // Set
     var row = ctx[0].aoData[this[0]];
-    row._aData = data; // If the DOM has an id, and the data source is an array
+    row._aData = data;
 
+    // If the DOM has an id, and the data source is an array
     if (Array.isArray(data) && row.nTr && row.nTr.id) {
       _fnSetObjectDataFn(ctx[0].rowId)(data, row.nTr.id);
-    } // Automatically invalidate
+    }
 
-
+    // Automatically invalidate
     _fnInvalidate(ctx[0], this[0], 'data');
-
     return this;
   });
-
   _api_register('row().node()', function () {
     var ctx = this.context;
     return ctx.length && this.length ? ctx[0].aoData[this[0]].nTr || null : null;
   });
-
   _api_register('row.add()', function (row) {
     // Allow a jQuery object to be passed in - only a single row is added from
     // it though - the first element in the set
     if (row instanceof $ && row.length) {
       row = row[0];
     }
-
     var rows = this.iterator('table', function (settings) {
       if (row.nodeName && row.nodeName.toUpperCase() === 'TR') {
         return _fnAddTr(settings, row)[0];
       }
-
       return _fnAddData(settings, row);
-    }); // Return an Api.rows() extended instance, with the newly added row selected
+    });
 
+    // Return an Api.rows() extended instance, with the newly added row selected
     return this.row(rows[0]);
   });
-
+  $(document).on('plugin-init.dt', function (e, context) {
+    var api = new _Api2(context);
+    var namespace = 'on-plugin-init';
+    var stateSaveParamsEvent = 'stateSaveParams.' + namespace;
+    var destroyEvent = 'destroy. ' + namespace;
+    api.on(stateSaveParamsEvent, function (e, settings, d) {
+      // This could be more compact with the API, but it is a lot faster as a simple
+      // internal loop
+      var idFn = settings.rowIdFn;
+      var data = settings.aoData;
+      var ids = [];
+      for (var i = 0; i < data.length; i++) {
+        if (data[i]._detailsShow) {
+          ids.push('#' + idFn(data[i]._aData));
+        }
+      }
+      d.childRows = ids;
+    });
+    api.on(destroyEvent, function () {
+      api.off(stateSaveParamsEvent + ' ' + destroyEvent);
+    });
+    var loaded = api.state.loaded();
+    if (loaded && loaded.childRows) {
+      api.rows($.map(loaded.childRows, function (id) {
+        return id.replace(/:/g, '\\:');
+      })).every(function () {
+        _fnCallbackFire(context, null, 'requestChild', [this]);
+      });
+    }
+  });
   var __details_add = function __details_add(ctx, row, data, klass) {
     // Convert to array of TR elements
     var rows = [];
-
     var addRow = function addRow(r, k) {
       // Recursion to allow for arrays of jQuery objects
       if (Array.isArray(r) || r instanceof $) {
         for (var i = 0, ien = r.length; i < ien; i++) {
           addRow(r[i], k);
         }
-
         return;
-      } // If we get a TR element, then just add it directly - up to the dev
+      }
+
+      // If we get a TR element, then just add it directly - up to the dev
       // to add the correct number of columns etc
-
-
       if (r.nodeName && r.nodeName.toLowerCase() === 'tr') {
         rows.push(r);
       } else {
@@ -20415,107 +18737,102 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
         rows.push(created[0]);
       }
     };
-
     addRow(data, klass);
-
     if (row._details) {
       row._details.detach();
     }
+    row._details = $(rows);
 
-    row._details = $(rows); // If the children were already shown, that state should be retained
-
+    // If the children were already shown, that state should be retained
     if (row._detailsShow) {
       row._details.insertAfter(row.nTr);
     }
   };
 
+  // Make state saving of child row details async to allow them to be batch processed
+  var __details_state = DataTable.util.throttle(function (ctx) {
+    _fnSaveState(ctx[0]);
+  }, 500);
   var __details_remove = function __details_remove(api, idx) {
     var ctx = api.context;
-
     if (ctx.length) {
       var row = ctx[0].aoData[idx !== undefined ? idx : api[0]];
-
       if (row && row._details) {
         row._details.remove();
-
         row._detailsShow = undefined;
         row._details = undefined;
+        $(row.nTr).removeClass('dt-hasChild');
+        __details_state(ctx);
       }
     }
   };
-
   var __details_display = function __details_display(api, show) {
     var ctx = api.context;
-
     if (ctx.length && api.length) {
       var row = ctx[0].aoData[api[0]];
-
       if (row._details) {
         row._detailsShow = show;
-
         if (show) {
           row._details.insertAfter(row.nTr);
+          $(row.nTr).addClass('dt-hasChild');
         } else {
           row._details.detach();
+          $(row.nTr).removeClass('dt-hasChild');
         }
-
+        _fnCallbackFire(ctx[0], null, 'childRow', [show, api.row(api[0])]);
         __details_events(ctx[0]);
+        __details_state(ctx);
       }
     }
   };
-
   var __details_events = function __details_events(settings) {
     var api = new _Api2(settings);
     var namespace = '.dt.DT_details';
     var drawEvent = 'draw' + namespace;
-    var colvisEvent = 'column-visibility' + namespace;
+    var colvisEvent = 'column-sizing' + namespace;
     var destroyEvent = 'destroy' + namespace;
     var data = settings.aoData;
     api.off(drawEvent + ' ' + colvisEvent + ' ' + destroyEvent);
-
     if (_pluck(data, '_details').length > 0) {
       // On each draw, insert the required elements into the document
       api.on(drawEvent, function (e, ctx) {
         if (settings !== ctx) {
           return;
         }
-
         api.rows({
           page: 'current'
         }).eq(0).each(function (idx) {
           // Internal data grab
           var row = data[idx];
-
           if (row._detailsShow) {
             row._details.insertAfter(row.nTr);
           }
         });
-      }); // Column visibility change - update the colspan
+      });
 
+      // Column visibility change - update the colspan
       api.on(colvisEvent, function (e, ctx, idx, vis) {
         if (settings !== ctx) {
           return;
-        } // Update the colspan for the details rows (note, only if it already has
+        }
+
+        // Update the colspan for the details rows (note, only if it already has
         // a colspan)
-
-
         var row,
-            visible = _fnVisbleColumns(ctx);
-
+          visible = _fnVisbleColumns(ctx);
         for (var i = 0, ien = data.length; i < ien; i++) {
           row = data[i];
-
           if (row._details) {
             row._details.children('td[colspan]').attr('colspan', visible);
           }
         }
-      }); // Table destroyed - nuke any child rows
+      });
 
+      // Table destroyed - nuke any child rows
       api.on(destroyEvent, function (e, ctx) {
         if (settings !== ctx) {
           return;
         }
-
         for (var i = 0, ien = data.length; i < ien; i++) {
           if (data[i]._details) {
             __details_remove(api, i);
@@ -20523,22 +18840,19 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
         }
       });
     }
-  }; // Strings for the method names to help minification
+  };
 
-
+  // Strings for the method names to help minification
   var _emp = '';
-
   var _child_obj = _emp + 'row().child';
+  var _child_mth = _child_obj + '()';
 
-  var _child_mth = _child_obj + '()'; // data can be:
+  // data can be:
   //  tr
   //  string
   //  jQuery or array of any of the above
-
-
   _api_register(_child_mth, function (data, klass) {
     var ctx = this.context;
-
     if (data === undefined) {
       // get
       return ctx.length && this.length ? ctx[0].aoData[this[0]]._details : undefined;
@@ -20552,44 +18866,35 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
       // set
       __details_add(ctx[0], ctx[0].aoData[this[0]], data, klass);
     }
-
     return this;
   });
-
   _api_register([_child_obj + '.show()', _child_mth + '.show()' // only when `child()` was called with parameters (without
   ], function (show) {
     // it returns an object and this method is not executed)
     __details_display(this, true);
-
     return this;
   });
-
   _api_register([_child_obj + '.hide()', _child_mth + '.hide()' // only when `child()` was called with parameters (without
   ], function () {
     // it returns an object and this method is not executed)
     __details_display(this, false);
-
     return this;
   });
-
   _api_register([_child_obj + '.remove()', _child_mth + '.remove()' // only when `child()` was called with parameters (without
   ], function () {
     // it returns an object and this method is not executed)
     __details_remove(this);
-
     return this;
   });
-
   _api_register(_child_obj + '.isShown()', function () {
     var ctx = this.context;
-
     if (ctx.length && this.length) {
       // _detailsShown as false or undefined will fall through to return false
       return ctx[0].aoData[this[0]]._detailsShow || false;
     }
-
     return false;
   });
+
   /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
    * Columns
    *
@@ -20600,135 +18905,123 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
    * "{string}"          - jQuery selector on column header nodes
    *
    */
+
   // can be an array of these items, comma separated list, or an array of comma
   // separated lists
 
+  var __re_column_selector = /^([^:]+):(name|visIdx|visible)$/;
 
-  var __re_column_selector = /^([^:]+):(name|visIdx|visible)$/; // r1 and r2 are redundant - but it means that the parameters match for the
+  // r1 and r2 are redundant - but it means that the parameters match for the
   // iterator callback in columns().data()
-
   var __columnData = function __columnData(settings, column, r1, r2, rows) {
     var a = [];
-
     for (var row = 0, ien = rows.length; row < ien; row++) {
       a.push(_fnGetCellData(settings, rows[row], column));
     }
-
     return a;
   };
-
   var __column_selector = function __column_selector(settings, selector, opts) {
     var columns = settings.aoColumns,
-        names = _pluck(columns, 'sName'),
-        nodes = _pluck(columns, 'nTh');
-
+      names = _pluck(columns, 'sName'),
+      nodes = _pluck(columns, 'nTh');
     var run = function run(s) {
-      var selInt = _intVal(s); // Selector - all
+      var selInt = _intVal(s);
 
-
+      // Selector - all
       if (s === '') {
         return _range(columns.length);
-      } // Selector - index
+      }
 
-
+      // Selector - index
       if (selInt !== null) {
-        return [selInt >= 0 ? selInt : // Count from left
+        return [selInt >= 0 ? selInt :
+        // Count from left
         columns.length + selInt // Count from right (+ because its a negative value)
         ];
-      } // Selector = function
+      }
 
-
+      // Selector = function
       if (typeof s === 'function') {
         var rows = _selector_row_indexes(settings, opts);
-
         return $.map(columns, function (col, idx) {
           return s(idx, __columnData(settings, idx, 0, 0, rows), nodes[idx]) ? idx : null;
         });
-      } // jQuery or string selector
+      }
 
-
+      // jQuery or string selector
       var match = typeof s === 'string' ? s.match(__re_column_selector) : '';
-
       if (match) {
         switch (match[2]) {
           case 'visIdx':
           case 'visible':
-            var idx = parseInt(match[1], 10); // Visible index given, convert to column index
-
+            var idx = parseInt(match[1], 10);
+            // Visible index given, convert to column index
             if (idx < 0) {
               // Counting from the right
               var visColumns = $.map(columns, function (col, i) {
                 return col.bVisible ? i : null;
               });
               return [visColumns[visColumns.length + idx]];
-            } // Counting from the left
-
-
+            }
+            // Counting from the left
             return [_fnVisibleToColumnIndex(settings, idx)];
-
           case 'name':
             // match by name. `names` is column index complete and in order
             return $.map(names, function (name, i) {
               return name === match[1] ? i : null;
             });
-
           default:
             return [];
         }
-      } // Cell in the table body
+      }
 
-
+      // Cell in the table body
       if (s.nodeName && s._DT_CellIndex) {
         return [s._DT_CellIndex.column];
-      } // jQuery selector on the TH elements for the columns
+      }
 
-
+      // jQuery selector on the TH elements for the columns
       var jqResult = $(nodes).filter(s).map(function () {
         return $.inArray(this, nodes); // `nodes` is column index complete and in order
       }).toArray();
-
       if (jqResult.length || !s.nodeName) {
         return jqResult;
-      } // Otherwise a node which might have a `dt-column` data attribute, or be
+      }
+
+      // Otherwise a node which might have a `dt-column` data attribute, or be
       // a child or such an element
-
-
       var host = $(s).closest('*[data-dt-column]');
       return host.length ? [host.data('dt-column')] : [];
     };
-
     return _selector_run('column', selector, run, settings, opts);
   };
-
   var __setColumnVis = function __setColumnVis(settings, column, vis) {
     var cols = settings.aoColumns,
-        col = cols[column],
-        data = settings.aoData,
-        row,
-        cells,
-        i,
-        ien,
-        tr; // Get
+      col = cols[column],
+      data = settings.aoData,
+      row,
+      cells,
+      i,
+      ien,
+      tr;
 
+    // Get
     if (vis === undefined) {
       return col.bVisible;
-    } // Set
+    }
+
+    // Set
     // No change
-
-
     if (col.bVisible === vis) {
       return;
     }
-
     if (vis) {
       // Insert column
       // Need to decide if we should use appendChild or insertBefore
       var insertBefore = $.inArray(true, _pluck(cols, 'bVisible'), column + 1);
-
       for (i = 0, ien = data.length; i < ien; i++) {
         tr = data[i].nTr;
         cells = data[i].anCells;
-
         if (tr) {
           // insertBefore can act like appendChild if 2nd arg is null
           tr.insertBefore(cells[column], cells[insertBefore] || null);
@@ -20737,12 +19030,11 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
     } else {
       // Remove column
       $(_pluck(settings.aoData, 'anCells', column)).detach();
-    } // Common actions
+    }
 
-
+    // Common actions
     col.bVisible = vis;
   };
-
   _api_register('columns()', function (selector, opts) {
     // argument shifting
     if (selector === undefined) {
@@ -20751,107 +19043,91 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
       opts = selector;
       selector = '';
     }
-
     opts = _selector_opts(opts);
     var inst = this.iterator('table', function (settings) {
       return __column_selector(settings, selector, opts);
-    }, 1); // Want argument shifting here and in _row_selector?
+    }, 1);
 
+    // Want argument shifting here and in _row_selector?
     inst.selector.cols = selector;
     inst.selector.opts = opts;
     return inst;
   });
-
   _api_registerPlural('columns().header()', 'column().header()', function (selector, opts) {
     return this.iterator('column', function (settings, column) {
       return settings.aoColumns[column].nTh;
     }, 1);
   });
-
   _api_registerPlural('columns().footer()', 'column().footer()', function (selector, opts) {
     return this.iterator('column', function (settings, column) {
       return settings.aoColumns[column].nTf;
     }, 1);
   });
-
   _api_registerPlural('columns().data()', 'column().data()', function () {
     return this.iterator('column-rows', __columnData, 1);
   });
-
   _api_registerPlural('columns().dataSrc()', 'column().dataSrc()', function () {
     return this.iterator('column', function (settings, column) {
       return settings.aoColumns[column].mData;
     }, 1);
   });
-
   _api_registerPlural('columns().cache()', 'column().cache()', function (type) {
     return this.iterator('column-rows', function (settings, column, i, j, rows) {
       return _pluck_order(settings.aoData, rows, type === 'search' ? '_aFilterData' : '_aSortData', column);
     }, 1);
   });
-
   _api_registerPlural('columns().nodes()', 'column().nodes()', function () {
     return this.iterator('column-rows', function (settings, column, i, j, rows) {
       return _pluck_order(settings.aoData, rows, 'anCells', column);
     }, 1);
   });
-
   _api_registerPlural('columns().visible()', 'column().visible()', function (vis, calc) {
     var that = this;
     var ret = this.iterator('column', function (settings, column) {
       if (vis === undefined) {
         return settings.aoColumns[column].bVisible;
       } // else
-
-
       __setColumnVis(settings, column, vis);
-    }); // Group the column visibility changes
+    });
 
+    // Group the column visibility changes
     if (vis !== undefined) {
       this.iterator('table', function (settings) {
         // Redraw the header after changes
         _fnDrawHead(settings, settings.aoHeader);
+        _fnDrawHead(settings, settings.aoFooter);
 
-        _fnDrawHead(settings, settings.aoFooter); // Update colspan for no records display. Child rows and extensions will use their own
+        // Update colspan for no records display. Child rows and extensions will use their own
         // listeners to do this - only need to update the empty table item here
-
-
         if (!settings.aiDisplay.length) {
           $(settings.nTBody).find('td[colspan]').attr('colspan', _fnVisbleColumns(settings));
         }
+        _fnSaveState(settings);
 
-        _fnSaveState(settings); // Second loop once the first is done for events
-
-
+        // Second loop once the first is done for events
         that.iterator('column', function (settings, column) {
           _fnCallbackFire(settings, null, 'column-visibility', [settings, column, vis, calc]);
         });
-
         if (calc === undefined || calc) {
           that.columns.adjust();
         }
       });
     }
-
     return ret;
   });
-
   _api_registerPlural('columns().indexes()', 'column().index()', function (type) {
     return this.iterator('column', function (settings, column) {
       return type === 'visible' ? _fnColumnIndexToVisible(settings, column) : column;
     }, 1);
   });
-
   _api_register('columns.adjust()', function () {
     return this.iterator('table', function (settings) {
       _fnAdjustColumnSizing(settings);
     }, 1);
   });
-
   _api_register('column.index()', function (type, idx) {
     if (this.context.length !== 0) {
       var ctx = this.context[0];
-
       if (type === 'fromVisible' || type === 'toData') {
         return _fnVisibleToColumnIndex(ctx, idx);
       } else if (type === 'fromData' || type === 'toVisible') {
@@ -20859,43 +19135,32 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
       }
     }
   });
-
   _api_register('column()', function (selector, opts) {
     return _selector_first(this.columns(selector, opts));
   });
-
   var __cell_selector = function __cell_selector(settings, selector, opts) {
     var data = settings.aoData;
-
     var rows = _selector_row_indexes(settings, opts);
-
     var cells = _removeEmpty(_pluck_order(data, rows, 'anCells'));
-
     var allCells = $(_flatten([], cells));
     var row;
     var columns = settings.aoColumns.length;
     var a, i, ien, j, o, host;
-
     var run = function run(s) {
       var fnSelector = typeof s === 'function';
-
       if (s === null || s === undefined || fnSelector) {
         // All cells and function selectors
         a = [];
-
         for (i = 0, ien = rows.length; i < ien; i++) {
           row = rows[i];
-
           for (j = 0; j < columns; j++) {
             o = {
               row: row,
               column: j
             };
-
             if (fnSelector) {
               // Selector - function
               host = data[row];
-
               if (s(o, _fnGetCellData(settings, row, j), host.anCells ? host.anCells[j] : null)) {
                 a.push(o);
               }
@@ -20905,17 +19170,16 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
             }
           }
         }
-
         return a;
-      } // Selector - index
+      }
 
-
+      // Selector - index
       if ($.isPlainObject(s)) {
         // Valid cell index and its in the array of selectable rows
         return s.column !== undefined && s.row !== undefined && $.inArray(s.row, rows) !== -1 ? [s] : [];
-      } // Selector - jQuery filtered cells
+      }
 
-
+      // Selector - jQuery filtered cells
       var jqResult = allCells.filter(s).map(function (i, el) {
         return {
           // use a new object, in case someone changes the values
@@ -20923,24 +19187,21 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
           column: el._DT_CellIndex.column
         };
       }).toArray();
-
       if (jqResult.length || !s.nodeName) {
         return jqResult;
-      } // Otherwise the selector is a node, and there is one last option - the
+      }
+
+      // Otherwise the selector is a node, and there is one last option - the
       // element might be a child of an element which has dt-row and dt-column
       // data attributes
-
-
       host = $(s).closest('*[data-dt-row]');
       return host.length ? [{
         row: host.data('dt-row'),
         column: host.data('dt-column')
       }] : [];
     };
-
     return _selector_run('cell', selector, run, settings, opts);
   };
-
   _api_register('cells()', function (rowSelector, columnSelector, opts) {
     // Argument shifting
     if ($.isPlainObject(rowSelector)) {
@@ -20955,32 +19216,31 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
         columnSelector = null;
       }
     }
-
     if ($.isPlainObject(columnSelector)) {
       opts = columnSelector;
       columnSelector = null;
-    } // Cell selector
+    }
 
-
+    // Cell selector
     if (columnSelector === null || columnSelector === undefined) {
       return this.iterator('table', function (settings) {
         return __cell_selector(settings, rowSelector, _selector_opts(opts));
       });
-    } // The default built in options need to apply to row and columns
+    }
 
-
+    // The default built in options need to apply to row and columns
     var internalOpts = opts ? {
       page: opts.page,
       order: opts.order,
       search: opts.search
-    } : {}; // Row + column selector
+    } : {};
 
+    // Row + column selector
     var columns = this.columns(columnSelector, internalOpts);
     var rows = this.rows(rowSelector, internalOpts);
     var i, ien, j, jen;
     var cellsNoOpts = this.iterator('table', function (settings, idx) {
       var a = [];
-
       for (i = 0, ien = rows[idx].length; i < ien; i++) {
         for (j = 0, jen = columns[idx].length; j < jen; j++) {
           a.push({
@@ -20989,12 +19249,12 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
           });
         }
       }
-
       return a;
-    }, 1); // There is currently only one extension which uses a cell selector extension
+    }, 1);
+
+    // There is currently only one extension which uses a cell selector extension
     // It is a _major_ performance drag to run this if it isn't needed, so this is
     // an extension specific check at the moment
-
     var cells = opts && opts.selected ? this.cells(cellsNoOpts, opts) : cellsNoOpts;
     $.extend(cells.selector, {
       cols: columnSelector,
@@ -21003,33 +19263,28 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
     });
     return cells;
   });
-
   _api_registerPlural('cells().nodes()', 'cell().node()', function () {
     return this.iterator('cell', function (settings, row, column) {
       var data = settings.aoData[row];
       return data && data.anCells ? data.anCells[column] : undefined;
     }, 1);
   });
-
   _api_register('cells().data()', function () {
     return this.iterator('cell', function (settings, row, column) {
       return _fnGetCellData(settings, row, column);
     }, 1);
   });
-
   _api_registerPlural('cells().cache()', 'cell().cache()', function (type) {
     type = type === 'search' ? '_aFilterData' : '_aSortData';
     return this.iterator('cell', function (settings, row, column) {
       return settings.aoData[row][type][column];
     }, 1);
   });
-
   _api_registerPlural('cells().render()', 'cell().render()', function (type) {
     return this.iterator('cell', function (settings, row, column) {
       return _fnGetCellData(settings, row, column, type);
     }, 1);
   });
-
   _api_registerPlural('cells().indexes()', 'cell().index()', function () {
     return this.iterator('cell', function (settings, row, column) {
       return {
@@ -21039,33 +19294,28 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
       };
     }, 1);
   });
-
   _api_registerPlural('cells().invalidate()', 'cell().invalidate()', function (src) {
     return this.iterator('cell', function (settings, row, column) {
       _fnInvalidate(settings, row, src, column);
     });
   });
-
   _api_register('cell()', function (rowSelector, columnSelector, opts) {
     return _selector_first(this.cells(rowSelector, columnSelector, opts));
   });
-
   _api_register('cell().data()', function (data) {
     var ctx = this.context;
     var cell = this[0];
-
     if (data === undefined) {
       // Get
       return ctx.length && cell.length ? _fnGetCellData(ctx[0], cell[0].row, cell[0].column) : undefined;
-    } // Set
+    }
 
-
+    // Set
     _fnSetCellData(ctx[0], cell[0].row, cell[0].column, data);
-
     _fnInvalidate(ctx[0], cell[0].row, 'data', cell[0].column);
-
     return this;
   });
+
   /**
    * Get current ordering (sorting) that has been applied to the table.
    *
@@ -21076,54 +19326,46 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
    *   the column index that the sorting condition applies to, the second is the
    *   direction of the sort (`desc` or `asc`) and, optionally, the third is the
    *   index of the sorting order from the `column.sorting` initialisation array.
-   */
-
-  /**
-  * Set the ordering for the table.
-  *
-  * @param {integer} order Column index to sort upon.
-  * @param {string} direction Direction of the sort to be applied (`asc` or `desc`)
-  * @returns {DataTables.Api} this
-  */
-
-  /**
-  * Set the ordering for the table.
-  *
-  * @param {array} order 1D array of sorting information to be applied.
-  * @param {array} [...] Optional additional sorting conditions
-  * @returns {DataTables.Api} this
-  */
-
-  /**
-  * Set the ordering for the table.
-  *
-  * @param {array} order 2D array of sorting information to be applied.
-  * @returns {DataTables.Api} this
-  */
-
-
+   */ /**
+      * Set the ordering for the table.
+      *
+      * @param {integer} order Column index to sort upon.
+      * @param {string} direction Direction of the sort to be applied (`asc` or `desc`)
+      * @returns {DataTables.Api} this
+      */ /**
+         * Set the ordering for the table.
+         *
+         * @param {array} order 1D array of sorting information to be applied.
+         * @param {array} [...] Optional additional sorting conditions
+         * @returns {DataTables.Api} this
+         */ /**
+            * Set the ordering for the table.
+            *
+            * @param {array} order 2D array of sorting information to be applied.
+            * @returns {DataTables.Api} this
+            */
   _api_register('order()', function (order, dir) {
     var ctx = this.context;
-
     if (order === undefined) {
       // get
       return ctx.length !== 0 ? ctx[0].aaSorting : undefined;
-    } // set
+    }
 
-
+    // set
     if (typeof order === 'number') {
       // Simple column / direction passed in
       order = [[order, dir]];
     } else if (order.length && !Array.isArray(order[0])) {
       // Arguments passed in (list of 1D arrays)
       order = Array.prototype.slice.call(arguments);
-    } // otherwise a 2D array was passed in
-
+    }
+    // otherwise a 2D array was passed in
 
     return this.iterator('table', function (settings) {
       settings.aaSorting = order.slice();
     });
   });
+
   /**
    * Attach a sort listener to an element for a given column
    *
@@ -21134,14 +19376,11 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
    * @param {function} [callback] callback function when sort is run
    * @returns {DataTables.Api} this
    */
-
-
   _api_register('order.listener()', function (node, column, callback) {
     return this.iterator('table', function (settings) {
       _fnSortAttachListener(settings, node, column, callback);
     });
   });
-
   _api_register('order.fixed()', function (set) {
     if (!set) {
       var ctx = this.context;
@@ -21150,13 +19389,12 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
         pre: fixed
       } : fixed;
     }
-
     return this.iterator('table', function (settings) {
       settings.aaSortingFixed = $.extend(true, {}, set);
     });
-  }); // Order by the selected column(s)
+  });
 
-
+  // Order by the selected column(s)
   _api_register(['columns().order()', 'column().order()'], function (dir) {
     var that = this;
     return this.iterator('table', function (settings, i) {
@@ -21167,21 +19405,18 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
       settings.aaSorting = sort;
     });
   });
-
   _api_register('search()', function (input, regex, smart, caseInsen) {
     var ctx = this.context;
-
     if (input === undefined) {
       // get
       return ctx.length !== 0 ? ctx[0].oPreviousSearch.sSearch : undefined;
-    } // set
+    }
 
-
+    // set
     return this.iterator('table', function (settings) {
       if (!settings.oFeatures.bFilter) {
         return;
       }
-
       _fnFilterComplete(settings, $.extend({}, settings.oPreviousSearch, {
         "sSearch": input + "",
         "bRegex": regex === null ? false : regex,
@@ -21190,56 +19425,90 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
       }), 1);
     });
   });
-
   _api_registerPlural('columns().search()', 'column().search()', function (input, regex, smart, caseInsen) {
     return this.iterator('column', function (settings, column) {
       var preSearch = settings.aoPreSearchCols;
-
       if (input === undefined) {
         // get
         return preSearch[column].sSearch;
-      } // set
+      }
 
-
+      // set
       if (!settings.oFeatures.bFilter) {
         return;
       }
-
       $.extend(preSearch[column], {
         "sSearch": input + "",
         "bRegex": regex === null ? false : regex,
         "bSmart": smart === null ? true : smart,
         "bCaseInsensitive": caseInsen === null ? true : caseInsen
       });
-
       _fnFilterComplete(settings, settings.oPreviousSearch, 1);
     });
   });
+
   /*
    * State API methods
    */
 
-
   _api_register('state()', function () {
     return this.context.length ? this.context[0].oSavedState : null;
   });
-
   _api_register('state.clear()', function () {
     return this.iterator('table', function (settings) {
       // Save an empty object
       settings.fnStateSaveCallback.call(settings.oInstance, settings, {});
     });
   });
-
   _api_register('state.loaded()', function () {
     return this.context.length ? this.context[0].oLoadedState : null;
   });
-
   _api_register('state.save()', function () {
     return this.iterator('table', function (settings) {
       _fnSaveState(settings);
     });
   });
+
+  /**
+   * Set the jQuery or window object to be used by DataTables
+   *
+   * @param {*} module Library / container object
+   * @param {string} type Library or container type `lib` or `win`.
+   */
+  DataTable.use = function (module, type) {
+    if (type === 'lib' || module.fn) {
+      $ = module;
+    } else if (type == 'win' || module.document) {
+      window = module;
+      document = module.document;
+    }
+  };
+
+  /**
+   * CommonJS factory function pass through. This will check if the arguments
+   * given are a window object or a jQuery object. If so they are set
+   * accordingly.
+   * @param {*} root Window
+   * @param {*} jq jQUery
+   * @returns {boolean} Indicator
+   */
+  DataTable.factory = function (root, jq) {
+    var is = false;
+
+    // Test if the first parameter is a window object
+    if (root && root.document) {
+      window = root;
+      document = root.document;
+    }
+
+    // Test if the second parameter is a jQuery object
+    if (jq && jq.fn && jq.fn.jquery) {
+      $ = jq;
+      is = true;
+    }
+    return is;
+  };
+
   /**
    * Provide a common method for plug-ins to check the version of DataTables being
    * used, in order to ensure compatibility.
@@ -21255,27 +19524,25 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
    *  @example
    *    alert( $.fn.dataTable.versionCheck( '1.9.0' ) );
    */
-
-
   DataTable.versionCheck = DataTable.fnVersionCheck = function (version) {
     var aThis = DataTable.version.split('.');
     var aThat = version.split('.');
     var iThis, iThat;
-
     for (var i = 0, iLen = aThat.length; i < iLen; i++) {
       iThis = parseInt(aThis[i], 10) || 0;
-      iThat = parseInt(aThat[i], 10) || 0; // Parts are the same, keep comparing
+      iThat = parseInt(aThat[i], 10) || 0;
 
+      // Parts are the same, keep comparing
       if (iThis === iThat) {
         continue;
-      } // Parts are different, return immediately
+      }
 
-
+      // Parts are different, return immediately
       return iThis > iThat;
     }
-
     return true;
   };
+
   /**
    * Check if a `<table>` node is a DataTable table already or not.
    *
@@ -21291,26 +19558,22 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
    *      $('#example').dataTable();
    *    }
    */
-
-
   DataTable.isDataTable = DataTable.fnIsDataTable = function (table) {
     var t = $(table).get(0);
     var is = false;
-
     if (table instanceof DataTable.Api) {
       return true;
     }
-
     $.each(DataTable.settings, function (i, o) {
       var head = o.nScrollHead ? $('table', o.nScrollHead)[0] : null;
       var foot = o.nScrollFoot ? $('table', o.nScrollFoot)[0] : null;
-
       if (o.nTable === t || head === t || foot === t) {
         is = true;
       }
     });
     return is;
   };
+
   /**
    * Get all DataTable tables that have been initialised - optionally you can
    * select to get only currently visible tables.
@@ -21327,16 +19590,12 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
    *      $(table).DataTable().columns.adjust();
    *    } );
    */
-
-
   DataTable.tables = DataTable.fnTables = function (visible) {
     var api = false;
-
     if ($.isPlainObject(visible)) {
       api = visible.api;
       visible = visible.visible;
     }
-
     var a = $.map(DataTable.settings, function (o) {
       if (!visible || visible && $(o.nTable).is(':visible')) {
         return o.nTable;
@@ -21344,6 +19603,7 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
     });
     return api ? new _Api2(a) : a;
   };
+
   /**
    * Convert from camel case parameters to Hungarian notation. This is made public
    * for the extensions to provide the same ability as DataTables core to accept
@@ -21357,27 +19617,25 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
    *    Hungarian value in the `user` object will be overwritten. Otherwise they
    *    won't be.
    */
-
-
   DataTable.camelToHungarian = _fnCamelToHungarian;
+
   /**
    *
    */
-
   _api_register('$()', function (selector, opts) {
     var rows = this.rows(opts).nodes(),
-        // Get all rows
-    jqRows = $(rows);
+      // Get all rows
+      jqRows = $(rows);
     return $([].concat(jqRows.filter(selector).toArray(), jqRows.find(selector).toArray()));
-  }); // jQuery functions to operate on the tables
+  });
 
-
+  // jQuery functions to operate on the tables
   $.each(['on', 'one', 'off'], function (i, key) {
-    _api_register(key + '()', function ()
-    /* event, handler */
-    {
-      var args = Array.prototype.slice.call(arguments); // Add the `dt` namespace automatically if it isn't already present
+    _api_register(key + '()', function /* event, handler */
+    () {
+      var args = Array.prototype.slice.call(arguments);
 
+      // Add the `dt` namespace automatically if it isn't already present
       args[0] = $.map(args[0].split(/\s/), function (e) {
         return !e.match(/\.dt\b/) ? e + '.dt' : e;
       }).join(' ');
@@ -21386,32 +19644,26 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
       return this;
     });
   });
-
   _api_register('clear()', function () {
     return this.iterator('table', function (settings) {
       _fnClearTable(settings);
     });
   });
-
   _api_register('settings()', function () {
     return new _Api2(this.context, this.context);
   });
-
   _api_register('init()', function () {
     var ctx = this.context;
     return ctx.length ? ctx[0].oInit : null;
   });
-
   _api_register('data()', function () {
     return this.iterator('table', function (settings) {
       return _pluck(settings.aoData, '_aData');
     }).flatten();
   });
-
   _api_register('destroy()', function (remove) {
     remove = remove || false;
     return this.iterator('table', function (settings) {
-      var orig = settings.nTableWrapper.parentNode;
       var classes = settings.oClasses;
       var table = settings.nTable;
       var tbody = settings.nTBody;
@@ -21423,78 +19675,80 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
       var rows = $.map(settings.aoData, function (r) {
         return r.nTr;
       });
-      var i, ien; // Flag to note that the table is currently being destroyed - no action
+      var i, ien;
+
+      // Flag to note that the table is currently being destroyed - no action
       // should be taken
+      settings.bDestroying = true;
 
-      settings.bDestroying = true; // Fire off the destroy callbacks for plug-ins etc
+      // Fire off the destroy callbacks for plug-ins etc
+      _fnCallbackFire(settings, "aoDestroyCallback", "destroy", [settings]);
 
-      _fnCallbackFire(settings, "aoDestroyCallback", "destroy", [settings]); // If not being removed from the document, make all columns visible
-
-
+      // If not being removed from the document, make all columns visible
       if (!remove) {
         new _Api2(settings).columns().visible(true);
-      } // Blitz all `DT` namespaced events (these are internal events, the
+      }
+
+      // Blitz all `DT` namespaced events (these are internal events, the
       // lowercase, `dt` events are user subscribed and they are responsible
       // for removing them
-
-
       jqWrapper.off('.DT').find(':not(tbody *)').off('.DT');
-      $(window).off('.DT-' + settings.sInstance); // When scrolling we had to break the table up - restore it
+      $(window).off('.DT-' + settings.sInstance);
 
+      // When scrolling we had to break the table up - restore it
       if (table != thead.parentNode) {
         jqTable.children('thead').detach();
         jqTable.append(thead);
       }
-
       if (tfoot && table != tfoot.parentNode) {
         jqTable.children('tfoot').detach();
         jqTable.append(tfoot);
       }
-
       settings.aaSorting = [];
       settings.aaSortingFixed = [];
-
       _fnSortingClasses(settings);
-
       $(rows).removeClass(settings.asStripeClasses.join(' '));
-      $('th, td', thead).removeClass(classes.sSortable + ' ' + classes.sSortableAsc + ' ' + classes.sSortableDesc + ' ' + classes.sSortableNone); // Add the TR elements back into the table in their original order
+      $('th, td', thead).removeClass(classes.sSortable + ' ' + classes.sSortableAsc + ' ' + classes.sSortableDesc + ' ' + classes.sSortableNone);
 
+      // Add the TR elements back into the table in their original order
       jqTbody.children().detach();
-      jqTbody.append(rows); // Remove the DataTables generated nodes, events and classes
+      jqTbody.append(rows);
+      var orig = settings.nTableWrapper.parentNode;
 
+      // Remove the DataTables generated nodes, events and classes
       var removedMethod = remove ? 'remove' : 'detach';
       jqTable[removedMethod]();
-      jqWrapper[removedMethod](); // If we need to reattach the table to the document
+      jqWrapper[removedMethod]();
 
+      // If we need to reattach the table to the document
       if (!remove && orig) {
         // insertBefore acts like appendChild if !arg[1]
-        orig.insertBefore(table, settings.nTableReinsertBefore); // Restore the width of the original table - was read from the style property,
-        // so we can restore directly to that
+        orig.insertBefore(table, settings.nTableReinsertBefore);
 
-        jqTable.css('width', settings.sDestroyWidth).removeClass(classes.sTable); // If the were originally stripe classes - then we add them back here.
+        // Restore the width of the original table - was read from the style property,
+        // so we can restore directly to that
+        jqTable.css('width', settings.sDestroyWidth).removeClass(classes.sTable);
+
+        // If the were originally stripe classes - then we add them back here.
         // Note this is not fool proof (for example if not all rows had stripe
         // classes - but it's a good effort without getting carried away
-
         ien = settings.asDestroyStripes.length;
-
         if (ien) {
           jqTbody.children().each(function (i) {
             $(this).addClass(settings.asDestroyStripes[i % ien]);
           });
         }
       }
+
       /* Remove the settings object from the settings array */
-
-
       var idx = $.inArray(settings, DataTable.settings);
-
       if (idx !== -1) {
         DataTable.settings.splice(idx, 1);
       }
     });
-  }); // Add the `every()` method for rows, columns and cells in a compact form
+  });
 
-
+  // Add the `every()` method for rows, columns and cells in a compact form
   $.each(['column', 'row', 'cell'], function (i, type) {
     _api_register(type + 's().every()', function (fn) {
       var opts = this.selector.opts;
@@ -21513,22 +19767,19 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
         fn.call(api[type](arg1, type === 'cell' ? arg2 : opts, type === 'cell' ? opts : undefined), arg1, arg2, arg3, arg4);
       });
     });
-  }); // i18n method for extensions to be able to use the language object from the
-  // DataTable
+  });
 
+  // i18n method for extensions to be able to use the language object from the
+  // DataTable
   _api_register('i18n()', function (token, def, plural) {
     var ctx = this.context[0];
-
     var resolved = _fnGetObjectDataFn(token)(ctx.oLanguage);
-
     if (resolved === undefined) {
       resolved = def;
     }
-
     if (plural !== undefined && $.isPlainObject(resolved)) {
       resolved = resolved[plural] !== undefined ? resolved[plural] : resolved._;
     }
-
     return resolved.replace('%d', plural); // nb: plural might be undefined,
   });
   /**
@@ -21539,9 +19790,8 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
    *  @type string
    *  @default Version number
    */
+  DataTable.version = "1.13.4";
 
-
-  DataTable.version = "1.10.25";
   /**
    * Private data store, containing all of the settings objects that are
    * created for the tables on a given page.
@@ -21554,22 +19804,21 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
    *  @default []
    *  @private
    */
-
   DataTable.settings = [];
+
   /**
    * Object models container, for the various models that DataTables has
    * available to it. These models define the objects that are used to hold
    * the active state and configuration of the table.
    *  @namespace
    */
-
   DataTable.models = {};
+
   /**
    * Template object for the way in which DataTables holds information about
    * search information for the global filter and individual column filters.
    *  @namespace
    */
-
   DataTable.models.oSearch = {
     /**
      * Flag to indicate if the filtering should be case insensitive or not
@@ -21577,14 +19826,12 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
      *  @default true
      */
     "bCaseInsensitive": true,
-
     /**
      * Applied search term
      *  @type string
      *  @default <i>Empty string</i>
      */
     "sSearch": "",
-
     /**
      * Flag to indicate if the search term should be interpreted as a
      * regular expression (true) or not (false) and therefore and special
@@ -21593,21 +19840,27 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
      *  @default false
      */
     "bRegex": false,
-
     /**
      * Flag to indicate if DataTables is to use its smart filtering or not.
      *  @type boolean
      *  @default true
      */
-    "bSmart": true
+    "bSmart": true,
+    /**
+     * Flag to indicate if DataTables should only trigger a search when
+     * the return key is pressed.
+     *  @type boolean
+     *  @default false
+     */
+    "return": false
   };
+
   /**
    * Template object for the way in which DataTables holds information about
    * each individual row. This is the object format used for the settings
    * aoData array.
    *  @namespace
    */
-
   DataTable.models.oRow = {
     /**
      * TR element for the row
@@ -21615,7 +19868,6 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
      *  @default null
      */
     "nTr": null,
-
     /**
      * Array of TD elements for each row. This is null until the row has been
      * created.
@@ -21623,7 +19875,6 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
      *  @default []
      */
     "anCells": null,
-
     /**
      * Data object from the original data source for the row. This is either
      * an array if using the traditional form of DataTables, or an object if
@@ -21634,7 +19885,6 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
      *  @default []
      */
     "_aData": [],
-
     /**
      * Sorting data cache - this array is ostensibly the same length as the
      * number of columns (although each index is generated only as it is
@@ -21648,7 +19898,6 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
      *  @private
      */
     "_aSortData": null,
-
     /**
      * Per cell filtering data cache. As per the sort data cache, used to
      * increase the performance of the filtering in DataTables
@@ -21657,7 +19906,6 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
      *  @private
      */
     "_aFilterData": null,
-
     /**
      * Filtering data cache. This is the same as the cell filtering cache, but
      * in this case a string rather than an array. This is easily computed with
@@ -21668,7 +19916,6 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
      *  @private
      */
     "_sFilterRow": null,
-
     /**
      * Cache of the class name that DataTables has applied to the row, so we
      * can quickly look at this variable rather than needing to do a DOM check
@@ -21678,7 +19925,6 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
      *  @private
      */
     "_sRowStripe": "",
-
     /**
      * Denote if the original data source was from the DOM, or the data source
      * object. This is used for invalidating data, so DataTables can
@@ -21689,7 +19935,6 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
      *  @private
      */
     "src": null,
-
     /**
      * Index in the aoData array. This saves an indexOf lookup when we have the
      * object, but want to know the index
@@ -21699,6 +19944,7 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
      */
     "idx": -1
   };
+
   /**
    * Template object for the column information object in DataTables. This object
    * is held in the settings aoColumns array and contains all the information that
@@ -21710,7 +19956,6 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
    * be done through the initialisation options.
    *  @namespace
    */
-
   DataTable.models.oColumn = {
     /**
      * Column index. This could be worked out on-the-fly with $.inArray, but it
@@ -21719,7 +19964,6 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
      *  @default null
      */
     "idx": null,
-
     /**
      * A list of the columns that sorting should occur on when this column
      * is sorted. That this property is an array allows multi-column sorting
@@ -21730,7 +19974,6 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
      *  @type array
      */
     "aDataSort": null,
-
     /**
      * Define the sorting directions that are applied to the column, in sequence
      * as the column is repeatedly sorted upon - i.e. the first value is used
@@ -21740,26 +19983,22 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
      *  @type array
      */
     "asSorting": null,
-
     /**
      * Flag to indicate if the column is searchable, and thus should be included
      * in the filtering or not.
      *  @type boolean
      */
     "bSearchable": null,
-
     /**
      * Flag to indicate if the column is sortable or not.
      *  @type boolean
      */
     "bSortable": null,
-
     /**
      * Flag to indicate if the column is currently visible in the table or not
      *  @type boolean
      */
     "bVisible": null,
-
     /**
      * Store for manual type assignment using the `column.type` option. This
      * is held in store so we can manipulate the column's `sType` property.
@@ -21768,7 +20007,6 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
      *  @private
      */
     "_sManualType": null,
-
     /**
      * Flag to indicate if HTML5 data attributes should be used as the data
      * source for filtering or sorting. True is either are.
@@ -21777,7 +20015,6 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
      *  @private
      */
     "_bAttrSrc": false,
-
     /**
      * Developer definable function that is called whenever a cell is created (Ajax source,
      * etc) or processed for input (DOM source). This can be used as a compliment to mRender
@@ -21791,7 +20028,6 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
      *  @default null
      */
     "fnCreatedCell": null,
-
     /**
      * Function to get data from a cell in a column. You should <b>never</b>
      * access data directly through _aData internally in DataTables - always use
@@ -21807,7 +20043,6 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
      *  @default null
      */
     "fnGetData": null,
-
     /**
      * Function to set data for a cell in the column. You should <b>never</b>
      * set the data directly to _aData internally in DataTables - always use
@@ -21820,7 +20055,6 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
      *  @default null
      */
     "fnSetData": null,
-
     /**
      * Property to read the value for the cells in the column from the data
      * source array / object. If null, then the default content is used, if a
@@ -21829,7 +20063,6 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
      *  @default null
      */
     "mData": null,
-
     /**
      * Partner property to mData which is used (only when defined) to get
      * the data - i.e. it is basically the same as mData, but without the
@@ -21839,7 +20072,6 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
      *  @default null
      */
     "mRender": null,
-
     /**
      * Unique header TH/TD element for this column - this is what the sorting
      * listener is attached to (if sorting is enabled.)
@@ -21847,7 +20079,6 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
      *  @default null
      */
     "nTh": null,
-
     /**
      * Unique footer TH/TD element for this column (if there is one). Not used
      * in DataTables as such, but can be used for plug-ins to reference the
@@ -21856,14 +20087,12 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
      *  @default null
      */
     "nTf": null,
-
     /**
      * The class to apply to all TD elements in the table's TBODY for the column
      *  @type string
      *  @default null
      */
     "sClass": null,
-
     /**
      * When DataTables calculates the column widths to assign to each column,
      * it finds the longest string in each column and then constructs a
@@ -21876,7 +20105,6 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
      *  @type string
      */
     "sContentPadding": null,
-
     /**
      * Allows a default value to be given for a column's data, and will be used
      * whenever a null data source is encountered (this can be because mData
@@ -21885,14 +20113,12 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
      *  @default null
      */
     "sDefaultContent": null,
-
     /**
      * Name for the column, allowing reference to the column by name as well as
      * by index (needs a lookup to work by name).
      *  @type string
      */
     "sName": null,
-
     /**
      * Custom sorting data type - defines which of the available plug-ins in
      * afnSortData the custom sorting will use - if any is defined.
@@ -21900,14 +20126,12 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
      *  @default std
      */
     "sSortDataType": 'std',
-
     /**
      * Class to be applied to the header element when sorting on this column
      *  @type string
      *  @default null
      */
     "sSortingClass": null,
-
     /**
      * Class to be applied to the header element when sorting on this column -
      * when jQuery UI theming is used.
@@ -21915,27 +20139,23 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
      *  @default null
      */
     "sSortingClassJUI": null,
-
     /**
      * Title of the column - what is seen in the TH element (nTh).
      *  @type string
      */
     "sTitle": null,
-
     /**
      * Column sorting and filtering type
      *  @type string
      *  @default null
      */
     "sType": null,
-
     /**
      * Width of the column
      *  @type string
      *  @default null
      */
     "sWidth": null,
-
     /**
      * Width of the column when it was first "encountered"
      *  @type string
@@ -21943,6 +20163,7 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
      */
     "sWidthOrig": null
   };
+
   /*
    * Developer note: The properties of the object below are given in Hungarian
    * notation, that was used as the interface for DataTables prior to v1.10, however
@@ -21964,7 +20185,6 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
    * time.
    *  @namespace
    */
-
   DataTable.defaults = {
     /**
      * An array of data to use for the table, passed in at initialisation which
@@ -22026,7 +20246,6 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
      *    } );
      */
     "aaData": null,
-
     /**
      * If ordering is enabled, then DataTables will perform a first pass sort on
      * initialisation. You can define which column(s) the sort is performed
@@ -22055,7 +20274,6 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
      *    } );
      */
     "aaSorting": [[0, 'asc']],
-
     /**
      * This parameter is basically identical to the `sorting` parameter, but
      * cannot be overridden by user interaction with the table. What this means
@@ -22077,7 +20295,6 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
      *    } )
      */
     "aaSortingFixed": [],
-
     /**
      * DataTables can be instructed to load data to display in the table from a
      * Ajax source. This option defines how that Ajax call is made and where to.
@@ -22233,7 +20450,6 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
      *   } );
      */
     "ajax": null,
-
     /**
      * This parameter allows you to readily specify the entries in the length drop
      * down menu that DataTables shows when pagination is enabled. It can be
@@ -22258,7 +20474,6 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
      *    } );
      */
     "aLengthMenu": [10, 25, 50, 100],
-
     /**
      * The `columns` option in the initialisation parameter allows you to define
      * details about the way individual columns behave. For a full list of
@@ -22272,7 +20487,6 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
      *  @name DataTable.defaults.column
      */
     "aoColumns": null,
-
     /**
      * Very similar to `columns`, `columnDefs` allows you to target a specific
      * column, multiple columns, or all columns, using the `targets` property of
@@ -22293,7 +20507,6 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
      *  @name DataTable.defaults.columnDefs
      */
     "aoColumnDefs": null,
-
     /**
      * Basically the same as `search`, this parameter defines the individual column
      * filtering state at initialisation time. The array must be of the same size
@@ -22319,7 +20532,6 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
      *    } )
      */
     "aoSearchCols": [],
-
     /**
      * An array of CSS classes that should be applied to displayed rows. This
      * array may be of any length, and DataTables will apply each class
@@ -22339,7 +20551,6 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
      *    } )
      */
     "asStripeClasses": null,
-
     /**
      * Enable or disable automatic column width calculation. This can be disabled
      * as an optimisation (it takes some time to calculate the widths) if the
@@ -22358,7 +20569,6 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
      *    } );
      */
     "bAutoWidth": true,
-
     /**
      * Deferred rendering can provide DataTables with a huge speed boost when you
      * are using an Ajax or JS data source for the table. This option, when set to
@@ -22380,7 +20590,6 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
      *    } );
      */
     "bDeferRender": false,
-
     /**
      * Replace a DataTable which matches the given selector and replace it with
      * one which has the properties of the new initialisation object passed. If no
@@ -22407,7 +20616,6 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
      *    } );
      */
     "bDestroy": false,
-
     /**
      * Enable or disable filtering of data. Filtering in DataTables is "smart" in
      * that it allows the end user to input multiple words (space separated) and
@@ -22430,7 +20638,6 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
      *    } );
      */
     "bFilter": true,
-
     /**
      * Enable or disable the table information display. This shows information
      * about the data that is currently visible on the page, including information
@@ -22449,7 +20656,6 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
      *    } );
      */
     "bInfo": true,
-
     /**
      * Allows the end user to select the size of a formatted page from a select
      * menu (sizes are 10, 25, 50 and 100). Requires pagination (`paginate`).
@@ -22467,7 +20673,6 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
      *    } );
      */
     "bLengthChange": true,
-
     /**
      * Enable or disable pagination.
      *  @type boolean
@@ -22484,7 +20689,6 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
      *    } );
      */
     "bPaginate": true,
-
     /**
      * Enable or disable the display of a 'processing' indicator when the table is
      * being processed (e.g. a sort). This is particularly useful for tables with
@@ -22504,7 +20708,6 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
      *    } );
      */
     "bProcessing": false,
-
     /**
      * Retrieve the DataTables object for the given selector. Note that if the
      * table has already been initialised, this parameter will cause DataTables
@@ -22541,7 +20744,6 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
      *    }
      */
     "bRetrieve": false,
-
     /**
      * When vertical (y) scrolling is enabled, DataTables will force the height of
      * the table's viewport to the given height at all times (useful for layout).
@@ -22564,7 +20766,6 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
      *    } );
      */
     "bScrollCollapse": false,
-
     /**
      * Configure DataTables to use server-side processing. Note that the
      * `ajax` parameter must also be given in order to give DataTables a
@@ -22585,7 +20786,6 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
      *    } );
      */
     "bServerSide": false,
-
     /**
      * Enable or disable sorting of columns. Sorting of individual columns can be
      * disabled by the `sortable` option for each column.
@@ -22603,7 +20803,6 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
      *    } );
      */
     "bSort": true,
-
     /**
      * Enable or display DataTables' ability to sort multiple columns at the
      * same time (activated by shift-click by the user).
@@ -22622,7 +20821,6 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
      *    } );
      */
     "bSortMulti": true,
-
     /**
      * Allows control over whether DataTables should use the top (true) unique
      * cell that is found for a single column, or the bottom (false - default).
@@ -22641,7 +20839,6 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
      *    } );
      */
     "bSortCellsTop": false,
-
     /**
      * Enable or disable the addition of the classes `sorting\_1`, `sorting\_2` and
      * `sorting\_3` to the columns which are currently being sorted on. This is
@@ -22662,7 +20859,6 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
      *    } );
      */
     "bSortClasses": true,
-
     /**
      * Enable or disable state saving. When enabled HTML5 `localStorage` will be
      * used to save table display information such as pagination information,
@@ -22686,7 +20882,6 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
      *    } );
      */
     "bStateSave": false,
-
     /**
      * This function is called when a TR element is created (and all TD child
      * elements have been inserted), or registered if using a DOM source, allowing
@@ -22713,7 +20908,6 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
      *    } );
      */
     "fnCreatedRow": null,
-
     /**
      * This function is called on every 'draw' event, and allows you to
      * dynamically modify any aspect you want about the created DOM.
@@ -22733,7 +20927,6 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
      *    } );
      */
     "fnDrawCallback": null,
-
     /**
      * Identical to fnHeaderCallback() but for the table footer this function
      * allows you to modify the table footer on every 'draw' event.
@@ -22760,7 +20953,6 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
      *    } )
      */
     "fnFooterCallback": null,
-
     /**
      * When rendering large numbers in the information element for the table
      * (i.e. "Showing 1 to 10 of 57 entries") DataTables will render large numbers
@@ -22791,7 +20983,6 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
     "fnFormatNumber": function fnFormatNumber(toFormat) {
       return toFormat.toString().replace(/\B(?=(\d{3})+(?!\d))/g, this.oLanguage.sThousands);
     },
-
     /**
      * This function is called on every 'draw' event, and allows you to
      * dynamically modify the header row. This can be used to calculate and
@@ -22819,7 +21010,6 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
      *    } )
      */
     "fnHeaderCallback": null,
-
     /**
      * The information element can be used to convey information about the current
      * state of the table. Although the internationalisation options presented by
@@ -22848,7 +21038,6 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
      *    } );
      */
     "fnInfoCallback": null,
-
     /**
      * Called when the table has been initialised. Normally DataTables will
      * initialise sequentially and there will be no need for this function,
@@ -22872,7 +21061,6 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
      *    } )
      */
     "fnInitComplete": null,
-
     /**
      * Called at the very start of each table draw and can be used to cancel the
      * draw by returning false, any other return (including undefined) results in
@@ -22897,7 +21085,6 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
      *    } );
      */
     "fnPreDrawCallback": null,
-
     /**
      * This function allows you to 'post process' each row after it have been
      * generated for each table draw, but before it is rendered on screen. This
@@ -22925,7 +21112,6 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
      *    } );
      */
     "fnRowCallback": null,
-
     /**
      * __Deprecated__ The functionality provided by this parameter has now been
      * superseded by that provided through `ajax`, which should be used instead.
@@ -22950,7 +21136,6 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
      *  @deprecated 1.10. Please use `ajax` for this functionality now.
      */
     "fnServerData": null,
-
     /**
      * __Deprecated__ The functionality provided by this parameter has now been
      * superseded by that provided through `ajax`, which should be used instead.
@@ -22976,7 +21161,6 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
      *  @deprecated 1.10. Please use `ajax` for this functionality now.
      */
     "fnServerParams": null,
-
     /**
      * Load the table state. With this function you can define from where, and how, the
      * state of a table is loaded. By default DataTables will load from `localStorage`
@@ -23014,7 +21198,6 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
         return {};
       }
     },
-
     /**
      * Callback which allows modification of the saved state prior to loading that state.
      * This callback is called when the table is loading state from the stored data, but
@@ -23051,7 +21234,6 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
      *    } );
      */
     "fnStateLoadParams": null,
-
     /**
      * Callback that is called when the state has been loaded from the state saving method
      * and the DataTables settings object has been modified as a result of the loaded state.
@@ -23074,7 +21256,6 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
      *    } );
      */
     "fnStateLoaded": null,
-
     /**
      * Save the table state. This function allows you to define where and how the state
      * information for the table is stored By default DataTables will use `localStorage`
@@ -23109,7 +21290,6 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
         (settings.iStateDuration === -1 ? sessionStorage : localStorage).setItem('DataTables_' + settings.sInstance + '_' + location.pathname, JSON.stringify(data));
       } catch (e) {}
     },
-
     /**
      * Callback which allows modification of the state to be saved. Called when the table
      * has changed state a new state save is required. This method allows modification of
@@ -23135,7 +21315,6 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
      *    } );
      */
     "fnStateSaveParams": null,
-
     /**
      * Duration for which the saved state information is considered valid. After this period
      * has elapsed the state will be returned to the default.
@@ -23154,7 +21333,6 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
      *    } )
      */
     "iStateDuration": 7200,
-
     /**
      * When enabled DataTables will not make a request to the server for the first
      * page draw - rather it will use the data already on the page (no sorting etc
@@ -23197,7 +21375,6 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
      *    } );
      */
     "iDeferLoading": null,
-
     /**
      * Number of rows to display on a single page when using pagination. If
      * feature enabled (`lengthChange`) then the end user will be able to override
@@ -23216,7 +21393,6 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
      *    } )
      */
     "iDisplayLength": 10,
-
     /**
      * Define the starting point for data display when using DataTables with
      * pagination. Note that this parameter is the number of records, rather than
@@ -23236,7 +21412,6 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
      *    } )
      */
     "iDisplayStart": 0,
-
     /**
      * By default DataTables allows keyboard navigation of the table (sorting, paging,
      * and filtering) by adding a `tabindex` attribute to the required elements. This
@@ -23258,7 +21433,6 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
      *    } );
      */
     "iTabIndex": 0,
-
     /**
      * Classes that DataTables assigns to the various components and features
      * that it adds to the HTML table. This allows classes to be configured
@@ -23268,7 +21442,6 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
      *  @name DataTable.defaults.classes
      */
     "oClasses": {},
-
     /**
      * All strings that DataTables uses in the user interface that it creates
      * are defined in this object, allowing you to modified them individually or
@@ -23307,7 +21480,6 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
          *    } );
          */
         "sSortAscending": ": activate to sort column ascending",
-
         /**
          * ARIA label that is added to the table headers when the column may be
          * sorted descending by activing the column (click or return when focused).
@@ -23331,7 +21503,6 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
          */
         "sSortDescending": ": activate to sort column descending"
       },
-
       /**
        * Pagination string used by DataTables for the built-in pagination
        * control types.
@@ -23360,7 +21531,6 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
          *    } );
          */
         "sFirst": "First",
-
         /**
          * Text to use when using the 'full_numbers' type of pagination for the
          * button to take the user to the last page.
@@ -23382,7 +21552,6 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
          *    } );
          */
         "sLast": "Last",
-
         /**
          * Text to use for the 'next' pagination button (to take the user to the
          * next page).
@@ -23404,7 +21573,6 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
          *    } );
          */
         "sNext": "Next",
-
         /**
          * Text to use for the 'previous' pagination button (to take the user to
          * the previous page).
@@ -23427,7 +21595,6 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
          */
         "sPrevious": "Previous"
       },
-
       /**
        * This string is shown in preference to `zeroRecords` when the table is
        * empty of data (regardless of filtering). Note that this is an optional
@@ -23449,7 +21616,6 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
        *    } );
        */
       "sEmptyTable": "No data available in table",
-
       /**
        * This string gives information to the end user about the information
        * that is current on display on the page. The following tokens can be
@@ -23480,7 +21646,6 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
        *    } );
        */
       "sInfo": "Showing _START_ to _END_ of _TOTAL_ entries",
-
       /**
        * Display information string for when the table is empty. Typically the
        * format of this string should match `info`.
@@ -23500,7 +21665,6 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
        *    } );
        */
       "sInfoEmpty": "Showing 0 to 0 of 0 entries",
-
       /**
        * When a user filters the information in a table, this string is appended
        * to the information (`info`) to give an idea of how strong the filtering
@@ -23521,7 +21685,6 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
        *    } );
        */
       "sInfoFiltered": "(filtered from _MAX_ total entries)",
-
       /**
        * If can be useful to append extra information to the info string at times,
        * and this variable does exactly that. This information will be appended to
@@ -23543,7 +21706,6 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
        *    } );
        */
       "sInfoPostFix": "",
-
       /**
        * This decimal place operator is a little different from the other
        * language options since DataTables doesn't output floating point
@@ -23573,7 +21735,6 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
        *    } );
        */
       "sDecimal": "",
-
       /**
        * DataTables has a build in number formatter (`formatNumber`) which is
        * used to format large numbers that are used in the table information.
@@ -23595,7 +21756,6 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
        *    } );
        */
       "sThousands": ",",
-
       /**
        * Detail the action that will be taken when the drop down menu for the
        * pagination length option is changed. The '_MENU_' variable is replaced
@@ -23635,7 +21795,6 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
        *    } );
        */
       "sLengthMenu": "Show _MENU_ entries",
-
       /**
        * When using Ajax sourced data and during the first draw when DataTables is
        * gathering the data, this message is shown in an empty row in the table to
@@ -23658,12 +21817,10 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
        *    } );
        */
       "sLoadingRecords": "Loading...",
-
       /**
        * Text which is displayed when the table is processing a user action
        * (usually a sort command or similar).
        *  @type string
-       *  @default Processing...
        *
        *  @dtopt Language
        *  @name DataTable.defaults.language.processing
@@ -23677,8 +21834,7 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
        *      } );
        *    } );
        */
-      "sProcessing": "Processing...",
-
+      "sProcessing": "",
       /**
        * Details the actions that will be taken when the user types into the
        * filtering input text box. The variable "_INPUT_", if used in the string,
@@ -23712,7 +21868,6 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
        *    } );
        */
       "sSearch": "Search:",
-
       /**
        * Assign a `placeholder` attribute to the search `input` element
        *  @type string
@@ -23722,7 +21877,6 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
        *  @name DataTable.defaults.language.searchPlaceholder
        */
       "sSearchPlaceholder": "",
-
       /**
        * All of the language information can be stored in a file on the
        * server-side, which DataTables will look up if this parameter is passed.
@@ -23746,7 +21900,6 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
        *    } );
        */
       "sUrl": "",
-
       /**
        * Text shown inside the table records when the is no information to be
        * displayed after filtering. `emptyTable` is shown when there is simply no
@@ -23768,7 +21921,6 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
        */
       "sZeroRecords": "No matching records found"
     },
-
     /**
      * This parameter allows you to have define the global filtering state at
      * initialisation time. As an object the `search` parameter must be
@@ -23791,7 +21943,6 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
      *    } )
      */
     "oSearch": $.extend({}, DataTable.models.oSearch),
-
     /**
      * __Deprecated__ The functionality provided by this parameter has now been
      * superseded by that provided through `ajax`, which should be used instead.
@@ -23811,7 +21962,6 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
      *  @deprecated 1.10. Please use `ajax` for this functionality now.
      */
     "sAjaxDataProp": "data",
-
     /**
      * __Deprecated__ The functionality provided by this parameter has now been
      * superseded by that provided through `ajax`, which should be used instead.
@@ -23829,7 +21979,6 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
      *  @deprecated 1.10. Please use `ajax` for this functionality now.
      */
     "sAjaxSource": null,
-
     /**
      * This initialisation variable allows you to specify exactly where in the
      * DOM you want DataTables to inject the various controls it adds to the page
@@ -23882,7 +22031,6 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
      *    } );
      */
     "sDom": "lfrtip",
-
     /**
      * Search delay option. This will throttle full table searches that use the
      * DataTables provided search input element (it does not effect calls to
@@ -23901,7 +22049,6 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
      *    } )
      */
     "searchDelay": null,
-
     /**
      * DataTables features six different built-in options for the buttons to
      * display for pagination control:
@@ -23928,7 +22075,6 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
      *    } )
      */
     "sPaginationType": "simple_numbers",
-
     /**
      * Enable horizontal scrolling. When a table is too wide to fit into a
      * certain layout, or you have a large number of columns in the table, you
@@ -23952,7 +22098,6 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
      *    } );
      */
     "sScrollX": "",
-
     /**
      * This property can be used to force a DataTable to use more width than it
      * might otherwise do when x-scrolling is enabled. For example if you have a
@@ -23975,7 +22120,6 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
      *    } );
      */
     "sScrollXInner": "",
-
     /**
      * Enable vertical scrolling. Vertical scrolling will constrain the DataTable
      * to the given height, and enable scrolling for any data which overflows the
@@ -23998,7 +22142,6 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
      *    } );
      */
     "sScrollY": "",
-
     /**
      * __Deprecated__ The functionality provided by this parameter has now been
      * superseded by that provided through `ajax`, which should be used instead.
@@ -24015,7 +22158,6 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
      *  @deprecated 1.10. Please use `ajax` for this functionality now.
      */
     "sServerMethod": "GET",
-
     /**
      * DataTables makes use of renderers when displaying HTML elements for
      * a table. These renderers can be added or modified by plug-ins to
@@ -24032,7 +22174,6 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
      *
      */
     "renderer": null,
-
     /**
      * Set the data property name that DataTables should use to get a row's id
      * to set as the `id` property in the node.
@@ -24043,8 +22184,8 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
      */
     "rowId": "DT_RowId"
   };
-
   _fnHungarianMap(DataTable.defaults);
+
   /*
    * Developer note - See note in model.defaults.js about the use of Hungarian
    * notation and camel case.
@@ -24054,8 +22195,6 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
    * Column options that can be given to DataTables at initialisation time.
    *  @namespace
    */
-
-
   DataTable.defaults.column = {
     /**
      * Define which column(s) an order will occur on for this column. This
@@ -24097,7 +22236,6 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
      */
     "aDataSort": null,
     "iDataSort": -1,
-
     /**
      * You can control the default ordering direction, and even alter the
      * behaviour of the sort handler (i.e. only allow ascending ordering etc)
@@ -24135,7 +22273,6 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
      *    } );
      */
     "asSorting": ['asc', 'desc'],
-
     /**
      * Enable or disable filtering on the data in this column.
      *  @type boolean
@@ -24167,7 +22304,6 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
      *    } );
      */
     "bSearchable": true,
-
     /**
      * Enable or disable ordering on this column.
      *  @type boolean
@@ -24199,7 +22335,6 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
      *    } );
      */
     "bSortable": true,
-
     /**
      * Enable or disable the display of this column.
      *  @type boolean
@@ -24231,7 +22366,6 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
      *    } );
      */
     "bVisible": true,
-
     /**
      * Developer definable function that is called whenever a cell is created (Ajax source,
      * etc) or processed for input (DOM source). This can be used as a compliment to mRender
@@ -24262,7 +22396,6 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
      *    } );
      */
     "fnCreatedCell": null,
-
     /**
      * This parameter has been replaced by `data` in DataTables to ensure naming
      * consistency. `dataProp` can still be used, as there is backwards
@@ -24398,7 +22531,7 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
      *          "data": function ( source, type, val ) {
      *            if (type === 'set') {
      *              source.price = val;
-     *              // Store the computed dislay and filter values for efficiency
+     *              // Store the computed display and filter values for efficiency
      *              source.price_display = val=="" ? "" : "$"+numberFormat(val);
      *              source.price_filter  = val=="" ? "" : "$"+numberFormat(val)+" "+val;
      *              return;
@@ -24441,7 +22574,6 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
      *
      */
     "mData": null,
-
     /**
      * This property is the rendering partner to `data` and it is suggested that
      * when you want to manipulate data for display (including filtering,
@@ -24562,7 +22694,6 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
      *    } );
      */
     "mRender": null,
-
     /**
      * Change the cell type created for the column - either TD cells or TH cells. This
      * can be useful as TH cells have semantic meaning in the table body, allowing them
@@ -24585,7 +22716,6 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
      *    } );
      */
     "sCellType": "td",
-
     /**
      * Class to give to each cell in this column.
      *  @type string
@@ -24619,7 +22749,6 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
      *    } );
      */
     "sClass": "",
-
     /**
      * When DataTables calculates the column widths to assign to each column,
      * it finds the longest string in each column and then constructs a
@@ -24652,7 +22781,6 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
      *    } );
      */
     "sContentPadding": "",
-
     /**
      * Allows a default value to be given for a column's data, and will be used
      * whenever a null data source is encountered (this can be because `data`
@@ -24694,7 +22822,6 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
      *    } );
      */
     "sDefaultContent": null,
-
     /**
      * This parameter is only used in DataTables' server-side processing. It can
      * be exceptionally useful to know what columns are being displayed on the
@@ -24737,7 +22864,6 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
      *    } );
      */
     "sName": "",
-
     /**
      * Defines a data source type for the ordering which can be used to read
      * real-time information from the table (updating the internally cached
@@ -24778,7 +22904,6 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
      *    } );
      */
     "sSortDataType": "std",
-
     /**
      * The title of this column.
      *  @type string
@@ -24813,7 +22938,6 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
      *    } );
      */
     "sTitle": null,
-
     /**
      * The type allows you to specify how the data for this column will be
      * ordered. Four types (string, numeric, date and html (which will strip
@@ -24853,7 +22977,6 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
      *    } );
      */
     "sType": null,
-
     /**
      * Defining the width of the column, this parameter may take any CSS value
      * (3em, 20px etc). DataTables applies 'smart' widths to columns which have not
@@ -24891,8 +23014,8 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
      */
     "sWidth": null
   };
-
   _fnHungarianMap(DataTable.defaults.column);
+
   /**
    * DataTables settings object - this holds all the information needed for a
    * given table, including configuration, data and current application of the
@@ -24915,8 +23038,6 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
    *    backwards compatibility with older installations. This is something that
    *    will be done in 2.0.
    */
-
-
   DataTable.models.oSettings = {
     /**
      * Primary features of DataTables and their enablement state.
@@ -24931,18 +23052,16 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
        *  @type boolean
        */
       "bAutoWidth": null,
-
       /**
        * Delay the creation of TR and TD elements until they are actually
        * needed by a driven page draw. This can give a significant speed
        * increase for Ajax source and Javascript source data, but makes no
-       * difference at all fro DOM and server-side processing tables.
+       * difference at all for DOM and server-side processing tables.
        * Note that this parameter will be set by the initialisation routine. To
        * set a default use {@link DataTable.defaults}.
        *  @type boolean
        */
       "bDeferRender": null,
-
       /**
        * Enable filtering on the table or not. Note that if this is disabled
        * then there is no filtering at all on the table, including fnFilter.
@@ -24952,7 +23071,6 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
        *  @type boolean
        */
       "bFilter": null,
-
       /**
        * Table information element (the 'Showing x of y records' div) enable
        * flag.
@@ -24961,7 +23079,6 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
        *  @type boolean
        */
       "bInfo": null,
-
       /**
        * Present a user control allowing the end user to change the page size
        * when pagination is enabled.
@@ -24970,7 +23087,6 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
        *  @type boolean
        */
       "bLengthChange": null,
-
       /**
        * Pagination enabled or not. Note that if this is disabled then length
        * changing must also be disabled.
@@ -24979,7 +23095,6 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
        *  @type boolean
        */
       "bPaginate": null,
-
       /**
        * Processing indicator enable flag whenever DataTables is enacting a
        * user request - typically an Ajax request for server-side processing.
@@ -24988,7 +23103,6 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
        *  @type boolean
        */
       "bProcessing": null,
-
       /**
        * Server-side processing enabled flag - when enabled DataTables will
        * get all data from the server for every draw - there is no filtering,
@@ -24998,7 +23112,6 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
        *  @type boolean
        */
       "bServerSide": null,
-
       /**
        * Sorting enablement flag.
        * Note that this parameter will be set by the initialisation routine. To
@@ -25006,7 +23119,6 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
        *  @type boolean
        */
       "bSort": null,
-
       /**
        * Multi-column sorting
        * Note that this parameter will be set by the initialisation routine. To
@@ -25014,7 +23126,6 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
        *  @type boolean
        */
       "bSortMulti": null,
-
       /**
        * Apply a class to the columns which are being sorted to provide a
        * visual highlight or not. This can slow things down when enabled since
@@ -25024,7 +23135,6 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
        *  @type boolean
        */
       "bSortClasses": null,
-
       /**
        * State saving enablement flag.
        * Note that this parameter will be set by the initialisation routine. To
@@ -25033,7 +23143,6 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
        */
       "bStateSave": null
     },
-
     /**
      * Scrolling settings for a table.
      *  @namespace
@@ -25047,7 +23156,6 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
        *  @type boolean
        */
       "bCollapse": null,
-
       /**
        * Width of the scrollbar for the web-browser's platform. Calculated
        * during table initialisation.
@@ -25055,7 +23163,6 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
        *  @default 0
        */
       "iBarWidth": 0,
-
       /**
        * Viewport width for horizontal scrolling. Horizontal scrolling is
        * disabled if an empty string.
@@ -25064,7 +23171,6 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
        *  @type string
        */
       "sX": null,
-
       /**
        * Width to expand the table to when using x-scrolling. Typically you
        * should not need to use this.
@@ -25074,7 +23180,6 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
        *  @deprecated
        */
       "sXInner": null,
-
       /**
        * Viewport height for vertical scrolling. Vertical scrolling is disabled
        * if an empty string.
@@ -25084,7 +23189,6 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
        */
       "sY": null
     },
-
     /**
      * Language information for the table.
      *  @namespace
@@ -25099,7 +23203,6 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
        */
       "fnInfoCallback": null
     },
-
     /**
      * Browser support parameters
      *  @namespace
@@ -25112,7 +23215,6 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
        *  @default false
        */
       "bScrollOversize": false,
-
       /**
        * Determine if the vertical scrollbar is on the right or left of the
        * scrolling container - needed for rtl language layout, although not
@@ -25121,14 +23223,12 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
        *  @default false
        */
       "bScrollbarLeft": false,
-
       /**
        * Flag for if `getBoundingClientRect` is fully supported or not
        *  @type boolean
        *  @default false
        */
       "bBounding": false,
-
       /**
        * Browser scrollbar width
        *  @type integer
@@ -25137,7 +23237,6 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
       "barWidth": 0
     },
     "ajax": null,
-
     /**
      * Array referencing the nodes which are used for the features. The
      * parameters of this object match what is allowed by sDom - i.e.
@@ -25153,7 +23252,6 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
      *  @default []
      */
     "aanFeatures": [],
-
     /**
      * Store data information - see {@link DataTable.models.oRow} for detailed
      * information.
@@ -25161,49 +23259,42 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
      *  @default []
      */
     "aoData": [],
-
     /**
      * Array of indexes which are in the current display (after filtering etc)
      *  @type array
      *  @default []
      */
     "aiDisplay": [],
-
     /**
      * Array of indexes for display - no filtering
      *  @type array
      *  @default []
      */
     "aiDisplayMaster": [],
-
     /**
      * Map of row ids to data indexes
      *  @type object
      *  @default {}
      */
     "aIds": {},
-
     /**
      * Store information about each column that is in use
      *  @type array
      *  @default []
      */
     "aoColumns": [],
-
     /**
      * Store information about the table's header
      *  @type array
      *  @default []
      */
     "aoHeader": [],
-
     /**
      * Store information about the table's footer
      *  @type array
      *  @default []
      */
     "aoFooter": [],
-
     /**
      * Store the applied global search information in case we want to force a
      * research or compare the old search to a new one.
@@ -25213,7 +23304,6 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
      *  @extends DataTable.models.oSearch
      */
     "oPreviousSearch": {},
-
     /**
      * Store the applied search for each column - see
      * {@link DataTable.models.oSearch} for the format that is used for the
@@ -25222,7 +23312,6 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
      *  @default []
      */
     "aoPreSearchCols": [],
-
     /**
      * Sorting that is applied to the table. Note that the inner arrays are
      * used in the following manner:
@@ -25236,7 +23325,6 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
      *  @todo These inner arrays should really be objects
      */
     "aaSorting": null,
-
     /**
      * Sorting that is always applied to the table (i.e. prefixed in front of
      * aaSorting).
@@ -25246,7 +23334,6 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
      *  @default []
      */
     "aaSortingFixed": [],
-
     /**
      * Classes to use for the striping of a table.
      * Note that this parameter will be set by the initialisation routine. To
@@ -25255,56 +23342,48 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
      *  @default []
      */
     "asStripeClasses": null,
-
     /**
      * If restoring a table - we should restore its striping classes as well
      *  @type array
      *  @default []
      */
     "asDestroyStripes": [],
-
     /**
      * If restoring a table - we should restore its width
      *  @type int
      *  @default 0
      */
     "sDestroyWidth": 0,
-
     /**
      * Callback functions array for every time a row is inserted (i.e. on a draw).
      *  @type array
      *  @default []
      */
     "aoRowCallback": [],
-
     /**
      * Callback functions for the header on each draw.
      *  @type array
      *  @default []
      */
     "aoHeaderCallback": [],
-
     /**
      * Callback function for the footer on each draw.
      *  @type array
      *  @default []
      */
     "aoFooterCallback": [],
-
     /**
      * Array of callback functions for draw callback functions
      *  @type array
      *  @default []
      */
     "aoDrawCallback": [],
-
     /**
      * Array of callback functions for row created function
      *  @type array
      *  @default []
      */
     "aoRowCreatedCallback": [],
-
     /**
      * Callback functions for just before the table is redrawn. A return of
      * false will be used to cancel the draw.
@@ -25312,14 +23391,12 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
      *  @default []
      */
     "aoPreDrawCallback": [],
-
     /**
      * Callback functions for when the table has been initialised.
      *  @type array
      *  @default []
      */
     "aoInitComplete": [],
-
     /**
      * Callbacks for modifying the settings to be stored for state saving, prior to
      * saving state.
@@ -25327,7 +23404,6 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
      *  @default []
      */
     "aoStateSaveParams": [],
-
     /**
      * Callbacks for modifying the settings that have been stored for state saving
      * prior to using the stored values to restore the state.
@@ -25335,7 +23411,6 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
      *  @default []
      */
     "aoStateLoadParams": [],
-
     /**
      * Callbacks for operating on the settings object once the saved state has been
      * loaded
@@ -25343,49 +23418,42 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
      *  @default []
      */
     "aoStateLoaded": [],
-
     /**
      * Cache the table ID for quick access
      *  @type string
      *  @default <i>Empty string</i>
      */
     "sTableId": "",
-
     /**
      * The TABLE node for the main table
      *  @type node
      *  @default null
      */
     "nTable": null,
-
     /**
      * Permanent ref to the thead element
      *  @type node
      *  @default null
      */
     "nTHead": null,
-
     /**
      * Permanent ref to the tfoot element - if it exists
      *  @type node
      *  @default null
      */
     "nTFoot": null,
-
     /**
      * Permanent ref to the tbody element
      *  @type node
      *  @default null
      */
     "nTBody": null,
-
     /**
      * Cache the wrapper node (contains all DataTables controlled elements)
      *  @type node
      *  @default null
      */
     "nTableWrapper": null,
-
     /**
      * Indicate if when using server-side processing the loading of data
      * should be deferred until the second draw.
@@ -25395,14 +23463,12 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
      *  @default false
      */
     "bDeferLoading": false,
-
     /**
      * Indicate if all required information has been read in
      *  @type boolean
      *  @default false
      */
     "bInitialised": false,
-
     /**
      * Information about open rows. Each object in the array has the parameters
      * 'nTr' and 'nParent'
@@ -25410,7 +23476,6 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
      *  @default []
      */
     "aoOpenRows": [],
-
     /**
      * Dictate the positioning of DataTables' control elements - see
      * {@link DataTable.model.oInit.sDom}.
@@ -25420,14 +23485,12 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
      *  @default null
      */
     "sDom": null,
-
     /**
      * Search delay (in mS)
      *  @type integer
      *  @default null
      */
     "searchDelay": null,
-
     /**
      * Which type of pagination should be used.
      * Note that this parameter will be set by the initialisation routine. To
@@ -25436,7 +23499,6 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
      *  @default two_button
      */
     "sPaginationType": "two_button",
-
     /**
      * The state duration (for `stateSave`) in seconds.
      * Note that this parameter will be set by the initialisation routine. To
@@ -25445,7 +23507,6 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
      *  @default 0
      */
     "iStateDuration": 0,
-
     /**
      * Array of callback functions for state saving. Each array element is an
      * object with the following parameters:
@@ -25460,7 +23521,6 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
      *  @default []
      */
     "aoStateSave": [],
-
     /**
      * Array of callback functions for state loading. Each array element is an
      * object with the following parameters:
@@ -25473,21 +23533,18 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
      *  @default []
      */
     "aoStateLoad": [],
-
     /**
      * State that was saved. Useful for back reference
      *  @type object
      *  @default null
      */
     "oSavedState": null,
-
     /**
      * State that was loaded. Useful for back reference
      *  @type object
      *  @default null
      */
     "oLoadedState": null,
-
     /**
      * Source url for AJAX data for the table.
      * Note that this parameter will be set by the initialisation routine. To
@@ -25496,7 +23553,6 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
      *  @default null
      */
     "sAjaxSource": null,
-
     /**
      * Property from a given object from which to read the table data from. This
      * can be an empty string (when not server-side processing), in which case
@@ -25506,7 +23562,6 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
      *  @type string
      */
     "sAjaxDataProp": null,
-
     /**
      * The last jQuery XHR object that was used for server-side data gathering.
      * This can be used for working with the XHR information in one of the
@@ -25515,21 +23570,18 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
      *  @default null
      */
     "jqXHR": null,
-
     /**
      * JSON returned from the server in the last Ajax request
      *  @type object
      *  @default undefined
      */
     "json": undefined,
-
     /**
      * Data submitted as part of the last Ajax request
      *  @type object
      *  @default undefined
      */
     "oAjaxData": undefined,
-
     /**
      * Function to get the server-side data.
      * Note that this parameter will be set by the initialisation routine. To
@@ -25537,7 +23589,6 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
      *  @type function
      */
     "fnServerData": null,
-
     /**
      * Functions which are called prior to sending an Ajax request so extra
      * parameters can easily be sent to the server
@@ -25545,7 +23596,6 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
      *  @default []
      */
     "aoServerParams": [],
-
     /**
      * Send the XHR HTTP method - GET or POST (could be PUT or DELETE if
      * required).
@@ -25554,7 +23604,6 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
      *  @type string
      */
     "sServerMethod": null,
-
     /**
      * Format numbers for display.
      * Note that this parameter will be set by the initialisation routine. To
@@ -25562,7 +23611,6 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
      *  @type function
      */
     "fnFormatNumber": null,
-
     /**
      * List of options that can be used for the user selectable length menu.
      * Note that this parameter will be set by the initialisation routine. To
@@ -25571,7 +23619,6 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
      *  @default []
      */
     "aLengthMenu": null,
-
     /**
      * Counter for the draws that the table does. Also used as a tracker for
      * server-side processing
@@ -25579,35 +23626,30 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
      *  @default 0
      */
     "iDraw": 0,
-
     /**
      * Indicate if a redraw is being done - useful for Ajax
      *  @type boolean
      *  @default false
      */
     "bDrawing": false,
-
     /**
      * Draw index (iDraw) of the last error when parsing the returned data
      *  @type int
      *  @default -1
      */
     "iDrawError": -1,
-
     /**
      * Paging display length
      *  @type int
      *  @default 10
      */
     "_iDisplayLength": 10,
-
     /**
      * Paging start point - aiDisplay index
      *  @type int
      *  @default 0
      */
     "_iDisplayStart": 0,
-
     /**
      * Server-side processing - number of records in the result set
      * (i.e. before filtering), Use fnRecordsTotal rather than
@@ -25618,7 +23660,6 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
      *  @private
      */
     "_iRecordsTotal": 0,
-
     /**
      * Server-side processing - number of records in the current display set
      * (i.e. after filtering). Use fnRecordsDisplay rather than
@@ -25629,14 +23670,12 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
      *  @private
      */
     "_iRecordsDisplay": 0,
-
     /**
      * The classes to use for the table
      *  @type object
      *  @default {}
      */
     "oClasses": {},
-
     /**
      * Flag attached to the settings object so you can check in the draw
      * callback if filtering has been done in the draw. Deprecated in favour of
@@ -25646,7 +23685,6 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
      *  @deprecated
      */
     "bFiltered": false,
-
     /**
      * Flag attached to the settings object so you can check in the draw
      * callback if sorting has been done in the draw. Deprecated in favour of
@@ -25656,7 +23694,6 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
      *  @deprecated
      */
     "bSorted": false,
-
     /**
      * Indicate that if multiple rows are in the header and there is more than
      * one unique cell per column, if the top one (true) or bottom one (false)
@@ -25666,14 +23703,12 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
      *  @type boolean
      */
     "bSortCellsTop": null,
-
     /**
      * Initialisation object that is used for the table
      *  @type object
      *  @default null
      */
     "oInit": null,
-
     /**
      * Destroy callback functions - for plug-ins to attach themselves to the
      * destroy so they can clean up markup and events.
@@ -25681,7 +23716,6 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
      *  @default []
      */
     "aoDestroyCallback": [],
-
     /**
      * Get the number of records in the current record set, before filtering
      *  @type function
@@ -25689,7 +23723,6 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
     "fnRecordsTotal": function fnRecordsTotal() {
       return _fnDataSource(this) == 'ssp' ? this._iRecordsTotal * 1 : this.aiDisplayMaster.length;
     },
-
     /**
      * Get the number of records in the current record set, after filtering
      *  @type function
@@ -25697,33 +23730,29 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
     "fnRecordsDisplay": function fnRecordsDisplay() {
       return _fnDataSource(this) == 'ssp' ? this._iRecordsDisplay * 1 : this.aiDisplay.length;
     },
-
     /**
      * Get the display end point - aiDisplay index
      *  @type function
      */
     "fnDisplayEnd": function fnDisplayEnd() {
       var len = this._iDisplayLength,
-          start = this._iDisplayStart,
-          calc = start + len,
-          records = this.aiDisplay.length,
-          features = this.oFeatures,
-          paginate = features.bPaginate;
-
+        start = this._iDisplayStart,
+        calc = start + len,
+        records = this.aiDisplay.length,
+        features = this.oFeatures,
+        paginate = features.bPaginate;
       if (features.bServerSide) {
         return paginate === false || len === -1 ? start + records : Math.min(start + len, this._iRecordsDisplay);
       } else {
         return !paginate || calc > records || len === -1 ? records : calc;
       }
     },
-
     /**
      * The DataTables object for this table
      *  @type object
      *  @default null
      */
     "oInstance": null,
-
     /**
      * Unique identifier for each instance of the DataTables object. If there
      * is an ID on the table node, then it takes that value, otherwise an
@@ -25732,44 +23761,37 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
      *  @default null
      */
     "sInstance": null,
-
     /**
      * tabindex attribute value that is added to DataTables control elements, allowing
      * keyboard navigation of the table and its controls.
      */
     "iTabIndex": 0,
-
     /**
      * DIV container for the footer scrolling table if scrolling
      */
     "nScrollHead": null,
-
     /**
      * DIV container for the footer scrolling table if scrolling
      */
     "nScrollFoot": null,
-
     /**
      * Last applied sort
      *  @type array
      *  @default []
      */
     "aLastSort": [],
-
     /**
      * Stored plug-in instances
      *  @type object
      *  @default {}
      */
     "oPlugins": {},
-
     /**
      * Function used to get a row's id from the row's data
      *  @type function
      *  @default null
      */
     "rowIdFn": null,
-
     /**
      * Data location where to store a row's id
      *  @type string
@@ -25777,6 +23799,7 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
      */
     "rowId": null
   };
+
   /**
    * Extension object for DataTables that is used to provide all extension
    * options.
@@ -25801,7 +23824,6 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
    *
    *  @namespace
    */
-
   DataTable.ext = _ext = {
     /**
      * Buttons. For use with the Buttons extension for DataTables. This is
@@ -25812,7 +23834,6 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
      *  @default {}
      */
     buttons: {},
-
     /**
      * Element class names
      *
@@ -25820,14 +23841,12 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
      *  @default {}
      */
     classes: {},
-
     /**
      * DataTables build type (expanded by the download builder)
      *
      *  @type string
      */
     builder: "-source-",
-
     /**
      * Error reporting.
      * 
@@ -25838,7 +23857,6 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
      *  @default alert
      */
     errMode: "alert",
-
     /**
      * Feature plug-ins.
      * 
@@ -25877,7 +23895,6 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
      *    } );
      */
     feature: [],
-
     /**
      * Row searching.
      * 
@@ -25937,7 +23954,6 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
      *    );
      */
     search: [],
-
     /**
      * Selector extensions
      *
@@ -25967,7 +23983,6 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
       column: [],
       row: []
     },
-
     /**
      * Internal functions, exposed for used in plug-ins.
      * 
@@ -25979,7 +23994,6 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
      *  @default {}
      */
     internal: {},
-
     /**
      * Legacy configuration options. Enable and disable legacy options that
      * are available in DataTables.
@@ -25996,7 +24010,6 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
        */
       ajax: null
     },
-
     /**
      * Pagination plug-in methods.
      * 
@@ -26047,7 +24060,6 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
       pageButton: {},
       header: {}
     },
-
     /**
      * Ordering plug-ins - custom data source
      * 
@@ -26089,7 +24101,6 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
      *    }
      */
     order: {},
-
     /**
      * Type based plug-ins.
      *
@@ -26142,7 +24153,6 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
        *    );
        */
       detect: [],
-
       /**
        * Type based search formatting.
        *
@@ -26180,7 +24190,6 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
        *    }
        */
       search: {},
-
       /**
        * Type based ordering.
        *
@@ -26247,7 +24256,6 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
        */
       order: {}
     },
-
     /**
      * Unique DataTables instance counter
      *
@@ -26257,7 +24265,7 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
     _unique: 0,
     //
     // Depreciated
-    // The following properties are retained for backwards compatiblity only.
+    // The following properties are retained for backwards compatibility only.
     // The should not be used in new projects and will be removed in a future
     // version
     //
@@ -26268,31 +24276,29 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
      *  @depreciated Since 1.10
      */
     fnVersionCheck: DataTable.fnVersionCheck,
-
     /**
      * Index for what 'this' index API functions should use
      *  @type int
      *  @deprecated Since v1.10
      */
     iApiIndex: 0,
-
     /**
      * jQuery UI class container
      *  @type object
      *  @deprecated Since v1.10
      */
     oJUIClasses: {},
-
     /**
      * Software version
      *  @type string
      *  @deprecated Since v1.10
      */
     sVersion: DataTable.version
-  }; //
+  };
+
+  //
   // Backwards compatibility. Alias to pre 1.10 Hungarian notation counter parts
   //
-
   $.extend(_ext, {
     afnFiltering: _ext.search,
     aTypes: _ext.type.detect,
@@ -26307,48 +24313,38 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
   $.extend(DataTable.ext.classes, {
     "sTable": "dataTable",
     "sNoFooter": "no-footer",
-
     /* Paging buttons */
     "sPageButton": "paginate_button",
     "sPageButtonActive": "current",
     "sPageButtonDisabled": "disabled",
-
     /* Striping classes */
     "sStripeOdd": "odd",
     "sStripeEven": "even",
-
     /* Empty row */
     "sRowEmpty": "dataTables_empty",
-
     /* Features */
     "sWrapper": "dataTables_wrapper",
     "sFilter": "dataTables_filter",
     "sInfo": "dataTables_info",
     "sPaging": "dataTables_paginate paging_",
-
     /* Note that the type is postfixed */
     "sLength": "dataTables_length",
     "sProcessing": "dataTables_processing",
-
     /* Sorting */
     "sSortAsc": "sorting_asc",
     "sSortDesc": "sorting_desc",
     "sSortable": "sorting",
-
     /* Sortable in both directions */
     "sSortableAsc": "sorting_desc_disabled",
     "sSortableDesc": "sorting_asc_disabled",
     "sSortableNone": "sorting_disabled",
     "sSortColumn": "sorting_",
-
     /* Note that an int is postfixed for the sorting order */
 
     /* Filtering */
     "sFilterInput": "",
-
     /* Page length */
     "sLengthSelect": "",
-
     /* Scrolling */
     "sScrollWrapper": "dataTables_scroll",
     "sScrollHead": "dataTables_scrollHead",
@@ -26356,7 +24352,6 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
     "sScrollBody": "dataTables_scrollBody",
     "sScrollFoot": "dataTables_scrollFoot",
     "sScrollFootInner": "dataTables_scrollFootInner",
-
     /* Misc */
     "sHeaderTH": "",
     "sFooterTH": "",
@@ -26372,13 +24367,11 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
     "sJUIFooter": ""
   });
   var extPagination = DataTable.ext.pager;
-
   function _numbers(page, pages) {
     var numbers = [],
-        buttons = extPagination.numbers_length,
-        half = Math.floor(buttons / 2),
-        i = 1;
-
+      buttons = extPagination.numbers_length,
+      half = Math.floor(buttons / 2),
+      i = 1;
     if (pages <= buttons) {
       numbers = _range(0, pages);
     } else if (page <= half) {
@@ -26388,7 +24381,6 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
     } else if (page >= pages - 1 - half) {
       numbers = _range(pages - (buttons - 2), pages);
       numbers.splice(0, 0, 'ellipsis'); // no unshift in ie6
-
       numbers.splice(0, 0, 0);
     } else {
       numbers = _range(page - half + 2, page + half - 1);
@@ -26397,11 +24389,9 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
       numbers.splice(0, 0, 'ellipsis');
       numbers.splice(0, 0, 0);
     }
-
     numbers.DT_el = 'span';
     return numbers;
   }
-
   $.extend(extPagination, {
     simple: function simple(page, pages) {
       return ['previous', 'next'];
@@ -26432,21 +24422,15 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
         var classes = settings.oClasses;
         var lang = settings.oLanguage.oPaginate;
         var aria = settings.oLanguage.oAria.paginate || {};
-        var btnDisplay,
-            btnClass,
-            counter = 0;
-
+        var btnDisplay, btnClass;
         var attach = function attach(container, buttons) {
           var i, ien, node, button, tabIndex;
           var disabledClass = classes.sPageButtonDisabled;
-
           var clickHandler = function clickHandler(e) {
             _fnPageChange(settings, e.data.action, true);
           };
-
           for (i = 0, ien = buttons.length; i < ien; i++) {
             button = buttons[i];
-
             if (Array.isArray(button)) {
               var inner = $('<' + (button.DT_el || 'div') + '/>').appendTo(container);
               attach(inner, button);
@@ -26454,83 +24438,69 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
               btnDisplay = null;
               btnClass = button;
               tabIndex = settings.iTabIndex;
-
               switch (button) {
                 case 'ellipsis':
                   container.append('<span class="ellipsis">&#x2026;</span>');
                   break;
-
                 case 'first':
                   btnDisplay = lang.sFirst;
-
                   if (page === 0) {
                     tabIndex = -1;
                     btnClass += ' ' + disabledClass;
                   }
-
                   break;
-
                 case 'previous':
                   btnDisplay = lang.sPrevious;
-
                   if (page === 0) {
                     tabIndex = -1;
                     btnClass += ' ' + disabledClass;
                   }
-
                   break;
-
                 case 'next':
                   btnDisplay = lang.sNext;
-
                   if (pages === 0 || page === pages - 1) {
                     tabIndex = -1;
                     btnClass += ' ' + disabledClass;
                   }
-
                   break;
-
                 case 'last':
                   btnDisplay = lang.sLast;
-
                   if (pages === 0 || page === pages - 1) {
                     tabIndex = -1;
                     btnClass += ' ' + disabledClass;
                   }
-
                   break;
-
                 default:
                   btnDisplay = settings.fnFormatNumber(button + 1);
                   btnClass = page === button ? classes.sPageButtonActive : '';
                   break;
               }
-
               if (btnDisplay !== null) {
-                node = $('<a>', {
+                var tag = settings.oInit.pagingTag || 'a';
+                var disabled = btnClass.indexOf(disabledClass) !== -1;
+                node = $('<' + tag + '>', {
                   'class': classes.sPageButton + ' ' + btnClass,
                   'aria-controls': settings.sTableId,
+                  'aria-disabled': disabled ? 'true' : null,
                   'aria-label': aria[button],
-                  'data-dt-idx': counter,
+                  'aria-role': 'link',
+                  'aria-current': btnClass === classes.sPageButtonActive ? 'page' : null,
+                  'data-dt-idx': button,
                   'tabindex': tabIndex,
                   'id': idx === 0 && typeof button === 'string' ? settings.sTableId + '_' + button : null
                 }).html(btnDisplay).appendTo(container);
-
                 _fnBindAction(node, {
                   action: button
                 }, clickHandler);
-
-                counter++;
               }
             }
           }
-        }; // IE9 throws an 'unknown error' if document.activeElement is used
+        };
+
+        // IE9 throws an 'unknown error' if document.activeElement is used
         // inside an iframe or frame. Try / catch the error. Not good for
         // accessibility, but neither are frames.
-
-
         var activeEl;
-
         try {
           // Because this approach is destroying and recreating the paging
           // elements, focus is lost on the select button which is bad for
@@ -26538,23 +24508,24 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
           // completed
           activeEl = $(host).find(document.activeElement).data('dt-idx');
         } catch (e) {}
-
         attach($(host).empty(), buttons);
-
         if (activeEl !== undefined) {
           $(host).find('[data-dt-idx=' + activeEl + ']').trigger('focus');
         }
       }
     }
-  }); // Built in type detection. See model.ext.aTypes for information about
-  // what is required from this methods.
+  });
 
-  $.extend(DataTable.ext.type.detect, [// Plain numbers - first since V8 detects some plain numbers as dates
+  // Built in type detection. See model.ext.aTypes for information about
+  // what is required from this methods.
+  $.extend(DataTable.ext.type.detect, [
+  // Plain numbers - first since V8 detects some plain numbers as dates
   // e.g. Date.parse('55') (but not all, e.g. Date.parse('22')...).
   function (d, settings) {
     var decimal = settings.oLanguage.sDecimal;
     return _isNumber(d, decimal) ? 'num' + decimal : null;
-  }, // Dates (only those recognised by the browser's Date.parse)
+  },
+  // Dates (only those recognised by the browser's Date.parse)
   function (d, settings) {
     // V8 tries _very_ hard to make a string passed into `Date.parse()`
     // valid, so we need to use a regex to restrict date formats. Use a
@@ -26562,25 +24533,30 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
     if (d && !(d instanceof Date) && !_re_date.test(d)) {
       return null;
     }
-
     var parsed = Date.parse(d);
     return parsed !== null && !isNaN(parsed) || _empty(d) ? 'date' : null;
-  }, // Formatted numbers
+  },
+  // Formatted numbers
   function (d, settings) {
     var decimal = settings.oLanguage.sDecimal;
     return _isNumber(d, decimal, true) ? 'num-fmt' + decimal : null;
-  }, // HTML numeric
+  },
+  // HTML numeric
   function (d, settings) {
     var decimal = settings.oLanguage.sDecimal;
     return _htmlNumeric(d, decimal) ? 'html-num' + decimal : null;
-  }, // HTML numeric, formatted
+  },
+  // HTML numeric, formatted
   function (d, settings) {
     var decimal = settings.oLanguage.sDecimal;
     return _htmlNumeric(d, decimal, true) ? 'html-num-fmt' + decimal : null;
-  }, // HTML (this is strict checking - there must be html)
+  },
+  // HTML (this is strict checking - there must be html)
   function (d, settings) {
     return _empty(d) || typeof d === 'string' && d.indexOf('<') !== -1 ? 'html' : null;
-  }]); // Filter formatting functions. See model.ext.ofnSearch for information about
+  }]);
+
+  // Filter formatting functions. See model.ext.ofnSearch for information about
   // what is required from these methods.
   // 
   // Note that additional search methods are added for the html numbers and
@@ -26595,35 +24571,35 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
       return _empty(data) ? data : typeof data === 'string' ? data.replace(_re_new_lines, " ") : data;
     }
   });
-
   var __numericReplace = function __numericReplace(d, decimalPlace, re1, re2) {
     if (d !== 0 && (!d || d === '-')) {
       return -Infinity;
-    } // If a decimal place other than `.` is used, it needs to be given to the
+    }
+    var type = _typeof(d);
+    if (type === 'number' || type === 'bigint') {
+      return d;
+    }
+
+    // If a decimal place other than `.` is used, it needs to be given to the
     // function so we can detect it and replace with a `.` which is the only
     // decimal place Javascript recognises - it is not locale aware.
-
-
     if (decimalPlace) {
       d = _numToDecimal(d, decimalPlace);
     }
-
     if (d.replace) {
       if (re1) {
         d = d.replace(re1, '');
       }
-
       if (re2) {
         d = d.replace(re2, '');
       }
     }
-
     return d * 1;
-  }; // Add the numeric 'deformatting' functions for sorting and search. This is done
+  };
+
+  // Add the numeric 'deformatting' functions for sorting and search. This is done
   // in a function to provide an easy ability for the language options to add
   // additional methods if a non-period decimal place is used.
-
-
   function _addNumericSort(decimalPlace) {
     $.each({
       // Plain numbers
@@ -26644,15 +24620,16 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
       }
     }, function (key, fn) {
       // Add the ordering method
-      _ext.type.order[key + decimalPlace + '-pre'] = fn; // For HTML types add a search formatter that will strip the HTML
+      _ext.type.order[key + decimalPlace + '-pre'] = fn;
 
+      // For HTML types add a search formatter that will strip the HTML
       if (key.match(/^html\-/)) {
         _ext.type.search[key + decimalPlace] = _ext.type.search.html;
       }
     });
-  } // Default sort methods
+  }
 
-
+  // Default sort methods
   $.extend(_ext.type.order, {
     // Dates
     "date-pre": function datePre(d) {
@@ -26677,10 +24654,10 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
     "string-desc": function stringDesc(x, y) {
       return x < y ? 1 : x > y ? -1 : 0;
     }
-  }); // Numeric sorting types - order doesn't matter here
+  });
 
+  // Numeric sorting types - order doesn't matter here
   _addNumericSort('');
-
   $.extend(true, DataTable.ext.renderer, {
     header: {
       _: function _(settings, cell, column, classes) {
@@ -26700,13 +24677,13 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
         });
       },
       jqueryui: function jqueryui(settings, cell, column, classes) {
-        $('<div/>').addClass(classes.sSortJUIWrapper).append(cell.contents()).append($('<span/>').addClass(classes.sSortIcon + ' ' + column.sSortingClassJUI)).appendTo(cell); // Attach a sort listener to update on sort
+        $('<div/>').addClass(classes.sSortJUIWrapper).append(cell.contents()).append($('<span/>').addClass(classes.sSortIcon + ' ' + column.sSortingClassJUI)).appendTo(cell);
 
+        // Attach a sort listener to update on sort
         $(settings.nTable).on('order.dt.DT', function (e, ctx, sorting, columns) {
           if (settings !== ctx) {
             return;
           }
-
           var colIdx = column.idx;
           cell.removeClass(classes.sSortAsc + " " + classes.sSortDesc).addClass(columns[colIdx] == 'asc' ? classes.sSortAsc : columns[colIdx] == 'desc' ? classes.sSortDesc : column.sSortingClass);
           cell.find('span.' + classes.sSortIcon).removeClass(classes.sSortJUIAsc + " " + classes.sSortJUIDesc + " " + classes.sSortJUI + " " + classes.sSortJUIAscAllowed + " " + classes.sSortJUIDescAllowed).addClass(columns[colIdx] == 'asc' ? classes.sSortJUIAsc : columns[colIdx] == 'desc' ? classes.sSortJUIDesc : column.sSortingClassJUI);
@@ -26714,6 +24691,7 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
       }
     }
   });
+
   /*
    * Public helper functions. These aren't used internally by DataTables, or
    * called by any of the options passed into DataTables, but they can be used
@@ -26722,8 +24700,166 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
    */
 
   var __htmlEscapeEntities = function __htmlEscapeEntities(d) {
+    if (Array.isArray(d)) {
+      d = d.join(',');
+    }
     return typeof d === 'string' ? d.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;') : d;
   };
+
+  // Common logic for moment, luxon or a date action
+  function __mld(dt, momentFn, luxonFn, dateFn, arg1) {
+    if (window.moment) {
+      return dt[momentFn](arg1);
+    } else if (window.luxon) {
+      return dt[luxonFn](arg1);
+    }
+    return dateFn ? dt[dateFn](arg1) : dt;
+  }
+  var __mlWarning = false;
+  function __mldObj(d, format, locale) {
+    var dt;
+    if (window.moment) {
+      dt = window.moment.utc(d, format, locale, true);
+      if (!dt.isValid()) {
+        return null;
+      }
+    } else if (window.luxon) {
+      dt = format && typeof d === 'string' ? window.luxon.DateTime.fromFormat(d, format) : window.luxon.DateTime.fromISO(d);
+      if (!dt.isValid) {
+        return null;
+      }
+      dt.setLocale(locale);
+    } else if (!format) {
+      // No format given, must be ISO
+      dt = new Date(d);
+    } else {
+      if (!__mlWarning) {
+        alert('DataTables warning: Formatted date without Moment.js or Luxon - https://datatables.net/tn/17');
+      }
+      __mlWarning = true;
+    }
+    return dt;
+  }
+
+  // Wrapper for date, datetime and time which all operate the same way with the exception of
+  // the output string for auto locale support
+  function __mlHelper(localeString) {
+    return function (from, to, locale, def) {
+      // Luxon and Moment support
+      // Argument shifting
+      if (arguments.length === 0) {
+        locale = 'en';
+        to = null; // means toLocaleString
+        from = null; // means iso8601
+      } else if (arguments.length === 1) {
+        locale = 'en';
+        to = from;
+        from = null;
+      } else if (arguments.length === 2) {
+        locale = to;
+        to = from;
+        from = null;
+      }
+      var typeName = 'datetime-' + to;
+
+      // Add type detection and sorting specific to this date format - we need to be able to identify
+      // date type columns as such, rather than as numbers in extensions. Hence the need for this.
+      if (!DataTable.ext.type.order[typeName]) {
+        // The renderer will give the value to type detect as the type!
+        DataTable.ext.type.detect.unshift(function (d) {
+          return d === typeName ? typeName : false;
+        });
+
+        // The renderer gives us Moment, Luxon or Date obects for the sorting, all of which have a
+        // `valueOf` which gives milliseconds epoch
+        DataTable.ext.type.order[typeName + '-asc'] = function (a, b) {
+          var x = a.valueOf();
+          var y = b.valueOf();
+          return x === y ? 0 : x < y ? -1 : 1;
+        };
+        DataTable.ext.type.order[typeName + '-desc'] = function (a, b) {
+          var x = a.valueOf();
+          var y = b.valueOf();
+          return x === y ? 0 : x > y ? -1 : 1;
+        };
+      }
+      return function (d, type) {
+        // Allow for a default value
+        if (d === null || d === undefined) {
+          if (def === '--now') {
+            // We treat everything as UTC further down, so no changes are
+            // made, as such need to get the local date / time as if it were
+            // UTC
+            var local = new Date();
+            d = new Date(Date.UTC(local.getFullYear(), local.getMonth(), local.getDate(), local.getHours(), local.getMinutes(), local.getSeconds()));
+          } else {
+            d = '';
+          }
+        }
+        if (type === 'type') {
+          // Typing uses the type name for fast matching
+          return typeName;
+        }
+        if (d === '') {
+          return type !== 'sort' ? '' : __mldObj('0000-01-01 00:00:00', null, locale);
+        }
+
+        // Shortcut. If `from` and `to` are the same, we are using the renderer to
+        // format for ordering, not display - its already in the display format.
+        if (to !== null && from === to && type !== 'sort' && type !== 'type' && !(d instanceof Date)) {
+          return d;
+        }
+        var dt = __mldObj(d, from, locale);
+        if (dt === null) {
+          return d;
+        }
+        if (type === 'sort') {
+          return dt;
+        }
+        var formatted = to === null ? __mld(dt, 'toDate', 'toJSDate', '')[localeString]() : __mld(dt, 'format', 'toFormat', 'toISOString', to);
+
+        // XSS protection
+        return type === 'display' ? __htmlEscapeEntities(formatted) : formatted;
+      };
+    };
+  }
+
+  // Based on locale, determine standard number formatting
+  // Fallback for legacy browsers is US English
+  var __thousands = ',';
+  var __decimal = '.';
+  if (Intl) {
+    try {
+      var num = new Intl.NumberFormat().formatToParts(100000.1);
+      for (var i = 0; i < num.length; i++) {
+        if (num[i].type === 'group') {
+          __thousands = num[i].value;
+        } else if (num[i].type === 'decimal') {
+          __decimal = num[i].value;
+        }
+      }
+    } catch (e) {
+      // noop
+    }
+  }
+
+  // Formatted date time detection - use by declaring the formats you are going to use
+  DataTable.datetime = function (format, locale) {
+    var typeName = 'datetime-detect-' + format;
+    if (!locale) {
+      locale = 'en';
+    }
+    if (!DataTable.ext.type.order[typeName]) {
+      DataTable.ext.type.detect.unshift(function (d) {
+        var dt = __mldObj(d, format, locale);
+        return d === '' || dt ? typeName : false;
+      });
+      DataTable.ext.type.order[typeName + '-pre'] = function (d) {
+        return __mldObj(d, format, locale) || 0;
+      };
+    }
+  };
+
   /**
    * Helpers for `columns.render`.
    *
@@ -26750,34 +24886,44 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
    *
    * @namespace
    */
-
-
   DataTable.render = {
+    date: __mlHelper('toLocaleDateString'),
+    datetime: __mlHelper('toLocaleString'),
+    time: __mlHelper('toLocaleTimeString'),
     number: function number(thousands, decimal, precision, prefix, postfix) {
+      // Auto locale detection
+      if (thousands === null || thousands === undefined) {
+        thousands = __thousands;
+      }
+      if (decimal === null || decimal === undefined) {
+        decimal = __decimal;
+      }
       return {
         display: function display(d) {
           if (typeof d !== 'number' && typeof d !== 'string') {
             return d;
           }
-
+          if (d === '' || d === null) {
+            return d;
+          }
           var negative = d < 0 ? '-' : '';
-          var flo = parseFloat(d); // If NaN then there isn't much formatting that we can do - just
+          var flo = parseFloat(d);
+
+          // If NaN then there isn't much formatting that we can do - just
           // return immediately, escaping any HTML (this was supposed to
           // be a number after all)
-
           if (isNaN(flo)) {
             return __htmlEscapeEntities(d);
           }
-
           flo = flo.toFixed(precision);
           d = Math.abs(flo);
           var intPart = parseInt(d, 10);
-          var floatPart = precision ? decimal + (d - intPart).toFixed(precision).substring(2) : ''; // If zero, then can't have a negative prefix
+          var floatPart = precision ? decimal + (d - intPart).toFixed(precision).substring(2) : '';
 
+          // If zero, then can't have a negative prefix
           if (intPart === 0 && parseFloat(floatPart) === 0) {
             negative = '';
           }
-
           return negative + (prefix || '') + intPart.toString().replace(/\B(?=(\d{3})+(?!\d))/g, thousands) + floatPart + (postfix || '');
         }
       };
@@ -26789,6 +24935,7 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
       };
     }
   };
+
   /*
    * This is really a good bit rubbish this method of exposing the internal methods
    * publicly... - To be fixed in 2.0 using methods on the prototype
@@ -26800,13 +24947,13 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
    *  @returns {function} wrapped function
    *  @memberof DataTable#internal
    */
-
   function _fnExternApiFunc(fn) {
     return function () {
       var args = [_fnSettingsFromNode(this[DataTable.ext.iApiIndex])].concat(Array.prototype.slice.call(arguments));
       return DataTable.ext.internal[fn].apply(this, args);
     };
   }
+
   /**
    * Reference to internal functions for use by plug-in developers. Note that
    * these methods are references to internal functions and are considered to be
@@ -26814,8 +24961,6 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
    * between versions.
    *  @namespace
    */
-
-
   $.extend(DataTable.ext.internal, {
     _fnExternApiFunc: _fnExternApiFunc,
     _fnBuildAjax: _fnBuildAjax,
@@ -26895,6 +25040,7 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
     _fnSortData: _fnSortData,
     _fnSaveState: _fnSaveState,
     _fnLoadState: _fnLoadState,
+    _fnImplementState: _fnImplementState,
     _fnSettingsFromNode: _fnSettingsFromNode,
     _fnLog: _fnLog,
     _fnMap: _fnMap,
@@ -26909,187 +25055,28 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
     _fnCalculateEnd: function _fnCalculateEnd() {} // Used by a lot of plug-ins, but redundant
     // in 1.10, so this dead-end function is
     // added to prevent errors
+  });
 
-  }); // jQuery access
+  // jQuery access
+  $.fn.dataTable = DataTable;
 
-  $.fn.dataTable = DataTable; // Provide access to the host jQuery object (circular reference)
+  // Provide access to the host jQuery object (circular reference)
+  DataTable.$ = $;
 
-  DataTable.$ = $; // Legacy aliases
-
+  // Legacy aliases
   $.fn.dataTableSettings = DataTable.settings;
-  $.fn.dataTableExt = DataTable.ext; // With a capital `D` we return a DataTables API instance rather than a
-  // jQuery object
+  $.fn.dataTableExt = DataTable.ext;
 
+  // With a capital `D` we return a DataTables API instance rather than a
+  // jQuery object
   $.fn.DataTable = function (opts) {
     return $(this).dataTable(opts).api();
-  }; // All properties that are available to $.fn.dataTable should also be
+  };
+
+  // All properties that are available to $.fn.dataTable should also be
   // available on $.fn.DataTable
-
-
   $.each(DataTable, function (prop, val) {
     $.fn.DataTable[prop] = val;
-  }); // Information about events fired by DataTables - for documentation.
-
-  /**
-   * Draw event, fired whenever the table is redrawn on the page, at the same
-   * point as fnDrawCallback. This may be useful for binding events or
-   * performing calculations when the table is altered at all.
-   *  @name DataTable#draw.dt
-   *  @event
-   *  @param {event} e jQuery event object
-   *  @param {object} o DataTables settings object {@link DataTable.models.oSettings}
-   */
-
-  /**
-   * Search event, fired when the searching applied to the table (using the
-   * built-in global search, or column filters) is altered.
-   *  @name DataTable#search.dt
-   *  @event
-   *  @param {event} e jQuery event object
-   *  @param {object} o DataTables settings object {@link DataTable.models.oSettings}
-   */
-
-  /**
-   * Page change event, fired when the paging of the table is altered.
-   *  @name DataTable#page.dt
-   *  @event
-   *  @param {event} e jQuery event object
-   *  @param {object} o DataTables settings object {@link DataTable.models.oSettings}
-   */
-
-  /**
-   * Order event, fired when the ordering applied to the table is altered.
-   *  @name DataTable#order.dt
-   *  @event
-   *  @param {event} e jQuery event object
-   *  @param {object} o DataTables settings object {@link DataTable.models.oSettings}
-   */
-
-  /**
-   * DataTables initialisation complete event, fired when the table is fully
-   * drawn, including Ajax data loaded, if Ajax data is required.
-   *  @name DataTable#init.dt
-   *  @event
-   *  @param {event} e jQuery event object
-   *  @param {object} oSettings DataTables settings object
-   *  @param {object} json The JSON object request from the server - only
-   *    present if client-side Ajax sourced data is used</li></ol>
-   */
-
-  /**
-   * State save event, fired when the table has changed state a new state save
-   * is required. This event allows modification of the state saving object
-   * prior to actually doing the save, including addition or other state
-   * properties (for plug-ins) or modification of a DataTables core property.
-   *  @name DataTable#stateSaveParams.dt
-   *  @event
-   *  @param {event} e jQuery event object
-   *  @param {object} oSettings DataTables settings object
-   *  @param {object} json The state information to be saved
-   */
-
-  /**
-   * State load event, fired when the table is loading state from the stored
-   * data, but prior to the settings object being modified by the saved state
-   * - allowing modification of the saved state is required or loading of
-   * state for a plug-in.
-   *  @name DataTable#stateLoadParams.dt
-   *  @event
-   *  @param {event} e jQuery event object
-   *  @param {object} oSettings DataTables settings object
-   *  @param {object} json The saved state information
-   */
-
-  /**
-   * State loaded event, fired when state has been loaded from stored data and
-   * the settings object has been modified by the loaded data.
-   *  @name DataTable#stateLoaded.dt
-   *  @event
-   *  @param {event} e jQuery event object
-   *  @param {object} oSettings DataTables settings object
-   *  @param {object} json The saved state information
-   */
-
-  /**
-   * Processing event, fired when DataTables is doing some kind of processing
-   * (be it, order, search or anything else). It can be used to indicate to
-   * the end user that there is something happening, or that something has
-   * finished.
-   *  @name DataTable#processing.dt
-   *  @event
-   *  @param {event} e jQuery event object
-   *  @param {object} oSettings DataTables settings object
-   *  @param {boolean} bShow Flag for if DataTables is doing processing or not
-   */
-
-  /**
-   * Ajax (XHR) event, fired whenever an Ajax request is completed from a
-   * request to made to the server for new data. This event is called before
-   * DataTables processed the returned data, so it can also be used to pre-
-   * process the data returned from the server, if needed.
-   *
-   * Note that this trigger is called in `fnServerData`, if you override
-   * `fnServerData` and which to use this event, you need to trigger it in you
-   * success function.
-   *  @name DataTable#xhr.dt
-   *  @event
-   *  @param {event} e jQuery event object
-   *  @param {object} o DataTables settings object {@link DataTable.models.oSettings}
-   *  @param {object} json JSON returned from the server
-   *
-   *  @example
-   *     // Use a custom property returned from the server in another DOM element
-   *     $('#table').dataTable().on('xhr.dt', function (e, settings, json) {
-   *       $('#status').html( json.status );
-   *     } );
-   *
-   *  @example
-   *     // Pre-process the data returned from the server
-   *     $('#table').dataTable().on('xhr.dt', function (e, settings, json) {
-   *       for ( var i=0, ien=json.aaData.length ; i<ien ; i++ ) {
-   *         json.aaData[i].sum = json.aaData[i].one + json.aaData[i].two;
-   *       }
-   *       // Note no return - manipulate the data directly in the JSON object.
-   *     } );
-   */
-
-  /**
-   * Destroy event, fired when the DataTable is destroyed by calling fnDestroy
-   * or passing the bDestroy:true parameter in the initialisation object. This
-   * can be used to remove bound events, added DOM nodes, etc.
-   *  @name DataTable#destroy.dt
-   *  @event
-   *  @param {event} e jQuery event object
-   *  @param {object} o DataTables settings object {@link DataTable.models.oSettings}
-   */
-
-  /**
-   * Page length change event, fired when number of records to show on each
-   * page (the length) is changed.
-   *  @name DataTable#length.dt
-   *  @event
-   *  @param {event} e jQuery event object
-   *  @param {object} o DataTables settings object {@link DataTable.models.oSettings}
-   *  @param {integer} len New length
-   */
-
-  /**
-   * Column sizing has changed.
-   *  @name DataTable#column-sizing.dt
-   *  @event
-   *  @param {event} e jQuery event object
-   *  @param {object} o DataTables settings object {@link DataTable.models.oSettings}
-   */
-
-  /**
-   * Column visibility has changed.
-   *  @name DataTable#column-visibility.dt
-   *  @event
-   *  @param {event} e jQuery event object
-   *  @param {object} o DataTables settings object {@link DataTable.models.oSettings}
-   *  @param {int} column Column index
-   *  @param {bool} vis `false` if column now hidden, or `true` if visible
-   */
-
-  return $.fn.dataTable;
+  });
+  return DataTable;
 });

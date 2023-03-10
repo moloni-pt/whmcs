@@ -1878,12 +1878,9 @@
   color: transparent !important;
 }
 #moloni html {
-  line-height: 1.15;
-  /* 1 */
-  -ms-text-size-adjust: 100%;
-  /* 2 */
-  -webkit-text-size-adjust: 100%;
-  /* 2 */
+  line-height: 1.15; /* 1 */
+  -ms-text-size-adjust: 100%; /* 2 */
+  -webkit-text-size-adjust: 100%; /* 2 */
 }
 #moloni body {
   margin: 0;
@@ -1902,41 +1899,30 @@
 }
 #moloni figcaption,
 #moloni figure,
-#moloni main {
-  /* 1 */
+#moloni main { /* 1 */
   display: block;
 }
 #moloni figure {
   margin: 1em 40px;
 }
 #moloni hr {
-  box-sizing: content-box;
-  /* 1 */
-  height: 0;
-  /* 1 */
-  overflow: visible;
-  /* 2 */
+  box-sizing: content-box; /* 1 */
+  height: 0; /* 1 */
+  overflow: visible; /* 2 */
 }
 #moloni pre {
-  font-family: monospace, monospace;
-  /* 1 */
-  font-size: 1em;
-  /* 2 */
+  font-family: monospace, monospace; /* 1 */
+  font-size: 1em; /* 2 */
 }
 #moloni a {
-  background-color: transparent;
-  /* 1 */
-  -webkit-text-decoration-skip: objects;
-  /* 2 */
+  background-color: transparent; /* 1 */
+  -webkit-text-decoration-skip: objects; /* 2 */
 }
 #moloni abbr[title] {
-  border-bottom: none;
-  /* 1 */
-  text-decoration: underline;
-  /* 2 */
+  border-bottom: none; /* 1 */
+  text-decoration: underline; /* 2 */
   -webkit-text-decoration: underline dotted;
-          text-decoration: underline dotted;
-  /* 2 */
+          text-decoration: underline dotted; /* 2 */
 }
 #moloni b,
 #moloni strong {
@@ -1949,10 +1935,8 @@
 #moloni code,
 #moloni kbd,
 #moloni samp {
-  font-family: monospace, monospace;
-  /* 1 */
-  font-size: 1em;
-  /* 2 */
+  font-family: monospace, monospace; /* 1 */
+  font-size: 1em; /* 2 */
 }
 #moloni dfn {
   font-style: italic;
@@ -1996,31 +1980,24 @@
 #moloni optgroup,
 #moloni select,
 #moloni textarea {
-  font-family: sans-serif;
-  /* 1 */
-  font-size: 100%;
-  /* 1 */
-  line-height: 1.15;
-  /* 1 */
-  margin: 0;
-  /* 2 */
+  font-family: sans-serif; /* 1 */
+  font-size: 100%; /* 1 */
+  line-height: 1.15; /* 1 */
+  margin: 0; /* 2 */
 }
 #moloni button,
-#moloni input {
-  /* 1 */
+#moloni input { /* 1 */
   overflow: visible;
 }
 #moloni button,
-#moloni select {
-  /* 1 */
+#moloni select { /* 1 */
   text-transform: none;
 }
 #moloni button,
 #moloni html [type=button],
 #moloni [type=reset],
 #moloni [type=submit] {
-  -webkit-appearance: button;
-  /* 2 */
+  -webkit-appearance: button; /* 2 */
 }
 #moloni button::-moz-focus-inner,
 #moloni [type=button]::-moz-focus-inner,
@@ -2039,54 +2016,40 @@
   padding: 0.35em 0.75em 0.625em;
 }
 #moloni legend {
-  box-sizing: border-box;
-  /* 1 */
-  color: inherit;
-  /* 2 */
-  display: table;
-  /* 1 */
-  max-width: 100%;
-  /* 1 */
-  padding: 0;
-  /* 3 */
-  white-space: normal;
-  /* 1 */
+  box-sizing: border-box; /* 1 */
+  color: inherit; /* 2 */
+  display: table; /* 1 */
+  max-width: 100%; /* 1 */
+  padding: 0; /* 3 */
+  white-space: normal; /* 1 */
 }
 #moloni progress {
-  display: inline-block;
-  /* 1 */
-  vertical-align: baseline;
-  /* 2 */
+  display: inline-block; /* 1 */
+  vertical-align: baseline; /* 2 */
 }
 #moloni textarea {
   overflow: auto;
 }
 #moloni [type=checkbox],
 #moloni [type=radio] {
-  box-sizing: border-box;
-  /* 1 */
-  padding: 0;
-  /* 2 */
+  box-sizing: border-box; /* 1 */
+  padding: 0; /* 2 */
 }
 #moloni [type=number]::-webkit-inner-spin-button,
 #moloni [type=number]::-webkit-outer-spin-button {
   height: auto;
 }
 #moloni [type=search] {
-  -webkit-appearance: textfield;
-  /* 1 */
-  outline-offset: -2px;
-  /* 2 */
+  -webkit-appearance: textfield; /* 1 */
+  outline-offset: -2px; /* 2 */
 }
 #moloni [type=search]::-webkit-search-cancel-button,
 #moloni [type=search]::-webkit-search-decoration {
   -webkit-appearance: none;
 }
 #moloni ::-webkit-file-upload-button {
-  -webkit-appearance: button;
-  /* 1 */
-  font: inherit;
-  /* 2 */
+  -webkit-appearance: button; /* 1 */
+  font: inherit; /* 2 */
 }
 #moloni details,
 #moloni menu {
@@ -2244,7 +2207,7 @@
   font-size: 24px;
 }
 #moloni .breadcrumb:before {
-  content: "";
+  content: "\e5cc";
   color: rgba(255, 255, 255, 0.7);
   vertical-align: top;
   display: inline-block;
@@ -2571,7 +2534,6 @@
 #moloni .no-select, #moloni input[type=range],
 #moloni input[type=range] + .thumb {
   -webkit-user-select: none;
-      -ms-user-select: none;
           user-select: none;
 }
 #moloni .circle {
@@ -3746,7 +3708,6 @@
   display: inline-block;
   overflow: hidden;
   -webkit-user-select: none;
-      -ms-user-select: none;
           user-select: none;
   -webkit-tap-highlight-color: transparent;
   vertical-align: middle;
@@ -4120,9 +4081,6 @@
 #moloni ::-webkit-input-placeholder {
   color: #666666;
 }
-#moloni :-ms-input-placeholder {
-  color: #666666;
-}
 #moloni ::placeholder {
   color: #666666;
 }
@@ -4369,7 +4327,6 @@
 #moloni textarea.materialize-textarea:focus.invalid ~ .helper-text[data-error] {
   color: transparent;
   -webkit-user-select: none;
-      -ms-user-select: none;
           user-select: none;
   pointer-events: none;
 }
@@ -4577,10 +4534,8 @@
 }
 #moloni textarea.materialize-textarea {
   line-height: normal;
-  overflow-y: hidden;
-  /* prevents scroll bar flash */
-  padding: 0.8rem 0 0.8rem 0;
-  /* prevents text jump on Enter keypress */
+  overflow-y: hidden; /* prevents scroll bar flash */
+  padding: 0.8rem 0 0.8rem 0; /* prevents text jump on Enter keypress */
   resize: none;
   min-height: 3rem;
   box-sizing: border-box;
@@ -4589,10 +4544,8 @@
   visibility: hidden;
   white-space: pre-wrap;
   word-wrap: break-word;
-  overflow-wrap: break-word;
-  /* future version of deprecated 'word-wrap' */
-  padding-top: 1.2rem;
-  /* prevents text jump on Enter keypress */
+  overflow-wrap: break-word; /* future version of deprecated 'word-wrap' */
+  padding-top: 1.2rem; /* prevents text jump on Enter keypress */
   position: absolute;
   top: 0;
   z-index: -1;
@@ -4625,7 +4578,6 @@
   font-size: 1rem;
   transition: 0.28s ease;
   -webkit-user-select: none;
-      -ms-user-select: none;
           user-select: none;
 }
 #moloni [type=radio] + span:before,
@@ -4719,7 +4671,6 @@
   line-height: 25px;
   font-size: 1rem;
   -webkit-user-select: none;
-      -ms-user-select: none;
           user-select: none;
 }
 #moloni [type=checkbox] + span:not(.lever):before, #moloni [type=checkbox]:not(.filled-in) + span:not(.lever):after {
@@ -4874,7 +4825,6 @@
 #moloni .switch * {
   -webkit-tap-highlight-color: transparent;
   -webkit-user-select: none;
-      -ms-user-select: none;
           user-select: none;
 }
 #moloni .switch label {
@@ -4986,7 +4936,6 @@
   padding: 0;
   display: block;
   -webkit-user-select: none;
-      -ms-user-select: none;
           user-select: none;
   z-index: 1;
 }
@@ -5020,7 +4969,6 @@
   color: rgba(0, 0, 0, 0.42);
   cursor: default;
   -webkit-user-select: none;
-      -ms-user-select: none;
           user-select: none;
 }
 #moloni .select-wrapper i {
@@ -5518,78 +5466,62 @@
 @-webkit-keyframes fill-unfill-rotate {
   12.5% {
     -webkit-transform: rotate(135deg);
-  }
-  /* 0.5 * ARCSIZE */
+  } /* 0.5 * ARCSIZE */
   25% {
     -webkit-transform: rotate(270deg);
-  }
-  /* 1   * ARCSIZE */
+  } /* 1   * ARCSIZE */
   37.5% {
     -webkit-transform: rotate(405deg);
-  }
-  /* 1.5 * ARCSIZE */
+  } /* 1.5 * ARCSIZE */
   50% {
     -webkit-transform: rotate(540deg);
-  }
-  /* 2   * ARCSIZE */
+  } /* 2   * ARCSIZE */
   62.5% {
     -webkit-transform: rotate(675deg);
-  }
-  /* 2.5 * ARCSIZE */
+  } /* 2.5 * ARCSIZE */
   75% {
     -webkit-transform: rotate(810deg);
-  }
-  /* 3   * ARCSIZE */
+  } /* 3   * ARCSIZE */
   87.5% {
     -webkit-transform: rotate(945deg);
-  }
-  /* 3.5 * ARCSIZE */
+  } /* 3.5 * ARCSIZE */
   to {
     -webkit-transform: rotate(1080deg);
-  }
-  /* 4   * ARCSIZE */
+  } /* 4   * ARCSIZE */
 }
 @keyframes fill-unfill-rotate {
   12.5% {
     -webkit-transform: rotate(135deg);
             transform: rotate(135deg);
-  }
-  /* 0.5 * ARCSIZE */
+  } /* 0.5 * ARCSIZE */
   25% {
     -webkit-transform: rotate(270deg);
             transform: rotate(270deg);
-  }
-  /* 1   * ARCSIZE */
+  } /* 1   * ARCSIZE */
   37.5% {
     -webkit-transform: rotate(405deg);
             transform: rotate(405deg);
-  }
-  /* 1.5 * ARCSIZE */
+  } /* 1.5 * ARCSIZE */
   50% {
     -webkit-transform: rotate(540deg);
             transform: rotate(540deg);
-  }
-  /* 2   * ARCSIZE */
+  } /* 2   * ARCSIZE */
   62.5% {
     -webkit-transform: rotate(675deg);
             transform: rotate(675deg);
-  }
-  /* 2.5 * ARCSIZE */
+  } /* 2.5 * ARCSIZE */
   75% {
     -webkit-transform: rotate(810deg);
             transform: rotate(810deg);
-  }
-  /* 3   * ARCSIZE */
+  } /* 3   * ARCSIZE */
   87.5% {
     -webkit-transform: rotate(945deg);
             transform: rotate(945deg);
-  }
-  /* 3.5 * ARCSIZE */
+  } /* 3.5 * ARCSIZE */
   to {
     -webkit-transform: rotate(1080deg);
             transform: rotate(1080deg);
-  }
-  /* 4   * ARCSIZE */
+  } /* 4   * ARCSIZE */
 }
 @-webkit-keyframes blue-fade-in-out {
   from {
@@ -5757,8 +5689,7 @@
 #moloni .circle-clipper .circle {
   width: 200%;
   height: 100%;
-  border-width: 3px;
-  /* STROKEWIDTH */
+  border-width: 3px; /* STROKEWIDTH */
   border-style: solid;
   border-color: inherit;
   border-bottom-color: transparent !important;
@@ -6304,7 +6235,7 @@
   padding: 0;
 }
 #moloni .text-primary {
-  color: white;
+  color: rgb(255, 255, 255);
 }
 #moloni .timepicker-digital-display {
   flex: 1 auto;
@@ -6320,7 +6251,6 @@
   font-weight: 400;
   position: relative;
   -webkit-user-select: none;
-      -ms-user-select: none;
           user-select: none;
 }
 #moloni .timepicker-span-hours,
@@ -6355,7 +6285,6 @@
   margin-top: 25px;
   margin-bottom: 5px;
   -webkit-user-select: none;
-      -ms-user-select: none;
           user-select: none;
 }
 #moloni .timepicker-canvas,
@@ -6439,15 +6368,6 @@
 @media only screen and (max-width : 992px){
   #moloni .pagination {
     width: 100%;
-  }
-  #moloni .pagination li.prev,
-#moloni .pagination li.next {
-    width: 10%;
-  }
-  #moloni .pagination li.pages {
-    width: 80%;
-    overflow: hidden;
-    white-space: nowrap;
   }
   #moloni .tabs {
     display: flex;
@@ -6626,14 +6546,14 @@ section.companySelect {
   width: 15em;
   height: 15em;
   cursor: pointer;
-  box-shadow: 0px 0px 10px #1A4D8029 !important;
+  box-shadow: 0px 0px 10px rgba(26, 77, 128, 0.1607843137) !important;
 }
 
 .empresasMoloni .card:hover {
   width: 15em;
   height: 15em;
   cursor: pointer;
-  box-shadow: 0px 0px 10px #1A4D80A3 !important;
+  box-shadow: 0px 0px 10px rgba(26, 77, 128, 0.6392156863) !important;
 }
 
 .empresasMoloni .card-content {
@@ -6859,6 +6779,19 @@ section.companySelect {
 }
 
 /* Ripples animation */
+@-webkit-keyframes ripples {
+  0% {
+    opacity: 0;
+  }
+  25% {
+    opacity: 1;
+  }
+  100% {
+    width: 200%;
+    padding-bottom: 200%;
+    opacity: 0;
+  }
+}
 @keyframes ripples {
   0% {
     opacity: 0;
@@ -6901,8 +6834,7 @@ section.companySelect {
 }
 
 input:-webkit-autofill {
-  -webkit-box-shadow: 0 0 0 50px #FAFAFA inset;
-  /* Change the color to your own background color */
+  -webkit-box-shadow: 0 0 0 50px #FAFAFA inset; /* Change the color to your own background color */
   -webkit-text-fill-color: #333;
 }
 
@@ -6941,7 +6873,7 @@ input:-webkit-autofill:focus {
 }
 
 .invoice-gen {
-  background-color: #f4f4f4 !important;
+  background-color: rgb(244, 244, 244) !important;
   padding: 25px !important;
   color: #2E619A;
 }
