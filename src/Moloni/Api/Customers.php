@@ -62,6 +62,10 @@ class Customers
 
         $result = Curl::simple("customers/getByEmail", $values);
 
+        if (!is_array($result)) {
+            return false;
+        }
+
         foreach ($result as $customer) {
             if (!is_array($customer) || !isset($customer['email'])) {
                 continue;
@@ -80,6 +84,10 @@ class Customers
         $values['company_id'] = $companyID;
 
         $result = Curl::simple("customers/getByNumber", $values);
+
+        if (!is_array($result)) {
+            return false;
+        }
 
         foreach ($result as $customer) {
             if (!is_array($customer) || !isset($customer['number'])) {

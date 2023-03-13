@@ -57,15 +57,22 @@ class Settings
 
             case "Addon":
                 $addonsInfo = WhmcsDB::getAddonInfo($this->item->relid);
-                $invoicedItem['name'] = $addonsInfo->name;
-                $invoicedItem['summary'] = $addonsInfo->domain . "<br>" . $this->item->duedate . " - " . $addonsInfo->nextduedate;
-                $invoicedItem['reference'] = $this->getReferenceByName($addonsInfo->name);
+
+                if ($addonsInfo && property_exists($addonsInfo, 'name')) {
+                    $invoicedItem['name'] = $addonsInfo->name;
+                    $invoicedItem['summary'] = $addonsInfo->domain . "<br>" . $this->item->duedate . " - " . $addonsInfo->nextduedate;
+                    $invoicedItem['reference'] = $this->getReferenceByName($addonsInfo->name);
+                } else {
+                    $invoicedItem['name'] = $this->item->description;
+                    $invoicedItem['summary'] = '';
+                    $invoicedItem['reference'] = 'Addon';
+                }
+
                 break;
 
 
             case "Upgrade":
                 $hostingInfo = WhmcsDB::getHostingInfo($this->item->relid);
-
                 $invoicedItem['name'] = "Upgrade/Downgrade - " . $hostingInfo->name;
                 $invoicedItem['summary'] = $hostingInfo->domain . "<br>" . $this->item->duedate . " - " . $hostingInfo->nextduedate;
                 $invoicedItem['reference'] = "UPGRADE";
