@@ -40,37 +40,58 @@ class Customers
     public static function getByVat($values, $companyID = COMPANY)
     {
         $values['company_id'] = $companyID;
+
         $result = Curl::simple("customers/getByVat", $values);
+
         foreach ($result as $customer) {
+            if (!is_array($customer) || !isset($customer['vat'])) {
+                continue;
+            }
+
             if ($values['vat'] == $customer['vat']) {
                 return ($customer);
             }
         }
-        return ($result[0]);
+
+        return false;
     }
 
     public static function getByEmail($values, $companyID = COMPANY)
     {
         $values['company_id'] = $companyID;
+
         $result = Curl::simple("customers/getByEmail", $values);
+
         foreach ($result as $customer) {
-            if ($values['email'] == $customer['email']) {
+            if (!is_array($customer) || !isset($customer['email'])) {
+                continue;
+            }
+
+            if ($values['email'] === $customer['email']) {
                 return ($customer);
             }
         }
-        return ($result[0]);
+
+        return false;
     }
 
     public static function getByNumber($values, $companyID = COMPANY)
     {
         $values['company_id'] = $companyID;
+
         $result = Curl::simple("customers/getByNumber", $values);
+
         foreach ($result as $customer) {
+            if (!is_array($customer) || !isset($customer['number'])) {
+                continue;
+            }
+
             if ($values['number'] == $customer['number']) {
                 return ($customer);
             }
         }
-        return ($result[0]);
+
+        return false;
     }
 
     public static function countByNumber($companyID = COMPANY)

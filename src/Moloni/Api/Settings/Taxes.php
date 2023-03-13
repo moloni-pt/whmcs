@@ -17,6 +17,7 @@ class Taxes
     {
         $values['company_id'] = $companyID;
         $result = Curl::simple("taxes/insert", $values);
+
         if (isset($result['tax_id'])) {
             return ($result['tax_id']);
         }
@@ -34,6 +35,7 @@ class Taxes
     public static function check($rate = 23)
     {
         $taxes = self::getAll();
+
         foreach ($taxes as $tax) {
             if (round($rate, 2) == round($tax['value'], 2)) {
                 return $tax['tax_id'];

@@ -293,12 +293,12 @@ class General
         $values = [];
 
         $returning = [];
-        $returning['customer_id'] = $customer['customer_id'];
+        $returning['customer_id'] = isset($customer['customer_id']) ? $customer['customer_id'] : 0;
         $returning['email'] = $clientInfo->email;
         $returning['name'] = $name;
         $returning['currency_code'] = WhmcsDB::getCustomerCurrency($clientInfo->currency);
 
-        if ($customer && count($customer) > 0) {
+        if ($customer && is_array($customer) && count($customer) > 0) {
             if (!$number || (int)$number !== 9990) {
                 if (defined('UPDATE_CUSTOMER') && UPDATE_CUSTOMER) {
                     $values['customer_id'] = $customer['customer_id'];
@@ -348,6 +348,7 @@ class General
             $MoloniCustomer['credit_limit'] = "0";
 
             $insertClient = Customers::insert($MoloniCustomer);
+
             if ($insertClient['error']) {
                 return ($insertClient);
             }
