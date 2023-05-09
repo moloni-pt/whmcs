@@ -442,6 +442,10 @@ class General
         $fullCurrency = [];
         $currencyCodes = Currencies::getAll();
         foreach ($currencyCodes as $currCode) {
+            if (!isset($currCode['iso4217'])) {
+                continue;
+            }
+
             if (strtoupper($code) == $currCode['iso4217']) {
                 $fullCurrency['whmcs_curr'] = $currCode['currency_id'];
             }
