@@ -9,6 +9,11 @@ add_hook("InvoicePaid", 1, function ($vars) {
     require_once __DIR__ . '/vendor/autoload.php';
 
     $moloni = new Start();
+
+    if (!$moloni->hasValidCompany() || !$moloni->hasValidAuthentication()) {
+        return true;
+    }
+
     $moloni->variablesDefine();
     $general = new General();
 
