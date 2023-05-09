@@ -2,6 +2,7 @@
 
 namespace Moloni\Admin;
 
+use Moloni\Core\Storage;
 use Moloni\Curl;
 use Moloni\Model\WhmcsDB;
 use Moloni\Start;
@@ -40,18 +41,8 @@ class Dispatcher
             return true;
         }
 
-        if (defined('ACCESS')) {
-            /** Previous request killed session */
-            if (empty(ACCESS) || empty(REFRESH)) {
-                Error::create('Login', 'Tokens vazias');
-
-                $this->moloni->clearMoloniTokens();
-                $this->template = 'login';
-
-                return true;
-            }
-
-            $date_expire = strtotime(DATE_EXPIRE);
+        if (!empty(Storage::$MOLONI_ACCESS_TOKEN) && !empty(Storage::$MOLONI_REFRESH_TOKEN)) {
+            $date_expire = strtotime(Storage::$MOLONI_DATE_EXPIRE);
 
             if (time() > $date_expire) {
                 if (time() > strtotime('+14 days', $date_expire)) {
@@ -63,7 +54,7 @@ class Dispatcher
                     return true;
                 }
 
-                $newtokens = Curl::refresh(REFRESH);
+                $newtokens = Curl::refresh(Storage::$MOLONI_REFRESH_TOKEN);
 
                 /** Refresh requerst failed */
                 if (empty($newtokens['access_token']) || empty($newtokens['refresh_token'])) {
@@ -82,7 +73,7 @@ class Dispatcher
                 $this->moloni->setCompanyId($_REQUEST['company_id']);
             }
 
-            if (defined('COMPANY') && empty(COMPANY) && !isset($_REQUEST['company_id'])) {
+            if (empty(Storage::$MOLONI_COMPANY_ID) && !isset($_REQUEST['company_id'])) {
                 $this->template = 'company';
                 return true;
             }
@@ -126,6 +117,7 @@ class Dispatcher
             return true;
         }
 
+        WhmcsDB::clearMoloniTokens();
         $this->template = "login";
 
         return true;
@@ -134,13 +126,15 @@ class Dispatcher
     private function tryLogin()
     {
         $isValidLogin = Curl::login($_REQUEST['mol-username'], $_REQUEST['mol-password']);
+
         if (!$isValidLogin) {
             $this->message = [
                 "label" => "login-errado",
                 "text" => 'Combinação errada, tente novamente'
             ];
         } else {
-            define("ACCESS", $isValidLogin['access_token']);
+            Storage::$MOLONI_ACCESS_TOKEN = $isValidLogin['access_token'];
+            Storage::$MOLONI_REFRESH_TOKEN = $isValidLogin['refresh_token'];
 
             $this->moloni->clearMoloniTokens();
             $this->moloni->setTokens($isValidLogin['access_token'], $isValidLogin['refresh_token']);

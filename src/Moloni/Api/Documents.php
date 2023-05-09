@@ -11,16 +11,19 @@ class Documents
     /**
      * @param $values
      * @param bool $type
-     * @param mixed $companyID
+     *
      * @return bool|mixed
      */
-    public static function insertInvoice($values, $type = false, $companyID = COMPANY)
+    public static function insertInvoice($values, $type = false)
     {
+        if (!is_array($values)) {
+            $values = [];
+        }
+
         if (!$type && defined('DOCUMENT_TYPE')) {
             $type = DOCUMENT_TYPE;
         }
 
-        $values['company_id'] = $companyID;
         $result = Curl::simple("$type/insert", $values);
 
         if (isset($result['document_id'])) {
@@ -34,13 +37,12 @@ class Documents
     /**
      * @param bool $document_id
      * @param bool $your_reference
-     * @param mixed $companyID
+     *
      * @return mixed
      */
-    public static function getOneInfo($document_id = false, $your_reference = false, $companyID = COMPANY)
+    public static function getOneInfo($document_id = false, $your_reference = false)
     {
         $values = [];
-        $values['company_id'] = $companyID;
 
         if ($document_id) {
             $values['document_id'] = $document_id;
@@ -62,16 +64,19 @@ class Documents
     /**
      * @param $values
      * @param bool $type
-     * @param mixed $companyID
+     *
      * @return mixed
      */
-    public static function update($values, $type = false, $companyID = COMPANY)
+    public static function update($values, $type = false)
     {
+        if (!is_array($values)) {
+            $values = [];
+        }
+
         if (!$type && defined('DOCUMENT_TYPE')) {
             $type = DOCUMENT_TYPE;
         }
 
-        $values['company_id'] = $companyID;
         $result = Curl::simple($type . "/update", $values);
 
         if (isset($result['document_id'])) {
@@ -89,7 +94,9 @@ class Documents
      */
     public static function getAll($values, $max = 120)
     {
-        $values['company_id'] = COMPANY;
+        if (!is_array($values)) {
+            $values = [];
+        }
 
         $total = 0;
         $offset = (isset($values['offset']) ? $values['offset'] : "0");
@@ -117,10 +124,10 @@ class Documents
     public static function getPDFLink($document_id)
     {
         $values = [];
-        $values['company_id'] = COMPANY;
         $values['document_id'] = $document_id;
 
         $result = Curl::simple("documents/getPDFLink", $values);
+
         return (isset($result['url'])) ? $result['url'] : false;
     }
 

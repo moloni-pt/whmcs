@@ -11,8 +11,10 @@ add_hook("InvoicePaid", 1, function ($vars) {
     $moloni = new Start();
     $moloni->variablesDefine();
     $general = new General();
+
     if (defined('INVOICE_AUTO') && INVOICE_AUTO) {
         $general->createInvoice($vars['invoiceid']);
     }
+
     return true;
 });

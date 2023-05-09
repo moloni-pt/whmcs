@@ -2,21 +2,23 @@
 
 namespace Moloni;
 
+use Moloni\Core\Storage;
+
 class Curl
 {
 
     private static $apiUrl = "https://api.moloni.pt/v1/";
 
-    public static function simple($action, $values = false, $print = false)
+    public static function simple($action, $values = [], $print = false)
     {
         $con = curl_init();
-        $url = self::$apiUrl . $action . "/?access_token=" . ACCESS;
+        $url = self::$apiUrl . $action . "/?access_token=" . Storage::$MOLONI_ACCESS_TOKEN;
 
-        if ($values) {
-            $send = http_build_query($values);
-        } else {
-            $send = false;
+        if (is_array($values) && !isset($values['company_id']) && !empty(Storage::$MOLONI_COMPANY_ID)) {
+            $values['company_id'] = Storage::$MOLONI_COMPANY_ID;
         }
+
+        $send = http_build_query($values);
 
         curl_setopt($con, CURLOPT_URL, $url);
         curl_setopt($con, CURLOPT_POST, true);

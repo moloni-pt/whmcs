@@ -6,27 +6,35 @@ use Moloni\Curl;
 
 class DocumentSets
 {
-    public static function getAll($companyID = COMPANY)
+    public static function getAll()
     {
-        $values = ["company_id" => $companyID];
-        return Curl::simple("documentSets/getAll", $values);
+        return Curl::simple("documentSets/getAll");
     }
 
-    public static function insert($values, $companyID = COMPANY)
+    public static function insert($values)
     {
-        $values["company_id"] = $companyID;
+        if (!is_array($values)) {
+            $values = [];
+        }
+
         return Curl::simple("documentSets/insert", $values);
     }
 
-    public static function update($values, $companyID = COMPANY)
+    public static function update($values)
     {
-        $values["company_id"] = $companyID;
+        if (!is_array($values)) {
+            $values = [];
+        }
+
         return Curl::simple("documentSets/update", $values);
     }
 
-    public static function delete($values, $companyID = COMPANY)
+    public static function delete($values)
     {
-        $values["company_id"] = $companyID;
+        if (!is_array($values)) {
+            $values = [];
+        }
+
         return Curl::simple("documentSets/delete", $values);
     }
 }

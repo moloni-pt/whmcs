@@ -24,15 +24,13 @@ class Companies
         return $companyList;
     }
 
-    public static function companyMe($companyID = COMPANY)
+    public static function companyMe()
     {
         if (isset(self::$cached[__FUNCTION__])) {
             return self::$cached[__FUNCTION__];
         }
 
-        $values = [];
-        $values['company_id'] = $companyID;
-        self::$cached[__FUNCTION__] = Curl::simple("companies/getOne", $values);
+        self::$cached[__FUNCTION__] = Curl::simple("companies/getOne");
 
         return self::$cached[__FUNCTION__];
     }

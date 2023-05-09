@@ -2,6 +2,7 @@
 
 namespace Moloni;
 
+use Moloni\Core\Storage;
 use Moloni\Model\WhmcsDB;
 
 class Start
@@ -14,10 +15,10 @@ class Start
         $moloni = WhmcsDB::getMoloniFirst();
 
         if ($moloni) {
-            define("ACCESS", $moloni->access_token);
-            define("COMPANY", $moloni->company_id);
-            define("REFRESH", $moloni->refresh_token);
-            define("DATE_EXPIRE", $moloni->date_expire);
+            Storage::$MOLONI_ACCESS_TOKEN = $moloni->access_token;
+            Storage::$MOLONI_REFRESH_TOKEN = $moloni->refresh_token;
+            Storage::$MOLONI_DATE_EXPIRE = $moloni->date_expire;
+            Storage::$MOLONI_COMPANY_ID = $moloni->company_id;
         }
     }
 
