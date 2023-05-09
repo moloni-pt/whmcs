@@ -41,16 +41,40 @@ class Dispatcher
         }
 
         if (defined('ACCESS')) {
+            /** Previous request killed session */
+            if (empty(ACCESS) || empty(REFRESH)) {
+                Error::create('Login', 'Tokens vazias');
+
+                $this->moloni->clearMoloniTokens();
+                $this->template = 'login';
+
+                return true;
+            }
+
             $date_expire = strtotime(DATE_EXPIRE);
+
             if (time() > $date_expire) {
                 if (time() > strtotime('+14 days', $date_expire)) {
                     Error::create('Login', 'Refresh token expirou');
+
                     $this->moloni->clearMoloniTokens();
                     $this->template = 'login';
+
                     return true;
                 }
 
                 $newtokens = Curl::refresh(REFRESH);
+
+                /** Refresh requerst failed */
+                if (empty($newtokens['access_token']) || empty($newtokens['refresh_token'])) {
+                    Error::create('Login', 'Erro atualizar tokens');
+
+                    $this->moloni->clearMoloniTokens();
+                    $this->template = 'login';
+
+                    return true;
+                }
+
                 $this->moloni->updateTokens($newtokens['access_token'], $newtokens['refresh_token']);
             }
 
@@ -98,10 +122,12 @@ class Dispatcher
 
             $this->moloni->variablesDefine();
             $this->template = 'index';
+
             return true;
         }
 
         $this->template = "login";
+
         return true;
     }
 
