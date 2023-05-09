@@ -12,7 +12,6 @@ class Start
 
     public function __construct()
     {
-        error_reporting(E_ALL);
         $moloni = WhmcsDB::getMoloniFirst();
 
         if ($moloni) {
