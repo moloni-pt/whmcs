@@ -108,6 +108,11 @@ class Settings
                 $invoicedItem['summary'] = "";
                 $invoicedItem['reference'] = "9999";
                 $invoicedItem['discount'] = "";
+
+                if ($this->item->amount < 0) {
+                    $invoicedItem['skip'] = true;
+                }
+
                 break;
 
             default:
