@@ -27,6 +27,14 @@
   "extra": {
     "changelog": [
       {
+        "version": "v3.3.6",
+        "title": "Lançamento da versão 3.3.6",
+        "description": [
+          "Melhorias na gestão da autenticação",
+          "Melhorias na criação de documentos em PHP 8.1"
+        ]
+      },
+      {
         "version": "v3.3.5",
         "title": "Lançamento da versão 3.3.5",
         "description": [
