@@ -21,16 +21,23 @@ class AlternateAddresses
 
     }
 
-    public static function getAll($values, $companyID = COMPANY)
+    public static function getAll($values)
     {
-        $values['company_id'] = $companyID;
+        if (!is_array($values)) {
+            $values = [];
+        }
+
         $result = Curl::simple("customerAlternateAddresses/getAll", $values);
+
         return ($result);
     }
 
-    public static function insert($values, $companyID = COMPANY)
+    public static function insert($values)
     {
-        $values['company_id'] = $companyID;
+        if (!is_array($values)) {
+            $values = [];
+        }
+
         $result = Curl::simple("customerAlternateAddresses/insert", $values);
 
         if (isset($result['address_id'])) {

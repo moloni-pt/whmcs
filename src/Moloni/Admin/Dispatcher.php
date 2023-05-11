@@ -2,6 +2,7 @@
 
 namespace Moloni\Admin;
 
+use Moloni\Core\Storage;
 use Moloni\Curl;
 use Moloni\Model\WhmcsDB;
 use Moloni\Start;
@@ -34,33 +35,22 @@ class Dispatcher
 
     private function actionDecide()
     {
-        // Caso sejam enviados dados de login
+        // Caso sejam enviados dados de “login”
         if (isset($_REQUEST['mol-username'], $_REQUEST['mol-password'])) {
             $this->tryLogin();
+
             return true;
         }
 
-        if (defined('ACCESS')) {
-            $date_expire = strtotime(DATE_EXPIRE);
-            if (time() > $date_expire) {
-                if (time() > strtotime('+14 days', $date_expire)) {
-                    Error::create('Login', 'Refresh token expirou');
-                    $this->moloni->clearMoloniTokens();
-                    $this->template = 'login';
+        if ($this->moloni->hasValidAuthentication()) {
+            if (!$this->moloni->hasValidCompany()) {
+                if (isset($_REQUEST['company_id'])) {
+                    $this->moloni->setCompanyId($_REQUEST['company_id']);
+                } else {
+                    $this->template = 'company';
+
                     return true;
                 }
-
-                $newtokens = Curl::refresh(REFRESH);
-                $this->moloni->updateTokens($newtokens['access_token'], $newtokens['refresh_token']);
-            }
-
-            if (isset($_REQUEST['company_id'])) {
-                $this->moloni->setCompanyId($_REQUEST['company_id']);
-            }
-
-            if (defined('COMPANY') && empty(COMPANY) && !isset($_REQUEST['company_id'])) {
-                $this->template = 'company';
-                return true;
             }
 
             switch ($_GET['action']) {
@@ -73,6 +63,7 @@ class Dispatcher
 
                     $this->moloni->variablesDefine();
                     $this->template = 'config';
+
                     return true;
                 case "invoice":
                     $this->moloni->variablesDefine();
@@ -89,32 +80,39 @@ class Dispatcher
                     }
                     $this->moloni->variablesDefine();
                     $this->template = 'document';
+
                     return true;
                 case 'logout':
                     WhmcsDB::clearMoloniTokens();
                     $this->template = 'login';
+
                     return true;
             }
 
             $this->moloni->variablesDefine();
             $this->template = 'index';
+
             return true;
         }
 
+        WhmcsDB::clearMoloniTokens();
         $this->template = "login";
+
         return true;
     }
 
     private function tryLogin()
     {
         $isValidLogin = Curl::login($_REQUEST['mol-username'], $_REQUEST['mol-password']);
+
         if (!$isValidLogin) {
             $this->message = [
                 "label" => "login-errado",
                 "text" => 'Combinação errada, tente novamente'
             ];
         } else {
-            define("ACCESS", $isValidLogin['access_token']);
+            Storage::$MOLONI_ACCESS_TOKEN = $isValidLogin['access_token'];
+            Storage::$MOLONI_REFRESH_TOKEN = $isValidLogin['refresh_token'];
 
             $this->moloni->clearMoloniTokens();
             $this->moloni->setTokens($isValidLogin['access_token'], $isValidLogin['refresh_token']);
@@ -129,6 +127,7 @@ class Dispatcher
         $invoice = [];
         $invoice['document_id'] = -1;
         $invoice['net_value'] = 0;
+
         if (WhmcsDB::insertMoloniInvoice($invoiceOrder, $invoice, '-1')) {
             return true;
         }

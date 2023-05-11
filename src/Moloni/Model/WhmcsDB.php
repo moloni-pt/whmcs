@@ -371,6 +371,20 @@ class WhmcsDB
         return 0;
     }
 
+    public static function getUpgradeDiscount($id, $relid)
+    {
+        $row = Capsule::table('tblinvoiceitems')
+            ->where('invoiceid', $id)
+            ->where('relid', $relid)
+            ->first();
+
+        if (!empty($row)) {
+            return ($row->amount < 0) ? abs($row->amount) : 0;
+        }
+
+        return 0;
+    }
+
     public static function getCustomerCurrency($id)
     {
         return Capsule::table('tblcurrencies')->select('code', 'prefix', 'suffix')->where('id', $id)->first();

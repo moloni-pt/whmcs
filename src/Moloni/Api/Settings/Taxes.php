@@ -7,15 +7,17 @@ use Moloni\Error;
 
 class Taxes
 {
-    public static function getAll($companyID = COMPANY)
+    public static function getAll()
     {
-        $values['company_id'] = $companyID;
-        return Curl::simple("taxes/getAll", $values);
+        return Curl::simple("taxes/getAll");
     }
 
-    public static function insert($values, $companyID = COMPANY)
+    public static function insert($values)
     {
-        $values['company_id'] = $companyID;
+        if (!is_array($values)) {
+            $values = [];
+        }
+
         $result = Curl::simple("taxes/insert", $values);
 
         if (isset($result['tax_id'])) {
@@ -23,12 +25,16 @@ class Taxes
         }
 
         Error::create("taxes/insert", "Erro ao inserir taxa", $values, $result);
+
         return false;
     }
 
-    public static function update($values, $companyID = COMPANY)
+    public static function update($values)
     {
-        $values['company_id'] = $companyID;
+        if (!is_array($values)) {
+            $values = [];
+        }
+
         return Curl::simple("taxes/update", $values);
     }
 

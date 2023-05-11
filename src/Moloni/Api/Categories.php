@@ -29,7 +29,6 @@ class Categories
     public static function getAll()
     {
         $values = [];
-        $values['company_id'] = COMPANY;
         $values['parent_id'] = "0";
 
         return Curl::simple("productCategories/getAll", $values);
@@ -37,7 +36,10 @@ class Categories
 
     public static function insert($values)
     {
-        $values['company_id'] = COMPANY;
+        if (!is_array($values)) {
+            $values = [];
+        }
+
         $result = Curl::simple("productCategories/insert", $values);
 
         if (isset($result['category_id'])) {
@@ -49,13 +51,19 @@ class Categories
 
     public static function update($values)
     {
-        $values['company_id'] = COMPANY;
+        if (!is_array($values)) {
+            $values = [];
+        }
+
         return Curl::simple("productCategories/update", $values);
     }
 
     public static function delete($values)
     {
-        $values['company_id'] = COMPANY;
+        if (!is_array($values)) {
+            $values = [];
+        }
+
         return Curl::simple("productCategories/delete", $values);
     }
 

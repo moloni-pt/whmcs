@@ -2,6 +2,7 @@
 
 namespace Moloni;
 
+use Moloni\Core\Storage;
 use Moloni\Model\WhmcsDB;
 
 class Start
@@ -14,12 +15,14 @@ class Start
         $moloni = WhmcsDB::getMoloniFirst();
 
         if ($moloni) {
-            define("ACCESS", $moloni->access_token);
-            define("COMPANY", $moloni->company_id);
-            define("REFRESH", $moloni->refresh_token);
-            define("DATE_EXPIRE", $moloni->date_expire);
+            Storage::$MOLONI_ACCESS_TOKEN = $moloni->access_token;
+            Storage::$MOLONI_REFRESH_TOKEN = $moloni->refresh_token;
+            Storage::$MOLONI_DATE_EXPIRE = $moloni->date_expire;
+            Storage::$MOLONI_COMPANY_ID = $moloni->company_id;
         }
     }
+
+    //           PUBLICS           //
 
     public function clearMoloniTokens()
     {
@@ -60,5 +63,55 @@ class Start
         $this->variablesDefine();
 
         return true;
+    }
+
+    //           PRIVATES           //
+
+    private function refreshTokens()
+    {
+        $newtokens = Curl::refresh(Storage::$MOLONI_REFRESH_TOKEN);
+
+        if (empty($newtokens['access_token']) || empty($newtokens['refresh_token'])) {
+            Error::create('Login', 'Erro atualizar tokens');
+
+            return false;
+        }
+
+        Storage::$MOLONI_ACCESS_TOKEN = $newtokens['access_token'];
+        Storage::$MOLONI_REFRESH_TOKEN = $newtokens['refresh_token'];
+
+        $this->updateTokens($newtokens['access_token'], $newtokens['refresh_token']);
+
+        return true;
+    }
+
+    //           VERIFICATIONS           //
+
+    public function hasValidCompany()
+    {
+        return !empty(Storage::$MOLONI_COMPANY_ID);
+    }
+
+    public function hasValidAuthentication()
+    {
+        if (empty(Storage::$MOLONI_ACCESS_TOKEN) || empty(Storage::$MOLONI_REFRESH_TOKEN)) {
+            return false;
+        }
+
+        if ($this->isValidAccessToken()) {
+            return true;
+        }
+
+        return $this->isValidRefreshToken() && $this->refreshTokens();
+    }
+
+    private function isValidAccessToken()
+    {
+        return time() < strtotime(Storage::$MOLONI_DATE_EXPIRE);
+    }
+
+    private function isValidRefreshToken()
+    {
+        return time() < strtotime('+13 days', strtotime(Storage::$MOLONI_DATE_EXPIRE));
     }
 }

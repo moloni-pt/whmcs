@@ -6,39 +6,35 @@ use Moloni\Curl;
 
 class PaymentMethods
 {
-    public static function getAll($companyID = COMPANY)
+    public static function getAll()
     {
-        $values = ["company_id" => $companyID];
-        return Curl::simple("paymentMethods/getAll", $values);
+        return Curl::simple("paymentMethods/getAll");
     }
 
-    public static function insert($values, $companyID = COMPANY)
+    public static function insert($values)
     {
         if (!is_array($values)) {
             $values = [];
         }
 
-        $values["company_id"] = $companyID;
         return Curl::simple("paymentMethods/insert", $values);
     }
 
-    public static function update($values, $companyID = COMPANY)
+    public static function update($values)
     {
         if (!is_array($values)) {
             $values = [];
         }
 
-        $values["company_id"] = $companyID;
         return Curl::simple("paymentMethods/update", $values);
     }
 
-    public static function delete($values, $companyID = COMPANY)
+    public static function delete($values)
     {
         if (!is_array($values)) {
             $values = [];
         }
 
-        $values["company_id"] = $companyID;
         return Curl::simple("paymentMethods/delete", $values);
     }
 }

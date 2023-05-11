@@ -7,39 +7,41 @@ use Moloni\Error;
 
 class Customers
 {
-    public static function number($companyID = COMPANY)
+    public static function number()
     {
         return Curl::simple("customers/count");
     }
 
-    public static function getAll($companyID = COMPANY)
+    public static function getAll()
     {
         return Curl::simple("customers/getAll");
     }
 
-    public static function getOne($companyID = COMPANY)
+    public static function getOne()
     {
         return Curl::simple("customers/getOne");
     }
 
-    public static function countBySearch($companyID = COMPANY)
+    public static function countBySearch()
     {
         return Curl::simple("customers/countBySearch");
     }
 
-    public static function getBySearch($companyID = COMPANY)
+    public static function getBySearch()
     {
         return Curl::simple("customers/getBySearch");
     }
 
-    public static function countByVat($companyID = COMPANY)
+    public static function countByVat()
     {
         return Curl::simple("customers/countByVat");
     }
 
-    public static function getByVat($values, $companyID = COMPANY)
+    public static function getByVat($values)
     {
-        $values['company_id'] = $companyID;
+        if (!is_array($values)) {
+            $values = [];
+        }
 
         $result = Curl::simple("customers/getByVat", $values);
 
@@ -56,9 +58,11 @@ class Customers
         return false;
     }
 
-    public static function getByEmail($values, $companyID = COMPANY)
+    public static function getByEmail($values)
     {
-        $values['company_id'] = $companyID;
+        if (!is_array($values)) {
+            $values = [];
+        }
 
         $result = Curl::simple("customers/getByEmail", $values);
 
@@ -79,9 +83,11 @@ class Customers
         return false;
     }
 
-    public static function getByNumber($values, $companyID = COMPANY)
+    public static function getByNumber($values)
     {
-        $values['company_id'] = $companyID;
+        if (!is_array($values)) {
+            $values = [];
+        }
 
         $result = Curl::simple("customers/getByNumber", $values);
 
@@ -102,37 +108,39 @@ class Customers
         return false;
     }
 
-    public static function countByNumber($companyID = COMPANY)
+    public static function countByNumber()
     {
         return Curl::simple("customers/countByNumber");
     }
 
-    public static function countByName($companyID = COMPANY)
+    public static function countByName()
     {
         return Curl::simple("customers/countByName");
     }
 
-    public static function getByName($companyID = COMPANY)
+    public static function getByName()
     {
         return Curl::simple("customers/getByName");
     }
 
-    public static function getLastNumber($companyID = COMPANY)
+    public static function getLastNumber()
     {
         return Curl::simple("customers/getLastNumber");
     }
 
-    public static function getNextNumber($companyID = COMPANY)
+    public static function getNextNumber()
     {
-        $values['company_id'] = $companyID;
-        $result = Curl::simple("customers/getNextNumber", $values);
+        $result = Curl::simple("customers/getNextNumber");
 
         return ($result['number']);
     }
 
-    public static function insert($values, $companyID = COMPANY)
+    public static function insert($values)
     {
-        $values['company_id'] = $companyID;
+        if (!is_array($values)) {
+            $values = [];
+        }
+
         $result = Curl::simple("customers/insert", $values);
 
         if (isset($result['customer_id'])) {
@@ -143,19 +151,24 @@ class Customers
         return false;
     }
 
-    public static function update($values, $companyID = COMPANY)
+    public static function update($values)
     {
-        $values['company_id'] = $companyID;
+        if (!is_array($values)) {
+            $values = [];
+        }
+
         $result = curl::simple("customers/update", $values);
+
         if (isset($result['customer_id'])) {
             return ($result);
         }
 
         Error::create("customers/update", "Erro ao actualizar cliente", $values, $result);
+
         return false;
     }
 
-    public static function delete($companyID = COMPANY)
+    public static function delete()
     {
         return curl::simple("customers/delete");
     }

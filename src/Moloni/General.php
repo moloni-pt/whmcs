@@ -10,6 +10,7 @@ use Moloni\Api\GlobalSettings\Countries;
 use Moloni\Api\GlobalSettings\Currencies;
 use Moloni\Api\Products;
 use Moloni\Api\Settings\Taxes;
+use Moloni\Core\Storage;
 use Moloni\Model\WhmcsDB;
 
 class General
@@ -27,7 +28,7 @@ class General
             $invoiceItems = WhmcsDB::getInvoiceItems($invoiceInfo->id);
 
             $invoice = [];
-            $invoice['company_id'] = COMPANY;
+            $invoice['company_id'] = Storage::$MOLONI_COMPANY_ID;
             $invoice['date'] = date('Y-m-d');
             $invoice['expiration_date'] = date('Y-m-d');
             if (defined('DOCUMENT_SET') && !empty(DOCUMENT_SET)) {
@@ -442,6 +443,10 @@ class General
         $fullCurrency = [];
         $currencyCodes = Currencies::getAll();
         foreach ($currencyCodes as $currCode) {
+            if (!isset($currCode['iso4217'])) {
+                continue;
+            }
+
             if (strtoupper($code) == $currCode['iso4217']) {
                 $fullCurrency['whmcs_curr'] = $currCode['currency_id'];
             }

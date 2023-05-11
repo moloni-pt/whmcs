@@ -24,14 +24,17 @@ class MeasurementUnits
 
     public static function getAll()
     {
-        $values['company_id'] = COMPANY;
-        return Curl::simple("measurementUnits/getAll", $values);
+        return Curl::simple("measurementUnits/getAll");
     }
 
     public static function insert($values)
     {
-        $values['company_id'] = COMPANY;
+        if (!is_array($values)) {
+            $values = [];
+        }
+
         $result = Curl::simple("measurementUnits/insert", $values);
+
         if (isset($result['unit_id'])) {
             return ($result['unit_id']);
         }
@@ -42,13 +45,19 @@ class MeasurementUnits
 
     public static function update($values)
     {
-        $values['company_id'] = COMPANY;
+        if (!is_array($values)) {
+            $values = [];
+        }
+
         return Curl::simple("measurementUnits/update", $values);
     }
 
     public static function delete($values)
     {
-        $values['company_id'] = COMPANY;
+        if (!is_array($values)) {
+            $values = [];
+        }
+
         return Curl::simple("measurementUnits/delete", $values);
     }
 }
