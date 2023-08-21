@@ -103,6 +103,7 @@ class Settings
                 $invoicedItem['massPay'] = true;
                 break;
 
+            case "Item":
             case "":
                 $invoicedItem['name'] = $this->item->description;
                 $invoicedItem['summary'] = "";
