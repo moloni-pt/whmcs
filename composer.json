@@ -27,6 +27,14 @@
   "extra": {
     "changelog": [
       {
+        "version": "v3.3.7",
+        "title": "Lançamento da versão 3.3.7",
+        "description": [
+          "Novas mensagens de erro na autenticação.",
+          "Adicionado novo tipo de serviço."
+        ]
+      },
+      {
         "version": "v3.3.6",
         "title": "Lançamento da versão 3.3.6",
         "description": [
