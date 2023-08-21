@@ -32,8 +32,18 @@ if (Error::$exists && !empty(Error::$error)) {
 
     <?php
 
-    if (isset($this->message['label']) && ($this->message['label'] == 'login-errado' || $this->message['label'] == "sessao-expirada")) {
-        echo "<div class='login-error'>" . $this->message['text'] . "</div>";
+    if (!empty($this->message)) {
+        if (isset($this->message['text']) && !empty($this->message['text'])) {
+            echo "<div class='login-error'>";
+            echo $this->message['text'];
+            echo "</div>";
+        }
+
+        if (isset($this->message['data']) && !empty($this->message['data'])) {
+            echo '<pre class="login-error-data">';
+            echo $this->message['data'];
+            echo '</pre>';
+        }
     }
 
     ?>

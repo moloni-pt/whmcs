@@ -59,12 +59,7 @@ class Curl
         $curl = curl_exec($con);
         curl_close($con);
 
-        $result = json_decode($curl, true);
-        if (!isset($result['error'])) {
-            return $result;
-        } else {
-            return false;
-        }
+        return json_decode($curl, true);
     }
 
     public static function refresh($refresh)
@@ -80,11 +75,6 @@ class Curl
         $res_curl = curl_exec($con);
         curl_close($con);
 
-        $res_txt = json_decode($res_curl, true);
-        if (!isset($res_txt['error'])) {
-            return $res_txt;
-        } else {
-            return false;
-        }
+        return json_decode($res_curl, true);
     }
 }
