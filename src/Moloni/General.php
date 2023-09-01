@@ -304,11 +304,11 @@ class General
                 if (defined('UPDATE_CUSTOMER') && UPDATE_CUSTOMER) {
                     $values['customer_id'] = $customer['customer_id'];
                     $values['name'] = $name;
-                    $values['language_id'] = $this->getCountryCode($clientInfo->country, "language");
+                    $values['language_id'] = $this->getLanguageCode($clientInfo->country);
                     $values['address'] = $clientInfo->address1 . ((!empty($clientInfo->address2)) ? " - " . $clientInfo->address2 : "");
                     $values['zip_code'] = $this->checkZip($clientInfo->postcode, $clientInfo->country);
                     $values['city'] = $clientInfo->city;
-                    $values['country_id'] = $this->getCountryCode($clientInfo->country, "country");
+                    $values['country_id'] = $this->getCountryCode($clientInfo);
                     $values['email'] = $clientInfo->email;
                     $values['phone'] = $clientInfo->phonenumber;
 
@@ -335,8 +335,8 @@ class General
             $MoloniCustomer['zip_code'] = $this->checkZip($clientInfo->postcode, $clientInfo->country);
             $MoloniCustomer['city'] = $clientInfo->city;
 
-            $MoloniCustomer['country_id'] = $this->getCountryCode($clientInfo->country, "country");
-            $MoloniCustomer['language_id'] = $this->getCountryCode($clientInfo->country, "language");
+            $MoloniCustomer['country_id'] = $this->getCountryCode($clientInfo);
+            $MoloniCustomer['language_id'] = $this->getLanguageCode($clientInfo->country);
 
             $MoloniCustomer['maturity_date_id'] = ((defined('MATURITY_DATE') && !empty(MATURITY_DATE)) ? MATURITY_DATE : $me['maturity_date_id']);
             $MoloniCustomer['payment_method_id'] = ((defined('PAYMENT_METHOD') && !empty(PAYMENT_METHOD)) ? PAYMENT_METHOD : $me['payment_method_id']);
@@ -404,38 +404,64 @@ class General
         return $zipCode;
     }
 
-    public function getCountryCode($iso2, $return = "all")
+    public function getCountryCode($clientInfo)
     {
-        $info = array();
-        if ($return === "country") {
-            if (strtolower($iso2) === 'gb') {
-                return 174;
-            }
+        $iso2 = strtolower($clientInfo->country);
 
-            $countries = Countries::getAll();
-            foreach ($countries as $moloniCountry) {
-                if (strtolower($iso2) == strtolower($moloniCountry['iso_3166_1'])) {
-                    $info['country_id'] = $moloniCountry['country_id'];
+        if ($iso2 === 'gb') {
+            return 174;
+        }
+
+        $countries = Countries::getAll();
+
+        $targetCountries = [];
+
+        foreach ($countries as $moloniCountry) {
+            if ($iso2 == strtolower($moloniCountry['iso_3166_1'])) {
+                $targetCountries[] = $moloniCountry;
+            }
+        }
+
+        /** Early return */
+        if (empty($targetCountries)) {
+            return 0;
+        }
+
+        /** Return the only one found */
+        if (count($targetCountries) === 1) {
+            return $targetCountries[0]['country_id'];
+        }
+
+        $region = strtolower($clientInfo->state);
+
+        /** Try to find the best match */
+        foreach ($targetCountries as $targetCountry) {
+            foreach ($targetCountry['languages'] as $language) {
+                if ($region === strtolower($language['name'])) {
+                    return $targetCountry['country_id'];
                 }
             }
-            return ($info['country_id']);
         }
 
-        if ($return === "language") {
-            if ($iso2 === 'PT' || $iso2 === 'BR') {
-                $info['language_id'] = 1;
-            } else {
-                $country_spanish = [
-                    'MX', 'CO', 'ES', 'AR', 'PE', 'VE', 'CL', 'EC',
-                    'GT', 'CU', 'BO', 'DO', 'HN', 'PY', 'SV', 'NI',
-                    'CR', 'PA', 'UY', 'PR', 'GQ'
-                ];
-                $info['language_id'] = in_array($iso2, $country_spanish, true) ? 3 : 2;
-            }
-            return ($info['language_id']);
+        /** Fallback */
+        return $targetCountries[0]['country_id'];
+    }
+
+    public function getLanguageCode($iso2)
+    {
+        if ($iso2 === 'PT' || $iso2 === 'BR') {
+            $languageId = 1;
+        } else {
+            $country_spanish = [
+                'MX', 'CO', 'ES', 'AR', 'PE', 'VE', 'CL', 'EC',
+                'GT', 'CU', 'BO', 'DO', 'HN', 'PY', 'SV', 'NI',
+                'CR', 'PA', 'UY', 'PR', 'GQ'
+            ];
+
+            $languageId = in_array($iso2, $country_spanish, true) ? 3 : 2;
         }
 
-        return false;
+        return $languageId;
     }
 
     public function getCurrencyCode($code)
