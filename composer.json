@@ -27,6 +27,14 @@
   "extra": {
     "changelog": [
       {
+        "version": "v3.3.8",
+        "title": "Lançamento da versão 3.3.8",
+        "description": [
+          "Método de pagamento usado na encomenda é agora utilizado no documento.",
+          "Correção na definição do país dos clientes."
+        ]
+      },
+      {
         "version": "v3.3.7",
         "title": "Lançamento da versão 3.3.7",
         "description": [
