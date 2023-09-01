@@ -8,9 +8,11 @@ use Moloni\Api\Customers;
 use Moloni\Api\Documents;
 use Moloni\Api\GlobalSettings\Countries;
 use Moloni\Api\GlobalSettings\Currencies;
+use Moloni\Api\PaymentMethods;
 use Moloni\Api\Products;
 use Moloni\Api\Settings\Taxes;
 use Moloni\Core\Storage;
+use Moloni\Enums\DocumentType;
 use Moloni\Model\WhmcsDB;
 
 class General
@@ -38,7 +40,7 @@ class General
                 return false;
             }
 
-            $client = $this->verifyCustomer($invoiceInfo->userid);
+            $client = $this->customer($invoiceInfo->userid);
 
             $fullCurrency = $this->getCurrencyCode($client['currency_code']->code);
 
@@ -50,7 +52,8 @@ class General
             $invoice['financial_discount'] = "";
             $invoice['special_discount'] = "";
             $invoice['maturity_date_id'] = defined('MATURITY_DATE') && !empty(MATURITY_DATE) ? MATURITY_DATE : null;
-            $invoice['payment_method_id'] = defined('PAYMENT_METHOD') && !empty(PAYMENT_METHOD) ? PAYMENT_METHOD : null;
+
+            $invoice['payments'] = $this->payment($invoiceInfo);
 
             if (isset($fullCurrency['whmcs_curr']) && !empty($fullCurrency['whmcs_curr'])) {
                 if (!($fullCurrency['same_curr'])) {
@@ -200,7 +203,7 @@ class General
         return false;
     }
 
-    public function product($productDefined, $item, $invoice, $exchange)
+    private function product($productDefined, $item, $invoice, $exchange)
     {
         $reference = $productDefined['reference'];
         $productExists = Products::getByReference($reference);
@@ -261,7 +264,7 @@ class General
         return Products::insert($product, $productDefined);
     }
 
-    public function verifyCustomer($id)
+    private function customer($id)
     {
         $customer = false;
         $number = false;
@@ -360,6 +363,51 @@ class General
         return ($returning);
     }
 
+    /**
+     * Get order payments
+     *
+     * @see https://classdocs.whmcs.com/7.4/WHMCS/Billing/Invoice.html
+     *
+     * @param object $order
+     *
+     * @return array
+     */
+    private function payment($order)
+    {
+        if (!defined('DOCUMENT_TYPE') || !DocumentType::hasPayments(DOCUMENT_TYPE)) {
+            return [];
+        }
+
+        $orderTotal = (float)$order->total;
+        $orderGateway = $order->paymentmethod;
+
+        if (empty($orderGateway)) {
+            return [];
+        }
+
+        $gateway = WhmcsDB::getGatewayInfo($orderGateway);
+
+        if (empty($gateway) || empty($gateway->value)) {
+            return [];
+        }
+
+        $paymentMethodId = PaymentMethods::searchByName($gateway->value);
+
+        if (empty($paymentMethodId)) {
+            $paymentMethodId = PaymentMethods::insert($gateway->value);
+        }
+
+        return [
+            [
+                'payment_method_id' => $paymentMethodId,
+                'date' => date('Y-m-d H:i:s'),
+                'value' => $orderTotal
+            ]
+        ];
+    }
+
+    //             Auxiliary             //
+
     public function checkZip($zipCode, $country = "PT")
     {
         if ($country === 'PT') {
@@ -404,7 +452,9 @@ class General
         return $zipCode;
     }
 
-    public function getCountryCode($clientInfo)
+    //             Gets             //
+
+    private function getCountryCode($clientInfo)
     {
         $iso2 = strtolower($clientInfo->country);
 
@@ -447,7 +497,7 @@ class General
         return $targetCountries[0]['country_id'];
     }
 
-    public function getLanguageCode($iso2)
+    private function getLanguageCode($iso2)
     {
         if ($iso2 === 'PT' || $iso2 === 'BR') {
             $languageId = 1;
@@ -464,7 +514,7 @@ class General
         return $languageId;
     }
 
-    public function getCurrencyCode($code)
+    private function getCurrencyCode($code)
     {
         $fullCurrency = [];
         $currencyCodes = Currencies::getAll();
