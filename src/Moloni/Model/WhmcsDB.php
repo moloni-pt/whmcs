@@ -389,4 +389,12 @@ class WhmcsDB
     {
         return Capsule::table('tblcurrencies')->select('code', 'prefix', 'suffix')->where('id', $id)->first();
     }
+
+    public static function getGatewayInfo($gateway)
+    {
+        return Capsule::table('tblpaymentgateways')
+            ->where('tblpaymentgateways.gateway', $gateway)
+            ->where('tblpaymentgateways.setting', 'name')
+            ->first();
+    }
 }

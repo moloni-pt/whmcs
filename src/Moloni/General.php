@@ -8,9 +8,11 @@ use Moloni\Api\Customers;
 use Moloni\Api\Documents;
 use Moloni\Api\GlobalSettings\Countries;
 use Moloni\Api\GlobalSettings\Currencies;
+use Moloni\Api\PaymentMethods;
 use Moloni\Api\Products;
 use Moloni\Api\Settings\Taxes;
 use Moloni\Core\Storage;
+use Moloni\Enums\DocumentType;
 use Moloni\Model\WhmcsDB;
 
 class General
@@ -38,7 +40,7 @@ class General
                 return false;
             }
 
-            $client = $this->verifyCustomer($invoiceInfo->userid);
+            $client = $this->customer($invoiceInfo->userid);
 
             $fullCurrency = $this->getCurrencyCode($client['currency_code']->code);
 
@@ -50,7 +52,8 @@ class General
             $invoice['financial_discount'] = "";
             $invoice['special_discount'] = "";
             $invoice['maturity_date_id'] = defined('MATURITY_DATE') && !empty(MATURITY_DATE) ? MATURITY_DATE : null;
-            $invoice['payment_method_id'] = defined('PAYMENT_METHOD') && !empty(PAYMENT_METHOD) ? PAYMENT_METHOD : null;
+
+            $invoice['payments'] = $this->payment($invoiceInfo);
 
             if (isset($fullCurrency['whmcs_curr']) && !empty($fullCurrency['whmcs_curr'])) {
                 if (!($fullCurrency['same_curr'])) {
@@ -200,7 +203,7 @@ class General
         return false;
     }
 
-    public function product($productDefined, $item, $invoice, $exchange)
+    private function product($productDefined, $item, $invoice, $exchange)
     {
         $reference = $productDefined['reference'];
         $productExists = Products::getByReference($reference);
@@ -261,7 +264,7 @@ class General
         return Products::insert($product, $productDefined);
     }
 
-    public function verifyCustomer($id)
+    private function customer($id)
     {
         $customer = false;
         $number = false;
@@ -304,11 +307,11 @@ class General
                 if (defined('UPDATE_CUSTOMER') && UPDATE_CUSTOMER) {
                     $values['customer_id'] = $customer['customer_id'];
                     $values['name'] = $name;
-                    $values['language_id'] = $this->getCountryCode($clientInfo->country, "language");
+                    $values['language_id'] = $this->getLanguageCode($clientInfo->country);
                     $values['address'] = $clientInfo->address1 . ((!empty($clientInfo->address2)) ? " - " . $clientInfo->address2 : "");
                     $values['zip_code'] = $this->checkZip($clientInfo->postcode, $clientInfo->country);
                     $values['city'] = $clientInfo->city;
-                    $values['country_id'] = $this->getCountryCode($clientInfo->country, "country");
+                    $values['country_id'] = $this->getCountryCode($clientInfo);
                     $values['email'] = $clientInfo->email;
                     $values['phone'] = $clientInfo->phonenumber;
 
@@ -335,8 +338,8 @@ class General
             $MoloniCustomer['zip_code'] = $this->checkZip($clientInfo->postcode, $clientInfo->country);
             $MoloniCustomer['city'] = $clientInfo->city;
 
-            $MoloniCustomer['country_id'] = $this->getCountryCode($clientInfo->country, "country");
-            $MoloniCustomer['language_id'] = $this->getCountryCode($clientInfo->country, "language");
+            $MoloniCustomer['country_id'] = $this->getCountryCode($clientInfo);
+            $MoloniCustomer['language_id'] = $this->getLanguageCode($clientInfo->country);
 
             $MoloniCustomer['maturity_date_id'] = ((defined('MATURITY_DATE') && !empty(MATURITY_DATE)) ? MATURITY_DATE : $me['maturity_date_id']);
             $MoloniCustomer['payment_method_id'] = ((defined('PAYMENT_METHOD') && !empty(PAYMENT_METHOD)) ? PAYMENT_METHOD : $me['payment_method_id']);
@@ -359,6 +362,51 @@ class General
 
         return ($returning);
     }
+
+    /**
+     * Get order payments
+     *
+     * @see https://classdocs.whmcs.com/7.4/WHMCS/Billing/Invoice.html
+     *
+     * @param object $order
+     *
+     * @return array
+     */
+    private function payment($order)
+    {
+        if (!defined('DOCUMENT_TYPE') || !DocumentType::hasPayments(DOCUMENT_TYPE)) {
+            return [];
+        }
+
+        $orderTotal = (float)$order->total;
+        $orderGateway = $order->paymentmethod;
+
+        if (empty($orderGateway)) {
+            return [];
+        }
+
+        $gateway = WhmcsDB::getGatewayInfo($orderGateway);
+
+        if (empty($gateway) || empty($gateway->value)) {
+            return [];
+        }
+
+        $paymentMethodId = PaymentMethods::searchByName($gateway->value);
+
+        if (empty($paymentMethodId)) {
+            $paymentMethodId = PaymentMethods::insert($gateway->value);
+        }
+
+        return [
+            [
+                'payment_method_id' => $paymentMethodId,
+                'date' => date('Y-m-d H:i:s'),
+                'value' => $orderTotal
+            ]
+        ];
+    }
+
+    //             Auxiliary             //
 
     public function checkZip($zipCode, $country = "PT")
     {
@@ -404,41 +452,69 @@ class General
         return $zipCode;
     }
 
-    public function getCountryCode($iso2, $return = "all")
-    {
-        $info = array();
-        if ($return === "country") {
-            if (strtolower($iso2) === 'gb') {
-                return 174;
-            }
+    //             Gets             //
 
-            $countries = Countries::getAll();
-            foreach ($countries as $moloniCountry) {
-                if (strtolower($iso2) == strtolower($moloniCountry['iso_3166_1'])) {
-                    $info['country_id'] = $moloniCountry['country_id'];
+    private function getCountryCode($clientInfo)
+    {
+        $iso2 = strtolower($clientInfo->country);
+
+        if ($iso2 === 'gb') {
+            return 174;
+        }
+
+        $countries = Countries::getAll();
+
+        $targetCountries = [];
+
+        foreach ($countries as $moloniCountry) {
+            if ($iso2 == strtolower($moloniCountry['iso_3166_1'])) {
+                $targetCountries[] = $moloniCountry;
+            }
+        }
+
+        /** Early return */
+        if (empty($targetCountries)) {
+            return 0;
+        }
+
+        /** Return the only one found */
+        if (count($targetCountries) === 1) {
+            return $targetCountries[0]['country_id'];
+        }
+
+        $region = strtolower($clientInfo->state);
+
+        /** Try to find the best match */
+        foreach ($targetCountries as $targetCountry) {
+            foreach ($targetCountry['languages'] as $language) {
+                if ($region === strtolower($language['name'])) {
+                    return $targetCountry['country_id'];
                 }
             }
-            return ($info['country_id']);
         }
 
-        if ($return === "language") {
-            if ($iso2 === 'PT' || $iso2 === 'BR') {
-                $info['language_id'] = 1;
-            } else {
-                $country_spanish = [
-                    'MX', 'CO', 'ES', 'AR', 'PE', 'VE', 'CL', 'EC',
-                    'GT', 'CU', 'BO', 'DO', 'HN', 'PY', 'SV', 'NI',
-                    'CR', 'PA', 'UY', 'PR', 'GQ'
-                ];
-                $info['language_id'] = in_array($iso2, $country_spanish, true) ? 3 : 2;
-            }
-            return ($info['language_id']);
-        }
-
-        return false;
+        /** Fallback */
+        return $targetCountries[0]['country_id'];
     }
 
-    public function getCurrencyCode($code)
+    private function getLanguageCode($iso2)
+    {
+        if ($iso2 === 'PT' || $iso2 === 'BR') {
+            $languageId = 1;
+        } else {
+            $country_spanish = [
+                'MX', 'CO', 'ES', 'AR', 'PE', 'VE', 'CL', 'EC',
+                'GT', 'CU', 'BO', 'DO', 'HN', 'PY', 'SV', 'NI',
+                'CR', 'PA', 'UY', 'PR', 'GQ'
+            ];
+
+            $languageId = in_array($iso2, $country_spanish, true) ? 3 : 2;
+        }
+
+        return $languageId;
+    }
+
+    private function getCurrencyCode($code)
     {
         $fullCurrency = [];
         $currencyCodes = Currencies::getAll();

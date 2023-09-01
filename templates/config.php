@@ -1,12 +1,13 @@
 <?php
 
 use Moloni\Tools;
+use Moloni\Model\WhmcsDB;
+use Moloni\Enums\DocumentType;
 use Moloni\Api\Settings\DocumentSets;
 use Moloni\Api\GlobalSettings\TaxExemptions;
 use Moloni\Api\Settings\MeasurementUnits;
 use Moloni\Api\Settings\MaturityDates;
 use Moloni\Api\Settings\PaymentMethods;
-use Moloni\Model\WhmcsDB;
 
 ?>
 
@@ -73,18 +74,11 @@ use Moloni\Model\WhmcsDB;
                         <div class='input-field'>
                             <select name='document_type' id="document_type">
                                 <option value='' disabled selected>Tipo de documento a usar</option>
-                                <option value='invoices'
-                                    <?= Tools::isSelected("DOCUMENT_TYPE", 'invoices') ?>>Fatura
-                                </option>
-                                <option value='invoiceReceipts'
-                                    <?= Tools::isSelected("DOCUMENT_TYPE", 'invoiceReceipts') ?>>Fatura/Recibo
-                                </option>
-                                <option value='estimates'
-                                    <?= Tools::isSelected("DOCUMENT_TYPE", 'estimates') ?>>Orçamento
-                                </option>
-                                <option value='billsOfLading'
-                                    <?= Tools::isSelected("DOCUMENT_TYPE", 'billsOfLading') ?>>Guias de Transporte
-                                </option>
+                                <?php $documentTypes = DocumentType::getDocumentTypeForRender() ?>
+
+                                <?php foreach ($documentTypes as $id => $label) : ?>
+                                    <option value="<?= $id ?>" <?= Tools::isSelected("DOCUMENT_TYPE", $id) ?>><?= $label ?></option>
+                                <?php endforeach; ?>
                             </select>
                             <label for="document_type">Tipo de documento</label>
                         </div>
