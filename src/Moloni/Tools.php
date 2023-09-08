@@ -18,6 +18,8 @@ class Tools
             $url .= $file;
         }
 
+        $url .= '?v=3.4.0';
+
         return $url;
     }
 

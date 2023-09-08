@@ -4,7 +4,10 @@ namespace Moloni\Admin;
 
 use Moloni\Core\Storage;
 use Moloni\Curl;
+use Moloni\Facades\LoggerFacade;
 use Moloni\Model\WhmcsDB;
+use Moloni\Services\Logs\DeleteLogs;
+use Moloni\Services\Logs\FetchLogs;
 use Moloni\Start;
 use Moloni\General;
 use Moloni\Error;
@@ -14,6 +17,7 @@ class Dispatcher
     /** @var Start */
     protected $moloni;
     protected $template = 'login';
+    /** @var General */
     protected $general;
     protected $message = [];
 
@@ -32,6 +36,26 @@ class Dispatcher
 
         echo 'Failed loading template ' . $templatePath;
         return false;
+    }
+
+    public function dispatchAjax()
+    {
+        $this->moloni = new Start();
+
+        switch ($_GET['action']) {
+            case 'logs':
+                $response = $this->logsPageAjax();
+
+                break;
+            default:
+                $response = [];
+
+                break;
+        }
+
+        header('Content-Type: application/json');
+        echo json_encode($response);
+        die();
     }
 
     //            Privates            //
@@ -58,36 +82,23 @@ class Dispatcher
 
             switch ($_GET['action']) {
                 case "config":
-                    if (isset($_GET['command']) && $_GET['command'] === "save") {
-                        $this->moloni->variablesUpdate();
-                        Error::success("Configurações guardadas com sucesso");
-                        break;
-                    }
-
-                    $this->moloni->variablesDefine();
-                    $this->template = 'config';
+                    $this->settingsPage();
 
                     return true;
                 case "invoice":
-                    $this->moloni->variablesDefine();
-                    if (isset($_GET['command']) && $_GET['command'] === "gen") {
-                        $this->general->createInvoice($_GET['id']);
-                    } elseif ($this->deleteInvoice($_GET['id'])) {
-                        Error::success('Encomenda apagada com sucesso');
-                    }
+                    $this->invoicePage();
+
                     break;
                 case 'docs':
-                    if (isset($_GET['command']) && $_GET['command'] === "redo") {
-                        $this->redoInvoice($_GET['id']);
-                        Error::success('Documento revertido com sucesso');
-                    }
-                    $this->moloni->variablesDefine();
-                    $this->template = 'document';
+                    $this->documentsPage();
+
+                    return true;
+                case 'logs':
+                    $this->logsPage();
 
                     return true;
                 case 'logout':
-                    WhmcsDB::clearMoloniTokens();
-                    $this->template = 'login';
+                    $this->logoutPage();
 
                     return true;
             }
@@ -139,6 +150,99 @@ class Dispatcher
     {
         WhmcsDB::deleteMoloniInvoice($invoice_id);
         return true;
+    }
+
+    //            Pages            //
+
+    private function settingsPage()
+    {
+        if (isset($_GET['command']) && $_GET['command'] === "save") {
+            $this->moloni->variablesUpdate();
+
+            $msg = 'Configurações guardadas com sucesso.';
+
+            LoggerFacade::info($msg, $_POST);
+            Error::success($msg);
+
+            $this->template = 'index';
+        } else {
+            $this->template = 'config';
+        }
+
+        $this->moloni->variablesDefine();
+    }
+
+    private function invoicePage()
+    {
+        $this->moloni->variablesDefine();
+
+        $orderId = (int)$_GET['id'];
+
+        if (isset($_GET['command']) && $_GET['command'] === "gen") {
+            $this->general->createInvoice($orderId);
+
+            return;
+        }
+
+        if ($this->deleteInvoice($orderId)) {
+            $msg = 'Encomenda apagada com sucesso.';
+            $data = [
+                'id' => $orderId
+            ];
+
+            LoggerFacade::info($msg, $data);
+            Error::success($msg);
+        }
+    }
+
+    private function documentsPage()
+    {
+        if (isset($_GET['command']) && $_GET['command'] === "redo") {
+            $orderId = (int)$_GET['id'];
+
+            $this->redoInvoice($orderId);
+
+            $msg = 'Documento revertido com sucesso.';
+            $data = [
+                'id' => $orderId
+            ];
+
+            LoggerFacade::info($msg, $data);
+            Error::success($msg);
+        }
+
+        $this->moloni->variablesDefine();
+        $this->template = 'document';
+    }
+
+    private function logsPage()
+    {
+        if (isset($_GET['command']) && $_GET['command'] === "delete") {
+            $service = new DeleteLogs();
+            $service->run();
+            $service->saveLog();
+
+            Error::success('Registos antigos eliminados com sucesso');
+        }
+
+        $this->template = 'logs';
+    }
+
+    private function logoutPage()
+    {
+        WhmcsDB::clearMoloniTokens();
+        LoggerFacade::info('Logout manual efetuado.');
+
+        $this->template = 'login';
+    }
+
+    //            Pages Ajax request           //
+
+    private function logsPageAjax()
+    {
+        $service = new FetchLogs($_GET);
+
+        return $service->run();
     }
 
     //            Auxiliary            //

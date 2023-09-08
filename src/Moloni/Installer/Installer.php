@@ -9,8 +9,11 @@ class Installer
 {
     private static $errors = [];
 
-
     /**
+     * Run installation script
+     *
+     * @see https://developers.whmcs.com/addon-modules/installation-uninstallation/
+     *
      * @return array|string[]
      */
     public static function install()
@@ -18,6 +21,7 @@ class Installer
         self::installMoloni();
         self::installMoloniConfigs();
         self::installMoloniInvoices();
+        self::installMoloniLogs();
         self::setDefaultSettings();
 
         if (!empty(self::$errors)) {
@@ -31,6 +35,10 @@ class Installer
     }
 
     /**
+     * Run remove script
+     *
+     * @see https://developers.whmcs.com/addon-modules/installation-uninstallation/
+     *
      * @return array|string[]
      */
     public static function remove()
@@ -42,8 +50,28 @@ class Installer
     }
 
     /**
-     * @return bool
+     * Run upgrade script
+     *
+     * @see https://developers.whmcs.com/addon-modules/upgrades/
+     *
+     * @return mixed|string[]
      */
+    public static function update()
+    {
+        self::installMoloniLogs();
+
+        if (!empty(self::$errors)) {
+            return self::$errors[0];
+        }
+
+        return [
+            'status' => 'success',
+            'description' => 'Addon Moloni atualizado com sucesso.'
+        ];
+    }
+
+    //        Queries        //
+
     private static function installMoloni()
     {
         try {
@@ -60,21 +88,14 @@ class Installer
                     }
                 );
             }
-
-            return true;
         } catch (Exception $e) {
             self::$errors = [
                 'status' => "error",
                 'description' => 'Falha ao criar tabela moloni: ' . $e->getMessage(),
             ];
-
-            return false;
         }
     }
 
-    /**
-     * @return bool
-     */
     private static function installMoloniConfigs()
     {
         try {
@@ -91,21 +112,14 @@ class Installer
                     }
                 );
             }
-
-            return true;
         } catch (Exception $e) {
             self::$errors = [
                 'status' => "error",
                 'description' => 'Falha ao criar tabela moloni_configs: ' . $e->getMessage(),
             ];
-
-            return false;
         }
     }
 
-    /**
-     * @return bool
-     */
     private static function installMoloniInvoices()
     {
         # Correr queries de inicio
@@ -133,17 +147,53 @@ class Installer
                     }
                 );
             }
-
-            return true;
         } catch (Exception $e) {
             self::$errors = [
                 'status' => "error",
                 'description' => 'Falha ao criar tabela moloni_invoices: ' . $e->getMessage(),
             ];
-
-            return false;
         }
     }
+
+    private static function installMoloniLogs()
+    {
+        try {
+            if (!Capsule::schema()->hasTable('moloni_logs')) {
+                Capsule::schema()->create(
+                    'moloni_logs',
+                    function ($table) {
+                        $table->increments('id');
+                        $table->text('log_level');
+                        $table->integer('company_id');
+                        $table->text('message');
+                        $table->text('context');
+                        $table->dateTime('created_at');
+                    }
+                );
+            }
+        } catch (Exception $e) {
+            self::$errors = [
+                'status' => "error",
+                'description' => 'Falha ao criar tabela moloni_logs: ' . $e->getMessage(),
+            ];
+        }
+    }
+
+    private static function removeMoloni()
+    {
+        if (Capsule::schema()->hasTable('moloni')) {
+            Capsule::schema()->dropIfExists('moloni');
+        }
+    }
+
+    private static function removeMoloniConfigs()
+    {
+        if (Capsule::schema()->hasTable('moloni_configs')) {
+            Capsule::schema()->dropIfExists('moloni_configs');
+        }
+    }
+
+    //        Defaults        //
 
     private static function setDefaultSettings()
     {
@@ -194,36 +244,6 @@ class Installer
                 'status' => "error",
                 'description' => 'Falha ao inserir dados na tabela moloni_configs: ' . $e->getMessage(),
             ];
-
-            return false;
         }
-
-        return true;
-    }
-
-    /**
-     * @return bool
-     */
-    private static function removeMoloni()
-    {
-        if (Capsule::schema()->hasTable('moloni')) {
-            Capsule::schema()->dropIfExists('moloni');
-            return true;
-        }
-
-        return false;
-    }
-
-    /**
-     * @return bool
-     */
-    private static function removeMoloniConfigs()
-    {
-        if (Capsule::schema()->hasTable('moloni_configs')) {
-            Capsule::schema()->dropIfExists('moloni_configs');
-            return true;
-        }
-
-        return false;
     }
 }

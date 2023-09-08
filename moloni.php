@@ -24,6 +24,17 @@ function moloni_activate()
     }
 }
 
+function moloni_upgrade($vars)
+{
+    try {
+        require_once __DIR__ . '/vendor/autoload.php';
+        return Installer::update();
+    } catch (Exception $exception) {
+        echo $exception->getMessage();
+        exit;
+    }
+}
+
 function moloni_deactivate()
 {
     try {
@@ -42,5 +53,10 @@ function moloni_output($vars)
     require_once __DIR__ . '/vendor/autoload.php';
 
     $dispatcher = new Dispatcher();
-    $dispatcher->dispatch($vars);
+
+    if (isset($_GET['ajax']) && filter_var($_GET['ajax'], FILTER_VALIDATE_BOOLEAN)) {
+        $dispatcher->dispatchAjax();
+    } else {
+        $dispatcher->dispatch($vars);
+    }
 }
