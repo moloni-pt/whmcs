@@ -2,14 +2,17 @@
 
 namespace Moloni\Admin;
 
+use Exception;
 use Moloni\Core\Storage;
 use Moloni\Curl;
+use Moloni\Exceptions\DocumentException;
+use Moloni\Exceptions\DocumentWarning;
 use Moloni\Facades\LoggerFacade;
 use Moloni\Model\WhmcsDB;
+use Moloni\Services\Invoices\CreateDocumentFromInvoice;
 use Moloni\Services\Logs\DeleteLogs;
 use Moloni\Services\Logs\FetchLogs;
 use Moloni\Start;
-use Moloni\General;
 use Moloni\Error;
 
 class Dispatcher
@@ -17,14 +20,11 @@ class Dispatcher
     /** @var Start */
     protected $moloni;
     protected $template = 'login';
-    /** @var General */
-    protected $general;
     protected $message = [];
 
     public function dispatch($parameters)
     {
         $this->moloni = new Start();
-        $this->general = new General();
         $this->actionDecide();
 
         $templatePath = MOLONI_TEMPLATE_PATH . $this->template . '.php';
@@ -161,7 +161,11 @@ class Dispatcher
 
             $msg = 'Configurações guardadas com sucesso.';
 
-            LoggerFacade::info($msg, $_POST);
+            $data = $_POST;
+            $data['token'] = '';
+            $data['tag'] = 'manual:settings:save';
+
+            LoggerFacade::info($msg, $data);
             Error::success($msg);
 
             $this->template = 'index';
@@ -179,7 +183,34 @@ class Dispatcher
         $orderId = (int)$_GET['id'];
 
         if (isset($_GET['command']) && $_GET['command'] === "gen") {
-            $this->general->createInvoice($orderId);
+            try {
+                $service = new CreateDocumentFromInvoice($orderId);
+                $service->execute();
+            } catch (DocumentWarning $e) {
+                Error::warning($e->getMessage());
+            } catch (DocumentException $e) {
+                Error::create(
+                    $e->getWhere(),
+                    $e->getMessage(),
+                    $e->getData()
+                );
+
+                LoggerFacade::error($e->getMessage() . ' (manual)', [
+                    'tag' => 'service:document:create:error',
+                    'isHook' => 0,
+                    'invoiceId' => $orderId,
+                    'data' => $e->getData()
+                ]);
+            } catch (Exception $e) {
+                Error::create('Geral', $e->getMessage());
+
+                LoggerFacade::error('Erro fatal. (manual)', [
+                    'tag' => 'service:document:create:fatalerror',
+                    'isHook' => 0,
+                    'invoiceId' => $orderId,
+                    'message' => $e->getMessage()
+                ]);
+            }
 
             return;
         }
@@ -187,6 +218,7 @@ class Dispatcher
         if ($this->deleteInvoice($orderId)) {
             $msg = 'Encomenda apagada com sucesso.';
             $data = [
+                'tag' => 'manual:invoice:discard',
                 'id' => $orderId
             ];
 
@@ -204,6 +236,7 @@ class Dispatcher
 
             $msg = 'Documento revertido com sucesso.';
             $data = [
+                'tag' => 'manual:invoice:redo',
                 'id' => $orderId
             ];
 
@@ -230,8 +263,13 @@ class Dispatcher
 
     private function logoutPage()
     {
+        $msg = 'Logout manual efetuado.';
+        $data = [
+            'tag' => 'manual:logout'
+        ];
+
         WhmcsDB::clearMoloniTokens();
-        LoggerFacade::info('Logout manual efetuado.');
+        LoggerFacade::info($msg, $data);
 
         $this->template = 'login';
     }

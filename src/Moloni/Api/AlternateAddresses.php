@@ -44,7 +44,7 @@ class AlternateAddresses
             return ($result);
         }
 
-        Error::create("customerAlternateAddresses/insert", "Erro ao inserir morada alternativa", $values, $result);
+        Error::create("customerAlternateAddresses/insert", "Erro ao inserir morada alternativa", [$values, $result]);
         return false;
     }
 

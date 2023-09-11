@@ -39,7 +39,7 @@ class MeasurementUnits
             return ($result['unit_id']);
         }
 
-        Error::create("measurementUnits/insert", "Erro ao inserir unidade de medida", $values, $result);
+        Error::create("measurementUnits/insert", "Erro ao inserir unidade de medida", [$values, $result]);
         return false;
     }
 

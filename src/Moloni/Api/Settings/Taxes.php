@@ -4,6 +4,7 @@ namespace Moloni\Api\Settings;
 
 use Moloni\Curl;
 use Moloni\Error;
+use Moloni\Exceptions\APIException;
 
 class Taxes
 {
@@ -12,6 +13,11 @@ class Taxes
         return Curl::simple("taxes/getAll");
     }
 
+    /**
+     * Create tax
+     *
+     * @throws APIException
+     */
     public static function insert($values)
     {
         if (!is_array($values)) {
@@ -21,12 +27,18 @@ class Taxes
         $result = Curl::simple("taxes/insert", $values);
 
         if (isset($result['tax_id'])) {
-            return ($result['tax_id']);
+            return $result['tax_id'];
         }
 
-        Error::create("taxes/insert", "Erro ao inserir taxa", $values, $result);
+        throw new APIException(
+            "Erro ao inserir taxa",
+            [
+                'values_sent' => $values,
+                'values_receive' => $result,
 
-        return false;
+            ],
+            "taxes/insert"
+        );
     }
 
     public static function update($values)
@@ -38,6 +50,11 @@ class Taxes
         return Curl::simple("taxes/update", $values);
     }
 
+    /**
+     * Get product tax
+     *
+     * @throws APIException
+     */
     public static function check($rate = 23)
     {
         $taxes = self::getAll();
