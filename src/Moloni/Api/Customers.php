@@ -18,26 +18,6 @@ class Customers
         return Curl::simple("customers/getAll");
     }
 
-    public static function getOne()
-    {
-        return Curl::simple("customers/getOne");
-    }
-
-    public static function countBySearch()
-    {
-        return Curl::simple("customers/countBySearch");
-    }
-
-    public static function getBySearch()
-    {
-        return Curl::simple("customers/getBySearch");
-    }
-
-    public static function countByVat()
-    {
-        return Curl::simple("customers/countByVat");
-    }
-
     public static function getByVat($values)
     {
         if (!is_array($values)) {
@@ -109,26 +89,6 @@ class Customers
         return false;
     }
 
-    public static function countByNumber()
-    {
-        return Curl::simple("customers/countByNumber");
-    }
-
-    public static function countByName()
-    {
-        return Curl::simple("customers/countByName");
-    }
-
-    public static function getByName()
-    {
-        return Curl::simple("customers/getByName");
-    }
-
-    public static function getLastNumber()
-    {
-        return Curl::simple("customers/getLastNumber");
-    }
-
     public static function getNextNumber()
     {
         $result = Curl::simple("customers/getNextNumber");
@@ -155,11 +115,10 @@ class Customers
 
 
         throw new APIException(
-            "Erro ao inserir cliente",
+            "Erro ao inserir cliente.",
             [
                 'values_sent' => $values,
                 'values_receive' => $result,
-
             ],
             "customers/insert"
         );
@@ -183,11 +142,10 @@ class Customers
         }
 
         throw new APIException(
-            "Erro ao actualizar cliente",
+            "Erro ao actualizar cliente.",
             [
                 'values_sent' => $values,
                 'values_receive' => $result,
-
             ],
             "customers/update"
         );

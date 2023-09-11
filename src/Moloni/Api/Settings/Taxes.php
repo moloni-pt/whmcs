@@ -31,7 +31,7 @@ class Taxes
         }
 
         throw new APIException(
-            "Erro ao inserir taxa",
+            "Erro ao inserir taxa.",
             [
                 'values_sent' => $values,
                 'values_receive' => $result,

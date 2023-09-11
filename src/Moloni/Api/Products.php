@@ -171,7 +171,7 @@ class Products
         }
 
         throw new APIException(
-            "Erro ao inserir artigo",
+            "Erro ao inserir artigo.",
             [
                 'values_sent' => $values,
                 'values_receive' => $result

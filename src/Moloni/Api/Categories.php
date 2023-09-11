@@ -3,9 +3,15 @@
 namespace Moloni\Api;
 
 use Moloni\Curl;
+use Moloni\Exceptions\APIException;
 
 class Categories
 {
+    /**
+     * Get category by name
+     *
+     * @throws APIException
+     */
     public static function check($name)
     {
         $categories = self::getAll();
@@ -23,7 +29,6 @@ class Categories
         $values['pos_enabled'] = "1";
 
         return self::insert($values);
-
     }
 
     public static function getAll()
@@ -34,6 +39,11 @@ class Categories
         return Curl::simple("productCategories/getAll", $values);
     }
 
+    /**
+     * Create category
+     *
+     * @throws APIException
+     */
     public static function insert($values)
     {
         if (!is_array($values)) {
@@ -44,9 +54,16 @@ class Categories
 
         if (isset($result['category_id'])) {
             return $result['category_id'];
-        } else {
-            return false;
         }
+
+        throw new APIException(
+            "Erro ao inserir categoria.",
+            [
+                'values_sent' => $values,
+                'values_receive' => $result,
+            ],
+            "productCategories/insert"
+        );
     }
 
     public static function update($values)

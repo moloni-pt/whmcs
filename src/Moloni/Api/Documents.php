@@ -36,7 +36,7 @@ class Documents
         }
 
         throw new APIException(
-            "Erro ao inserir documento",
+            "Erro ao inserir documento.",
             [
                 'values_sent' => $values,
                 'values_receive' => $result,
@@ -100,7 +100,7 @@ class Documents
         }
 
         throw new APIException(
-            "Erro ao actualizar documento",
+            "Erro ao actualizar documento.",
             [
                 'values_sent' => $values,
                 'values_receive' => $result,
@@ -122,7 +122,7 @@ class Documents
         }
 
         $total = 0;
-        $offset = (isset($values['offset']) ? $values['offset'] : "0");
+        $offset = $values['offset'] ?? "0";
         $results = [];
 
         while ($total < $max) {

@@ -743,7 +743,12 @@ class CreateDocumentFromInvoice
         }
 
         $product = [];
-        $product['category_id'] = Categories::check("WHMCS");
+
+        try {
+            $product['category_id'] = Categories::check("WHMCS");
+        } catch (APIException $e) {
+            throw new DocumentException($e->getMessage(), $e->getData(), $e->getWhere());
+        }
 
         if (isset($productDefined['type']) && in_array($productDefined['type'], [0, 1, 2])) {
             $product['type'] = (int)$productDefined['type'];
