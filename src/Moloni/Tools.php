@@ -18,7 +18,9 @@ class Tools
             $url .= $file;
         }
 
-        $url .= '?v=3.4.0';
+        if (defined('MOLONI_ADDON_VERSION')) {
+            $url .= '?v=' . MOLONI_ADDON_VERSION;
+        }
 
         return $url;
     }

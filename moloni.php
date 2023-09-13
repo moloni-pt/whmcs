@@ -3,12 +3,16 @@
 use Moloni\Admin\Dispatcher;
 use Moloni\Installer\Installer;
 
+if (!defined('MOLONI_ADDON_VERSION')) {
+    define('MOLONI_ADDON_VERSION', '3.5.0');
+}
+
 function moloni_config()
 {
     return [
         "name" => "Moloni",
         "description" => "Facturação fácil e automática? É para já!",
-        "version" => "7.1",
+        "version" => MOLONI_ADDON_VERSION,
         "author" => "Moloni",
     ];
 }
