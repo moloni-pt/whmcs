@@ -99,10 +99,7 @@ class CreateDocumentFromInvoice
         if (Error::$exists) {
             throw new DocumentException(
                 Error::$error['message'],
-                [
-                    'values_sent' => Error::$error['values_sent'],
-                    'values_receive' => Error::$error['values_receive']
-                ],
+                Error::$error['data'],
                 Error::$error['where']
             );
         }
