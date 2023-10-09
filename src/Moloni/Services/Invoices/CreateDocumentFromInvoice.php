@@ -249,7 +249,7 @@ class CreateDocumentFromInvoice
             throw new DocumentException('Moeda usada por cliente não existe no Moloni', [], 'Moeda');
         }
 
-        if (!$this->fullCurrency['same_curr']) {
+        if (!$fullCurrency['same_curr']) {
             $this->documentData['exchange_currency_id'] = $fullCurrency['whmcs_curr'];
             $this->documentData['exchange_rate'] = $fullCurrency['exchange_value'];
         }
