@@ -103,11 +103,14 @@ class WhmcsDB
         $options["custom_reference"] = "Campo customizado Ref Produto";
         $options["custom_client"] = "Campo customizado NIF cliente";
 
-        foreach ($_POST as $key => $value) {
-            $val = (is_array($value) ? serialize($value) : $value);
-            if (isset($options[$key])) {
-                Capsule::table('moloni_configs')->updateOrInsert(['label' => $key, 'name' => $options[$key], 'description' => ''], ['value' => $val]);
+        foreach ($options as $key => $name) {
+            if (isset($_POST[$key])) {
+                $val = (is_array($_POST[$key]) ? serialize($_POST[$key]) : $_POST[$key]);
+            } else {
+                $val = '';
             }
+
+            Capsule::table('moloni_configs')->updateOrInsert(['label' => $key, 'name' => $name, 'description' => ''], ['value' => $val]);
         }
 
         return true;
