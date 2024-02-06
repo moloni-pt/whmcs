@@ -27,6 +27,14 @@
   "extra": {
     "changelog": [
       {
+        "version": "v3.3.9",
+        "title": "Lançamento da versão 3.3.9",
+        "description": [
+          "Adicionado novo tipo de artigo (fundos).",
+          "Correção a guardar configurações do plugin."
+        ]
+      },
+      {
         "version": "v3.3.8",
         "title": "Lançamento da versão 3.3.8",
         "description": [

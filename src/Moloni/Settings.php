@@ -99,6 +99,13 @@ class Settings
                 $invoicedItem['type'] = 2;
                 break;
 
+            case "AddFunds":
+                $invoicedItem['name'] = !empty($this->item->description) ? $this->item->description : 'Adição de fundos';
+                $invoicedItem['summary'] = "";
+                $invoicedItem['reference'] = 'ADD-FUNDS';
+                $invoicedItem['type'] = 2;
+                break;
+
             case "Invoice":
                 $invoicedItem['massPay'] = true;
                 break;
