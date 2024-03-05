@@ -20,7 +20,6 @@ class General
     public function createInvoice($invoiceID)
     {
         $hasMassPay = false;
-        $forceDraft = false;
 
         $invoiceInfo = WhmcsDB::getInvoice($invoiceID);
 
@@ -70,6 +69,7 @@ class General
 
             foreach ($invoiceItems as $item) {
                 $settingsProducts = new Settings($item, $invoiceID);
+
                 $invoicedItem = $settingsProducts->buildProduct();
 
                 if (isset($invoicedItem['skip']) && $invoicedItem['skip'] == true) {
@@ -97,7 +97,6 @@ class General
                         $invoice['products'][$x]['taxes'][0]['value'] = round($productPrice * ($invoiceTaxRate / 100));
                     } elseif (defined('EXEMPTION_REASON') && !empty(EXEMPTION_REASON)) {
                         $invoice['products'][$x]['exemption_reason'] = EXEMPTION_REASON;
-                        $forceDraft = true;
                     } else {
                         Error::create('Produtos', 'Não existe razão de isenção selecionada');
                         return false;
@@ -155,7 +154,7 @@ class General
                         $insertValue = 0;
                         $insertMessage = "Documento inserido como rascunho com sucesso!";
 
-                        if (defined('DOCUMENT_STATUS') && DOCUMENT_STATUS == 1 && !$forceDraft && !$hasMassPay) {
+                        if (defined('DOCUMENT_STATUS') && DOCUMENT_STATUS == 1 && !$hasMassPay) {
                             $update = [];
                             $update['document_id'] = $documentID;
                             $update['status'] = 1;
