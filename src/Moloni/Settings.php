@@ -72,9 +72,10 @@ class Settings
 
 
             case "Upgrade":
-                $hostingInfo = WhmcsDB::getHostingInfo($this->item->relid);
-                $invoicedItem['name'] = "Upgrade/Downgrade - " . $hostingInfo->name;
-                $invoicedItem['summary'] = $hostingInfo->domain . "<br>" . $this->item->duedate . " - " . $hostingInfo->nextduedate;
+                $upgradeInfo = WhmcsDB::getUpgradeInfo($this->item->relid);
+
+                $invoicedItem['name'] = "Upgrade/Downgrade - " . $upgradeInfo->name;
+                $invoicedItem['summary'] = $upgradeInfo->domain . "<br>" . $this->item->duedate . " - " . $upgradeInfo->nextduedate;
                 $invoicedItem['reference'] = "UPGRADE";
                 $invoicedItem['type'] = 2;
                 break;
