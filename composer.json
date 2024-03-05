@@ -27,6 +27,14 @@
   "extra": {
     "changelog": [
       {
+        "version": "v3.4.0",
+        "title": "Lançamento da versão 3.4.0",
+        "description": [
+          "Documentos com razão de isenção passam a poder ser gerados no estado 'fechado'.",
+          "Descrição e nome de produtos do tipo 'Upgrade' foi corrigido."
+        ]
+      },
+      {
         "version": "v3.3.9",
         "title": "Lançamento da versão 3.3.9",
         "description": [
