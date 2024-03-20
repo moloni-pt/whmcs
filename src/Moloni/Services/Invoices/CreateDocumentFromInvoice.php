@@ -41,7 +41,6 @@ class CreateDocumentFromInvoice
     private $documentCustomer = [];
 
     private $hasMassPay = false;
-    private $forceDraft = false;
 
     /**
      * Constructor
@@ -150,7 +149,7 @@ class CreateDocumentFromInvoice
                 $insertValue = 0;
                 $insertMessage = "Documento inserido como rascunho com sucesso!";
 
-                if (defined('DOCUMENT_STATUS') && DOCUMENT_STATUS == DocumentStatus::CLOSED && !$this->forceDraft && !$this->hasMassPay) {
+                if (defined('DOCUMENT_STATUS') && DOCUMENT_STATUS == DocumentStatus::CLOSED && !$this->hasMassPay) {
                     $update = [];
                     $update['document_id'] = $documentID;
                     $update['status'] = DocumentStatus::CLOSED;
@@ -423,7 +422,6 @@ class CreateDocumentFromInvoice
                     $this->documentData['products'][$x]['taxes'][0]['value'] = round($productPrice * ($invoiceTaxRate / 100));
                 } elseif (defined('EXEMPTION_REASON') && !empty(EXEMPTION_REASON)) {
                     $this->documentData['products'][$x]['exemption_reason'] = EXEMPTION_REASON;
-                    $this->forceDraft = true;
                 } else {
                     throw new DocumentException("Não existe razão de isenção selecionada", [], 'Produtos');
                 }
