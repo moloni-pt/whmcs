@@ -3,7 +3,8 @@
 namespace Moloni\Api\Settings;
 
 use Moloni\Curl;
-use Moloni\Error;
+use Moloni\Enums\SaftType;
+use Moloni\Enums\TaxType;
 use Moloni\Exceptions\APIException;
 
 class Taxes
@@ -55,25 +56,46 @@ class Taxes
      *
      * @throws APIException
      */
-    public static function check($rate = 23)
+    public static function check($rate = 23, $fiscalCountry = [])
     {
+        $countryId = (int)$fiscalCountry['country_id'];
+        $countryCode = strtolower($fiscalCountry['country_code']);
+        $targetRate = round($rate, 2);
+
         $taxes = self::getAll();
 
         foreach ($taxes as $tax) {
-            if (round($rate, 2) == round($tax['value'], 2)) {
+            if (strtolower($tax['fiscal_zone']) !== $countryCode) {
+                continue;
+            }
+
+            if ((int)$tax['country_id'] !== $countryId) {
+                continue;
+            }
+
+            if ((int)$tax['saft_type'] !== SaftType::IVA) {
+                continue;
+            }
+
+            if ((int)$tax['type'] !== TaxType::PERCENTAGE) {
+                continue;
+            }
+
+            if ($targetRate == round($tax['value'], 2)) {
                 return $tax['tax_id'];
             }
         }
 
         $values = [];
-        $values['name'] = "Taxa " . round($rate, 2);
+        $values['name'] = "Tax $countryCode - $targetRate";
         $values['value'] = $rate;
-        $values['type'] = "1";
-        $values['saft_type'] = "1";
+        $values['type'] = TaxType::PERCENTAGE;
+        $values['saft_type'] = SaftType::IVA;
         $values['vat_type'] = "OUT";
         $values['stamp_tax'] = "0";
         $values['exemption_reason'] = defined('EXEMPTION_REASON') ? EXEMPTION_REASON : '';
-        $values['fiscal_zone'] = "PT";
+        $values['fiscal_zone'] = $countryCode;
+        $values['country_id'] = $countryId;
         $values['active_by_default'] = "0";
 
         return self::insert($values);

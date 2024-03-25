@@ -319,6 +319,11 @@ class WhmcsDB
         return ($invoice);
     }
 
+    public static function getInvoiceData($id)
+    {
+        return Capsule::table('tblinvoicedata')->where('invoice_id', $id)->first();
+    }
+
     public static function getInvoiceItems($id)
     {
         $array = array();

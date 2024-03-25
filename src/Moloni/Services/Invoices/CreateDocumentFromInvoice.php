@@ -30,11 +30,13 @@ class CreateDocumentFromInvoice
     private $company = [];
 
     private $invoice;
+    private $invoiceData;
     private $invoiceId;
     private $invoiceItems;
     private $invoiceCustomer;
 
     private $fullCurrency = [];
+    private $fiscalCountry = [];
 
     private $documentId = 0;
     private $documentData = [];
@@ -57,6 +59,7 @@ class CreateDocumentFromInvoice
 
         $this
             ->loadInvoice()
+            ->loadInvoiceData()
             ->loadInvoiceItems()
             ->loadInvoiceCustomer()
             ->loadMoloniCompany();
@@ -75,6 +78,7 @@ class CreateDocumentFromInvoice
         $this->documentData = [];
 
         $this
+            ->defineFiscalZone()
             ->defineBasics()
             ->defineExchange()
             ->defineCustomer()
@@ -197,6 +201,43 @@ class CreateDocumentFromInvoice
     }
 
     //          DEFINES          //
+
+    /**
+     * Define document fiscal zone
+     *
+     * @throws DocumentException
+     */
+    private function defineFiscalZone(): CreateDocumentFromInvoice
+    {
+        $fiscalCountry = [
+            'country_id' => 0,
+            'country_code' => strtolower($this->invoiceData['country'])
+        ];
+
+        if ($fiscalCountry['country_code'] === 'gb') {
+            $fiscalCountry['country_id'] = 174;
+        } else {
+            $countries = Countries::getAll();
+
+            foreach ($countries as $moloniCountry) {
+                if ($fiscalCountry['country_code'] !== strtolower($moloniCountry['iso_3166_1'])) {
+                    continue;
+                }
+
+                $fiscalCountry['country_id'] = (int)$moloniCountry['country_id'];
+
+                break;
+            }
+        }
+
+        if (empty($fiscalCountry['country_id'])) {
+            throw new DocumentException("Zona fiscal não encontrada", $fiscalCountry, 'Zona fiscal');
+        }
+
+        $this->fiscalCountry = $fiscalCountry;
+
+        return $this;
+    }
 
     /**
      * Define basic information
@@ -414,7 +455,7 @@ class CreateDocumentFromInvoice
 
                 if ($item->taxed == 1 && !empty((float)$invoiceTaxRate)) {
                     try {
-                        $this->documentData['products'][$x]['taxes'][0]['tax_id'] = Taxes::check($invoiceTaxRate);
+                        $this->documentData['products'][$x]['taxes'][0]['tax_id'] = Taxes::check($invoiceTaxRate, $this->fiscalCountry);
                     } catch (APIException $e) {
                         throw new DocumentException($e->getMessage(), $e->getData(), $e->getWhere());
                     }
@@ -522,7 +563,7 @@ class CreateDocumentFromInvoice
     }
 
     /**
-     * Load WHMCS invoice data
+     * Load WHMCS invoice
      *
      * @throws DocumentException
      */
@@ -532,6 +573,22 @@ class CreateDocumentFromInvoice
 
         if (empty($this->invoice)) {
             throw new DocumentException("Documento não foi encontrado/já foi gerado", [], 'Documento não existe');
+        }
+
+        return $this;
+    }
+
+    /**
+     * Load WHMCS invoice data
+     *
+     * @throws DocumentException
+     */
+    private function loadInvoiceData(): CreateDocumentFromInvoice
+    {
+        $this->invoiceData = WhmcsDB::getInvoiceData($this->invoiceId);
+
+        if (empty($this->invoiceData)) {
+            throw new DocumentException("Dados do documento não foram encontrados", [], 'Dados do documento não existe');
         }
 
         return $this;
@@ -794,7 +851,7 @@ class CreateDocumentFromInvoice
             $product['exemption_reason'] = EXEMPTION_REASON;
         } else {
             try {
-                $product['taxes'][0]['tax_id'] = Taxes::check($invoiceTaxRate);
+                $product['taxes'][0]['tax_id'] = Taxes::check($invoiceTaxRate, $this->fiscalCountry);
             } catch (APIException $e) {
                 throw new DocumentException($e->getMessage(), $e->getData(), $e->getWhere());
             }
