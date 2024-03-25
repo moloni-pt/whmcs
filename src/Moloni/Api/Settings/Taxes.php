@@ -6,6 +6,7 @@ use Moloni\Curl;
 use Moloni\Enums\SaftType;
 use Moloni\Enums\TaxType;
 use Moloni\Exceptions\APIException;
+use Moloni\Facades\LoggerFacade;
 
 class Taxes
 {
@@ -28,6 +29,11 @@ class Taxes
         $result = Curl::simple("taxes/insert", $values);
 
         if (isset($result['tax_id'])) {
+            LoggerFacade::info('Taxa criada no Moloni', [
+                'tag' => 'service:tax:create',
+                'data' => $values
+            ]);
+
             return $result['tax_id'];
         }
 
@@ -59,13 +65,13 @@ class Taxes
     public static function check($rate = 23, $fiscalCountry = [])
     {
         $countryId = (int)$fiscalCountry['country_id'];
-        $countryCode = strtolower($fiscalCountry['country_code']);
+        $countryCode = strtoupper($fiscalCountry['country_code']);
         $targetRate = round($rate, 2);
 
         $taxes = self::getAll();
 
         foreach ($taxes as $tax) {
-            if (strtolower($tax['fiscal_zone']) !== $countryCode) {
+            if (strtoupper($tax['fiscal_zone']) !== $countryCode) {
                 continue;
             }
 

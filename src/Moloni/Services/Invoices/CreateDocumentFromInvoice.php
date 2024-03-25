@@ -211,7 +211,7 @@ class CreateDocumentFromInvoice
     {
         $fiscalCountry = [
             'country_id' => 0,
-            'country_code' => strtolower($this->invoiceData['country'])
+            'country_code' => strtolower($this->invoiceData->country)
         ];
 
         if ($fiscalCountry['country_code'] === 'gb') {
