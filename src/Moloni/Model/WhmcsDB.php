@@ -362,18 +362,6 @@ class WhmcsDB
         return ($row);
     }
 
-    public static function getUpgradeInfo($id)
-    {
-        $row = Capsule::table('tblupgrades')
-            ->join('tblhosting', 'tblhosting.id', '=', 'tblupgrades.relid')
-            ->join('tblproducts', 'tblhosting.packageid', '=', 'tblproducts.id')
-            ->where('tblupgrades.id', $id)
-            ->select('tblupgrades.*', 'tblhosting.*', 'tblproducts.name')
-            ->first();
-
-        return ($row);
-    }
-
     public static function getHostingDiscount($id, $relid)
     {
         $row = Capsule::table('tblinvoiceitems')
