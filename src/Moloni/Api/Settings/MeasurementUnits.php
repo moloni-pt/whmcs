@@ -4,29 +4,20 @@ namespace Moloni\Api\Settings;
 
 use Moloni\Curl;
 use Moloni\Error;
+use Moloni\Exceptions\APIException;
 
 class MeasurementUnits
 {
-    public static function check($name)
-    {
-        $units = self::getAll();
-        foreach ($units as $unit) {
-            if (mb_strtolower($name) == mb_strtolower($unit['name'])) {
-                return $unit['unit_id'];
-            }
-        }
-
-        $values['name'] = $name;
-        $values['short_name'] = "Uni.";
-
-        return self::insert($values);
-    }
-
     public static function getAll()
     {
         return Curl::simple("measurementUnits/getAll");
     }
 
+    /**
+     * Create measurement unit
+     *
+     * @throws APIException
+     */
     public static function insert($values)
     {
         if (!is_array($values)) {
@@ -36,11 +27,17 @@ class MeasurementUnits
         $result = Curl::simple("measurementUnits/insert", $values);
 
         if (isset($result['unit_id'])) {
-            return ($result['unit_id']);
+            return $result['unit_id'];
         }
 
-        Error::create("measurementUnits/insert", "Erro ao inserir unidade de medida", $values, $result);
-        return false;
+        throw new APIException(
+            "Erro ao inserir unidade de medida.",
+            [
+                'values_sent' => $values,
+                'values_receive' => $result,
+            ],
+            "measurementUnits/insert"
+        );
     }
 
     public static function update($values)

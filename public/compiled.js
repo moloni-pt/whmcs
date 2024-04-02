@@ -1,4 +1,3 @@
-function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (obj) { return typeof obj; } : function (obj) { return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }, _typeof(obj); }
 /*!
  * Materialize v1.0.0 (http://materializecss.com)
  * Copyright 2014-2017 Materialize
@@ -44,11 +43,11 @@ function _possibleConstructorReturn(self, call) {
   if (!self) {
     throw new ReferenceError("this hasn't been initialised - super() hasn't been called");
   }
-  return call && (_typeof(call) === "object" || typeof call === "function") ? call : self;
+  return call && (typeof call === "object" || typeof call === "function") ? call : self;
 }
 function _inherits(subClass, superClass) {
   if (typeof superClass !== "function" && superClass !== null) {
-    throw new TypeError("Super expression must either be null or a function, not " + _typeof(superClass));
+    throw new TypeError("Super expression must either be null or a function, not " + typeof superClass);
   }
   subClass.prototype = Object.create(superClass && superClass.prototype, {
     constructor: {
@@ -74,21 +73,21 @@ function _classCallCheck(instance, Constructor) {
     win = window,
     ArrayProto = Array.prototype,
     slice = ArrayProto.slice,
-    _filter = ArrayProto.filter,
+    filter = ArrayProto.filter,
     push = ArrayProto.push;
-  var noop = function noop() {},
-    isFunction = function isFunction(item) {
+  var noop = function () {},
+    isFunction = function (item) {
       // @see https://crbug.com/568448
-      return _typeof(item) === _typeof(noop) && item.call;
+      return typeof item === typeof noop && item.call;
     },
-    isString = function isString(item) {
-      return _typeof(item) === _typeof("");
+    isString = function (item) {
+      return typeof item === typeof "";
     };
   var idMatch = /^#[\w-]*$/,
     classMatch = /^\.[\w-]*$/,
     htmlMatch = /<.+>/,
     singlet = /^\w+$/;
-  function _find(selector, context) {
+  function find(selector, context) {
     context = context || doc;
     var elems = classMatch.test(selector) ? context.getElementsByClassName(selector.slice(1)) : singlet.test(selector) ? context.getElementsByTagName(selector) : context.querySelectorAll(selector);
     return elems;
@@ -130,7 +129,7 @@ function _classCallCheck(instance, Constructor) {
       // If HTML, parse it into real elements
       parseHTML(selector) :
       // else use `find`
-      _find(selector, context);
+      find(selector, context);
 
       // If function, use as shortcut for DOM ready
     } else if (isFunction(selector)) {
@@ -194,7 +193,7 @@ function _classCallCheck(instance, Constructor) {
     }
     return target;
   };
-  function _each(collection, callback) {
+  function each(collection, callback) {
     var l = collection.length,
       i = 0;
     for (; i < l; i++) {
@@ -224,7 +223,7 @@ function _classCallCheck(instance, Constructor) {
     }));
   }
   cash.extend({
-    merge: function merge(first, second) {
+    merge: function (first, second) {
       var len = +second.length,
         i = first.length,
         j = 0;
@@ -234,11 +233,11 @@ function _classCallCheck(instance, Constructor) {
       first.length = i;
       return first;
     },
-    each: _each,
+    each: each,
     matches: matches,
     unique: unique,
     isArray: Array.isArray,
-    isNumeric: function isNumeric(n) {
+    isNumeric: function (n) {
       return !isNaN(parseFloat(n)) && isFinite(n);
     }
   });
@@ -256,7 +255,7 @@ function _classCallCheck(instance, Constructor) {
     }
     return c[key];
   }
-  function _removeData(node, key) {
+  function removeData(node, key) {
     var c = getDataCache(node);
     if (c) {
       delete c[key];
@@ -267,7 +266,7 @@ function _classCallCheck(instance, Constructor) {
     }
   }
   fn.extend({
-    data: function data(name, value) {
+    data: function (name, value) {
       if (isString(name)) {
         return value === undefined ? getData(this[0], name) : this.each(function (v) {
           return setData(v, name, value);
@@ -278,9 +277,9 @@ function _classCallCheck(instance, Constructor) {
       }
       return this;
     },
-    removeData: function removeData(key) {
+    removeData: function (key) {
       return this.each(function (v) {
-        return _removeData(v, key);
+        return removeData(v, key);
       });
     }
   });
@@ -288,17 +287,17 @@ function _classCallCheck(instance, Constructor) {
   function getClasses(c) {
     return isString(c) && c.match(notWhiteMatch);
   }
-  function _hasClass(v, c) {
+  function hasClass(v, c) {
     return v.classList ? v.classList.contains(c) : new RegExp("(^| )" + c + "( |$)", "gi").test(v.className);
   }
-  function _addClass(v, c, spacedName) {
+  function addClass(v, c, spacedName) {
     if (v.classList) {
       v.classList.add(c);
     } else if (spacedName.indexOf(" " + c + " ")) {
       v.className += " " + c;
     }
   }
-  function _removeClass(v, c) {
+  function removeClass(v, c) {
     if (v.classList) {
       v.classList.remove(c);
     } else {
@@ -306,16 +305,16 @@ function _classCallCheck(instance, Constructor) {
     }
   }
   fn.extend({
-    addClass: function addClass(c) {
+    addClass: function (c) {
       var classes = getClasses(c);
       return classes ? this.each(function (v) {
         var spacedName = " " + v.className + " ";
-        _each(classes, function (c) {
-          _addClass(v, c, spacedName);
+        each(classes, function (c) {
+          addClass(v, c, spacedName);
         });
       }) : this;
     },
-    attr: function attr(name, value) {
+    attr: function (name, value) {
       if (!name) {
         return undefined;
       }
@@ -336,18 +335,18 @@ function _classCallCheck(instance, Constructor) {
       }
       return this;
     },
-    hasClass: function hasClass(c) {
+    hasClass: function (c) {
       var check = false,
         classes = getClasses(c);
       if (classes && classes.length) {
         this.each(function (v) {
-          check = _hasClass(v, classes[0]);
+          check = hasClass(v, classes[0]);
           return !check;
         });
       }
       return check;
     },
-    prop: function prop(name, value) {
+    prop: function (name, value) {
       if (isString(name)) {
         return value === undefined ? this[0][name] : this.each(function (v) {
           v[name] = value;
@@ -358,7 +357,7 @@ function _classCallCheck(instance, Constructor) {
       }
       return this;
     },
-    removeAttr: function removeAttr(name) {
+    removeAttr: function (name) {
       return this.each(function (v) {
         if (v.removeAttribute) {
           v.removeAttribute(name);
@@ -367,74 +366,74 @@ function _classCallCheck(instance, Constructor) {
         }
       });
     },
-    removeClass: function removeClass(c) {
+    removeClass: function (c) {
       if (!arguments.length) {
         return this.attr("class", "");
       }
       var classes = getClasses(c);
       return classes ? this.each(function (v) {
-        _each(classes, function (c) {
-          _removeClass(v, c);
+        each(classes, function (c) {
+          removeClass(v, c);
         });
       }) : this;
     },
-    removeProp: function removeProp(name) {
+    removeProp: function (name) {
       return this.each(function (v) {
         delete v[name];
       });
     },
-    toggleClass: function toggleClass(c, state) {
+    toggleClass: function (c, state) {
       if (state !== undefined) {
         return this[state ? "addClass" : "removeClass"](c);
       }
       var classes = getClasses(c);
       return classes ? this.each(function (v) {
         var spacedName = " " + v.className + " ";
-        _each(classes, function (c) {
-          if (_hasClass(v, c)) {
-            _removeClass(v, c);
+        each(classes, function (c) {
+          if (hasClass(v, c)) {
+            removeClass(v, c);
           } else {
-            _addClass(v, c, spacedName);
+            addClass(v, c, spacedName);
           }
         });
       }) : this;
     }
   });
   fn.extend({
-    add: function add(selector, context) {
+    add: function (selector, context) {
       return unique(cash.merge(this, cash(selector, context)));
     },
-    each: function each(callback) {
-      _each(this, callback);
+    each: function (callback) {
+      each(this, callback);
       return this;
     },
-    eq: function eq(index) {
+    eq: function (index) {
       return cash(this.get(index));
     },
-    filter: function filter(selector) {
+    filter: function (selector) {
       if (!selector) {
         return this;
       }
       var comparator = isFunction(selector) ? selector : getCompareFunction(selector);
-      return cash(_filter.call(this, function (e) {
+      return cash(filter.call(this, function (e) {
         return comparator(e, selector);
       }));
     },
-    first: function first() {
+    first: function () {
       return this.eq(0);
     },
-    get: function get(index) {
+    get: function (index) {
       if (index === undefined) {
         return slice.call(this);
       }
       return index < 0 ? this[index + this.length] : this[index];
     },
-    index: function index(elem) {
+    index: function (elem) {
       var child = elem ? cash(elem)[0] : this[0],
         collection = elem ? this : cash(child).parent().children();
       return slice.call(collection).indexOf(child);
     },
-    last: function last() {
+    last: function () {
       return this.eq(-1);
     }
   });
@@ -460,7 +459,7 @@ function _classCallCheck(instance, Constructor) {
       var ucProp = prop.charAt(0).toUpperCase() + prop.slice(1),
         prefixes = ["webkit", "moz", "ms", "o"],
         props = (prop + " " + prefixes.join(ucProp + " ") + ucProp).split(" ");
-      _each(props, function (p) {
+      each(props, function (p) {
         if (p in style) {
           cache[p] = prop = cache[prop] = p;
           return false;
@@ -472,7 +471,7 @@ function _classCallCheck(instance, Constructor) {
   cash.prefixedProp = getPrefixedProp;
   cash.camelCase = camelCase;
   fn.extend({
-    css: function css(prop, value) {
+    css: function (prop, value) {
       if (isString(prop)) {
         prop = getPrefixedProp(prop);
         return arguments.length > 1 ? this.each(function (v) {
@@ -488,7 +487,7 @@ function _classCallCheck(instance, Constructor) {
   function compute(el, prop) {
     return parseInt(win.getComputedStyle(el[0], null)[prop], 10) || 0;
   }
-  _each(["Width", "Height"], function (v) {
+  each(["Width", "Height"], function (v) {
     var lower = v.toLowerCase();
     fn[lower] = function () {
       return this[0].getBoundingClientRect()[lower];
@@ -520,19 +519,19 @@ function _classCallCheck(instance, Constructor) {
         eventCache.splice(index, 1);
       }
     } else {
-      _each(eventCache, function (event) {
+      each(eventCache, function (event) {
         node.removeEventListener(eventName, event);
       });
       eventCache = [];
     }
   }
   fn.extend({
-    off: function off(eventName, callback) {
+    off: function (eventName, callback) {
       return this.each(function (v) {
         return removeEvent(v, eventName, callback);
       });
     },
-    on: function on(eventName, delegate, callback, runOnce) {
+    on: function (eventName, delegate, callback, runOnce) {
       // jshint ignore:line
       var originalCallback;
       if (!isString(eventName)) {
@@ -551,7 +550,7 @@ function _classCallCheck(instance, Constructor) {
       }
       if (delegate) {
         originalCallback = callback;
-        callback = function callback(e) {
+        callback = function (e) {
           var t = e.target;
           while (!matches(t, delegate)) {
             if (t === this || t === null) {
@@ -565,17 +564,17 @@ function _classCallCheck(instance, Constructor) {
         };
       }
       return this.each(function (v) {
-        var _finalCallback = callback;
+        var finalCallback = callback;
         if (runOnce) {
-          _finalCallback = function finalCallback() {
+          finalCallback = function () {
             callback.apply(this, arguments);
-            removeEvent(v, eventName, _finalCallback);
+            removeEvent(v, eventName, finalCallback);
           };
         }
-        registerEvent(v, eventName, _finalCallback);
+        registerEvent(v, eventName, finalCallback);
       });
     },
-    one: function one(eventName, delegate, callback) {
+    one: function (eventName, delegate, callback) {
       return this.on(eventName, delegate, callback, true);
     },
     ready: onReady,
@@ -585,7 +584,7 @@ function _classCallCheck(instance, Constructor) {
      * @param String eventName
      * @param Object data - Add properties to event object
      */
-    trigger: function trigger(eventName, data) {
+    trigger: function (eventName, data) {
       if (document.createEvent) {
         var evt = document.createEvent('HTMLEvents');
         evt.initEvent(eventName, true, false);
@@ -601,7 +600,7 @@ function _classCallCheck(instance, Constructor) {
   }
   function getSelectMultiple_(el) {
     var values = [];
-    _each(el.options, function (o) {
+    each(el.options, function (o) {
       if (o.selected) {
         values.push(o.value);
       }
@@ -631,9 +630,9 @@ function _classCallCheck(instance, Constructor) {
     }
   }
   fn.extend({
-    serialize: function serialize() {
+    serialize: function () {
       var query = "";
-      _each(this[0].elements || this, function (el) {
+      each(this[0].elements || this, function (el) {
         if (el.disabled || el.tagName === "FIELDSET") {
           return;
         }
@@ -647,7 +646,7 @@ function _classCallCheck(instance, Constructor) {
           case "select-multiple":
             var values = getValue(el);
             if (values !== null) {
-              _each(values, function (value) {
+              each(values, function (value) {
                 query += encode(name, value);
               });
             }
@@ -661,7 +660,7 @@ function _classCallCheck(instance, Constructor) {
       });
       return query.substr(1);
     },
-    val: function val(value) {
+    val: function (value) {
       if (value === undefined) {
         return getValue(this[0]);
       }
@@ -681,44 +680,44 @@ function _classCallCheck(instance, Constructor) {
   function insertContent(parent, child, prepend) {
     var str = isString(child);
     if (!str && child.length) {
-      _each(child, function (v) {
+      each(child, function (v) {
         return insertContent(parent, v, prepend);
       });
       return;
     }
-    _each(parent, str ? function (v) {
+    each(parent, str ? function (v) {
       return v.insertAdjacentHTML(prepend ? "afterbegin" : "beforeend", child);
     } : function (v, i) {
       return insertElement(v, i === 0 ? child : child.cloneNode(true), prepend);
     });
   }
   fn.extend({
-    after: function after(selector) {
+    after: function (selector) {
       cash(selector).insertAfter(this);
       return this;
     },
-    append: function append(content) {
+    append: function (content) {
       insertContent(this, content);
       return this;
     },
-    appendTo: function appendTo(parent) {
+    appendTo: function (parent) {
       insertContent(cash(parent), this);
       return this;
     },
-    before: function before(selector) {
+    before: function (selector) {
       cash(selector).insertBefore(this);
       return this;
     },
-    clone: function clone() {
+    clone: function () {
       return cash(this.map(function (v) {
         return v.cloneNode(true);
       }));
     },
-    empty: function empty() {
+    empty: function () {
       this.html("");
       return this;
     },
-    html: function html(content) {
+    html: function (content) {
       if (content === undefined) {
         return this[0].innerHTML;
       }
@@ -727,7 +726,7 @@ function _classCallCheck(instance, Constructor) {
         return v.innerHTML = source;
       });
     },
-    insertAfter: function insertAfter(selector) {
+    insertAfter: function (selector) {
       var _this = this;
       cash(selector).each(function (el, i) {
         var parent = el.parentNode,
@@ -738,7 +737,7 @@ function _classCallCheck(instance, Constructor) {
       });
       return this;
     },
-    insertBefore: function insertBefore(selector) {
+    insertBefore: function (selector) {
       var _this2 = this;
       cash(selector).each(function (el, i) {
         var parent = el.parentNode;
@@ -748,22 +747,22 @@ function _classCallCheck(instance, Constructor) {
       });
       return this;
     },
-    prepend: function prepend(content) {
+    prepend: function (content) {
       insertContent(this, content, true);
       return this;
     },
-    prependTo: function prependTo(parent) {
+    prependTo: function (parent) {
       insertContent(cash(parent), this, true);
       return this;
     },
-    remove: function remove() {
+    remove: function () {
       return this.each(function (v) {
         if (!!v.parentNode) {
           return v.parentNode.removeChild(v);
         }
       });
     },
-    text: function text(content) {
+    text: function (content) {
       if (content === undefined) {
         return this[0].textContent;
       }
@@ -774,26 +773,26 @@ function _classCallCheck(instance, Constructor) {
   });
   var docEl = doc.documentElement;
   fn.extend({
-    position: function position() {
+    position: function () {
       var el = this[0];
       return {
         left: el.offsetLeft,
         top: el.offsetTop
       };
     },
-    offset: function offset() {
+    offset: function () {
       var rect = this[0].getBoundingClientRect();
       return {
         top: rect.top + win.pageYOffset - docEl.clientTop,
         left: rect.left + win.pageXOffset - docEl.clientLeft
       };
     },
-    offsetParent: function offsetParent() {
+    offsetParent: function () {
       return cash(this[0].offsetParent);
     }
   });
   fn.extend({
-    children: function children(selector) {
+    children: function (selector) {
       var elems = [];
       this.each(function (el) {
         push.apply(elems, el.children);
@@ -803,7 +802,7 @@ function _classCallCheck(instance, Constructor) {
         return matches(v, selector);
       });
     },
-    closest: function closest(selector) {
+    closest: function (selector) {
       if (!selector || this.length < 1) {
         return cash();
       }
@@ -812,7 +811,7 @@ function _classCallCheck(instance, Constructor) {
       }
       return this.parent().closest(selector);
     },
-    is: function is(selector) {
+    is: function (selector) {
       if (!selector) {
         return false;
       }
@@ -824,28 +823,28 @@ function _classCallCheck(instance, Constructor) {
       });
       return match;
     },
-    find: function find(selector) {
+    find: function (selector) {
       if (!selector || selector.nodeType) {
         return cash(selector && this.has(selector).length ? selector : null);
       }
       var elems = [];
       this.each(function (el) {
-        push.apply(elems, _find(selector, el));
+        push.apply(elems, find(selector, el));
       });
       return unique(elems);
     },
-    has: function has(selector) {
+    has: function (selector) {
       var comparator = isString(selector) ? function (el) {
-        return _find(selector, el).length !== 0;
+        return find(selector, el).length !== 0;
       } : function (el) {
         return el.contains(selector);
       };
       return this.filter(comparator);
     },
-    next: function next() {
+    next: function () {
       return cash(this[0].nextElementSibling);
     },
-    not: function not(selector) {
+    not: function (selector) {
       if (!selector) {
         return this;
       }
@@ -854,7 +853,7 @@ function _classCallCheck(instance, Constructor) {
         return !comparator(el, selector);
       });
     },
-    parent: function parent() {
+    parent: function () {
       var result = [];
       this.each(function (item) {
         if (item && item.parentNode) {
@@ -863,7 +862,7 @@ function _classCallCheck(instance, Constructor) {
       });
       return unique(result);
     },
-    parents: function parents(selector) {
+    parents: function (selector) {
       var last,
         result = [];
       this.each(function (item) {
@@ -877,10 +876,10 @@ function _classCallCheck(instance, Constructor) {
       });
       return unique(result);
     },
-    prev: function prev() {
+    prev: function () {
       return cash(this[0].previousElementSibling);
     },
-    siblings: function siblings(selector) {
+    siblings: function (selector) {
       var collection = this.parent().children(selector),
         el = this[0];
       return collection.filter(function (i) {
@@ -979,24 +978,24 @@ M.keys = {
  */
 M.tabPressed = false;
 M.keyDown = false;
-var docHandleKeydown = function docHandleKeydown(e) {
+var docHandleKeydown = function (e) {
   M.keyDown = true;
   if (e.which === M.keys.TAB || e.which === M.keys.ARROW_DOWN || e.which === M.keys.ARROW_UP) {
     M.tabPressed = true;
   }
 };
-var docHandleKeyup = function docHandleKeyup(e) {
+var docHandleKeyup = function (e) {
   M.keyDown = false;
   if (e.which === M.keys.TAB || e.which === M.keys.ARROW_DOWN || e.which === M.keys.ARROW_UP) {
     M.tabPressed = false;
   }
 };
-var docHandleFocus = function docHandleFocus(e) {
+var docHandleFocus = function (e) {
   if (M.keyDown) {
     document.body.classList.add('keyboard-focused');
   }
 };
-var docHandleBlur = function docHandleBlur(e) {
+var docHandleBlur = function (e) {
   document.body.classList.remove('keyboard-focused');
 };
 document.addEventListener('keydown', docHandleKeydown, true);
@@ -1029,7 +1028,7 @@ M.initializeJqueryWrapper = function (plugin, pluginName, classRef) {
       });
 
       // Initialize plugin if options or no argument is passed in
-    } else if (_typeof(methodOrOptions) === 'object' || !methodOrOptions) {
+    } else if (typeof methodOrOptions === 'object' || !methodOrOptions) {
       plugin.init(this, arguments[0]);
       return this;
     }
@@ -1304,7 +1303,7 @@ M.throttle = function (func, wait, options) {
   var timeout = null;
   var previous = 0;
   options || (options = {});
-  var later = function later() {
+  var later = function () {
     previous = options.leading === false ? 0 : getTime();
     timeout = null;
     result = func.apply(context, args);
@@ -1360,7 +1359,7 @@ $jscomp.initSymbolIterator = function () {
   "function" != typeof Array.prototype[e] && $jscomp.defineProperty(Array.prototype, e, {
     configurable: !0,
     writable: !0,
-    value: function value() {
+    value: function () {
       return $jscomp.arrayIterator(this);
     }
   });
@@ -1393,7 +1392,7 @@ $jscomp.iteratorFromArray = function (e, r) {
   e instanceof String && (e += "");
   var p = 0,
     m = {
-      next: function next() {
+      next: function () {
         if (p < e.length) {
           var u = p++;
           return {
@@ -1918,40 +1917,40 @@ var $jscomp$this = this;
     W = "translateX translateY translateZ rotate rotateX rotateY rotateZ scale scaleX scaleY scaleZ skewX skewY perspective".split(" "),
     H,
     h = {
-      arr: function arr(a) {
+      arr: function (a) {
         return Array.isArray(a);
       },
-      obj: function obj(a) {
+      obj: function (a) {
         return -1 < Object.prototype.toString.call(a).indexOf("Object");
       },
-      pth: function pth(a) {
+      pth: function (a) {
         return h.obj(a) && a.hasOwnProperty("totalLength");
       },
-      svg: function svg(a) {
+      svg: function (a) {
         return a instanceof SVGElement;
       },
-      dom: function dom(a) {
+      dom: function (a) {
         return a.nodeType || h.svg(a);
       },
-      str: function str(a) {
+      str: function (a) {
         return "string" === typeof a;
       },
-      fnc: function fnc(a) {
+      fnc: function (a) {
         return "function" === typeof a;
       },
-      und: function und(a) {
+      und: function (a) {
         return "undefined" === typeof a;
       },
-      hex: function hex(a) {
+      hex: function (a) {
         return /(^#[0-9A-F]{6}$)|(^#[0-9A-F]{3}$)/i.test(a);
       },
-      rgb: function rgb(a) {
+      rgb: function (a) {
         return /^rgb/.test(a);
       },
-      hsl: function hsl(a) {
+      hsl: function (a) {
         return /^hsl/.test(a);
       },
-      col: function col(a) {
+      col: function (a) {
         return h.hex(a) || h.rgb(a) || h.hsl(a);
       }
     },
@@ -2028,16 +2027,16 @@ var $jscomp$this = this;
       return b;
     }(),
     ha = {
-      css: function css(a, c, d) {
+      css: function (a, c, d) {
         return a.style[c] = d;
       },
-      attribute: function attribute(a, c, d) {
+      attribute: function (a, c, d) {
         return a.setAttribute(c, d);
       },
-      object: function object(a, c, d) {
+      object: function (a, c, d) {
         return a[c] = d;
       },
-      transform: function transform(a, c, d, b, f) {
+      transform: function (a, c, d, b, f) {
         b[f] || (b[f] = []);
         b[f].push(c + "(" + d + ")");
       }
@@ -2296,7 +2295,7 @@ var $jscomp$this = this;
             paddingBottom: pBottom,
             duration: this.options.inDuration,
             easing: 'easeInOutCubic',
-            complete: function complete(anim) {
+            complete: function (anim) {
               $body.css({
                 overflow: '',
                 paddingTop: '',
@@ -2333,7 +2332,7 @@ var $jscomp$this = this;
             paddingBottom: 0,
             duration: this.options.outDuration,
             easing: 'easeInOutCubic',
-            complete: function complete() {
+            complete: function () {
               $body.css({
                 height: '',
                 overflow: '',
@@ -2417,7 +2416,7 @@ var $jscomp$this = this;
       }
     }, {
       key: "defaults",
-      get: function get() {
+      get: function () {
         return _defaults;
       }
     }]);
@@ -2874,7 +2873,7 @@ var $jscomp$this = this;
           scaleY: [0.3, 1],
           duration: this.options.inDuration,
           easing: 'easeOutQuint',
-          complete: function complete(anim) {
+          complete: function (anim) {
             if (_this11.options.autoFocus) {
               _this11.dropdownEl.focus();
             }
@@ -2905,7 +2904,7 @@ var $jscomp$this = this;
           scaleY: 0.3,
           duration: this.options.outDuration,
           easing: 'easeOutQuint',
-          complete: function complete(anim) {
+          complete: function (anim) {
             _this12._resetDropdownStyles();
 
             // onCloseEnd callback
@@ -3014,7 +3013,7 @@ var $jscomp$this = this;
       }
     }, {
       key: "defaults",
-      get: function get() {
+      get: function () {
         return _defaults;
       }
     }]);
@@ -3240,7 +3239,7 @@ var $jscomp$this = this;
           duration: this.options.inDuration,
           easing: 'easeOutCubic',
           // Handle modal onOpenEnd callback
-          complete: function complete() {
+          complete: function () {
             if (typeof _this14.options.onOpenEnd === 'function') {
               _this14.options.onOpenEnd.call(_this14, _this14.el, _this14._openingTrigger);
             }
@@ -3289,7 +3288,7 @@ var $jscomp$this = this;
           duration: this.options.outDuration,
           easing: 'easeOutCubic',
           // Handle modal ready callback
-          complete: function complete() {
+          complete: function () {
             _this15.el.style.display = 'none';
             _this15.$overlay.remove();
 
@@ -3414,7 +3413,7 @@ var $jscomp$this = this;
       }
     }, {
       key: "defaults",
-      get: function get() {
+      get: function () {
         return _defaults;
       }
     }]);
@@ -3615,7 +3614,7 @@ var $jscomp$this = this;
           top: M.getDocumentScrollTop() + this.windowHeight / 2 - this.placeholder.offset().top - this.newHeight / 2,
           duration: this.options.inDuration,
           easing: 'easeOutQuad',
-          complete: function complete() {
+          complete: function () {
             _this17.doneAnimating = true;
 
             // onOpenEnd callback
@@ -3652,7 +3651,7 @@ var $jscomp$this = this;
           top: 0,
           duration: this.options.outDuration,
           easing: 'easeOutQuad',
-          complete: function complete() {
+          complete: function () {
             _this18.placeholder.css({
               height: '',
               width: '',
@@ -3855,7 +3854,7 @@ var $jscomp$this = this;
           opacity: 0,
           duration: this.options.outDuration,
           easing: 'easeOutQuad',
-          complete: function complete() {
+          complete: function () {
             _this20.overlayActive = false;
             _this20.$overlay.remove();
           }
@@ -3869,7 +3868,7 @@ var $jscomp$this = this;
             opacity: 0,
             duration: this.options.outDuration,
             easing: 'easeOutQuad',
-            complete: function complete() {
+            complete: function () {
               _this20.$photoCaption.remove();
             }
           });
@@ -3892,7 +3891,7 @@ var $jscomp$this = this;
       }
     }, {
       key: "defaults",
-      get: function get() {
+      get: function () {
         return _defaults;
       }
     }]);
@@ -4030,7 +4029,7 @@ var $jscomp$this = this;
       }
     }, {
       key: "defaults",
-      get: function get() {
+      get: function () {
         return _defaults;
       }
     }]);
@@ -4299,7 +4298,7 @@ var $jscomp$this = this;
         this._tabsCarousel = M.Carousel.init($tabsWrapper[0], {
           fullWidth: true,
           noWrap: true,
-          onCycleTo: function onCycleTo(item) {
+          onCycleTo: function (item) {
             var prevIndex = _this25.index;
             _this25.index = $(item).index();
             _this25.$activeTabLink.removeClass('active');
@@ -4462,7 +4461,7 @@ var $jscomp$this = this;
       }
     }, {
       key: "defaults",
-      get: function get() {
+      get: function () {
         return _defaults;
       }
     }]);
@@ -4773,7 +4772,7 @@ var $jscomp$this = this;
       }
     }, {
       key: "defaults",
-      get: function get() {
+      get: function () {
         return _defaults;
       }
     }]);
@@ -4816,7 +4815,7 @@ var $jscomp$this = this;
       },
       doc = elem && elem.ownerDocument;
     docElem = doc.documentElement;
-    if (_typeof(elem.getBoundingClientRect) !== (typeof undefined === "undefined" ? "undefined" : _typeof(undefined))) {
+    if (typeof elem.getBoundingClientRect !== typeof undefined) {
       box = elem.getBoundingClientRect();
     }
     win = getWindow(doc);
@@ -4837,7 +4836,7 @@ var $jscomp$this = this;
   var Effect = {
     // Effect delay
     duration: 750,
-    show: function show(e, element) {
+    show: function (e, element) {
       // Disable right click
       if (e.button === 2) {
         return false;
@@ -4893,7 +4892,7 @@ var $jscomp$this = this;
       rippleStyle['transition-timing-function'] = 'cubic-bezier(0.250, 0.460, 0.450, 0.940)';
       ripple.setAttribute('style', convertStyle(rippleStyle));
     },
-    hide: function hide(e) {
+    hide: function (e) {
       TouchHandler.touchup(e);
       var el = this;
       var width = el.clientWidth * 1.4;
@@ -4945,7 +4944,7 @@ var $jscomp$this = this;
       }, delay);
     },
     // Little hack to make <input> can perform waves effect
-    wrapInput: function wrapInput(elements) {
+    wrapInput: function (elements) {
       for (var a = 0; a < elements.length; a++) {
         var el = elements[a];
         if (el.tagName.toLowerCase() === 'input') {
@@ -4984,7 +4983,7 @@ var $jscomp$this = this;
      * within the 500ms. Cannot mouseup between touchstart and
      * touchend, nor in the 500ms after touchend. */
     touches: 0,
-    allowEvent: function allowEvent(e) {
+    allowEvent: function (e) {
       var allow = true;
       if (e.type === 'touchstart') {
         TouchHandler.touches += 1; //push
@@ -4999,7 +4998,7 @@ var $jscomp$this = this;
       }
       return allow;
     },
-    touchup: function touchup(e) {
+    touchup: function (e) {
       TouchHandler.allowEvent(e);
     }
   };
@@ -5139,7 +5138,7 @@ var $jscomp$this = this;
         }
 
         // Set content
-        if ((typeof HTMLElement === "undefined" ? "undefined" : _typeof(HTMLElement)) === 'object' ? this.message instanceof HTMLElement : this.message && _typeof(this.message) === 'object' && this.message !== null && this.message.nodeType === 1 && typeof this.message.nodeName === 'string') {
+        if (typeof HTMLElement === 'object' ? this.message instanceof HTMLElement : this.message && typeof this.message === 'object' && this.message !== null && this.message.nodeType === 1 && typeof this.message.nodeName === 'string') {
           toast.appendChild(this.message);
 
           // Check if it is jQuery object
@@ -5215,7 +5214,7 @@ var $jscomp$this = this;
           marginTop: -40,
           duration: this.options.outDuration,
           easing: 'easeOutExpo',
-          complete: function complete() {
+          complete: function () {
             // Call the optional callback
             if (typeof _this30.options.completeCallback === 'function') {
               _this30.options.completeCallback();
@@ -5368,7 +5367,7 @@ var $jscomp$this = this;
       }
     }, {
       key: "defaults",
-      get: function get() {
+      get: function () {
         return _defaults;
       }
     }]);
@@ -5897,7 +5896,7 @@ var $jscomp$this = this;
           translateX: [slideOutPercent * 100 + "%", 0],
           duration: this.options.inDuration,
           easing: 'easeOutQuad',
-          complete: function complete() {
+          complete: function () {
             // Run onOpenEnd callback
             if (typeof _this32.options.onOpenEnd === 'function') {
               _this32.options.onOpenEnd.call(_this32, _this32.el);
@@ -5945,7 +5944,7 @@ var $jscomp$this = this;
           translateX: [slideOutPercent * 100 + "%", endPercent * 105 + "%"],
           duration: this.options.outDuration,
           easing: 'easeOutQuad',
-          complete: function complete() {
+          complete: function () {
             // Run onOpenEnd callback
             if (typeof _this33.options.onCloseEnd === 'function') {
               _this33.options.onCloseEnd.call(_this33, _this33.el);
@@ -5963,7 +5962,7 @@ var $jscomp$this = this;
           opacity: 0,
           duration: this.options.outDuration,
           easing: 'easeOutQuad',
-          complete: function complete() {
+          complete: function () {
             $(_this34._overlay).css('display', 'none');
           }
         });
@@ -5985,7 +5984,7 @@ var $jscomp$this = this;
       }
     }, {
       key: "defaults",
-      get: function get() {
+      get: function () {
         return _defaults;
       }
     }]);
@@ -6013,7 +6012,7 @@ var $jscomp$this = this;
     scrollOffset: 200,
     // offset - 200 allows elements near bottom of page to scroll
     activeClass: 'active',
-    getActiveElement: function getActiveElement(id) {
+    getActiveElement: function (id) {
       return 'a[href="#' + id + '"]';
     }
   };
@@ -6248,7 +6247,7 @@ var $jscomp$this = this;
       }
     }, {
       key: "defaults",
-      get: function get() {
+      get: function () {
         return _defaults;
       }
     }]);
@@ -6312,7 +6311,7 @@ var $jscomp$this = this;
     // Callback for when autocompleted
     minLength: 1,
     // Min characters before autocomplete starts
-    sortFunction: function sortFunction(a, b, inputString) {
+    sortFunction: function (a, b, inputString) {
       // Sort function for sorting autocomplete results
       return a.indexOf(inputString) - b.indexOf(inputString);
     }
@@ -6434,7 +6433,7 @@ var $jscomp$this = this;
           autoFocus: false,
           closeOnClick: false,
           coverTrigger: false,
-          onItemClick: function onItemClick(itemEl) {
+          onItemClick: function (itemEl) {
             _this38.selectOption($(itemEl));
           }
         });
@@ -6653,7 +6652,7 @@ var $jscomp$this = this;
 
         // Sort
         if (this.options.sortFunction) {
-          var sortFunctionBound = function sortFunctionBound(a, b) {
+          var sortFunctionBound = function (a, b) {
             return _this39.options.sortFunction(a.key.toLowerCase(), b.key.toLowerCase(), val.toLowerCase());
           };
           matchingData.sort(sortFunctionBound);
@@ -6734,7 +6733,7 @@ var $jscomp$this = this;
       }
     }, {
       key: "defaults",
-      get: function get() {
+      get: function () {
         return _defaults;
       }
     }]);
@@ -7246,7 +7245,7 @@ var $jscomp$this = this;
             opacity: 0,
             duration: this.options.duration,
             easing: 'easeOutQuad',
-            complete: function complete() {
+            complete: function () {
               _this44.$slides.not('.active').each(function (el) {
                 anim({
                   targets: el,
@@ -7350,7 +7349,7 @@ var $jscomp$this = this;
       }
     }, {
       key: "defaults",
-      get: function get() {
+      get: function () {
         return _defaults;
       }
     }]);
@@ -7377,7 +7376,7 @@ var $jscomp$this = this;
           translateY: 0,
           duration: 225,
           easing: 'easeInOutQuad',
-          complete: function complete(anim) {
+          complete: function (anim) {
             var el = anim.animatables[0].target;
             $(el).css({
               display: 'none'
@@ -7878,7 +7877,7 @@ var $jscomp$this = this;
       }
     }, {
       key: "defaults",
-      get: function get() {
+      get: function () {
         return _defaults;
       }
     }]);
@@ -8043,7 +8042,7 @@ var $jscomp$this = this;
       }
     }, {
       key: "defaults",
-      get: function get() {
+      get: function () {
         return _defaults;
       }
     }]);
@@ -8262,7 +8261,7 @@ var $jscomp$this = this;
             translateX: _this50.offsetX,
             duration: 175,
             easing: 'easeOutQuad',
-            complete: function complete() {
+            complete: function () {
               _this50.$el.removeClass('active');
             }
           });
@@ -8414,7 +8413,7 @@ var $jscomp$this = this;
       }
     }, {
       key: "defaults",
-      get: function get() {
+      get: function () {
         return _defaults;
       }
     }]);
@@ -8509,7 +8508,7 @@ var $jscomp$this = this;
       _this53.options = $.extend({}, Datepicker.defaults, options);
 
       // make sure i18n defaults are not lost when only few i18n option properties are passed
-      if (!!options && options.hasOwnProperty('i18n') && _typeof(options.i18n) === 'object') {
+      if (!!options && options.hasOwnProperty('i18n') && typeof options.i18n === 'object') {
         _this53.options.i18n = $.extend({}, Datepicker.defaults.i18n, options.i18n);
       }
 
@@ -8590,7 +8589,7 @@ var $jscomp$this = this;
         var _this54 = this;
         this.modalEl.id = 'modal-' + this.id;
         this.modal = M.Modal.init(this.modalEl, {
-          onCloseEnd: function onCloseEnd() {
+          onCloseEnd: function () {
             _this54.isOpen = false;
           }
         });
@@ -9009,36 +9008,36 @@ var $jscomp$this = this;
         this.doneBtn = this.modalEl.querySelector('.datepicker-done');
         this.cancelBtn = this.modalEl.querySelector('.datepicker-cancel');
         this.formats = {
-          d: function d() {
+          d: function () {
             return _this56.date.getDate();
           },
-          dd: function dd() {
+          dd: function () {
             var d = _this56.date.getDate();
             return (d < 10 ? '0' : '') + d;
           },
-          ddd: function ddd() {
+          ddd: function () {
             return _this56.options.i18n.weekdaysShort[_this56.date.getDay()];
           },
-          dddd: function dddd() {
+          dddd: function () {
             return _this56.options.i18n.weekdays[_this56.date.getDay()];
           },
-          m: function m() {
+          m: function () {
             return _this56.date.getMonth() + 1;
           },
-          mm: function mm() {
+          mm: function () {
             var m = _this56.date.getMonth() + 1;
             return (m < 10 ? '0' : '') + m;
           },
-          mmm: function mmm() {
+          mmm: function () {
             return _this56.options.i18n.monthsShort[_this56.date.getMonth()];
           },
-          mmmm: function mmmm() {
+          mmmm: function () {
             return _this56.options.i18n.months[_this56.date.getMonth()];
           },
-          yy: function yy() {
+          yy: function () {
             return ('' + _this56.date.getFullYear()).slice(2);
           },
-          yyyy: function yyyy() {
+          yyyy: function () {
             return _this56.date.getFullYear();
           }
         };
@@ -9256,7 +9255,7 @@ var $jscomp$this = this;
       }
     }, {
       key: "defaults",
-      get: function get() {
+      get: function () {
         return _defaults;
       }
     }]);
@@ -9464,7 +9463,7 @@ var $jscomp$this = this;
           onOpenStart: this.options.onOpenStart,
           onOpenEnd: this.options.onOpenEnd,
           onCloseStart: this.options.onCloseStart,
-          onCloseEnd: function onCloseEnd() {
+          onCloseEnd: function () {
             if (typeof _this59.options.onCloseEnd === 'function') {
               _this59.options.onCloseEnd.call(_this59);
             }
@@ -9868,7 +9867,7 @@ var $jscomp$this = this;
       }
     }, {
       key: "defaults",
-      get: function get() {
+      get: function () {
         return _defaults;
       }
     }]);
@@ -10020,7 +10019,7 @@ var $jscomp$this = this;
       }
     }, {
       key: "defaults",
-      get: function get() {
+      get: function () {
         return _defaults;
       }
     }]);
@@ -10756,7 +10755,7 @@ var $jscomp$this = this;
       }
     }, {
       key: "defaults",
-      get: function get() {
+      get: function () {
         return _defaults;
       }
     }]);
@@ -11083,7 +11082,7 @@ var $jscomp$this = this;
       }
     }, {
       key: "defaults",
-      get: function get() {
+      get: function () {
         return _defaults;
       }
     }]);
@@ -11514,7 +11513,7 @@ var $jscomp$this = this;
       }
     }, {
       key: "defaults",
-      get: function get() {
+      get: function () {
         return _defaults;
       }
     }]);
@@ -11775,7 +11774,7 @@ var $jscomp$this = this;
       }
     }, {
       key: "defaults",
-      get: function get() {
+      get: function () {
         return _defaults;
       }
     }]);
@@ -11787,8 +11786,7 @@ var $jscomp$this = this;
   }
   Range.init($('input[type=range]'));
 })(cash, M.anime);
-function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (obj) { return typeof obj; } : function (obj) { return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }, _typeof(obj); }
-/*! DataTables 1.13.4
+/*! DataTables 1.13.5
  * ©2008-2023 SpryMedia Ltd - datatables.net/license
  */
 
@@ -11821,7 +11819,7 @@ function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" =
     define(['jquery'], function ($) {
       return factory($, window, document);
     });
-  } else if ((typeof exports === "undefined" ? "undefined" : _typeof(exports)) === 'object') {
+  } else if (typeof exports === 'object') {
     // CommonJS
     // jQuery's factory checks for a global window - if it isn't present then it
     // returns a factory function that expects the window object
@@ -11848,7 +11846,7 @@ function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" =
 })(function ($, window, document, undefined) {
   "use strict";
 
-  var DataTable = function DataTable(selector, options) {
+  var DataTable = function (selector, options) {
     // Check if called with a window or jQuery object for DOM less applications
     // This is for backwards compatibility
     if (DataTable.factory(selector, options)) {
@@ -11965,7 +11963,7 @@ function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" =
      * @return {DataTables.Api}
      */
     this.api = function (traditional) {
-      return traditional ? new _Api2(_fnSettingsFromNode(this[_ext.iApiIndex])) : new _Api2(this);
+      return traditional ? new _Api(_fnSettingsFromNode(this[_ext.iApiIndex])) : new _Api(this);
     };
 
     /**
@@ -12696,14 +12694,14 @@ function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" =
         $.ajax({
           dataType: 'json',
           url: oLanguage.sUrl,
-          success: function success(json) {
+          success: function (json) {
             _fnCamelToHungarian(defaults.oLanguage, json);
             _fnLanguageCompat(json);
             $.extend(true, oLanguage, json, oSettings.oInit.oLanguage);
             _fnCallbackFire(oSettings, null, 'i18n', [oSettings]);
             _fnInitialise(oSettings);
           },
-          error: function error() {
+          error: function () {
             // Error occurred loading language file, continue on as best we can
             _fnInitialise(oSettings);
           }
@@ -12766,7 +12764,7 @@ function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" =
        * attributes are found
        */
       if (rowOne.length) {
-        var a = function a(cell, name) {
+        var a = function (cell, name) {
           return cell.getAttribute('data-' + name) !== null ? name : null;
         };
         $(rowOne[0]).children('th, td').each(function (i, cell) {
@@ -12791,7 +12789,7 @@ function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" =
         });
       }
       var features = oSettings.oFeatures;
-      var loadedInit = function loadedInit() {
+      var loadedInit = function () {
         /*
          * Sorting
          * @todo For modularisation (1.11) this needs to do into a sort start up handler
@@ -12917,7 +12915,7 @@ function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" =
   //  _selector_row_indexes
 
   var _ext; // DataTable.ext
-  var _Api2; // DataTable.Api
+  var _Api; // DataTable.Api
   var _api_register; // DataTable.Api.register
   var _api_registerPlural; // DataTable.Api.registerPlural
 
@@ -12945,25 +12943,25 @@ function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" =
   // - Ξ - Ethereum
   //   standards as thousands separators.
   var _re_formatted_numeric = /['\u00A0,$£€¥%\u2009\u202F\u20BD\u20a9\u20BArfkɃΞ]/gi;
-  var _empty = function _empty(d) {
+  var _empty = function (d) {
     return !d || d === true || d === '-' ? true : false;
   };
-  var _intVal = function _intVal(s) {
+  var _intVal = function (s) {
     var integer = parseInt(s, 10);
     return !isNaN(integer) && isFinite(s) ? integer : null;
   };
 
   // Convert from a formatted number with characters other than `.` as the
   // decimal place, to a Javascript number
-  var _numToDecimal = function _numToDecimal(num, decimalPoint) {
+  var _numToDecimal = function (num, decimalPoint) {
     // Cache created regular expressions for speed as this function is called often
     if (!_re_dic[decimalPoint]) {
       _re_dic[decimalPoint] = new RegExp(_fnEscapeRegex(decimalPoint), 'g');
     }
     return typeof num === 'string' && decimalPoint !== '.' ? num.replace(/\./g, '').replace(_re_dic[decimalPoint], '.') : num;
   };
-  var _isNumber = function _isNumber(d, decimalPoint, formatted) {
-    var type = _typeof(d);
+  var _isNumber = function (d, decimalPoint, formatted) {
+    var type = typeof d;
     var strType = type === 'string';
     if (type === 'number' || type === 'bigint') {
       return true;
@@ -12985,17 +12983,17 @@ function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" =
   };
 
   // A string without HTML in it can be considered to be HTML still
-  var _isHtml = function _isHtml(d) {
+  var _isHtml = function (d) {
     return _empty(d) || typeof d === 'string';
   };
-  var _htmlNumeric = function _htmlNumeric(d, decimalPoint, formatted) {
+  var _htmlNumeric = function (d, decimalPoint, formatted) {
     if (_empty(d)) {
       return true;
     }
     var html = _isHtml(d);
     return !html ? null : _isNumber(_stripHtml(d), decimalPoint, formatted) ? true : null;
   };
-  var _pluck = function _pluck(a, prop, prop2) {
+  var _pluck = function (a, prop, prop2) {
     var out = [];
     var i = 0,
       ien = a.length;
@@ -13020,7 +13018,7 @@ function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" =
 
   // Basically the same as _pluck, but rather than looping over `a` we use `order`
   // as the indexes to pick from `a`
-  var _pluck_order = function _pluck_order(a, order, prop, prop2) {
+  var _pluck_order = function (a, order, prop, prop2) {
     var out = [];
     var i = 0,
       ien = order.length;
@@ -13040,7 +13038,7 @@ function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" =
     }
     return out;
   };
-  var _range = function _range(len, start) {
+  var _range = function (len, start) {
     var out = [];
     var end;
     if (start === undefined) {
@@ -13055,7 +13053,7 @@ function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" =
     }
     return out;
   };
-  var _removeEmpty = function _removeEmpty(a) {
+  var _removeEmpty = function (a) {
     var out = [];
     for (var i = 0, ien = a.length; i < ien; i++) {
       if (a[i]) {
@@ -13065,8 +13063,9 @@ function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" =
     }
     return out;
   };
-  var _stripHtml = function _stripHtml(d) {
-    return d.replace(_re_html, '');
+  var _stripHtml = function (d) {
+    return d.replace(_re_html, '') // Complete tags
+    .replace(/<script/i, ''); // Safety for incomplete script tag
   };
 
   /**
@@ -13078,7 +13077,7 @@ function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" =
    * @return {boolean} true if all unique, false otherwise
    * @ignore
    */
-  var _areAllUnique = function _areAllUnique(src) {
+  var _areAllUnique = function (src) {
     if (src.length < 2) {
       return true;
     }
@@ -13100,7 +13099,7 @@ function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" =
    * @return {array} Array of unique items
    * @ignore
    */
-  var _unique = function _unique(src) {
+  var _unique = function (src) {
     if (_areAllUnique(src)) {
       return src.slice();
     }
@@ -13130,7 +13129,7 @@ function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" =
 
   // Surprisingly this is faster than [].concat.apply
   // https://jsperf.com/flatten-an-array-loop-vs-reduce/2
-  var _flatten = function _flatten(out, val) {
+  var _flatten = function (out, val) {
     if (Array.isArray(val)) {
       for (var i = 0; i < val.length; i++) {
         _flatten(out, val[i]);
@@ -13140,7 +13139,7 @@ function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" =
     }
     return out;
   };
-  var _includes = function _includes(search, start) {
+  var _includes = function (search, start) {
     if (start === undefined) {
       start = 0;
     }
@@ -13188,7 +13187,7 @@ function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" =
      * @param {integer} freq Call frequency in mS
      * @return {function} Wrapped function
      */
-    throttle: function throttle(fn, freq) {
+    throttle: function (fn, freq) {
       var frequency = freq !== undefined ? freq : 200,
         last,
         timer;
@@ -13214,7 +13213,7 @@ function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" =
      *  @param {string} val string to escape
      *  @returns {string} escaped string
      */
-    escapeRegex: function escapeRegex(val) {
+    escapeRegex: function (val) {
       return val.replace(_re_escape_regex, '\\$1');
     },
     /**
@@ -13222,7 +13221,7 @@ function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" =
      * @param {*} source JSON notation string
      * @returns Write function
      */
-    set: function set(source) {
+    set: function (source) {
       if ($.isPlainObject(source)) {
         /* Unlike get, only the underscore (global) option is used for for
          * setting data since we don't know the type here. This is why an object
@@ -13239,7 +13238,7 @@ function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" =
         };
       } else if (typeof source === 'string' && (source.indexOf('.') !== -1 || source.indexOf('[') !== -1 || source.indexOf('(') !== -1)) {
         // Like the get, we need to get data from a nested object
-        var setData = function setData(data, val, src) {
+        var setData = function (data, val, src) {
           var a = _fnSplitObjNotation(src),
             b;
           var aLast = a[a.length - 1];
@@ -13320,7 +13319,7 @@ function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" =
      * @param {*} source JSON notation string
      * @returns Value read
      */
-    get: function get(source) {
+    get: function (source) {
       if ($.isPlainObject(source)) {
         // Build an object of get functions, and wrap them in a single call
         var o = {};
@@ -13350,7 +13349,7 @@ function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" =
          * return. This allows entire objects to be missing and sDefaultContent to
          * be used if defined, rather than throwing an error
          */
-        var fetchData = function fetchData(data, type, src) {
+        var fetchData = function (data, type, src) {
           var arrayNotation, funcNotation, out, innerSrc;
           if (src !== "") {
             var a = _fnSplitObjNotation(src);
@@ -13393,7 +13392,9 @@ function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" =
                 data = data[a[i]]();
                 continue;
               }
-              if (data === null || data[a[i]] === undefined) {
+              if (data === null || data[a[i]] === null) {
+                return null;
+              } else if (data === undefined || data[a[i]] === undefined) {
                 return undefined;
               }
               data = data[a[i]];
@@ -13522,7 +13523,7 @@ function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" =
    *  @param {*} knew The new parameter name
    *  @param {*} old The old parameter name
    */
-  var _fnCompatMap = function _fnCompatMap(o, knew, old) {
+  var _fnCompatMap = function (o, knew, old) {
     if (o[knew] !== undefined) {
       o[old] = o[knew];
     }
@@ -13776,7 +13777,7 @@ function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" =
     var mDataSrc = oCol.mData;
     var mData = _fnGetObjectDataFn(mDataSrc);
     var mRender = oCol.mRender ? _fnGetObjectDataFn(oCol.mRender) : null;
-    var attrTest = function attrTest(src) {
+    var attrTest = function (src) {
       return typeof src === 'string' && src.indexOf('@') !== -1;
     };
     oCol._bAttrSrc = $.isPlainObject(mDataSrc) && (attrTest(mDataSrc.sort) || attrTest(mDataSrc.type) || attrTest(mDataSrc.filter));
@@ -14281,7 +14282,7 @@ function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" =
   function _fnInvalidate(settings, rowIdx, src, colIdx) {
     var row = settings.aoData[rowIdx];
     var i, ien;
-    var cellWrite = function cellWrite(cell, col) {
+    var cellWrite = function (cell, col) {
       // This is very frustrating, but in IE if you just write directly
       // to innerHTML, and elements that are overwritten are GC'ed,
       // even if there is a reference to them elsewhere
@@ -14359,7 +14360,7 @@ function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" =
 
     // Allow the data object to be passed in, or construct
     d = d !== undefined ? d : objectRead ? {} : [];
-    var attr = function attr(str, td) {
+    var attr = function (str, td) {
       if (typeof str === 'string') {
         var idx = str.indexOf('@');
         if (idx !== -1) {
@@ -14371,7 +14372,7 @@ function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" =
     };
 
     // Read data from a cell and store into the data object
-    var cellProcess = function cellProcess(cell) {
+    var cellProcess = function (cell) {
       if (colIdx === undefined || colIdx === i) {
         col = columns[i];
         contents = cell.innerHTML.trim();
@@ -14932,7 +14933,7 @@ function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" =
     var nTr, nCell;
     var i, k, l, iLen, jLen, iColShifted, iColumn, iColspan, iRowspan;
     var bUnique;
-    var fnShiftCol = function fnShiftCol(a, i, j) {
+    var fnShiftCol = function (a, i, j) {
       var k = a[i];
       while (k[j]) {
         j++;
@@ -15063,7 +15064,7 @@ function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" =
     var ajaxData;
     var ajax = oSettings.ajax;
     var instance = oSettings.oInstance;
-    var callback = function callback(json) {
+    var callback = function (json) {
       var status = oSettings.jqXHR ? oSettings.jqXHR.status : null;
       if (json === null || typeof status === 'number' && status == 204) {
         json = {};
@@ -15096,10 +15097,10 @@ function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" =
       "dataType": "json",
       "cache": false,
       "type": oSettings.sServerMethod,
-      "error": function error(xhr, _error, thrown) {
+      "error": function (xhr, error, thrown) {
         var ret = _fnCallbackFire(oSettings, null, 'xhr', [oSettings, null, oSettings.jqXHR]);
         if ($.inArray(true, ret) === -1) {
-          if (_error == "parsererror") {
+          if (error == "parsererror") {
             _fnLog(oSettings, 0, 'Invalid JSON response', 1);
           } else if (xhr.readyState === 4) {
             _fnLog(oSettings, 0, 'Ajax error', 7);
@@ -15149,8 +15150,13 @@ function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" =
   function _fnAjaxUpdate(settings) {
     settings.iDraw++;
     _fnProcessingDisplay(settings, true);
+
+    // Keep track of drawHold state to handle scrolling after the Ajax call
+    var drawHold = settings._drawHold;
     _fnBuildAjax(settings, _fnAjaxParameters(settings), function (json) {
+      settings._drawHold = drawHold;
       _fnAjaxUpdateDraw(settings, json);
+      settings._drawHold = false;
     });
   }
 
@@ -15179,7 +15185,7 @@ function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" =
       sort = _fnSortFlatten(settings),
       displayStart = settings._iDisplayStart,
       displayLength = features.bPaginate !== false ? settings._iDisplayLength : -1;
-    var param = function param(name, value) {
+    var param = function (name, value) {
       data.push({
         'name': name,
         'value': value
@@ -15271,7 +15277,7 @@ function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" =
   function _fnAjaxUpdateDraw(settings, json) {
     // v1.10 uses camelCase variables, while 1.9 uses Hungarian notation.
     // Support both
-    var compat = function compat(old, modern) {
+    var compat = function (old, modern) {
       return json[old] !== undefined ? json[old] : json[modern];
     };
     var data = _fnAjaxDataSrc(settings, json);
@@ -15347,7 +15353,7 @@ function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" =
       'id': !features.f ? tableId + '_filter' : null,
       'class': classes.sFilter
     }).append($('<label/>').append(str));
-    var searchFn = function searchFn(event) {
+    var searchFn = function (event) {
       /* Update all other filter input elements for the new display */
       var n = features.f;
       var val = !this.value ? "" : this.value; // mental IE8 fix :-(
@@ -15370,7 +15376,7 @@ function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" =
       }
     };
     var searchDelay = settings.searchDelay !== null ? settings.searchDelay : _fnDataSource(settings) === 'ssp' ? 400 : 0;
-    var jqFilter = $('input', filter).val(previousSearch.sSearch).attr('placeholder', language.sSearchPlaceholder).on('keyup.DT search.DT input.DT paste.DT cut.DT', searchDelay ? _fnThrottle(searchFn, searchDelay) : searchFn).on('mouseup', function (e) {
+    var jqFilter = $('input', filter).val(previousSearch.sSearch).attr('placeholder', language.sSearchPlaceholder).on('keyup.DT search.DT input.DT paste.DT cut.DT', searchDelay ? _fnThrottle(searchFn, searchDelay) : searchFn).on('mouseup.DT', function (e) {
       // Edge fix! Edge 17 does not trigger anything other than mouse events when clicking
       // on the clear icon (Edge bug 17584515). This is safe in other browsers as `searchFn`
       // checks the value to see if it has changed. In other browsers it won't have.
@@ -15409,7 +15415,7 @@ function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" =
   function _fnFilterComplete(oSettings, oInput, iForce) {
     var oPrevSearch = oSettings.oPreviousSearch;
     var aoPrevSearch = oSettings.aoPreSearchCols;
-    var fnSaveFilter = function fnSaveFilter(oFilter) {
+    var fnSaveFilter = function (oFilter) {
       /* Save the filtering values */
       oPrevSearch.sSearch = oFilter.sSearch;
       oPrevSearch.bRegex = oFilter.bRegex;
@@ -15417,7 +15423,7 @@ function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" =
       oPrevSearch.bCaseInsensitive = oFilter.bCaseInsensitive;
       oPrevSearch.return = oFilter.return;
     };
-    var fnRegex = function fnRegex(o) {
+    var fnRegex = function (o) {
       // Backwards compatibility with the bEscapeRegex option
       return o.bEscapeRegex !== undefined ? !o.bEscapeRegex : o.bRegex;
     };
@@ -15429,7 +15435,7 @@ function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" =
     /* In server-side processing all filtering is done by the server, so no point hanging around here */
     if (_fnDataSource(oSettings) != 'ssp') {
       /* Global filter */
-      _fnFilter(oSettings, oInput.sSearch, iForce, fnRegex(oInput), oInput.bSmart, oInput.bCaseInsensitive, oInput.return);
+      _fnFilter(oSettings, oInput.sSearch, iForce, fnRegex(oInput), oInput.bSmart, oInput.bCaseInsensitive);
       fnSaveFilter(oInput);
 
       /* Now do the individual column filter */
@@ -15569,9 +15575,12 @@ function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" =
        * 
        * ^(?=.*?\bone\b)(?=.*?\btwo three\b)(?=.*?\bfour\b).*$
        */
-      var a = $.map(search.match(/"[^"]+"|[^ ]+/g) || [''], function (word) {
+      var a = $.map(search.match(/["\u201C][^"\u201D]+["\u201D]|[^ ]+/g) || [''], function (word) {
         if (word.charAt(0) === '"') {
           var m = word.match(/^"(.*)"$/);
+          word = m ? m[1] : word;
+        } else if (word.charAt(0) === '\u201C') {
+          var m = word.match(/^\u201C(.*)\u201D$/);
           word = m ? m[1] : word;
         }
         return word.replace('"', '');
@@ -15904,7 +15913,7 @@ function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" =
     var type = settings.sPaginationType,
       plugin = DataTable.ext.pager[type],
       modern = typeof plugin === 'function',
-      redraw = function redraw(settings) {
+      redraw = function (settings) {
         _fnDraw(settings);
       },
       node = $('<div/>').addClass(settings.oClasses.sPaging + type)[0],
@@ -15917,7 +15926,7 @@ function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" =
     if (!features.p) {
       node.id = settings.sTableId + '_paginate';
       settings.aoDrawCallback.push({
-        "fn": function fn(settings) {
+        "fn": function (settings) {
           if (modern) {
             var start = settings._iDisplayStart,
               len = settings._iDisplayLength,
@@ -16041,7 +16050,7 @@ function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" =
     var footerClone = $(table[0].cloneNode(false));
     var footer = table.children('tfoot');
     var _div = '<div/>';
-    var size = function size(s) {
+    var size = function (s) {
       return !s ? null : _fnStringToCss(s);
     };
     if (!footer.length) {
@@ -16181,7 +16190,7 @@ function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" =
       idx,
       correction,
       sanityWidth,
-      zeroOut = function zeroOut(nSizer) {
+      zeroOut = function (nSizer) {
         var style = nSizer.style;
         style.paddingTop = "0";
         style.paddingBottom = "0";
@@ -16598,7 +16607,7 @@ function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" =
       table.style.width = _fnStringToCss(tableWidthAttr);
     }
     if ((tableWidthAttr || scrollX) && !oSettings._reszEvt) {
-      var bindResize = function bindResize() {
+      var bindResize = function () {
         $(window).on('resize.DT-' + oSettings.sInstance, _fnThrottle(function () {
           _fnAdjustColumnSizing(oSettings);
         }));
@@ -16715,7 +16724,7 @@ function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" =
       fixed = settings.aaSortingFixed,
       fixedObj = $.isPlainObject(fixed),
       nestedSort = [],
-      add = function add(a) {
+      add = function (a) {
         if (a.length && !Array.isArray(a[0])) {
           // 1D array
           nestedSort.push(a);
@@ -16944,7 +16953,7 @@ function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" =
     var sorting = settings.aaSorting;
     var asSorting = col.asSorting;
     var nextSortIdx;
-    var next = function next(a, overflow) {
+    var next = function (a, overflow) {
       var idx = a._idx;
       if (idx === undefined) {
         idx = $.inArray(a[1], asSorting);
@@ -17137,7 +17146,7 @@ function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" =
       callback();
       return;
     }
-    var loaded = function loaded(state) {
+    var loaded = function (state) {
       _fnImplementState(settings, state, callback);
     };
     var state = settings.fnStateLoadCallback.call(settings.oInstance, settings, loaded);
@@ -17558,7 +17567,7 @@ function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" =
    *   `undefined` is returned if no matching DataTable is found.
    * @ignore
    */
-  var _toSettings = function _toSettings(mixed) {
+  var _toSettings = function (mixed) {
     var idx, jq;
     var settings = DataTable.settings;
     var tables = $.map(settings, function (el, i) {
@@ -17644,12 +17653,12 @@ function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" =
    *   // Initialisation as a constructor
    *   var api = new $.fn.DataTable.Api( 'table.dataTable' );
    */
-  _Api2 = function _Api(context, data) {
-    if (!(this instanceof _Api2)) {
-      return new _Api2(context, data);
+  _Api = function (context, data) {
+    if (!(this instanceof _Api)) {
+      return new _Api(context, data);
     }
     var settings = [];
-    var ctxSettings = function ctxSettings(o) {
+    var ctxSettings = function (o) {
       var a = _toSettings(o);
       if (a) {
         settings.push.apply(settings, a);
@@ -17677,34 +17686,34 @@ function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" =
       cols: null,
       opts: null
     };
-    _Api2.extend(this, this, __apiStruct);
+    _Api.extend(this, this, __apiStruct);
   };
-  DataTable.Api = _Api2;
+  DataTable.Api = _Api;
 
   // Don't destroy the existing prototype, just extend it. Required for jQuery 2's
   // isPlainObject.
-  $.extend(_Api2.prototype, {
-    any: function any() {
+  $.extend(_Api.prototype, {
+    any: function () {
       return this.count() !== 0;
     },
     concat: __arrayProto.concat,
     context: [],
     // array of table settings objects
 
-    count: function count() {
+    count: function () {
       return this.flatten().length;
     },
-    each: function each(fn) {
+    each: function (fn) {
       for (var i = 0, ien = this.length; i < ien; i++) {
         fn.call(this, this[i], i, this);
       }
       return this;
     },
-    eq: function eq(idx) {
+    eq: function (idx) {
       var ctx = this.context;
-      return ctx.length > idx ? new _Api2(ctx[idx], this[idx]) : null;
+      return ctx.length > idx ? new _Api(ctx[idx], this[idx]) : null;
     },
-    filter: function filter(fn) {
+    filter: function (fn) {
       var a = [];
       if (__arrayProto.filter) {
         a = __arrayProto.filter.call(this, fn, this);
@@ -17716,11 +17725,11 @@ function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" =
           }
         }
       }
-      return new _Api2(this.context, a);
+      return new _Api(this.context, a);
     },
-    flatten: function flatten() {
+    flatten: function () {
       var a = [];
-      return new _Api2(this.context, a.concat.apply(a, this.toArray()));
+      return new _Api(this.context, a.concat.apply(a, this.toArray()));
     },
     join: __arrayProto.join,
     indexOf: __arrayProto.indexOf || function (obj, start) {
@@ -17731,7 +17740,7 @@ function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" =
       }
       return -1;
     },
-    iterator: function iterator(flatten, type, fn, alwaysNew) {
+    iterator: function (flatten, type, fn, alwaysNew) {
       var a = [],
         ret,
         i,
@@ -17752,7 +17761,7 @@ function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" =
         flatten = false;
       }
       for (i = 0, ien = context.length; i < ien; i++) {
-        var apiInst = new _Api2(context[i]);
+        var apiInst = new _Api(context[i]);
         if (type === 'table') {
           ret = fn.call(apiInst, context[i], i);
           if (ret !== undefined) {
@@ -17785,7 +17794,7 @@ function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" =
         }
       }
       if (a.length || alwaysNew) {
-        var api = new _Api2(context, flatten ? a.concat.apply([], a) : a);
+        var api = new _Api(context, flatten ? a.concat.apply([], a) : a);
         var apiSelector = api.selector;
         apiSelector.rows = selector.rows;
         apiSelector.cols = selector.cols;
@@ -17799,7 +17808,7 @@ function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" =
       return this.indexOf.apply(this.toArray.reverse(), arguments);
     },
     length: 0,
-    map: function map(fn) {
+    map: function (fn) {
       var a = [];
       if (__arrayProto.map) {
         a = __arrayProto.map.call(this, fn, this);
@@ -17809,9 +17818,9 @@ function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" =
           a.push(fn.call(this, this[i], i));
         }
       }
-      return new _Api2(this.context, a);
+      return new _Api(this.context, a);
     },
-    pluck: function pluck(prop) {
+    pluck: function (prop) {
       var fn = DataTable.util.get(prop);
       return this.map(function (el) {
         return fn(el);
@@ -17830,41 +17839,41 @@ function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" =
     // Object with rows, columns and opts
     selector: null,
     shift: __arrayProto.shift,
-    slice: function slice() {
-      return new _Api2(this.context, this);
+    slice: function () {
+      return new _Api(this.context, this);
     },
     sort: __arrayProto.sort,
     // ? name - order?
 
     splice: __arrayProto.splice,
-    toArray: function toArray() {
+    toArray: function () {
       return __arrayProto.slice.call(this);
     },
-    to$: function to$() {
+    to$: function () {
       return $(this);
     },
-    toJQuery: function toJQuery() {
+    toJQuery: function () {
       return $(this);
     },
-    unique: function unique() {
-      return new _Api2(this.context, _unique(this));
+    unique: function () {
+      return new _Api(this.context, _unique(this));
     },
     unshift: __arrayProto.unshift
   });
-  _Api2.extend = function (scope, obj, ext) {
+  _Api.extend = function (scope, obj, ext) {
     // Only extend API instances and static properties of the API
-    if (!ext.length || !obj || !(obj instanceof _Api2) && !obj.__dt_wrapper) {
+    if (!ext.length || !obj || !(obj instanceof _Api) && !obj.__dt_wrapper) {
       return;
     }
     var i,
       ien,
       struct,
-      methodScoping = function methodScoping(scope, fn, struc) {
+      methodScoping = function (scope, fn, struc) {
         return function () {
           var ret = fn.apply(scope, arguments);
 
           // Method extension
-          _Api2.extend(ret, ret, struc.methodExt);
+          _Api.extend(ret, ret, struc.methodExt);
           return ret;
         };
       };
@@ -17876,7 +17885,7 @@ function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" =
       obj[struct.name].__dt_wrapper = true;
 
       // Property extension
-      _Api2.extend(scope, obj[struct.name], struct.propExt);
+      _Api.extend(scope, obj[struct.name], struct.propExt);
     }
   };
 
@@ -17912,10 +17921,10 @@ function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" =
   //       }
   //     ]
 
-  _Api2.register = _api_register = function _api_register(name, val) {
+  _Api.register = _api_register = function (name, val) {
     if (Array.isArray(name)) {
       for (var j = 0, jen = name.length; j < jen; j++) {
-        _Api2.register(name[j], val);
+        _Api.register(name[j], val);
       }
       return;
     }
@@ -17925,7 +17934,7 @@ function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" =
       struct = __apiStruct,
       key,
       method;
-    var find = function find(src, name) {
+    var find = function (src, name) {
       for (var i = 0, ien = src.length; i < ien; i++) {
         if (src[i].name === name) {
           return src[i];
@@ -17955,17 +17964,17 @@ function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" =
       }
     }
   };
-  _Api2.registerPlural = _api_registerPlural = function _api_registerPlural(pluralName, singularName, val) {
-    _Api2.register(pluralName, val);
-    _Api2.register(singularName, function () {
+  _Api.registerPlural = _api_registerPlural = function (pluralName, singularName, val) {
+    _Api.register(pluralName, val);
+    _Api.register(singularName, function () {
       var ret = val.apply(this, arguments);
       if (ret === this) {
         // Returned item is the API instance that was passed in, return it
         return this;
-      } else if (ret instanceof _Api2) {
+      } else if (ret instanceof _Api) {
         // New API instance returned, want the value from the first item
         // in the returned array for the singular result.
-        return ret.length ? Array.isArray(ret[0]) ? new _Api2(ret.context, ret[0]) :
+        return ret.length ? Array.isArray(ret[0]) ? new _Api(ret.context, ret[0]) :
         // Array results are 'enhanced'
         ret[0] : undefined;
       }
@@ -17984,7 +17993,7 @@ function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" =
    * @return {array}
    * @ignore
    */
-  var __table_selector = function __table_selector(selector, a) {
+  var __table_selector = function (selector, a) {
     if (Array.isArray(selector)) {
       return $.map(selector, function (item) {
         return __table_selector(item, a);
@@ -18020,14 +18029,14 @@ function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" =
    */
   _api_register('tables()', function (selector) {
     // A new instance is created if there was a selector specified
-    return selector !== undefined && selector !== null ? new _Api2(__table_selector(selector, this.context)) : this;
+    return selector !== undefined && selector !== null ? new _Api(__table_selector(selector, this.context)) : this;
   });
   _api_register('table()', function (selector) {
     var tables = this.tables(selector);
     var ctx = tables.context;
 
     // Truncate to the first matched table
-    return ctx.length ? new _Api2(ctx[0]) : tables;
+    return ctx.length ? new _Api(ctx[0]) : tables;
   });
   _api_registerPlural('tables().nodes()', 'table().node()', function () {
     return this.iterator('table', function (ctx) {
@@ -18164,10 +18173,10 @@ function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" =
       _fnLengthChange(settings, len);
     });
   });
-  var __reload = function __reload(settings, holdPosition, callback) {
+  var __reload = function (settings, holdPosition, callback) {
     // Use the draw event to trigger a callback
     if (callback) {
-      var api = new _Api2(settings);
+      var api = new _Api(settings);
       api.one('draw', function () {
         callback(api.ajax.json());
       });
@@ -18291,7 +18300,7 @@ function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" =
       __reload(ctx, resetPaging === false, callback);
     });
   });
-  var _selector_run = function _selector_run(type, selector, selectFn, settings, opts) {
+  var _selector_run = function (type, selector, selectFn, settings, opts) {
     var out = [],
       res,
       a,
@@ -18299,7 +18308,7 @@ function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" =
       ien,
       j,
       jen,
-      selectorType = _typeof(selector);
+      selectorType = typeof selector;
 
     // Can't just check for isArray here, as an API or jQuery instance might be
     // given with their array like look
@@ -18326,7 +18335,7 @@ function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" =
     }
     return _unique(out);
   };
-  var _selector_opts = function _selector_opts(opts) {
+  var _selector_opts = function (opts) {
     if (!opts) {
       opts = {};
     }
@@ -18342,7 +18351,7 @@ function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" =
       page: 'all'
     }, opts);
   };
-  var _selector_first = function _selector_first(inst) {
+  var _selector_first = function (inst) {
     // Reduce the API instance to the first item found
     for (var i = 0, ien = inst.length; i < ien; i++) {
       if (inst[i].length > 0) {
@@ -18360,7 +18369,7 @@ function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" =
     inst.length = 0;
     return inst;
   };
-  var _selector_row_indexes = function _selector_row_indexes(settings, opts) {
+  var _selector_row_indexes = function (settings, opts) {
     var i,
       ien,
       tmp,
@@ -18427,9 +18436,9 @@ function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" =
    * {array}     - jQuery array of nodes, or simply an array of TR nodes
    *
    */
-  var __row_selector = function __row_selector(settings, selector, opts) {
+  var __row_selector = function (settings, selector, opts) {
     var rows;
-    var run = function run(sel) {
+    var run = function (sel) {
       var selInt = _intVal(sel);
       var i, ien;
       var aoData = settings.aoData;
@@ -18561,7 +18570,7 @@ function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" =
         a.push((hash === true ? '#' : '') + id);
       }
     }
-    return new _Api2(context, a);
+    return new _Api(context, a);
   });
   _api_registerPlural('rows().remove()', 'row().remove()', function () {
     var that = this;
@@ -18685,7 +18694,7 @@ function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" =
     return this.row(rows[0]);
   });
   $(document).on('plugin-init.dt', function (e, context) {
-    var api = new _Api2(context);
+    var api = new _Api(context);
     var namespace = 'on-plugin-init';
     var stateSaveParamsEvent = 'stateSaveParams.' + namespace;
     var destroyEvent = 'destroy. ' + namespace;
@@ -18714,10 +18723,10 @@ function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" =
       });
     }
   });
-  var __details_add = function __details_add(ctx, row, data, klass) {
+  var __details_add = function (ctx, row, data, klass) {
     // Convert to array of TR elements
     var rows = [];
-    var addRow = function addRow(r, k) {
+    var addRow = function (r, k) {
       // Recursion to allow for arrays of jQuery objects
       if (Array.isArray(r) || r instanceof $) {
         for (var i = 0, ien = r.length; i < ien; i++) {
@@ -18753,7 +18762,7 @@ function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" =
   var __details_state = DataTable.util.throttle(function (ctx) {
     _fnSaveState(ctx[0]);
   }, 500);
-  var __details_remove = function __details_remove(api, idx) {
+  var __details_remove = function (api, idx) {
     var ctx = api.context;
     if (ctx.length) {
       var row = ctx[0].aoData[idx !== undefined ? idx : api[0]];
@@ -18766,7 +18775,7 @@ function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" =
       }
     }
   };
-  var __details_display = function __details_display(api, show) {
+  var __details_display = function (api, show) {
     var ctx = api.context;
     if (ctx.length && api.length) {
       var row = ctx[0].aoData[api[0]];
@@ -18785,8 +18794,8 @@ function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" =
       }
     }
   };
-  var __details_events = function __details_events(settings) {
-    var api = new _Api2(settings);
+  var __details_events = function (settings) {
+    var api = new _Api(settings);
     var namespace = '.dt.DT_details';
     var drawEvent = 'draw' + namespace;
     var colvisEvent = 'column-sizing' + namespace;
@@ -18913,18 +18922,18 @@ function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" =
 
   // r1 and r2 are redundant - but it means that the parameters match for the
   // iterator callback in columns().data()
-  var __columnData = function __columnData(settings, column, r1, r2, rows) {
+  var __columnData = function (settings, column, r1, r2, rows) {
     var a = [];
     for (var row = 0, ien = rows.length; row < ien; row++) {
       a.push(_fnGetCellData(settings, rows[row], column));
     }
     return a;
   };
-  var __column_selector = function __column_selector(settings, selector, opts) {
+  var __column_selector = function (settings, selector, opts) {
     var columns = settings.aoColumns,
       names = _pluck(columns, 'sName'),
       nodes = _pluck(columns, 'nTh');
-    var run = function run(s) {
+    var run = function (s) {
       var selInt = _intVal(s);
 
       // Selector - all
@@ -18995,7 +19004,7 @@ function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" =
     };
     return _selector_run('column', selector, run, settings, opts);
   };
-  var __setColumnVis = function __setColumnVis(settings, column, vis) {
+  var __setColumnVis = function (settings, column, vis) {
     var cols = settings.aoColumns,
       col = cols[column],
       data = settings.aoData,
@@ -19138,7 +19147,7 @@ function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" =
   _api_register('column()', function (selector, opts) {
     return _selector_first(this.columns(selector, opts));
   });
-  var __cell_selector = function __cell_selector(settings, selector, opts) {
+  var __cell_selector = function (settings, selector, opts) {
     var data = settings.aoData;
     var rows = _selector_row_indexes(settings, opts);
     var cells = _removeEmpty(_pluck_order(data, rows, 'anCells'));
@@ -19146,7 +19155,7 @@ function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" =
     var row;
     var columns = settings.aoColumns.length;
     var a, i, ien, j, o, host;
-    var run = function run(s) {
+    var run = function (s) {
       var fnSelector = typeof s === 'function';
       if (s === null || s === undefined || fnSelector) {
         // All cells and function selectors
@@ -19473,7 +19482,8 @@ function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" =
    * Set the jQuery or window object to be used by DataTables
    *
    * @param {*} module Library / container object
-   * @param {string} type Library or container type `lib` or `win`.
+   * @param {string} [type] Library or container type `lib`, `win` or `datetime`.
+   *   If not provided, automatic detection is attempted.
    */
   DataTable.use = function (module, type) {
     if (type === 'lib' || module.fn) {
@@ -19481,6 +19491,8 @@ function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" =
     } else if (type == 'win' || module.document) {
       window = module;
       document = module.document;
+    } else if (type === 'datetime' || module.type === 'DateTime') {
+      DataTable.DateTime = module;
     }
   };
 
@@ -19601,7 +19613,7 @@ function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" =
         return o.nTable;
       }
     });
-    return api ? new _Api2(a) : a;
+    return api ? new _Api(a) : a;
   };
 
   /**
@@ -19650,7 +19662,7 @@ function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" =
     });
   });
   _api_register('settings()', function () {
-    return new _Api2(this.context, this.context);
+    return new _Api(this.context, this.context);
   });
   _api_register('init()', function () {
     var ctx = this.context;
@@ -19686,7 +19698,7 @@ function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" =
 
       // If not being removed from the document, make all columns visible
       if (!remove) {
-        new _Api2(settings).columns().visible(true);
+        new _Api(settings).columns().visible(true);
       }
 
       // Blitz all `DT` namespaced events (these are internal events, the
@@ -19780,7 +19792,8 @@ function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" =
     if (plural !== undefined && $.isPlainObject(resolved)) {
       resolved = resolved[plural] !== undefined ? resolved[plural] : resolved._;
     }
-    return resolved.replace('%d', plural); // nb: plural might be undefined,
+    return typeof resolved === 'string' ? resolved.replace('%d', plural) // nb: plural might be undefined,
+    : resolved;
   });
   /**
    * Version string for plug-ins to check compatibility. Allowed format is
@@ -19790,7 +19803,7 @@ function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" =
    *  @type string
    *  @default Version number
    */
-  DataTable.version = "1.13.4";
+  DataTable.version = "1.13.5";
 
   /**
    * Private data store, containing all of the settings objects that are
@@ -20980,7 +20993,7 @@ function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" =
      *      } );
      *    } );
      */
-    "fnFormatNumber": function fnFormatNumber(toFormat) {
+    "fnFormatNumber": function (toFormat) {
       return toFormat.toString().replace(/\B(?=(\d{3})+(?!\d))/g, this.oLanguage.sThousands);
     },
     /**
@@ -21191,7 +21204,7 @@ function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" =
      *      } );
      *    } );
      */
-    "fnStateLoadCallback": function fnStateLoadCallback(settings) {
+    "fnStateLoadCallback": function (settings) {
       try {
         return JSON.parse((settings.iStateDuration === -1 ? sessionStorage : localStorage).getItem('DataTables_' + settings.sInstance + '_' + location.pathname));
       } catch (e) {
@@ -21285,7 +21298,7 @@ function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" =
      *      } );
      *    } );
      */
-    "fnStateSaveCallback": function fnStateSaveCallback(settings, data) {
+    "fnStateSaveCallback": function (settings, data) {
       try {
         (settings.iStateDuration === -1 ? sessionStorage : localStorage).setItem('DataTables_' + settings.sInstance + '_' + location.pathname, JSON.stringify(data));
       } catch (e) {}
@@ -23720,21 +23733,21 @@ function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" =
      * Get the number of records in the current record set, before filtering
      *  @type function
      */
-    "fnRecordsTotal": function fnRecordsTotal() {
+    "fnRecordsTotal": function () {
       return _fnDataSource(this) == 'ssp' ? this._iRecordsTotal * 1 : this.aiDisplayMaster.length;
     },
     /**
      * Get the number of records in the current record set, after filtering
      *  @type function
      */
-    "fnRecordsDisplay": function fnRecordsDisplay() {
+    "fnRecordsDisplay": function () {
       return _fnDataSource(this) == 'ssp' ? this._iRecordsDisplay * 1 : this.aiDisplay.length;
     },
     /**
      * Get the display end point - aiDisplay index
      *  @type function
      */
-    "fnDisplayEnd": function fnDisplayEnd() {
+    "fnDisplayEnd": function () {
       var len = this._iDisplayLength,
         start = this._iDisplayStart,
         calc = start + len,
@@ -24393,22 +24406,22 @@ function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" =
     return numbers;
   }
   $.extend(extPagination, {
-    simple: function simple(page, pages) {
+    simple: function (page, pages) {
       return ['previous', 'next'];
     },
-    full: function full(page, pages) {
+    full: function (page, pages) {
       return ['first', 'previous', 'next', 'last'];
     },
-    numbers: function numbers(page, pages) {
+    numbers: function (page, pages) {
       return [_numbers(page, pages)];
     },
-    simple_numbers: function simple_numbers(page, pages) {
+    simple_numbers: function (page, pages) {
       return ['previous', _numbers(page, pages), 'next'];
     },
-    full_numbers: function full_numbers(page, pages) {
+    full_numbers: function (page, pages) {
       return ['first', 'previous', _numbers(page, pages), 'next', 'last'];
     },
-    first_last_numbers: function first_last_numbers(page, pages) {
+    first_last_numbers: function (page, pages) {
       return ['first', _numbers(page, pages), 'last'];
     },
     // For testing and plug-ins to use
@@ -24418,15 +24431,15 @@ function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" =
   });
   $.extend(true, DataTable.ext.renderer, {
     pageButton: {
-      _: function _(settings, host, idx, buttons, page, pages) {
+      _: function (settings, host, idx, buttons, page, pages) {
         var classes = settings.oClasses;
         var lang = settings.oLanguage.oPaginate;
         var aria = settings.oLanguage.oAria.paginate || {};
         var btnDisplay, btnClass;
-        var attach = function attach(container, buttons) {
+        var attach = function (container, buttons) {
           var i, ien, node, button, tabIndex;
           var disabledClass = classes.sPageButtonDisabled;
-          var clickHandler = function clickHandler(e) {
+          var clickHandler = function (e) {
             _fnPageChange(settings, e.data.action, true);
           };
           for (i = 0, ien = buttons.length; i < ien; i++) {
@@ -24483,7 +24496,7 @@ function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" =
                   'aria-controls': settings.sTableId,
                   'aria-disabled': disabled ? 'true' : null,
                   'aria-label': aria[button],
-                  'aria-role': 'link',
+                  'role': 'link',
                   'aria-current': btnClass === classes.sPageButtonActive ? 'page' : null,
                   'data-dt-idx': button,
                   'tabindex': tabIndex,
@@ -24564,18 +24577,18 @@ function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" =
   // place is
 
   $.extend(DataTable.ext.type.search, {
-    html: function html(data) {
+    html: function (data) {
       return _empty(data) ? data : typeof data === 'string' ? data.replace(_re_new_lines, " ").replace(_re_html, "") : '';
     },
-    string: function string(data) {
+    string: function (data) {
       return _empty(data) ? data : typeof data === 'string' ? data.replace(_re_new_lines, " ") : data;
     }
   });
-  var __numericReplace = function __numericReplace(d, decimalPlace, re1, re2) {
+  var __numericReplace = function (d, decimalPlace, re1, re2) {
     if (d !== 0 && (!d || d === '-')) {
       return -Infinity;
     }
-    var type = _typeof(d);
+    var type = typeof d;
     if (type === 'number' || type === 'bigint') {
       return d;
     }
@@ -24603,19 +24616,19 @@ function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" =
   function _addNumericSort(decimalPlace) {
     $.each({
       // Plain numbers
-      "num": function num(d) {
+      "num": function (d) {
         return __numericReplace(d, decimalPlace);
       },
       // Formatted numbers
-      "num-fmt": function numFmt(d) {
+      "num-fmt": function (d) {
         return __numericReplace(d, decimalPlace, _re_formatted_numeric);
       },
       // HTML numeric
-      "html-num": function htmlNum(d) {
+      "html-num": function (d) {
         return __numericReplace(d, decimalPlace, _re_html);
       },
       // HTML numeric, formatted
-      "html-num-fmt": function htmlNumFmt(d) {
+      "html-num-fmt": function (d) {
         return __numericReplace(d, decimalPlace, _re_html, _re_formatted_numeric);
       }
     }, function (key, fn) {
@@ -24632,26 +24645,26 @@ function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" =
   // Default sort methods
   $.extend(_ext.type.order, {
     // Dates
-    "date-pre": function datePre(d) {
+    "date-pre": function (d) {
       var ts = Date.parse(d);
       return isNaN(ts) ? -Infinity : ts;
     },
     // html
-    "html-pre": function htmlPre(a) {
+    "html-pre": function (a) {
       return _empty(a) ? '' : a.replace ? a.replace(/<.*?>/g, "").toLowerCase() : a + '';
     },
     // string
-    "string-pre": function stringPre(a) {
+    "string-pre": function (a) {
       // This is a little complex, but faster than always calling toString,
       // http://jsperf.com/tostring-v-check
       return _empty(a) ? '' : typeof a === 'string' ? a.toLowerCase() : !a.toString ? '' : a.toString();
     },
     // string-asc and -desc are retained only for compatibility with the old
     // sort methods
-    "string-asc": function stringAsc(x, y) {
+    "string-asc": function (x, y) {
       return x < y ? -1 : x > y ? 1 : 0;
     },
-    "string-desc": function stringDesc(x, y) {
+    "string-desc": function (x, y) {
       return x < y ? 1 : x > y ? -1 : 0;
     }
   });
@@ -24660,7 +24673,7 @@ function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" =
   _addNumericSort('');
   $.extend(true, DataTable.ext.renderer, {
     header: {
-      _: function _(settings, cell, column, classes) {
+      _: function (settings, cell, column, classes) {
         // No additional mark-up required
         // Attach a sort listener to update on sort - note that using the
         // `DT` namespace will allow the event to be removed automatically
@@ -24676,7 +24689,7 @@ function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" =
           cell.removeClass(classes.sSortAsc + ' ' + classes.sSortDesc).addClass(columns[colIdx] == 'asc' ? classes.sSortAsc : columns[colIdx] == 'desc' ? classes.sSortDesc : column.sSortingClass);
         });
       },
-      jqueryui: function jqueryui(settings, cell, column, classes) {
+      jqueryui: function (settings, cell, column, classes) {
         $('<div/>').addClass(classes.sSortJUIWrapper).append(cell.contents()).append($('<span/>').addClass(classes.sSortIcon + ' ' + column.sSortingClassJUI)).appendTo(cell);
 
         // Attach a sort listener to update on sort
@@ -24699,7 +24712,7 @@ function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" =
    * to make working with DataTables a little bit easier.
    */
 
-  var __htmlEscapeEntities = function __htmlEscapeEntities(d) {
+  var __htmlEscapeEntities = function (d) {
     if (Array.isArray(d)) {
       d = d.join(',');
     }
@@ -24828,7 +24841,7 @@ function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" =
   // Fallback for legacy browsers is US English
   var __thousands = ',';
   var __decimal = '.';
-  if (Intl) {
+  if (window.Intl !== undefined) {
     try {
       var num = new Intl.NumberFormat().formatToParts(100000.1);
       for (var i = 0; i < num.length; i++) {
@@ -24890,7 +24903,7 @@ function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" =
     date: __mlHelper('toLocaleDateString'),
     datetime: __mlHelper('toLocaleString'),
     time: __mlHelper('toLocaleTimeString'),
-    number: function number(thousands, decimal, precision, prefix, postfix) {
+    number: function (thousands, decimal, precision, prefix, postfix) {
       // Auto locale detection
       if (thousands === null || thousands === undefined) {
         thousands = __thousands;
@@ -24899,7 +24912,7 @@ function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" =
         decimal = __decimal;
       }
       return {
-        display: function display(d) {
+        display: function (d) {
           if (typeof d !== 'number' && typeof d !== 'string') {
             return d;
           }
@@ -24928,7 +24941,7 @@ function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" =
         }
       };
     },
-    text: function text() {
+    text: function () {
       return {
         display: __htmlEscapeEntities,
         filter: __htmlEscapeEntities
@@ -25052,7 +25065,7 @@ function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" =
     _fnDataSource: _fnDataSource,
     _fnRowAttributes: _fnRowAttributes,
     _fnExtend: _fnExtend,
-    _fnCalculateEnd: function _fnCalculateEnd() {} // Used by a lot of plug-ins, but redundant
+    _fnCalculateEnd: function () {} // Used by a lot of plug-ins, but redundant
     // in 1.10, so this dead-end function is
     // added to prevent errors
   });
@@ -25080,3 +25093,165 @@ function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" =
   });
   return DataTable;
 });
+if (pt === undefined) {
+  var pt = {};
+}
+if (pt.moloni === undefined) {
+  pt.moloni = {};
+}
+if (pt.moloni.Logs === undefined) {
+  pt.moloni.Logs = {};
+}
+pt.moloni.Logs = function ($) {
+  var currentPageAction;
+  var logs = [];
+  function init(_currentPageAction) {
+    currentPageAction = _currentPageAction;
+    startObservers();
+  }
+  function startObservers() {
+    var datatable = $('.moloniTable');
+    datatable.on('preXhr.dt', disableTable) // https://datatables.net/reference/event/preXhr
+    .dataTable({
+      "processing": true,
+      "serverSide": true,
+      "bStateSave": false,
+      "order": [[0, 'desc']],
+      "ajax": {
+        "url": currentPageAction,
+        "data": {
+          "ajax": true
+        }
+      },
+      "columns": [{
+        data: 'created_at',
+        orderable: true
+      }, {
+        data: 'log_level',
+        orderable: false,
+        render: renderLevelCol
+      }, {
+        data: 'message',
+        defaultContent: '',
+        orderable: false
+      }, {
+        data: 'context',
+        orderable: false,
+        render: renderContextCol
+      }],
+      "columnDefs": [{
+        className: "center-align",
+        targets: [1, 3]
+      }],
+      "fnDrawCallback": enableTable,
+      // https://datatables.net/reference/option/drawCallback
+      "searchDelay": 2000,
+      "lengthMenu": [10, 25, 50, 75],
+      "pageLength": 10,
+      "sPaginationType": "simple_numbers",
+      "sDom": '<"top"<"MolSearch"f><"MolShowing"l>>rt<"bottom row"<"MolInfo col s6"i><"MolPagination col s6"p>><"clear">',
+      "language": {
+        "sLengthMenu": "_MENU_",
+        "sZeroRecords": "Sem resultados encontrados",
+        "sInfo": "A mostrar <b>_START_</b> - <b>_END_</b> de <b>_TOTAL_</b> registos",
+        "sInfoEmpty": "Sem resultados para apresentar",
+        "sInfoFiltered": "(Filtrados de _MAX_)",
+        "sSearch": "",
+        "sSearchPlaceholder": "Pesquisar...",
+        "oPaginate": {
+          "sPrevious": "Anterior",
+          "sNext": "Seguinte"
+        }
+      }
+    });
+
+    // Duct tape to fix, multiple ajax requests while searching.
+    // Only searches when pressing "enter"
+    $('.dataTables_filter input').off('').bind('keyup', function (e) {
+      if (e.keyCode !== 13) {
+        return;
+      }
+      datatable.fnFilter($(this).val());
+    });
+  }
+
+  //       PRIVATES       //
+
+  function disableTable() {
+    $('.moloniTable').addClass('dataTable--disabled');
+    logs = [];
+  }
+  function enableTable() {
+    $('.moloniTable').removeClass('dataTable--disabled');
+  }
+  function openLogOverlay(logId) {
+    var overlay = $("#logs_overlay_modal");
+    var overlayBtn = $("[data-target='#logs_overlay_modal']");
+    var content = '';
+    content += '<pre class="logs-content">';
+    content += logs[logId];
+    content += '</pre>';
+    overlay.find('.modal-body').html(content);
+    overlay.find('.modal-footer').find('#download_log_btn').off('click').on('click', downloadLogOverlay.bind(this, logId));
+    overlayBtn.trigger('click');
+  }
+  function downloadLogOverlay(logId) {
+    var element = document.createElement('a');
+    element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(logs[logId]));
+    element.setAttribute('download', 'log.txt');
+    element.style.display = 'none';
+    document.body.appendChild(element);
+    element.click();
+    document.body.removeChild(element);
+  }
+
+  //       RENDERS       //
+
+  function renderLevelCol(data, type, row, meta) {
+    var cssClass = '';
+    var labelText = '';
+    switch (data) {
+      case 'debug':
+        cssClass = 'grey white-text';
+        labelText = 'Debug';
+        break;
+      case 'warning':
+        cssClass = 'yellow black-text';
+        labelText = 'Alerta';
+        break;
+      case 'critical':
+        cssClass = 'red white-text';
+        labelText = 'Crítico';
+        break;
+      case 'error':
+        cssClass = 'red white-text';
+        labelText = 'Erro';
+        break;
+      default:
+      case 'info':
+        cssClass = 'blue white-text';
+        labelText = 'Informativo';
+        break;
+    }
+    var html = "";
+    html += "<span class='badge " + cssClass + "'>";
+    html += labelText;
+    html += "</span>";
+    return html;
+  }
+  function renderContextCol(data, type, row, meta) {
+    data = data || '{}';
+    data = JSON.parse(data);
+    var logId = row.id;
+    var html = "";
+    html += "<button type='button' class='waves-effect waves-light btn-small' onclick='pt.moloni.Logs.openLogOverlay(" + logId + ");'>";
+    html += "Ver";
+    html += "</button>";
+    logs[logId] = JSON.stringify(data || {}, null, 2);
+    return html;
+  }
+  return {
+    init: init,
+    openLogOverlay: openLogOverlay
+  };
+}(jQuery);

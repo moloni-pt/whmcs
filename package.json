@@ -20,9 +20,14 @@
     "url": "https://github.com/moloni-pt/whmcs/issues"
   },
   "homepage": "https://github.com/moloni-pt/whmcs#readme",
+  "dependencies": {
+    "datatables.net": "^1.13.5",
+    "datatables.net-dt": "*",
+    "materialize-css": "^1.0.0"
+  },
   "devDependencies": {
-    "@babel/core": "^7.21.0",
-    "@babel/preset-env": "^7.20.2",
+    "@babel/core": "^7.22.6",
+    "@babel/preset-env": "^7.22.6",
     "autoprefixer": "^10.4.14",
     "gulp": "^4.0.2",
     "gulp-babel": "^8.0.0",
@@ -31,19 +36,15 @@
     "gulp-cssimport": "^7.0.0",
     "gulp-plumber": "^1.2.1",
     "gulp-postcss": "^9.0.1",
-    "gulp-purgecss": "^4.0.3",
+    "gulp-purgecss": "^5.0.0",
     "gulp-rename": "^2.0.0",
     "gulp-sass": "^5.1.0",
     "gulp-sourcemaps": "^3.0.0",
     "gulp-uglify": "^3.0.2",
-    "postcss": "^8.4.21",
+    "postcss": "^8.4.24",
     "postcss-combine-media-query": "^1.0.1",
-    "postcss-sort-media-queries": "^4.3.0",
-    "sass": "^1.37.5"
-  },
-  "dependencies": {
-    "datatables.net": "^1.10.25",
-    "materialize-css": "^1.0.0"
+    "postcss-sort-media-queries": "^5.2.0",
+    "sass": "^1.63.6"
   },
   "browserslist": [
     "> 0.25%",

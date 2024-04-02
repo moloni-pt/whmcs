@@ -3,6 +3,7 @@
 namespace Moloni\Api;
 
 use Moloni\Curl;
+use Moloni\Exceptions\APIException;
 
 class PaymentMethods
 {
@@ -21,6 +22,11 @@ class PaymentMethods
         return 0;
     }
 
+    /**
+     * Create payment method
+     *
+     * @throws APIException
+     */
     public static function insert($name = '')
     {
         $props = [
@@ -30,9 +36,16 @@ class PaymentMethods
         $insert = Curl::simple("paymentMethods/insert", $props);
 
         if (isset($insert['payment_method_id'])) {
-            return (int)$insert['payment_method_id'];
+            return $insert;
         }
 
-        return 0;
+        throw new APIException(
+            'Erro a criar método de pagamento.',
+            [
+                'values_sent' => $props,
+                'values_receive' => $insert
+            ],
+            'paymentMethods/insert'
+        );
     }
 }

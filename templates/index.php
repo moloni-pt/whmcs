@@ -6,75 +6,13 @@ use Moloni\Model\WhmcsDB;
 
 ?>
 <section id="moloni">
-
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" scope href="<?= Tools::getPublicUrl('compiled.min.css') ?>">
-
-    <div class="row">
-        <div class="col">
-            <a href='https://moloni.pt' target='_BLANK'>
-                <img src='<?= Tools::getPublicUrl('img/logo.png') ?>' class='moloni-logo'>
-            </a>
-        </div>
-        <div class="right">
-            <div>
-                <a href="addonmodules.php?module=moloni&action=logout"
-                   class="waves-effect waves-light btn red logoutMoloni">
-                    <span>Sair</span>
-                    <i class='material-icons'>logout</i>
-                </a>
-            </div>
-        </div>
-    </div>
-
     <?php
+    $activeTab = '';
 
-    if (Error::$exists) {
-        if (!empty(Error::$success)) {
-            $echoSuccess = "<div class='alert alert-success'>" . Error::$success['text'];
-            if (!empty(Error::$success['moloniURL'])) {
-                $echoSuccess .= " | <a target='_blank' rel='noopener noreferrer' href='" . Error::$success['moloniURL'] . "' style='cursor:pointer'> Consultar aqui documento no Moloni</a>";
-            }
-            if (!empty(Error::$success['downloadURL'])) {
-                $echoSuccess .= " | <a target='_blank' rel='noopener noreferrer' href='" . Error::$success['downloadURL'] . "' style='cursor:pointer'> Fazer download de documento aqui</a>";
-            }
-            echo $echoSuccess . "</div>";
-        }
-
-        if (!empty(Error::$error)) {
-            $echoError = "<div class='alert alert-danger'>" . Error::$error['where'] . " - " . Error::$error['message'];
-            if (!empty(Error::$error['values_sent']) || !empty(Error::$error['values_receive'])) {
-                $echoError .= " | <a id='debugMoloniAPI' style='cursor:pointer'> Ver mais</a>";
-            }
-            echo $echoError . '</div>';
-
-            if (!empty(Error::$error['values_sent']) || !empty(Error::$error['values_receive'])) {
-                echo '<div id="showDebugMoloni" style="display:none">';
-                echo '<pre class="alert alert-warning">';
-                print_r(Error::$error['values_sent']);
-                echo '</pre>';
-                echo '<pre class="alert alert-warning">';
-                print_r(Error::$error['values_receive']);
-                echo '</pre>';
-                echo '</div>';
-            }
-        }
-    }
-
+    include MOLONI_TEMPLATE_PATH . 'Blocks/header.php';
+    include MOLONI_TEMPLATE_PATH . 'Blocks/messages.php';
+    include MOLONI_TEMPLATE_PATH . 'Blocks/navbar.php';
     ?>
-
-    <div class="row menuMoloni">
-        <div class="col menuAtivo">
-            <a class="black-text" href="addonmodules.php?module=moloni">Faturação</a>
-        </div>
-        <div class="col">
-            <a class="black-text" href="addonmodules.php?module=moloni&action=docs">Documentos</a>
-        </div>
-        <div class="col">
-            <a class="black-text" href="addonmodules.php?module=moloni&action=config">Configuração</a>
-        </div>
-    </div>
 
     <div class="row">
         <div class="col s12">
@@ -125,7 +63,7 @@ use Moloni\Model\WhmcsDB;
 
 </section>
 
-<script type="text/javascript" src="<?= Tools::getPublicUrl('compiled.min.js') ?>"></script>
+<?php include MOLONI_TEMPLATE_PATH . 'Blocks/footer.php'; ?>
 
 <script>
     $(document).ready(function() {
@@ -177,27 +115,7 @@ use Moloni\Model\WhmcsDB;
                     "sNext": "Seguinte",
                 }
             }
-        }).on('draw.dt', function() {
-            var info = ($(this).DataTable()).page.info();
-            //ultima pagina
-            if (info.page + 1 === info.pages) {
-                $('.paginate_button.previous').removeClass('paginateInativo');
-                $('.paginate_button.next').addClass('paginateInativo');
-            } else if (info.page == 0) { //primeira pagina
-                $('.paginate_button.previous').addClass('paginateInativo');
-                $('.paginate_button.next').removeClass('paginateInativo');
-            } else {
-                $('.paginate_button.next').removeClass('paginateInativo');
-                $('.paginate_button.previous').removeClass('paginateInativo');
-            }
-            $('#mydiv').hide();
         });
-
-        $('.paginate_button.previous').addClass('paginateInativo');
-        //unica pagina
-        if (($('.highlight').DataTable()).page.info().pages == 1) {
-            $('.paginate_button.next').addClass('paginateInativo');
-        }
 
         function deselect(e) {
             $('.pop').slideFadeToggle(function() {

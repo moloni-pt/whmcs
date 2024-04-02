@@ -184,6 +184,19 @@ class WhmcsDB
         return false;
     }
 
+    public static function getUpgradeInfo($id)
+    {
+        $row = Capsule::table('tblupgrades')
+            ->join('tblhosting', 'tblhosting.id', '=', 'tblupgrades.relid')
+            ->join('tblproducts', 'tblhosting.packageid', '=', 'tblproducts.id')
+            ->where('tblupgrades.id', $id)
+            ->select('tblupgrades.*', 'tblhosting.*', 'tblproducts.name')
+            ->first();
+
+        return ($row);
+    }
+
+
     public static function getCustomFieldProduct()
     {
         $array = array();
@@ -304,6 +317,11 @@ class WhmcsDB
         }
 
         return ($invoice);
+    }
+
+    public static function getInvoiceData($id)
+    {
+        return Capsule::table('tblinvoicedata')->where('invoice_id', $id)->first();
     }
 
     public static function getInvoiceItems($id)

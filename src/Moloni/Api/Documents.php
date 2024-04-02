@@ -4,15 +4,20 @@ namespace Moloni\Api;
 
 use Moloni\Curl;
 use Moloni\Error;
+use Moloni\Exceptions\APIException;
 
 class Documents
 {
 
     /**
+     * Create document
+     *
      * @param $values
      * @param bool $type
      *
      * @return bool|mixed
+     *
+     * @throws APIException
      */
     public static function insertInvoice($values, $type = false)
     {
@@ -30,8 +35,15 @@ class Documents
             return ($result['document_id']);
         }
 
-        Error::create("$type/insert", "Erro ao inserir documento", $values, $result);
-        return false;
+        throw new APIException(
+            "Erro ao inserir documento.",
+            [
+                'values_sent' => $values,
+                'values_receive' => $result,
+
+            ],
+            "$type/insert"
+        );
     }
 
     /**
@@ -62,10 +74,14 @@ class Documents
     }
 
     /**
+     * Update document
+     *
      * @param $values
      * @param bool $type
      *
      * @return mixed
+     *
+     * @throws APIException
      */
     public static function update($values, $type = false)
     {
@@ -83,8 +99,15 @@ class Documents
             return ($result['document_id']);
         }
 
-        Error::create("$type/update", "Erro ao actualizar documento", $values, $result);
-        return false;
+        throw new APIException(
+            "Erro ao actualizar documento.",
+            [
+                'values_sent' => $values,
+                'values_receive' => $result,
+
+            ],
+            "$type/update"
+        );
     }
 
     /**
@@ -99,7 +122,7 @@ class Documents
         }
 
         $total = 0;
-        $offset = (isset($values['offset']) ? $values['offset'] : "0");
+        $offset = $values['offset'] ?? "0";
         $results = [];
 
         while ($total < $max) {
