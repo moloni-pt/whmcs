@@ -25192,7 +25192,9 @@ pt.moloni.Logs = function ($) {
     content += logs[logId];
     content += '</pre>';
     overlay.find('.modal-body').html(content);
-    overlay.find('.modal-footer').find('#download_log_btn').off('click').on('click', downloadLogOverlay.bind(this, logId));
+    overlay.find('.modal-footer').find('#download_log_btn').off('click').on('click', function () {
+      downloadLogOverlay(logId);
+    });
     overlayBtn.trigger('click');
   }
   function downloadLogOverlay(logId) {
