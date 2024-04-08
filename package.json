@@ -1,6 +1,6 @@
 {
   "name": "whmcs",
-  "version": "3.3.1",
+  "version": "8.0.0",
   "description": "Moloni for WHMCS",
   "main": "index.js",
   "scripts": {

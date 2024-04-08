@@ -28,10 +28,12 @@
   "extra": {
     "changelog": [
       {
-        "version": "v3.4.1",
-        "title": "Lançamento da versão 3.4.1",
+        "version": "v8.0.0",
+        "title": "Lançamento da versão 8.0.0",
         "description": [
-          "Adicionado novo tipo de artigo (taxa de atraso)."
+          "Adicionado novo tipo de artigo (taxa de atraso).",
+          "Adicionado registos (logs) no plugin.",
+          "Optimizações na criação de documento."
         ]
       },
       {
