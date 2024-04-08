@@ -4,6 +4,7 @@ namespace Moloni\Api;
 
 use Moloni\Curl;
 use Moloni\Error;
+use Moloni\Exceptions\APIException;
 
 class Customers
 {
@@ -15,26 +16,6 @@ class Customers
     public static function getAll()
     {
         return Curl::simple("customers/getAll");
-    }
-
-    public static function getOne()
-    {
-        return Curl::simple("customers/getOne");
-    }
-
-    public static function countBySearch()
-    {
-        return Curl::simple("customers/countBySearch");
-    }
-
-    public static function getBySearch()
-    {
-        return Curl::simple("customers/getBySearch");
-    }
-
-    public static function countByVat()
-    {
-        return Curl::simple("customers/countByVat");
     }
 
     public static function getByVat($values)
@@ -51,7 +32,7 @@ class Customers
             }
 
             if ($values['vat'] == $customer['vat']) {
-                return ($customer);
+                return $customer;
             }
         }
 
@@ -76,7 +57,7 @@ class Customers
             }
 
             if ($values['email'] === $customer['email']) {
-                return ($customer);
+                return $customer;
             }
         }
 
@@ -101,31 +82,11 @@ class Customers
             }
 
             if ($values['number'] == $customer['number']) {
-                return ($customer);
+                return $customer;
             }
         }
 
         return false;
-    }
-
-    public static function countByNumber()
-    {
-        return Curl::simple("customers/countByNumber");
-    }
-
-    public static function countByName()
-    {
-        return Curl::simple("customers/countByName");
-    }
-
-    public static function getByName()
-    {
-        return Curl::simple("customers/getByName");
-    }
-
-    public static function getLastNumber()
-    {
-        return Curl::simple("customers/getLastNumber");
     }
 
     public static function getNextNumber()
@@ -135,6 +96,11 @@ class Customers
         return ($result['number']);
     }
 
+    /**
+     * Create customer
+     *
+     * @throws APIException
+     */
     public static function insert($values)
     {
         if (!is_array($values)) {
@@ -147,10 +113,22 @@ class Customers
             return $result;
         }
 
-        Error::create("customers/insert", "Erro ao inserir cliente", $values, $result);
-        return false;
+
+        throw new APIException(
+            "Erro ao inserir cliente.",
+            [
+                'values_sent' => $values,
+                'values_receive' => $result,
+            ],
+            "customers/insert"
+        );
     }
 
+    /**
+     * Update customer
+     *
+     * @throws APIException
+     */
     public static function update($values)
     {
         if (!is_array($values)) {
@@ -160,12 +138,17 @@ class Customers
         $result = curl::simple("customers/update", $values);
 
         if (isset($result['customer_id'])) {
-            return ($result);
+            return $result;
         }
 
-        Error::create("customers/update", "Erro ao actualizar cliente", $values, $result);
-
-        return false;
+        throw new APIException(
+            "Erro ao actualizar cliente.",
+            [
+                'values_sent' => $values,
+                'values_receive' => $result,
+            ],
+            "customers/update"
+        );
     }
 
     public static function delete()

@@ -107,6 +107,13 @@ class Settings
                 $invoicedItem['type'] = 2;
                 break;
 
+            case "LateFee":
+                $invoicedItem['name'] = !empty($this->item->description) ? $this->item->description : 'Taxa de atraso';
+                $invoicedItem['summary'] = "";
+                $invoicedItem['reference'] = 'LATE-FEE';
+                $invoicedItem['type'] = 3;
+                break;
+
             case "Invoice":
                 $invoicedItem['massPay'] = true;
                 break;

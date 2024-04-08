@@ -18,6 +18,10 @@ class Tools
             $url .= $file;
         }
 
+        if (defined('MOLONI_ADDON_VERSION')) {
+            $url .= '?v=' . MOLONI_ADDON_VERSION;
+        }
+
         return $url;
     }
 

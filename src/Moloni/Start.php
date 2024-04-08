@@ -3,6 +3,7 @@
 namespace Moloni;
 
 use Moloni\Core\Storage;
+use Moloni\Facades\LoggerFacade;
 use Moloni\Model\WhmcsDB;
 
 class Start
@@ -72,7 +73,14 @@ class Start
         $newtokens = Curl::refresh(Storage::$MOLONI_REFRESH_TOKEN);
 
         if (empty($newtokens['access_token']) || empty($newtokens['refresh_token'])) {
-            Error::create('Login', 'Erro atualizar tokens');
+            $msg = 'Erro atualizar tokens.';
+            $data = [
+                'tag' => 'service:token:refresh',
+                'response' => $newtokens
+            ];
+
+            LoggerFacade::info($msg, $data);
+            Error::create('Login', $msg);
 
             return false;
         }

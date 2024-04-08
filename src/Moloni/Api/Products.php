@@ -4,6 +4,7 @@ namespace Moloni\Api;
 
 use Moloni\Curl;
 use Moloni\Error;
+use Moloni\Exceptions\APIException;
 
 class Products
 {
@@ -152,7 +153,12 @@ class Products
         return Curl::simple("products/getModifiedSince", $values);
     }
 
-    public static function insert($values, $rawValues = [])
+    /**
+     * Create product
+     *
+     * @throws APIException
+     */
+    public static function insert($values)
     {
         if (!is_array($values)) {
             $values = [];
@@ -161,11 +167,17 @@ class Products
         $result = Curl::simple("products/insert", $values);
 
         if (isset($result['product_id'])) {
-            return $result['product_id'];
+            return $result;
         }
 
-        Error::create("products/insert", "Erro ao inserir artigo", array_merge($values, $rawValues), $result);
-        return false;
+        throw new APIException(
+            "Erro ao inserir artigo.",
+            [
+                'values_sent' => $values,
+                'values_receive' => $result
+            ],
+            "products/insert"
+        );
     }
 
     public static function update($values)

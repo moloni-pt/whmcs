@@ -4,23 +4,10 @@ namespace Moloni\Api;
 
 use Moloni\Curl;
 use Moloni\Error;
+use Moloni\Exceptions\APIException;
 
 class AlternateAddresses
 {
-    public static function search($values)
-    {
-        $results = self::getAll($values);
-
-        foreach ($results as $result) {
-            if (mb_strtolower($result['designation']) == mb_strtolower($values['designation'])) {
-                return ($result['address_id']);
-            }
-        }
-
-        return false;
-
-    }
-
     public static function getAll($values)
     {
         if (!is_array($values)) {
@@ -32,6 +19,11 @@ class AlternateAddresses
         return ($result);
     }
 
+    /**
+     * Create alternate addresses
+     *
+     * @throws APIException
+     */
     public static function insert($values)
     {
         if (!is_array($values)) {
@@ -44,8 +36,14 @@ class AlternateAddresses
             return ($result);
         }
 
-        Error::create("customerAlternateAddresses/insert", "Erro ao inserir morada alternativa", $values, $result);
-        return false;
+        throw new APIException(
+            "Erro ao inserir morada alternativa.",
+            [
+                'values_sent' => $values,
+                'values_receive' => $result,
+            ],
+            "customerAlternateAddresses/insert"
+        );
     }
 
     public static function update()

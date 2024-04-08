@@ -12,39 +12,12 @@ use Moloni\Api\Settings\PaymentMethods;
 ?>
 
 <section id="moloni">
+    <?php
+    $activeTab = 'config';
 
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <link href='https://fonts.googleapis.com/css?family=Roboto:400,300,100,500,700' rel='stylesheet' type='text/css'>
-    <link rel="stylesheet" href="<?= Tools::getPublicUrl('compiled.min.css') ?>">
-
-    <div class="row">
-        <div class="col">
-            <a href='https://moloni.pt' target='_BLANK'>
-                <img src='<?= Tools::getPublicUrl('img/logo.png') ?>' class='moloni-logo' alt="">
-            </a>
-        </div>
-        <div class="right">
-            <div>
-                <a href="addonmodules.php?module=moloni&action=logout"
-                   class="waves-effect waves-light btn red logoutMoloni">
-                    <span>Sair</span>
-                    <i class='material-icons'>logout</i>
-                </a>
-            </div>
-        </div>
-    </div>
-
-    <div class="row menuMoloni">
-        <div class="col">
-            <a class="black-text" href="addonmodules.php?module=moloni">Faturação</a>
-        </div>
-        <div class="col">
-            <a class="black-text" href="addonmodules.php?module=moloni&action=docs">Documentos</a>
-        </div>
-        <div class="col menuAtivo">
-            <a class="black-text" href="addonmodules.php?module=moloni&action=config">Configuração</a>
-        </div>
-    </div>
+    include MOLONI_TEMPLATE_PATH . 'Blocks/header.php';
+    include MOLONI_TEMPLATE_PATH . 'Blocks/navbar.php';
+    ?>
 
     <div class="row">
         <div class="col s12">
@@ -107,23 +80,23 @@ use Moloni\Api\Settings\PaymentMethods;
                     </div>
                     <div class="configMoloni">
                         <!-------------------------- Encomendas por gerar desde dia X ------------------------------>
-                        <div class='input-field input-field-date'>
+                        <div class='input-field'>
                             <input placeholder='Introduza data'
-                                   class="datepicker"
                                    name='after_date'
                                    id='after_date'
-                                   type="text"
+                                   class="input-field-date"
+                                   type="date"
                                    value='<?= (defined('AFTER_DATE')) ? AFTER_DATE : '' ?>'>
                             <label for="after_date">Encomendas desde</label>
                         </div>
 
                         <!-------------------------- Documentos gerados desde dia X ------------------------------>
-                        <div class='input-field input-field-date'>
+                        <div class='input-field'>
                             <input placeholder='Introduza data'
-                                   class="datepicker"
                                    name='after_date_doc'
                                    id='after_date_doc'
-                                   type="text"
+                                   class="input-field-date"
+                                   type="date"
                                    value='<?= (defined('AFTER_DATE_DOC')) ? AFTER_DATE_DOC : '' ?>'>
                             <label for="after_date_doc">Documentos desde</label>
                         </div>
@@ -323,19 +296,11 @@ use Moloni\Api\Settings\PaymentMethods;
     </div>
 </section>
 
-<script type="text/javascript" src="<?= Tools::getPublicUrl('compiled.min.js') ?>"></script>
+<?php include MOLONI_TEMPLATE_PATH . 'Blocks/footer.php'; ?>
 
 <script>
     $(document).ready(function() {
         $('#moloni select').formSelect();
-
-        $('.datepicker').datepicker({
-            selectMonths: true, // Creates a dropdown to control month
-            selectYears: 15, // Creates a dropdown of 15 years to control year
-            formatSubmit: "yyyy-mm-dd",
-            format: 'yyyy-mm-dd',
-        });
-
         $('#moloni .caret').empty();
 
         $(document).on("click", ".seccaoTituloConfig", function() {

@@ -33,4 +33,4 @@ $companies = Companies::getAll();
     </div>
 </section>
 
-<script type="text/javascript" src="<?= Tools::getPublicUrl('compiled.min.js') ?>"></script>
+<?php include MOLONI_TEMPLATE_PATH . 'Blocks/footer.php'; ?>

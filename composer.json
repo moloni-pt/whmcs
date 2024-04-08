@@ -18,6 +18,7 @@
   "scripts": {
   },
   "require": {
+    "psr/log": "1.1.4"
   },
   "require-dev": {
     "roave/security-advisories": "dev-latest",
@@ -26,6 +27,13 @@
   },
   "extra": {
     "changelog": [
+      {
+        "version": "v3.4.1",
+        "title": "Lançamento da versão 3.4.1",
+        "description": [
+          "Adicionado novo tipo de artigo (taxa de atraso)."
+        ]
+      },
       {
         "version": "v3.4.0",
         "title": "Lançamento da versão 3.4.0",
