@@ -337,7 +337,7 @@ class CreateDocumentFromInvoice
         }
 
         $actualCustomer = [];
-        $actualCustomer['customer_id'] = $customer['customer_id'] ?? 0;
+        $actualCustomer['customer_id'] = $possibleCustomer['customer_id'] ?? 0;
         $actualCustomer['email'] = $this->invoiceCustomer->email;
         $actualCustomer['name'] = $name;
 
