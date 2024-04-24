@@ -28,6 +28,13 @@
   "extra": {
     "changelog": [
       {
+        "version": "v8.0.1",
+        "title": "Lançamento da versão 8.0.1",
+        "description": [
+          "Correção na pesquisa de clientes"
+        ]
+      },
+      {
         "version": "v8.0.0",
         "title": "Lançamento da versão 8.0.0",
         "description": [
