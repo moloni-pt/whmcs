@@ -513,6 +513,10 @@ class CreateDocumentFromInvoice
             $paymentMethodId = $mutation['payment_method_id'];
         }
 
+        if (!$this->fullCurrency['same_curr']) {
+            $orderTotal *= $this->fullCurrency['exchange_value_product'];
+        }
+
         $this->documentData['payments'] = [];
         $this->documentData['payments'][] = [
             'payment_method_id' => $paymentMethodId,
