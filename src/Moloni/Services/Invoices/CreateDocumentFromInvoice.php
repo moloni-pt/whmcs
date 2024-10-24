@@ -514,7 +514,7 @@ class CreateDocumentFromInvoice
         }
 
         if (!$this->fullCurrency['same_curr']) {
-            $orderTotal *= $this->fullCurrency['exchange_value'];
+            $orderTotal *= $this->fullCurrency['exchange_value_product'];
         }
 
         $this->documentData['payments'] = [];
