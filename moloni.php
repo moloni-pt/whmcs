@@ -4,7 +4,7 @@ use Moloni\Admin\Dispatcher;
 use Moloni\Installer\Installer;
 
 if (!defined('MOLONI_ADDON_VERSION')) {
-    define('MOLONI_ADDON_VERSION', '8.0.1');
+    define('MOLONI_ADDON_VERSION', '8.1.0');
 }
 
 function moloni_config()
