@@ -66,6 +66,7 @@ class Settings
                     $invoicedItem['name'] = $this->item->description;
                     $invoicedItem['summary'] = '';
                     $invoicedItem['reference'] = 'Addon';
+                    $invoicedItem['product_name'] = 'Addon';
                 }
 
                 break;
@@ -77,6 +78,7 @@ class Settings
                 $invoicedItem['name'] = "Upgrade/Downgrade - " . $upgradeInfo->name;
                 $invoicedItem['summary'] = $upgradeInfo->domain . "<br>" . $this->item->duedate . " - " . $upgradeInfo->nextduedate;
                 $invoicedItem['reference'] = "UPGRADE";
+                $invoicedItem['product_name'] = 'Upgrade/Downgrade';
                 $invoicedItem['type'] = 2;
                 break;
 
@@ -91,6 +93,11 @@ class Settings
                 $invoicedItem['discount'] = ($discountValue > 0) ? round(($discountValue * 100) / $this->item->amount) : "";
                 $invoicedItem['type'] = 2;
 
+                if (empty($customValue)) {
+                    // No custom reference: shared "Alojamento" product keeps a fixed name, not the first item's name
+                    $invoicedItem['product_name'] = 'Alojamento';
+                }
+
                 break;
 
             case "Setup":
@@ -104,6 +111,7 @@ class Settings
                 $invoicedItem['name'] = !empty($this->item->description) ? $this->item->description : 'Adição de fundos';
                 $invoicedItem['summary'] = "";
                 $invoicedItem['reference'] = 'ADD-FUNDS';
+                $invoicedItem['product_name'] = 'Adição de fundos';
                 $invoicedItem['type'] = 2;
                 break;
 
@@ -111,6 +119,7 @@ class Settings
                 $invoicedItem['name'] = !empty($this->item->description) ? $this->item->description : 'Taxa de atraso';
                 $invoicedItem['summary'] = "";
                 $invoicedItem['reference'] = 'LATE-FEE';
+                $invoicedItem['product_name'] = 'Taxa de atraso';
                 $invoicedItem['type'] = 3;
                 break;
 
@@ -124,6 +133,7 @@ class Settings
                 $invoicedItem['summary'] = "";
                 $invoicedItem['reference'] = "9999";
                 $invoicedItem['discount'] = "";
+                $invoicedItem['product_name'] = 'Artigo';
 
                 if ($this->item->amount < 0) {
                     $invoicedItem['skip'] = true;
