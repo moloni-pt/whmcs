@@ -812,7 +812,8 @@ class CreateDocumentFromInvoice
             $product['type'] = (defined('AT_CATEGORY') && AT_CATEGORY === "SS") ? 2 : 1;
         }
 
-        $product['name'] = $productDefined['name'];
+        // Use the fixed generic name when set, so the shared product isn't named after the first invoice item
+        $product['name'] = $productDefined['product_name'] ?? $productDefined['name'];
         $product['summary'] = $productDefined['summary'];
         $product['reference'] = $reference;
         $product['ean'] = "";
